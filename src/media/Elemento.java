@@ -6,7 +6,7 @@
  *
  */
 
-public abstract class Elemento{
+public abstract class Elemento implements Serializable{
 
   private String titulo;
   private Time duracion;
@@ -19,11 +19,15 @@ public abstract class Elemento{
        * elemento y de inicializar a false el atributo bloqueado y borrado.
        * @param titulo String que identifica el titulo de la cancion
        */
-  public void Elemento(String titulo){
+  public Elemento(String titulo){
       this.titulo = titulo;
       this.bloqueado = false;
       this.borrado = false;
   }
+
+  public abstract boolean contieneElemento(Elemento e);
+
+  public abstract reproducir();
 
   public String getTitulo(){
       return this.titulo;
@@ -52,7 +56,5 @@ public abstract class Elemento{
   public void setBorrado(boolean b){
       this.borrado = b;
   }
-
-  public abstract reproducir();
 
 }
