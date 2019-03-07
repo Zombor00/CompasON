@@ -71,8 +71,9 @@ public class Cancion extends Elemento implements Serializable{
      * @return boolean: true si la cancion es la misma false
      * en caso contrario
      */
+    @Override
     public boolean contieneElemento(Elemento e){
-        if(e.equals(this)==true)return true
+        if(e.equals(this) == true)return true
         return false;
     }
 

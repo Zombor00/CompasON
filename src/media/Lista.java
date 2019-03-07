@@ -40,7 +40,7 @@ public class Lista extends Elemento implements Serializable{
      * @return false si el elemento ya esta en la lista true en caso contrario
      */
     public boolean aniadirElemento(Elemento e){
-        if(elementos.contieneElemento(e)==true)return false;
+        if(elementos.contieneElemento(e) == true)return false;
         elementos.add(e);
         return true;
     }
@@ -54,7 +54,7 @@ public class Lista extends Elemento implements Serializable{
         int index;
 
         index = elementos.indexOf(e);
-        if(index ==-1)return false;
+        if(index == -1)return false;
 
         elementos.remove(index);
         return true;
@@ -67,6 +67,8 @@ public class Lista extends Elemento implements Serializable{
      * @return boolean: true si existe el elemento en el album false
      * en caso contrario
      */
+
+    @Override
     public boolean contieneElemento(Elemento e){
         for(Elemento eLista: elementos){
             if(eLista.contieneElemento(e)){

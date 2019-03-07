@@ -67,6 +67,7 @@ public class Album extends Elemento implements Serializable{
      * @return boolean: true si existe la cancion en el album false
      * en caso contrario
      */
+    @Override
     public boolean contieneElemento(Elemento e){
         return canciones.contains(c);
     }
