@@ -46,13 +46,29 @@ public class UsuarioRegistrado extends UsuarioConCuenta{
         return this.seguidores;
     }
 
+    public ArrayList<Cancion> getCanciones(){
+        return this.canciones;
+    }
+
+    /**
+    * Este metodo hace Premium a un usuario
+    *
+    */
+    public void hacerPremium(){
+        //to do: pago
+        if (premiumHasta == null){
+            this.premiumHasta = LocalDate.now().plusDays(30);
+        }
+    }
+
     /**
     * Este metodo se usa para aniadir una cancion al usuario
     *
     * @param c cancion a aniadir
+    * @return boolean sobre si se hace correctamente
     */
     public boolean aniadirCancion(Cancion c){
-        return this.canciones.add(album);
+        return this.canciones.add(c);
     }
 
     /**
@@ -91,6 +107,7 @@ public class UsuarioRegistrado extends UsuarioConCuenta{
     *
     * @param titulo de la lista
     * @param e elementos que contiene la lista inicialmente
+    * @return boolean sobre si se hace correctamente
     */
     public boolean crearLista(String titulo, ArrayList<Elemento> e){
         if (this.premiumHasta == null){
@@ -105,6 +122,7 @@ public class UsuarioRegistrado extends UsuarioConCuenta{
     *
     * @param titulo de la lista
     * @param c canciones que contiene el album inicialmente
+    * @return boolean sobre si se hace correctamente
     */
     public boolean crearAlbum(String titulo, ArrayList<Cancion> c){
         Album album = new Album(titulo,c);
@@ -115,6 +133,7 @@ public class UsuarioRegistrado extends UsuarioConCuenta{
     * Este metodo se usa para aniadir una cancion a la cola
     *
     * @param e elemento a aniadir a la cola
+    * @return boolean sobre si se hace correctamente
     */
     public boolean aniadirALaCola(Elemento e){
         return this.cola.aniadirElemento(e);
@@ -124,6 +143,7 @@ public class UsuarioRegistrado extends UsuarioConCuenta{
     * Este metodo se usa para aniadir una notificacion al usuario
     *
     * @param n notificacion a aniadir
+    * @return boolean sobre si se hace correctamente
     */
     public boolean aniadirNotificacion(Notificacion n){
         return this.notificaciones.add(n);
