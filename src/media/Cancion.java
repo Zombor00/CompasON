@@ -5,7 +5,7 @@
  *
  */
 
-public class Cancion extends Elemento{
+public class Cancion extends Elemento implements Serializable{
 
     private boolean explicit;
     private UsuarioRegistrado autor;
@@ -22,8 +22,7 @@ public class Cancion extends Elemento{
      * @param file fichero con el audio de la cancion
      * @param autor autor de la cancion
      */
-
-    public void Cancion(String titulo, File file, UsuarioRegistrado autor){
+    public Cancion(String titulo, File file, UsuarioRegistrado autor){
         Super(titulo);
         this.autor = autor;
         this.ficheroAudio = file;
@@ -50,6 +49,7 @@ public class Cancion extends Elemento{
      *  por parametros si son distintos de null
      * @param titulo titulo de la cancion
      * @param file fichero de audio de la cancion
+     * @return true si se puede modificar, false en caso contrario
      */
     public boolean modificar(String titulo, File file){
         /*TO DO: file tiene que ser apto*/
@@ -64,4 +64,20 @@ public class Cancion extends Elemento{
         }
         return true;
     }
+
+    /**
+     * Te devuelve true si el elemento pasado es el mismo.
+     * @param c Cancion a comparar
+     * @return boolean: true si la cancion es la misma false
+     * en caso contrario
+     */
+    public boolean contieneElemento(Elemento e){
+        if(e.equals(this)==true)return true
+        return false;
+    }
+
+    public boolean getValidada(){
+        return this.validada;
+    }
+
 }
