@@ -60,13 +60,13 @@ public class UsuarioRegistrado extends UsuarioConCuenta{
     }
 
     /**
-    * Este metodo se usa para aniadir una cancion al usuario
+    * Este metodo se usa para aniadir un elemento al usuario
     *
-    * @param c cancion a aniadir
+    * @param e elemento a aniadir
     * @return boolean sobre si se hace correctamente
     */
-    public boolean aniadirCancion(Cancion c){
-        return this.musica.add(c);
+    public boolean aniadirElemento(Elemento e){
+        return this.musica.add(e);
     }
 
     /**
@@ -100,32 +100,6 @@ public class UsuarioRegistrado extends UsuarioConCuenta{
         }
     }
 
-    /**
-    * Este metodo se usa para crear una lista
-    *
-    * @param titulo de la lista
-    * @param e elementos que contiene la lista inicialmente
-    * @return boolean sobre si se hace correctamente
-    */
-    public boolean crearLista(String titulo, ArrayList<Elemento> e){
-        if (this.premiumHasta == null){
-            return false;
-        }
-        Lista list = new Lista(titulo,e);
-        return this.musica.add(list);
-    }
-
-    /**
-    * Este metodo se usa para crear un album
-    *
-    * @param titulo de la lista
-    * @param c canciones que contiene el album inicialmente
-    * @return boolean sobre si se hace correctamente
-    */
-    public boolean crearAlbum(String titulo, ArrayList<Cancion> c){
-        Album album = new Album(titulo,c);
-        return this.musica.add(album);
-    }
 
     /**
     * Este metodo se usa para aniadir una cancion a la cola
