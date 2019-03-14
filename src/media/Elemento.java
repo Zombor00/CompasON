@@ -6,6 +6,12 @@
  *
  */
 
+
+public enum estado{
+ SINVALIDAR,EXPLICITO,APTOMENORES;
+}
+
+
 public abstract class Elemento implements Serializable{
 
   private String titulo;

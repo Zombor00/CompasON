@@ -19,9 +19,7 @@ public class UsuarioRegistrado extends UsuarioConCuenta{
     private boolean limiteReproduccionesAlcanzado;
     private int reproducidas;
     private Cola = new Cola();
-    private ArrayList<Cancion> canciones = new ArrayList<>();
-    private ArrayList<Album> albumes = new ArrayList<>();
-    private ArrayList<Lista> listas = new ArrayList<>();
+    private ArrayList<Elemento> musica = new ArrayList<>();
     private ArrayList<Notificacion> notificaciones = new ArrayList<>();
     private ArrayList<UsuarioRegistrado> seguidos = new ArrayList<>();
     private ArrayList<UsuarioRegistrado> seguidores = new ArrayList<>();
@@ -46,8 +44,8 @@ public class UsuarioRegistrado extends UsuarioConCuenta{
         return this.seguidores;
     }
 
-    public ArrayList<Cancion> getCanciones(){
-        return this.canciones;
+    public ArrayList<Elemento> getMusica(){
+        return this.musica;
     }
 
     /**
@@ -68,7 +66,7 @@ public class UsuarioRegistrado extends UsuarioConCuenta{
     * @return boolean sobre si se hace correctamente
     */
     public boolean aniadirCancion(Cancion c){
-        return this.canciones.add(c);
+        return this.musica.add(c);
     }
 
     /**
@@ -114,7 +112,7 @@ public class UsuarioRegistrado extends UsuarioConCuenta{
             return false;
         }
         Lista list = new Lista(titulo,e);
-        return this.listas.add(list);
+        return this.musica.add(list);
     }
 
     /**
@@ -126,7 +124,7 @@ public class UsuarioRegistrado extends UsuarioConCuenta{
     */
     public boolean crearAlbum(String titulo, ArrayList<Cancion> c){
         Album album = new Album(titulo,c);
-        return this.albumes.add(album);
+        return this.musica.add(album);
     }
 
     /**

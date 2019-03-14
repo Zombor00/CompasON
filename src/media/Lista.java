@@ -77,5 +77,9 @@ public class Lista extends Elemento implements Serializable{
         }
         return false;
     }
+    @Override
+    public setBloqueado(boolean b){
+        
+    }
 
 }
