@@ -15,11 +15,12 @@ public class UsuarioRegistrado extends UsuarioConCuenta{
     private LocalDate premiumHasta;
     private LocalDate bloqueadoHasta;
     private LocalDate ultimoLogin;
+    /* Atributo que almacena la fecha en la que se ha reproducido una cancion del usuario*/
     private ArrayList<LocalDate> reproducciones = new ArrayList<>();
     private boolean limiteReproduccionesAlcanzado;
-    private int reproducidas;
-    private Cola = new Cola();
-    private ArrayList<Elemento> musica = new ArrayList<>();
+    private int reproducidas; /* Numero de veces que ha reproducido el usuario*/
+    private ArrayList<Buscable> buscables = new ArrayList<>();
+    private ArrayList<Lista> listas = new ArrayList<>();
     private ArrayList<Notificacion> notificaciones = new ArrayList<>();
     private ArrayList<UsuarioRegistrado> seguidos = new ArrayList<>();
     private ArrayList<UsuarioRegistrado> seguidores = new ArrayList<>();
@@ -44,9 +45,34 @@ public class UsuarioRegistrado extends UsuarioConCuenta{
         return this.seguidores;
     }
 
-    public ArrayList<Elemento> getMusica(){
-        return this.musica;
+    public ArrayList<Buscable> getBuscables(){
+        return this.buscables;
     }
+
+    public ArrayList<Lista> getListas(){
+        return this.listas;
+    }
+
+    public int getReproducidas(){
+        return this.reproducidas;
+    }
+
+    public ArrayList<LocalDate> getReproducciones(){
+        return this.reproducciones;
+    }
+
+    public void setBloqueadoHasta(LocalDate b){
+        this.bloqueadoHasta = b;
+    }
+
+    public void setUltimoLogin(LocalDate l){
+        this.ultimoLogin = l;
+    }
+
+    public void setLimiteReproduccionesAlcanzado(boolean b){
+        this.limiteReproduccionesAlcanzado = b;
+    }
+
 
     /**
     * Este metodo hace Premium a un usuario
@@ -60,14 +86,31 @@ public class UsuarioRegistrado extends UsuarioConCuenta{
     }
 
     /**
-    * Este metodo se usa para aniadir un elemento al usuario
+    * Este metodo se usa para aniadir una cancion o album al usuario
     *
     * @param e elemento a aniadir
     * @return boolean sobre si se hace correctamente
     */
-    public boolean aniadirElemento(Elemento e){
-        return this.musica.add(e);
+    public boolean aniadirBuscable(Buscable e){
+        return this.buscables.add(e);
     }
+
+    /**
+    * Este metodo se usa para aniadir un elemento al usuario
+    *
+    * @param titulo nombre de la lista
+    * @param elementos iniciales de la lista
+    * @return boolean sobre si se hace correctamente
+    */
+    public boolean crearLista(String titulo, Reproducible elementos){
+        if(premiumHasta!=null && premiumHasta.isAfter(LocalDate.now())){
+            Lista lista = new Lista(titulo,elementos);
+            return this.listas.add(lista);
+        }
+        return false;
+    }
+
+
 
     /**
     * Este metodo almacena el usuario que se recibe en lista de seguidos y guarda
@@ -102,16 +145,6 @@ public class UsuarioRegistrado extends UsuarioConCuenta{
 
 
     /**
-    * Este metodo se usa para aniadir una cancion a la cola
-    *
-    * @param e elemento a aniadir a la cola
-    * @return boolean sobre si se hace correctamente
-    */
-    public boolean aniadirALaCola(Elemento e){
-        return this.cola.aniadirElemento(e);
-    }
-
-    /**
     * Este metodo se usa para aniadir una notificacion al usuario
     *
     * @param n notificacion a aniadir
@@ -120,6 +153,24 @@ public class UsuarioRegistrado extends UsuarioConCuenta{
     public boolean aniadirNotificacion(Notificacion n){
         return this.notificaciones.add(n);
     }
+
+    /**
+    * Este metodo se usa para aumentar las reproducciones del usuario
+    *
+    */
+    public void aniadirReproducida(){
+        this.reproducidas++;
+    }
+
+    /**
+    * Este metodo se usa para aumentar las reproducciones de otros usuarios
+    * a canciones del usuario
+    *
+    */
+    public void aniadirReproduccion(){
+        this.reproducciones.add(LocalDate.now());
+    }
+
 
 
 

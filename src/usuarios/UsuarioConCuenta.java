@@ -37,7 +37,7 @@ public abstract class UsuarioConCuenta{
         this.contrasenia = contrasenia;
     }
 
-    public abstract boolean aniadirCancion();
+    
 
 
 }

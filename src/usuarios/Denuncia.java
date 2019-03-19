@@ -8,6 +8,7 @@
 public class Denuncia{
     private UsuarioRegistrado denunciante;
     private Cancion denunciada;
+    private String comentario;
 
     /**
     * Constructor, con el nombre de usuario y contrasenia
@@ -15,9 +16,18 @@ public class Denuncia{
     * @param nombreUsuario
     * @param contrasenia del usuario
     */
-    public Denuncia(UsuarioRegistrado denunciante, Cancion denunciada){
+    public Denuncia(UsuarioRegistrado denunciante, Cancion denunciada, String c){
         this.denunciante = denunciante;
         this.denunciada = denunciada;
+        this.comentario = c;
+    }
+
+    public Cancion getDenunciada(){
+        return this.denunciada;
+    }
+
+    public UsuarioRegistrado getDenunciante(){
+        return this.denunciante;
     }
 
 
