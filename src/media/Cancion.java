@@ -6,14 +6,16 @@
  */
 
 
-public class Cancion extends Elemento implements Serializable{
+public class Cancion extends Buscable implements Serializable{
 
-    private boolean explicit;
+    private static int maxId = 0;
+    private int id;
     private UsuarioRegistrado autor;
-    private File ficheroAudio;
+    private String ficheroAudio;
     private LocalDate fechaSubida;
     private LocalDateTime modificableHasta;
-    private boolean validada;
+    private Estado validada;
+    private double duracion;
 
     /**
      * Constructor de la clase cancion que llama al constructor de elemento
@@ -23,26 +25,40 @@ public class Cancion extends Elemento implements Serializable{
      * @param file fichero con el audio de la cancion
      * @param autor autor de la cancion
      */
-    public Cancion(String titulo, File file, UsuarioRegistrado autor){
-        Super(titulo);
+    public Cancion(String titulo, String file, UsuarioRegistrado autor){
+        super(titulo);
+        this.id = this.maxId +1;
+        this.maxId += 1;
         this.autor = autor;
         this.ficheroAudio = file;
         this.fechaSubida = LocalDate.now();
-        /*TO DO: Meter duración*/
-        this.validada = false;
+        this.duracion = Mp3Player.getDuracion(file);
+        this.validada = Estado.SINVALIDAR;
     }
 
-    /*TO DO:*/
-    public void reproducir();
+    /**
+     * Aniade una cancion a la cola
+     * @param mp3 Cola donde se añade la cancion
+     */
+    public void reproducir(Mp3Player mp3){
+        mp3.add(ficheroAudio);
+    }
 
 
     /**
      * Valida la canción y pone si la cancion es explicita o no.
      * @param explicito boolean que identifica si la cancion es explicita o no
      */
-    public void validar(boolean explicito){
-        this.validada = true;
-        this.explicit = explicito;
+    public void validar(Estado val){
+        if(val == Estado.NOVALIDAR){
+            this.validada = Estado.NOVALIDAR;
+            modificableHasta = LocalDateTime.now().plusDays(3);
+        }
+        else if(val == EXPLICITO){
+            this.Estado = Estado.EXPLICITO;
+        }else{
+            this.Estado = Estado.APTOMENORES;
+        }
     }
 
     /**
@@ -80,6 +96,10 @@ public class Cancion extends Elemento implements Serializable{
 
     public boolean getValidada(){
         return this.validada;
+    }
+
+    public UsuarioRegistrado getAutor(){
+        return this.autor;
     }
 
 }

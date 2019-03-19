@@ -7,28 +7,24 @@
  */
 
 
-public enum estado{
- SINVALIDAR,EXPLICITO,APTOMENORES;
+public enum Estado{
+ SINVALIDAR,NOVALIDAR,EXPLICITO,APTOMENORES,BLOQUEADO,BORRADO,NOBLOQUEADO;
 }
 
-
-public abstract class Elemento implements Serializable{
+public abstract class Reproducible implements Serializable{
 
   private String titulo;
   private Time duracion;
-  private boolean bloqueado;
-  private boolean borrado ;
-
+  private Estado estado;
 
   /**
        * Constructor de la clase elemento que se encarga de poner titulo al
        * elemento y de inicializar a false el atributo bloqueado y borrado.
        * @param titulo String que identifica el titulo de la cancion
        */
-  public Elemento(String titulo){
+  public Reproducible(String titulo){
       this.titulo = titulo;
-      this.bloqueado = false;
-      this.borrado = false;
+      this.estado = Estado.NOBLOQUEADO;
   }
 
   public abstract boolean contieneElemento(Elemento e);
@@ -43,12 +39,8 @@ public abstract class Elemento implements Serializable{
       return this.duracion;
   }
 
-  public boolean getBloqueado(){
-      return this.bloqueado;
-  }
-
-  public boolean getBorrado(){
-      return this.borrado;
+  public boolean getEstado(){
+      return this.estado;
   }
 
   public void setTitulo(String titulo){
@@ -56,11 +48,21 @@ public abstract class Elemento implements Serializable{
   }
 
   public void setBloqueado(boolean b){
-      this.bloqueado = b;
+      if(this.estado == Estado.BORRADO){
+          return;
+      }
+      if(b == true){
+          this.estado = Estado.BLOQUEADO;
+      }
+      else{
+          this.estado == Estado.NOBLOQUEADO;
+      }
   }
 
   public void setBorrado(boolean b){
-      this.borrado = b;
+      if(b == true){
+          this.estado = Estado.BORRADO;
+      }
   }
 
 }

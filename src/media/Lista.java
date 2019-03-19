@@ -5,9 +5,9 @@ import java.utils.*;
  *         Grupo CompasON
  *
  */
-public class Lista extends Elemento implements Serializable{
+public class Lista extends Reproducible implements Serializable{
 
-    private ArrayList <Elemento> elementos;
+    private ArrayList <Reproducible> elementos;
 
     /**
      * Constructor de la clase lista que inicializa el array de elementos y
@@ -16,7 +16,7 @@ public class Lista extends Elemento implements Serializable{
      */
     public Lista(String titulo){
         super(titulo);
-        elementos = new ArrayList <Elemento>;
+        elementos = new ArrayList<Reproducible>();
     }
 
     /**
@@ -25,21 +25,29 @@ public class Lista extends Elemento implements Serializable{
      * @param titulo string que identifica el titulo de la lista
      * @param elementos array de elementos a meter en el album
      */
-    public Lista(String titulo,ArrayList <Elemento> elementos){
+    public Lista(String titulo,ArrayList <Reproducible> elementos){
         this(titulo);
-        this.elementos
+        this.elementos=elementos;
 
     }
 
-    /*TO DO:*/
-    public void reproducir();
+    /**
+     * Reproduce una lista en orden entrando recursivamente en las listas
+     * contenidas en las listas
+     * @param mp3 Cola donde se añade la cancion
+     */
+    public void reproducir(Mp3Player mp3){
+        for(Reproducible r: elementos){
+            r.reproducibles(mp3);
+        }
+    }
 
     /**
      * Sirve para meter un elemento pasado como argumento en la lista
      * @param e Cancion a aniadir en el album
      * @return false si el elemento ya esta en la lista true en caso contrario
      */
-    public boolean aniadirElemento(Elemento e){
+    public boolean aniadirElemento(Reproducible e){
         if(elementos.contieneElemento(e) == true)return false;
         elementos.add(e);
         return true;
@@ -50,7 +58,7 @@ public class Lista extends Elemento implements Serializable{
      * @param e Elemento a quitar de la lista
      * @return true si existe el elemento a quitar false en caso contrario
      */
-    public boolean quitarElemento(Elemento e){
+    public boolean quitarElemento(Reproducible e){
         int index;
 
         index = elementos.indexOf(e);
@@ -69,8 +77,8 @@ public class Lista extends Elemento implements Serializable{
      */
 
     @Override
-    public boolean contieneElemento(Elemento e){
-        for(Elemento eLista: elementos){
+    public boolean contieneElemento(Reproducible e){
+        for(Reproducible eLista: elementos){
             if(eLista.contieneElemento(e)){
                 return true;
             }
@@ -79,7 +87,7 @@ public class Lista extends Elemento implements Serializable{
     }
     @Override
     public setBloqueado(boolean b){
-        
+
     }
 
 }

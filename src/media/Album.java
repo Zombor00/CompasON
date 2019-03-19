@@ -6,18 +6,20 @@ import java.utils.*;
  *         Grupo CompasON
  *
  */
-public class Album extends Elemento implements Serializable{
+public class Album extends Buscable implements Serializable{
 
-    private ArrayList <Cancion> canciones = new ArrayList <Cancion>;
+    private ArrayList <Cancion> canciones;
+    private LocalDate anio;
 
     /**
      * Constructor de la clase album que inicializa el array de canciones y
      * pone titulo al album.
      * @param titulo string que identifica el titulo del album
      */
-    public Album(String titulo){
+    public Album(String titulo,LocalDate anio){
         super(titulo);
-        canciones = new ArrayList <Cancion>;
+        canciones = new ArrayList<Cancion>();
+        this.anio = anio;
     }
 
     /**
@@ -26,13 +28,21 @@ public class Album extends Elemento implements Serializable{
      * @param titulo string que identifica el titulo del album
      * @param canciones array de canciones a meter en el album
      */
-    public Album(String titulo, ArrayList <Cancion> canciones){
-        super(titulo);
+    public Album(String titulo, Date anio, ArrayList <Cancion> canciones){
+        super(titulo,anio);
         this.canciones = canciones;
     }
 
-    /*TO DO:*/
-    public void reproducir();
+    /**
+     * Reproduce un album en orden
+     * @param mp3 Cola donde se añade la cancion
+     */
+
+    public void reproducir(Mp3Player mp3){
+        for(Cancion c: canciones){
+            c.reproducir(mp3);
+        }
+    }
 
     /**
      * Sirve para meter la cancion pasada como argumento en el album
