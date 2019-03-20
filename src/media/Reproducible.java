@@ -55,7 +55,7 @@ public abstract class Reproducible implements Serializable{
           this.estado = Estado.BLOQUEADO;
       }
       else{
-          this.estado == Estado.NOBLOQUEADO;
+          this.estado = Estado.NOBLOQUEADO;
       }
   }
 

@@ -57,8 +57,13 @@ public class Administrador extends UsuarioConCuenta{
     *
     */
     public void tramitarValidacion(Cancion c, Estado estado){
+    	if (c.getModificableHasta().isAfter(LocalDateTime.now())) {
+    		return;
+    	}
         c.validar(estado);
-        cancionesAValidar.remove(cancionesAValidar.index(c));
+        if (estado != Estado.NOVALIDAR) {
+        	cancionesAValidar.remove(cancionesAValidar.index(c));
+        }        
     }
 
     /**
@@ -77,7 +82,11 @@ public class Administrador extends UsuarioConCuenta{
         else{
             autor.setBloqueadoHasta(LocalDate.now().plusDays(30));
             ArrayList<Buscable> buscables = autor.getBuscables();
-            /*To do: bucle hiper tocho*/
+            for (Buscable b : buscables) {
+            	if (b.contieneReproducible(c)) {
+            		b.setBloqueado(false);
+            	}
+            }
         }
         denuncias.remove(denuncias.index(d));
     }
