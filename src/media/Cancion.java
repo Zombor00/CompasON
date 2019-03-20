@@ -5,6 +5,9 @@
  *
  */
 
+ public enum EstadoValidar{
+  NOVALIDADA,EXPLICITO,BORRADA,APTOMENORES;
+ }
 
 public class Cancion extends Buscable implements Serializable{
 
@@ -14,7 +17,7 @@ public class Cancion extends Buscable implements Serializable{
     private String ficheroAudio;
     private LocalDate fechaSubida;
     private LocalDateTime modificableHasta;
-    private Estado validada;
+    private EstadoValidar estadoValidada;
     private double duracion;
 
     /**
@@ -33,7 +36,6 @@ public class Cancion extends Buscable implements Serializable{
         this.ficheroAudio = file;
         this.fechaSubida = LocalDate.now();
         this.duracion = Mp3Player.getDuracion(file);
-        this.validada = Estado.SINVALIDAR;
     }
 
     /**
@@ -49,15 +51,15 @@ public class Cancion extends Buscable implements Serializable{
      * Valida la canción y pone si la cancion es explicita o no.
      * @param explicito boolean que identifica si la cancion es explicita o no
      */
-    public void validar(Estado estado){
-        if(val == Estado.NOVALIDAR){
-            this.validada = Estado.NOVALIDAR;
+    public void validar(EstadoValidar estado){
+        if(estado == EstadoValidar.NOVALIDADA){
+            this.estadoValidada = EstadoValidar.NOVALIDADA;
             modificableHasta = LocalDateTime.now().plusDays(3);
         }
-        else if(estado == EXPLICITO){
-            this.Estado = Estado.EXPLICITO;
+        else if(estado == EstadoValidar.EXPLICITO){
+            this.estadoValidada = EstadoValidar.EXPLICITO;
         }else{
-            this.Estado = Estado.APTOMENORES;
+            this.estadoValidada = EstadoValidar.APTOMENORES;
         }
     }
 
@@ -70,7 +72,7 @@ public class Cancion extends Buscable implements Serializable{
      */
     public boolean modificar(String titulo, File file){
         /*TO DO: file tiene que ser apto*/
-        if(this.validada == true || modificableHasta.isBefore(LocalDateTime.now())){
+        if(this.estadoValidada == true || modificableHasta.isBefore(LocalDateTime.now())){
             return false
         }
         if(file != null){
@@ -95,7 +97,7 @@ public class Cancion extends Buscable implements Serializable{
     }
 
     public boolean getValidada(){
-        return this.validada;
+        return this.estadoValidada;
     }
 
     public UsuarioRegistrado getAutor(){

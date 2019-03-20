@@ -8,7 +8,7 @@
 
 
 public enum Estado{
- SINVALIDAR,NOVALIDAR,EXPLICITO,APTOMENORES,BLOQUEADO,BORRADO,NOBLOQUEADO;
+ BORRADO,BLOQUEADO,NOBLOQUEADO;
 }
 
 public abstract class Reproducible implements Serializable{
