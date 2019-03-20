@@ -49,12 +49,12 @@ public class Cancion extends Buscable implements Serializable{
      * Valida la canción y pone si la cancion es explicita o no.
      * @param explicito boolean que identifica si la cancion es explicita o no
      */
-    public void validar(Estado val){
+    public void validar(Estado estado){
         if(val == Estado.NOVALIDAR){
             this.validada = Estado.NOVALIDAR;
             modificableHasta = LocalDateTime.now().plusDays(3);
         }
-        else if(val == EXPLICITO){
+        else if(estado == EXPLICITO){
             this.Estado = Estado.EXPLICITO;
         }else{
             this.Estado = Estado.APTOMENORES;
@@ -83,13 +83,13 @@ public class Cancion extends Buscable implements Serializable{
     }
 
     /**
-     * Te devuelve true si el elemento pasado es el mismo.
+     * Te devuelve true si el Reproducible pasado es el mismo.
      * @param c Cancion a comparar
      * @return boolean: true si la cancion es la misma false
      * en caso contrario
      */
     @Override
-    public boolean contieneElemento(Elemento e){
+    public boolean contieneReproducible(Reproducible e){
         if(e.equals(this) == true)return true
         return false;
     }

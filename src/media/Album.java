@@ -78,7 +78,7 @@ public class Album extends Buscable implements Serializable{
      * en caso contrario
      */
     @Override
-    public boolean contieneElemento(Elemento e){
+    public boolean contieneReproducible(Reproducible e){
         return canciones.contains(c);
     }
 }

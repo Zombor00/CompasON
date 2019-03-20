@@ -18,7 +18,7 @@ public abstract class Reproducible implements Serializable{
   private Estado estado;
 
   /**
-       * Constructor de la clase elemento que se encarga de poner titulo al
+       * Constructor de la clase Reproducible que se encarga de poner titulo al
        * elemento y de inicializar a false el atributo bloqueado y borrado.
        * @param titulo String que identifica el titulo de la cancion
        */
@@ -27,7 +27,7 @@ public abstract class Reproducible implements Serializable{
       this.estado = Estado.NOBLOQUEADO;
   }
 
-  public abstract boolean contieneElemento(Elemento e);
+  public abstract boolean contieneReproducible(Reproducible e);
 
   public abstract reproducir();
 
@@ -47,22 +47,8 @@ public abstract class Reproducible implements Serializable{
       this.titulo = titulo;
   }
 
-  public void setBloqueado(boolean b){
-      if(this.estado == Estado.BORRADO){
-          return;
-      }
-      if(b == true){
-          this.estado = Estado.BLOQUEADO;
-      }
-      else{
-          this.estado == Estado.NOBLOQUEADO;
-      }
-  }
-
-  public void setBorrado(boolean b){
-      if(b == true){
-          this.estado = Estado.BORRADO;
-      }
+  public void setEstado(Estado estado){
+      this.estado = estado;
   }
 
 }

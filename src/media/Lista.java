@@ -7,27 +7,27 @@ import java.utils.*;
  */
 public class Lista extends Reproducible implements Serializable{
 
-    private ArrayList <Reproducible> elementos;
+    private ArrayList <Reproducible> reproducibles;
 
     /**
-     * Constructor de la clase lista que inicializa el array de elementos y
+     * Constructor de la clase lista que inicializa el array de reproducibles y
      * pone titulo a la lista.
      * @param titulo string que identifica el titulo de la lista
      */
     public Lista(String titulo){
         super(titulo);
-        elementos = new ArrayList<Reproducible>();
+        this.reproducibles = new ArrayList<Reproducible>();
     }
 
     /**
-     * Constructor de la clase lista que inicializa el array de elementos y
+     * Constructor de la clase lista que inicializa el array de reproducibles y
      * pone titulo a la lista.
      * @param titulo string que identifica el titulo de la lista
-     * @param elementos array de elementos a meter en el album
+     * @param reproducibles array de Reproducibles a meter en el album
      */
-    public Lista(String titulo,ArrayList <Reproducible> elementos){
+    public Lista(String titulo,ArrayList <Reproducible> reproducibles){
         this(titulo);
-        this.elementos=elementos;
+        this.reproducibles=reproducibles;
 
     }
 
@@ -37,49 +37,49 @@ public class Lista extends Reproducible implements Serializable{
      * @param mp3 Cola donde se añade la cancion
      */
     public void reproducir(Mp3Player mp3){
-        for(Reproducible r: elementos){
+        for(Reproducible r: reproducibles){
             r.reproducibles(mp3);
         }
     }
 
     /**
-     * Sirve para meter un elemento pasado como argumento en la lista
-     * @param e Cancion a aniadir en el album
-     * @return false si el elemento ya esta en la lista true en caso contrario
+     * Sirve para meter un reproducible pasado como argumento en la lista
+     * @param r Cancion a aniadir en el album
+     * @return false si el Reproducible ya esta en la lista true en caso contrario
      */
-    public boolean aniadirElemento(Reproducible e){
-        if(elementos.contieneElemento(e) == true)return false;
-        elementos.add(e);
+    public boolean aniadirReproducible(Reproducible r){
+        if(reproducibles.contieneReproducible(r) == true)return false;
+        reproducibles.add(r);
         return true;
     }
 
     /**
-     * Sirve para quitar un elemento de la lista
-     * @param e Elemento a quitar de la lista
-     * @return true si existe el elemento a quitar false en caso contrario
+     * Sirve para quitar un reproducible de la lista
+     * @param r Reproducible a quitar de la lista
+     * @return true si existe el reproducible a quitar false en caso contrario
      */
-    public boolean quitarElemento(Reproducible e){
+    public boolean quitarReproducible(Reproducible r){
         int index;
 
-        index = elementos.indexOf(e);
+        index = reproducibles.indexOf(r);
         if(index == -1)return false;
 
-        elementos.remove(index);
+        reproducibles.remove(index);
         return true;
     }
 
     /**
-     * Te devuelve true si el elemento existe en el album y false si no
-     * existe el elemento
-     * @param e elemento a buscar en la lista
-     * @return boolean: true si existe el elemento en el album false
+     * Te devuelve true si el reproducible existe en el album y false si no
+     * existe el reproducible
+     * @param r reproducible a buscar en la lista
+     * @return boolean: true si existe el reproducible en el album false
      * en caso contrario
      */
 
     @Override
-    public boolean contieneElemento(Reproducible e){
-        for(Reproducible eLista: elementos){
-            if(eLista.contieneElemento(e)){
+    public boolean contieneReproducible(Reproducible r){
+        for(Reproducible eLista: reproducibles){
+            if(eLista.contieneReproducible(r)){
                 return true;
             }
         }
