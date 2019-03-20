@@ -14,7 +14,8 @@ public class NotificacionDenuncia extends Notificacion{
     *
     * @param denuncia a notificar
     */
-    public NotificacionCancion(Denuncia denuncia){
+    public NotificacionDenuncia(Denuncia denuncia){
         this.denuncia = denuncia;
     }
+
 }

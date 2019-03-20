@@ -37,6 +37,7 @@ public class Administrador extends UsuarioConCuenta{
         return this.cancionesAValidar.add(c);
     }
 
+
     /**
     * Este metodo se usa para aniadir una denuncia
     * pendiente de tramitar
@@ -46,6 +47,48 @@ public class Administrador extends UsuarioConCuenta{
     */
     public boolean aniadirDenuncia(Denuncia d){
         return this.denuncias.add(d);
+    }
+
+    /**
+    * Este metodo se usa para tramitar la validacion de una cancion
+    *
+    * @param c cancion a tramitar
+    * @param estado indica si es explicito, no explicito o no validado
+    *
+    */
+    public void tramitarValidacion(Cancion c, Estado estado){
+    	if (c.getModificableHasta().isAfter(LocalDateTime.now())) {
+    		return;
+    	}
+        c.validar(estado);
+        if (estado != Estado.NOVALIDAR) {
+        	cancionesAValidar.remove(cancionesAValidar.index(c));
+        }        
+    }
+
+    /**
+    * Este metodo se usa para tramitar una denuncia
+    *
+    * @param d denuncia a tramitar
+    * @param ganada indica si la denuncia tiene fundamento
+    *
+    */
+    public void tramitarDenuncia(Denuncia d, boolean plagio){
+        UsuarioRegistrado autor = d.getDenunciada.getAutor();
+        UsuarioRegistrado denunciante = d.getDenunciante();
+        if(plagio){
+            autor.setBloqueadoHasta(LocalDate.MAX);
+        }
+        else{
+            autor.setBloqueadoHasta(LocalDate.now().plusDays(30));
+            ArrayList<Buscable> buscables = autor.getBuscables();
+            for (Buscable b : buscables) {
+            	if (b.contieneReproducible(c)) {
+            		b.setBloqueado(false);
+            	}
+            }
+        }
+        denuncias.remove(denuncias.index(d));
     }
 
 }

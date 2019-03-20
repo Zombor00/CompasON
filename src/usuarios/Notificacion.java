@@ -8,7 +8,16 @@
 public abstract class Notificacion{
     private boolean visible = true;
 
+    public String mostrarNotificacion(){
+        if(visible == true){
+            return this.toString();
+        }
+        return null;
+    }
 
+    public void ocultarNotificacion(){
+        visible=false;
+    }
 
 
 }
