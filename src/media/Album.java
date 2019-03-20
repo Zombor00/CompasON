@@ -67,7 +67,7 @@ public class Album extends Buscable implements Serializable{
         if(index == -1)return false;
 
         canciones.remove(index);
-        return true
+        return true;
     }
 
     /**

@@ -73,7 +73,7 @@ public class Cancion extends Buscable implements Serializable{
     public boolean modificar(String titulo, File file){
         /*TO DO: file tiene que ser apto*/
         if(this.estadoValidada == true || modificableHasta.isBefore(LocalDateTime.now())){
-            return false
+            return false;
         }
         if(file != null){
             this.ficheroAudio = file;
