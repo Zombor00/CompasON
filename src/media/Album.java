@@ -1,4 +1,10 @@
-import java.utils.*;
+package media;
+
+import java.io.*;
+import java.util.*;
+import java.time.*;
+import pads.musicPlayer.Mp3Player;
+import media.*;
 
 /**
  * Esta clase tiene toda la informacion relevante a los Albumes.
@@ -17,9 +23,7 @@ public class Album extends Buscable implements Serializable{
      * @param titulo string que identifica el titulo del album
      */
     public Album(String titulo,LocalDate anio){
-        super(titulo);
-        canciones = new ArrayList<Cancion>();
-        this.anio = anio;
+        this(titulo, anio, new ArrayList<Cancion>() );
     }
 
     /**
@@ -28,8 +32,9 @@ public class Album extends Buscable implements Serializable{
      * @param titulo string que identifica el titulo del album
      * @param canciones array de canciones a meter en el album
      */
-    public Album(String titulo, Date anio, ArrayList <Cancion> canciones){
-        super(titulo,anio);
+    public Album(String titulo, LocalDate anio, ArrayList <Cancion> canciones){
+        super(titulo);
+        this.anio = anio;
         this.canciones = canciones;
     }
 
@@ -67,7 +72,7 @@ public class Album extends Buscable implements Serializable{
         if(index == -1)return false;
 
         canciones.remove(index);
-        return true
+        return true;
     }
 
     /**
@@ -78,7 +83,7 @@ public class Album extends Buscable implements Serializable{
      * en caso contrario
      */
     @Override
-    public boolean contieneElemento(Elemento e){
-        return canciones.contains(c);
+    public boolean contieneReproducible(Reproducible e){
+        return canciones.contains(e);
     }
 }

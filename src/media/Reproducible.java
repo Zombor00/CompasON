@@ -1,3 +1,11 @@
+package media;
+
+import java.io.*;
+import java.util.*;
+import java.sql.Time;
+import pads.musicPlayer.Mp3Player;
+
+
 /**
  * Esta clase contiene todos los atributos y metodos comunes a los elementos
  * reproducibles.
@@ -7,9 +15,6 @@
  */
 
 
-public enum Estado{
- SINVALIDAR,NOVALIDAR,EXPLICITO,APTOMENORES,BLOQUEADO,BORRADO,NOBLOQUEADO;
-}
 
 public abstract class Reproducible implements Serializable{
 
@@ -18,7 +23,7 @@ public abstract class Reproducible implements Serializable{
   private Estado estado;
 
   /**
-       * Constructor de la clase elemento que se encarga de poner titulo al
+       * Constructor de la clase Reproducible que se encarga de poner titulo al
        * elemento y de inicializar a false el atributo bloqueado y borrado.
        * @param titulo String que identifica el titulo de la cancion
        */
@@ -27,9 +32,9 @@ public abstract class Reproducible implements Serializable{
       this.estado = Estado.NOBLOQUEADO;
   }
 
-  public abstract boolean contieneElemento(Elemento e);
+  public abstract boolean contieneReproducible(Reproducible e);
 
-  public abstract reproducir();
+  public abstract void reproducir(Mp3Player mp3);
 
   public String getTitulo(){
       return this.titulo;
@@ -39,7 +44,7 @@ public abstract class Reproducible implements Serializable{
       return this.duracion;
   }
 
-  public boolean getEstado(){
+  public Estado getEstado(){
       return this.estado;
   }
 
@@ -47,22 +52,8 @@ public abstract class Reproducible implements Serializable{
       this.titulo = titulo;
   }
 
-  public void setBloqueado(boolean b){
-      if(this.estado == Estado.BORRADO){
-          return;
-      }
-      if(b == true){
-          this.estado = Estado.BLOQUEADO;
-      }
-      else{
-          this.estado = Estado.NOBLOQUEADO;
-      }
-  }
-
-  public void setBorrado(boolean b){
-      if(b == true){
-          this.estado = Estado.BORRADO;
-      }
+  public void setEstado(Estado estado){
+      this.estado = estado;
   }
 
 }

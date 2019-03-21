@@ -1,3 +1,5 @@
+package usuarios;
+
 /**
 * Esta clase contiene la informacion comun a todos los
 * usuarios que tienen cuenta en la aplicacion

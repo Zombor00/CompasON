@@ -1,5 +1,10 @@
+package usuarios;
 
+import java.io.*;
+import java.time.*;
 import java.util.*;
+import media.*;
+import gestion.*;
 
 /**
 * Esta clase contiene la informacion necesaria para
@@ -10,7 +15,7 @@ import java.util.*;
 *
 */
 public class Administrador extends UsuarioConCuenta{
-    private ArrayList<Cancion> cancionesAValidar = new ArrayList<>();
+    private ArrayList<Cancion> cancionesNuevas = new ArrayList<>();
     private ArrayList<Denuncia> denuncias = new ArrayList<>();
 
     /**
@@ -31,10 +36,10 @@ public class Administrador extends UsuarioConCuenta{
     * @return boolean sobre si se hace correctamente
     */
     public boolean aniadirCancion(Cancion c){
-        if (c.getValidada()){
-            return false;
+        if (c.getEstadoValidacion() == EstadoValidacion.NOVALIDADA){
+            return this.cancionesNuevas.add(c);
         }
-        return this.cancionesAValidar.add(c);
+        return false;
     }
 
 
@@ -56,13 +61,14 @@ public class Administrador extends UsuarioConCuenta{
     * @param estado indica si es explicito, no explicito o no validado
     *
     */
-    public void tramitarValidacion(Cancion c, Estado estado){
+    public void tramitarValidacion(Cancion c, EstadoValidacion estadoValidacion){
     	if (c.getModificableHasta().isAfter(LocalDateTime.now())) {
     		return;
     	}
-        c.validar(estado);
-        if (estado != Estado.NOVALIDAR) {
-        	cancionesAValidar.remove(cancionesAValidar.index(c));
+        c.validar(estadoValidacion);
+        /* Creo que habria que poner setEstadoValidacion(). Hablar con Bravo */
+        if (estadoValidacion != EstadoValidacion.NOVALIDADA) {
+        	cancionesNuevas.remove(c);
         }        
     }
 
@@ -74,21 +80,22 @@ public class Administrador extends UsuarioConCuenta{
     *
     */
     public void tramitarDenuncia(Denuncia d, boolean plagio){
-        UsuarioRegistrado autor = d.getDenunciada.getAutor();
+        Cancion c = d.getDenunciada();
+        UsuarioRegistrado autor = c.getAutor();
         UsuarioRegistrado denunciante = d.getDenunciante();
         if(plagio){
             autor.setBloqueadoHasta(LocalDate.MAX);
         }
         else{
-            autor.setBloqueadoHasta(LocalDate.now().plusDays(30));
+            denunciante.setBloqueadoHasta(LocalDate.now().plusDays(30));
             ArrayList<Buscable> buscables = autor.getBuscables();
             for (Buscable b : buscables) {
-            	if (b.contieneReproducible(c)) {
-            		b.setBloqueado(false);
-            	}
+                if (b.contieneReproducible(c)) {
+                    b.setEstado(Estado.NOBLOQUEADO);
+                }
             }
         }
-        denuncias.remove(denuncias.index(d));
+        denuncias.remove(d);
     }
 
 }

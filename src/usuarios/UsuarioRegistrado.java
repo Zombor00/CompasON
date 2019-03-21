@@ -1,5 +1,10 @@
+package usuarios;
 
+import java.io.*;
 import java.util.*;
+import java.time.*;
+import media.*;
+import gestion.*;
 
 /**
 * Esta clase contiene la informacion comun de los usuarios
@@ -102,7 +107,7 @@ public class UsuarioRegistrado extends UsuarioConCuenta{
     * @param elementos iniciales de la lista
     * @return boolean sobre si se hace correctamente
     */
-    public boolean crearLista(String titulo, Reproducible elementos){
+    public boolean crearLista(String titulo, ArrayList <Reproducible> elementos){
         if(premiumHasta!=null && premiumHasta.isAfter(LocalDate.now())){
             Lista lista = new Lista(titulo,elementos);
             return this.listas.add(lista);

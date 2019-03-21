@@ -1,3 +1,11 @@
+package media;
+
+import java.io.*;
+import java.time.*;
+import pads.musicPlayer.Mp3Player;
+import pads.musicPlayer.exceptions.Mp3InvalidFileException;
+import usuarios.*;
+
 /**
  * Esta clase tiene toda la informacion relevante a las canciones.
  * @author Alejandro Bravo(alejandro.bravodela@estudiante.uam.es)
@@ -14,7 +22,7 @@ public class Cancion extends Buscable implements Serializable{
     private String ficheroAudio;
     private LocalDate fechaSubida;
     private LocalDateTime modificableHasta;
-    private Estado validada;
+    private EstadoValidacion estadoValidacion;
     private double duracion;
 
     /**
@@ -32,8 +40,12 @@ public class Cancion extends Buscable implements Serializable{
         this.autor = autor;
         this.ficheroAudio = file;
         this.fechaSubida = LocalDate.now();
-        this.duracion = Mp3Player.getDuracion(file);
-        this.validada = Estado.SINVALIDAR;
+        try {
+            this.duracion = Mp3Player.getDuration(file);
+        }
+        catch(FileNotFoundException e) {
+            /* Gestion de excepxion */
+        }
     }
 
     /**
@@ -41,7 +53,12 @@ public class Cancion extends Buscable implements Serializable{
      * @param mp3 Cola donde se añade la cancion
      */
     public void reproducir(Mp3Player mp3){
-        mp3.add(ficheroAudio);
+        try {
+            mp3.add(ficheroAudio);
+        }
+        catch(Mp3InvalidFileException e) {
+            /* Gestion de excepxion */
+        }
     }
 
 
@@ -49,15 +66,15 @@ public class Cancion extends Buscable implements Serializable{
      * Valida la canción y pone si la cancion es explicita o no.
      * @param explicito boolean que identifica si la cancion es explicita o no
      */
-    public void validar(Estado val){
-        if(val == Estado.NOVALIDAR){
-            this.validada = Estado.NOVALIDAR;
+    public void validar(EstadoValidacion estado){
+        if(estado == EstadoValidacion.NOVALIDADA){
+            this.estadoValidacion = EstadoValidacion.NOVALIDADA;
             modificableHasta = LocalDateTime.now().plusDays(3);
         }
-        else if(val == EXPLICITO){
-            this.Estado = Estado.EXPLICITO;
+        else if(estado == EstadoValidacion.EXPLICITO){
+            this.estadoValidacion = EstadoValidacion.EXPLICITO;
         }else{
-            this.Estado = Estado.APTOMENORES;
+            this.estadoValidacion = EstadoValidacion.APTOMENORES;
         }
     }
 
@@ -68,10 +85,12 @@ public class Cancion extends Buscable implements Serializable{
      * @param file fichero de audio de la cancion
      * @return true si se puede modificar, false en caso contrario
      */
-    public boolean modificar(String titulo, File file){
+    public boolean modificar(String titulo, String file){
         /*TO DO: file tiene que ser apto*/
-        if(this.validada == true || modificableHasta.isBefore(LocalDateTime.now())){
-            return false
+        if(this.estadoValidacion == EstadoValidacion.APTOMENORES || 
+           this.estadoValidacion == EstadoValidacion.EXPLICITO ||
+           modificableHasta.isBefore(LocalDateTime.now())){
+            return false;
         }
         if(file != null){
             this.ficheroAudio = file;
@@ -83,23 +102,26 @@ public class Cancion extends Buscable implements Serializable{
     }
 
     /**
-     * Te devuelve true si el elemento pasado es el mismo.
+     * Te devuelve true si el Reproducible pasado es el mismo.
      * @param c Cancion a comparar
      * @return boolean: true si la cancion es la misma false
      * en caso contrario
      */
     @Override
-    public boolean contieneElemento(Elemento e){
-        if(e.equals(this) == true)return true
+    public boolean contieneReproducible(Reproducible e){
+        if(e.equals(this) == true) return true;
         return false;
     }
 
-    public boolean getValidada(){
-        return this.validada;
+    public EstadoValidacion getEstadoValidacion(){
+        return this.estadoValidacion;
     }
 
     public UsuarioRegistrado getAutor(){
         return this.autor;
     }
 
+    public LocalDateTime getModificableHasta(){
+        return modificableHasta;
+    }
 }
