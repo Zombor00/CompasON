@@ -14,8 +14,7 @@ import gestion.*;
 * @version 1.0 (07-03-2019)
 *
 */
-public class Administrador extends UsuarioConCuenta{
-    private ArrayList<Cancion> cancionesNuevas = new ArrayList<>();
+public class Administrador extends UsuarioConCuenta implements Serializable{
     private ArrayList<Denuncia> denuncias = new ArrayList<>();
 
     /**
@@ -28,19 +27,6 @@ public class Administrador extends UsuarioConCuenta{
         super(nombreUsuario,contrasenia);
     }
 
-    /**
-    * Este metodo se usa para aniadir una cancion pendiente
-    * de validar
-    *
-    * @param c cancion a aniadir
-    * @return boolean sobre si se hace correctamente
-    */
-    public boolean aniadirCancion(Cancion c){
-        if (c.getEstadoValidacion() == EstadoValidacion.NOVALIDADA){
-            return this.cancionesNuevas.add(c);
-        }
-        return false;
-    }
 
 
     /**
@@ -97,5 +83,6 @@ public class Administrador extends UsuarioConCuenta{
         }
         denuncias.remove(d);
     }
+    
 
 }

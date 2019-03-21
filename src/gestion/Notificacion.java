@@ -1,5 +1,7 @@
 package gestion;
 
+import java.io.*;
+
 /**
 * Esta clase contiene la informacion comun a las notificaciones
 *
@@ -7,7 +9,7 @@ package gestion;
 * @version 1.0 (07-03-2019)
 *
 */
-public abstract class Notificacion{
+public abstract class Notificacion implements Serializable{
     private boolean visible = true;
 
     public String mostrarNotificacion(){

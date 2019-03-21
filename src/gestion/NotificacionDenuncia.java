@@ -1,5 +1,7 @@
 package gestion;
 
+import java.io.Serializable;
+
 /**
 * Esta clase contiene la informacion de las notificaciones default:
 * canciones nuevas
@@ -8,7 +10,7 @@ package gestion;
 * @version 1.0 (07-03-2019)
 *
 */
-public class NotificacionDenuncia extends Notificacion{
+public class NotificacionDenuncia extends Notificacion implements Serializable{
     private Denuncia denuncia;
 
     /**

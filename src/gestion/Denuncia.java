@@ -1,5 +1,6 @@
 package gestion;
 
+import java.io.*;
 import media.Cancion;
 import usuarios.UsuarioRegistrado;
 
@@ -10,16 +11,17 @@ import usuarios.UsuarioRegistrado;
 * @version 1.0 (07-03-2019)
 *
 */
-public class Denuncia{
+public class Denuncia implements Serializable{
     private UsuarioRegistrado denunciante;
     private Cancion denunciada;
     private String comentario;
 
     /**
-    * Constructor, con el nombre de usuario y contrasenia
-    *
+    * Constructor, con el denunciante, cancion denunciada y un comentario 
+    * 
     * @param nombreUsuario
-    * @param contrasenia del usuario
+    * @param contrasenia clave del usuario
+    * @param c comentario de la denuncia
     */
     public Denuncia(UsuarioRegistrado denunciante, Cancion denunciada, String c){
         this.denunciante = denunciante;

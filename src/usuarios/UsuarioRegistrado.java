@@ -14,12 +14,12 @@ import gestion.*;
 * @version 1.0 (05-03-2019)
 *
 */
-public class UsuarioRegistrado extends UsuarioConCuenta{
-    private String nombre;
+public class UsuarioRegistrado extends UsuarioConCuenta implements Serializable{
+
+	private String nombre;
     private LocalDate fechaNacimiento;
     private LocalDate premiumHasta;
     private LocalDate bloqueadoHasta;
-    private LocalDate ultimoLogin;
     /* Atributo que almacena la fecha en la que se ha reproducido una cancion del usuario*/
     private ArrayList<LocalDate> reproducciones = new ArrayList<>();
     private boolean limiteReproduccionesAlcanzado;
@@ -29,6 +29,7 @@ public class UsuarioRegistrado extends UsuarioConCuenta{
     private ArrayList<Notificacion> notificaciones = new ArrayList<>();
     private ArrayList<UsuarioRegistrado> seguidos = new ArrayList<>();
     private ArrayList<UsuarioRegistrado> seguidores = new ArrayList<>();
+    private LocalDate ultimoLogin;
 
     /**
     * Constructor, con el nombre de usuario, contrasenia, nombre y
@@ -65,14 +66,28 @@ public class UsuarioRegistrado extends UsuarioConCuenta{
     public ArrayList<LocalDate> getReproducciones(){
         return this.reproducciones;
     }
+    
+    public LocalDate getUltimoLogin() {
+    	return this.ultimoLogin;
+    }
+    
+    public LocalDate getPremiumHasta() {
+		return premiumHasta;
+	}
+
+	public void setPremiumHasta(LocalDate premiumHasta) {
+		this.premiumHasta = premiumHasta;
+	}
+
+
+    public void setUltimoLogin(LocalDate l){
+        this.ultimoLogin = l;
+    }
 
     public void setBloqueadoHasta(LocalDate b){
         this.bloqueadoHasta = b;
     }
 
-    public void setUltimoLogin(LocalDate l){
-        this.ultimoLogin = l;
-    }
 
     public void setLimiteReproduccionesAlcanzado(boolean b){
         this.limiteReproduccionesAlcanzado = b;
@@ -174,6 +189,45 @@ public class UsuarioRegistrado extends UsuarioConCuenta{
     */
     public void aniadirReproduccion(){
         this.reproducciones.add(LocalDate.now());
+    }
+    
+    /**
+    * Devuelve el numero de reproducciones que han hecho otros usuarios
+    * de canciones suyas el ultimo mes
+    *
+    * @return numero de reproducciones
+    */
+    public int reproduccionesUltimoMes() {
+    	LocalDate hoy = LocalDate.now();
+    	int cont = 0, mesBuscado, anioBuscado;      	
+    	int mes = hoy.getMonthValue();
+    	int anio = hoy.getYear();
+    	ArrayList<LocalDate> posteriores = new ArrayList<>();
+    	
+    	if (mes == 1) {
+    		mesBuscado = 12;
+    		anioBuscado = anio - 1;
+    	}
+    	else {
+    		mesBuscado = mes - 1;
+    		anioBuscado = anio;
+    	}
+    	
+    	LocalDate fechaAntigua = LocalDate.of(anioBuscado, mesBuscado, 1);
+    	
+    	for (int i = this.reproducciones.size() - 1; this.reproducciones.get(i).isAfter(fechaAntigua) ;i--) {
+    		if (this.reproducciones.get(i).getYear() == anioBuscado &&
+    				this.reproducciones.get(i).getMonthValue() == mesBuscado) {
+    			cont++;
+    		}
+    		else {
+    			posteriores.add(this.reproducciones.get(i));
+    		}
+    	}
+    	
+    	this.reproducciones.retainAll(posteriores);
+    	return cont;
+    	 
     }
 
 

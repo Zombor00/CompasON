@@ -1,5 +1,7 @@
 package gestion;
 
+import java.io.Serializable;
+
 import media.Cancion;
 
 /**
@@ -10,7 +12,7 @@ import media.Cancion;
 * @version 1.0 (07-03-2019)
 *
 */
-public class NotificacionCancion extends Notificacion{
+public class NotificacionCancion extends Notificacion implements Serializable{
     private Cancion cancion;
 
     /**

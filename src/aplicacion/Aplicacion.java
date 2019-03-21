@@ -222,13 +222,14 @@ public class Aplicacion implements Serializable {
      * @return Devuelve la lista de canciones cuyo autor tiene un
      * nombre que empieza por s
      */
-    public ArrayList<Cancion> buscarPorAutor(String s) {
-        ArrayList<Cancion> coincidencias = new ArrayList<>();
+    public ArrayList<Buscable> buscarPorAutor(String s) {
+        ArrayList<Buscable> coincidencias = new ArrayList<>();
         for (UsuarioRegistrado autor : this.usuarios) {
-            if (autor.getNombre().startsWith(s)) {
+            if (autor.getNombreUsuario().startsWith(s)) {
                 coincidencias.addAll(autor.getBuscables());
             }
         }
+        return coincidencias;
     }
 
     /**
