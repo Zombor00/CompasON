@@ -55,7 +55,7 @@ public class Album extends Buscable implements Serializable{
      * @return false si la cancion ya esta en el album true en caso contrario
      */
     public boolean aniadirCancion(Cancion c){
-        if(canciones.contains(c) == true)return false;
+        if(canciones.contains(c))return false;
         canciones.add(c);
         return true;
     }
@@ -86,4 +86,30 @@ public class Album extends Buscable implements Serializable{
     public boolean contieneReproducible(Reproducible e){
         return canciones.contains(e);
     }
+
+    @Override
+    public void desbloquear(Cancion c){
+        for(Cancion can: canciones){
+            can.desbloquear(c);
+        }
+        if(this.contBloqueadas() == 0){
+            this.setEstado(Estado.NOBLOQUEADO);
+        }
+    }
+
+    /**
+     * Cuenta el numero de canciones bloqueadas en un album
+     * @return int count: numero de canciones bloqueadas
+     */
+    public int contBloqueadas(){
+        int count = 0;
+
+        for(Cancion can: canciones){
+            if(can.getEstado() == Estado.BLOQUEADO){
+                count += 1;
+            }
+        }
+        return count;
+    }
+
 }

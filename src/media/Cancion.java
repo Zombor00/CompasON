@@ -35,8 +35,8 @@ public class Cancion extends Buscable implements Serializable{
      */
     public Cancion(String titulo, String file, UsuarioRegistrado autor){
         super(titulo);
-        this.id = this.maxId +1;
-        this.maxId += 1;
+        this.id = Cancion.maxId +1;
+        Cancion.maxId += 1;
         this.autor = autor;
         this.ficheroAudio = file;
         this.fechaSubida = LocalDate.now();
@@ -87,7 +87,7 @@ public class Cancion extends Buscable implements Serializable{
      */
     public boolean modificar(String titulo, String file){
         /*TO DO: file tiene que ser apto*/
-        if(this.estadoValidacion == EstadoValidacion.APTOMENORES || 
+        if(this.estadoValidacion == EstadoValidacion.APTOMENORES ||
            this.estadoValidacion == EstadoValidacion.EXPLICITO ||
            modificableHasta.isBefore(LocalDateTime.now())){
             return false;
@@ -109,7 +109,7 @@ public class Cancion extends Buscable implements Serializable{
      */
     @Override
     public boolean contieneReproducible(Reproducible e){
-        if(e.equals(this) == true) return true;
+        if(e.equals(this)) return true;
         return false;
     }
 
@@ -123,5 +123,12 @@ public class Cancion extends Buscable implements Serializable{
 
     public LocalDateTime getModificableHasta(){
         return modificableHasta;
+    }
+
+    @Override
+    public void desbloquear(Cancion c){
+        if(this.equals(c)){
+            this.setEstado(Estado.NOBLOQUEADO);
+        }
     }
 }
