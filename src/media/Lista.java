@@ -44,7 +44,7 @@ public class Lista extends Reproducible implements Serializable{
     @Override
     public void reproducir(Mp3Player mp3){
         for(Reproducible r: reproducibles){
-            r.reproducir(mp3);
+            r.reproducibles(mp3);
         }
     }
 
@@ -54,7 +54,7 @@ public class Lista extends Reproducible implements Serializable{
      * @return false si el Reproducible ya esta en la lista true en caso contrario
      */
     public boolean aniadirReproducible(Reproducible r){
-        if(reproducibles.contains(r) == true) return false;
+        if(reproducibles.contieneReproducible(r))return false;
         reproducibles.add(r);
         return true;
     }

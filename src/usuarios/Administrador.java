@@ -1,5 +1,5 @@
-package usuarios;
 
+package usuarios;
 import java.io.*;
 import java.time.*;
 import java.util.*;
@@ -69,7 +69,7 @@ public class Administrador extends UsuarioConCuenta{
         /* Creo que habria que poner setEstadoValidacion(). Hablar con Bravo */
         if (estadoValidacion != EstadoValidacion.NOVALIDADA) {
         	cancionesNuevas.remove(c);
-        }        
+        }
     }
 
     /**

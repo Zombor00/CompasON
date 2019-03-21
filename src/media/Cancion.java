@@ -13,6 +13,9 @@ import usuarios.*;
  *
  */
 
+ public enum EstadoValidar{
+  NOVALIDADA,EXPLICITO,BORRADA,APTOMENORES;
+ }
 
 public class Cancion extends Buscable implements Serializable{
 
@@ -22,7 +25,7 @@ public class Cancion extends Buscable implements Serializable{
     private String ficheroAudio;
     private LocalDate fechaSubida;
     private LocalDateTime modificableHasta;
-    private EstadoValidacion estadoValidacion;
+    private EstadoValidar estadoValidada;
     private double duracion;
 
     /**
@@ -66,15 +69,15 @@ public class Cancion extends Buscable implements Serializable{
      * Valida la canción y pone si la cancion es explicita o no.
      * @param explicito boolean que identifica si la cancion es explicita o no
      */
-    public void validar(EstadoValidacion estado){
-        if(estado == EstadoValidacion.NOVALIDADA){
-            this.estadoValidacion = EstadoValidacion.NOVALIDADA;
+    public void validar(EstadoValidar estado){
+        if(estado == EstadoValidar.NOVALIDADA){
+            this.estadoValidada = EstadoValidar.NOVALIDADA;
             modificableHasta = LocalDateTime.now().plusDays(3);
         }
-        else if(estado == EstadoValidacion.EXPLICITO){
-            this.estadoValidacion = EstadoValidacion.EXPLICITO;
+        else if(estado == EstadoValidar.EXPLICITO){
+            this.estadoValidada = EstadoValidar.EXPLICITO;
         }else{
-            this.estadoValidacion = EstadoValidacion.APTOMENORES;
+            this.estadoValidada = EstadoValidar.APTOMENORES;
         }
     }
 
@@ -87,7 +90,7 @@ public class Cancion extends Buscable implements Serializable{
      */
     public boolean modificar(String titulo, String file){
         /*TO DO: file tiene que ser apto*/
-        if(this.estadoValidacion == EstadoValidacion.APTOMENORES || 
+        if(this.estadoValidacion == EstadoValidacion.APTOMENORES ||
            this.estadoValidacion == EstadoValidacion.EXPLICITO ||
            modificableHasta.isBefore(LocalDateTime.now())){
             return false;
@@ -109,12 +112,12 @@ public class Cancion extends Buscable implements Serializable{
      */
     @Override
     public boolean contieneReproducible(Reproducible e){
-        if(e.equals(this) == true) return true;
+        if(e.equals(this) == true)return true
         return false;
     }
 
-    public EstadoValidacion getEstadoValidacion(){
-        return this.estadoValidacion;
+    public boolean getValidada(){
+        return this.estadoValidada;
     }
 
     public UsuarioRegistrado getAutor(){
