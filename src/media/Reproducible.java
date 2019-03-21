@@ -15,9 +15,7 @@ import pads.musicPlayer.Mp3Player;
  */
 
 
-public enum Estado{
- BORRADO,BLOQUEADO,NOBLOQUEADO;
-}
+
 
 public abstract class Reproducible implements Serializable{
 
