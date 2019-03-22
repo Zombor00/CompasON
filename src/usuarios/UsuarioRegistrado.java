@@ -22,7 +22,6 @@ public class UsuarioRegistrado extends UsuarioConCuenta implements Serializable{
     private LocalDate bloqueadoHasta;
     /* Atributo que almacena la fecha en la que se ha reproducido una cancion del usuario*/
     private ArrayList<LocalDate> reproducciones = new ArrayList<>();
-    private boolean limiteReproduccionesAlcanzado;
     private int reproducidas; /* Numero de veces que ha reproducido el usuario*/
     private ArrayList<Buscable> buscables = new ArrayList<>();
     private ArrayList<Lista> listas = new ArrayList<>();
@@ -88,10 +87,6 @@ public class UsuarioRegistrado extends UsuarioConCuenta implements Serializable{
         this.bloqueadoHasta = b;
     }
 
-
-    public void setLimiteReproduccionesAlcanzado(boolean b){
-        this.limiteReproduccionesAlcanzado = b;
-    }
 
 
     /**
