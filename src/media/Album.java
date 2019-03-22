@@ -4,7 +4,6 @@ import java.io.*;
 import java.util.*;
 import java.time.*;
 import pads.musicPlayer.Mp3Player;
-import media.*;
 
 /**
  * Esta clase tiene toda la informacion relevante a los Albumes.

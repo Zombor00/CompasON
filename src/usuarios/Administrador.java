@@ -48,11 +48,10 @@ public class Administrador extends UsuarioConCuenta implements Serializable{
     *
     */
     public void tramitarValidacion(Cancion c, EstadoValidacion estadoValidacion){
-    	if (c.getModificableHasta().isAfter(LocalDateTime.now())) {
+    	if (c.getModificableHasta() != null && c.getModificableHasta().isAfter(LocalDateTime.now())) {
     		return;
     	}
         c.validar(estadoValidacion);
-        /* Creo que habria que poner setEstadoValidacion(). Hablar con Bravo */
         if (estadoValidacion != EstadoValidacion.NOVALIDADA) {
         	cancionesNuevas.remove(c);
         }
@@ -77,7 +76,7 @@ public class Administrador extends UsuarioConCuenta implements Serializable{
             ArrayList<Buscable> buscables = autor.getBuscables();
             for (Buscable b : buscables) {
                 if (b.contieneReproducible(c)) {
-                    b.setEstado(Estado.NOBLOQUEADO);
+                    b.desbloquear(c);
                 }
             }
         }

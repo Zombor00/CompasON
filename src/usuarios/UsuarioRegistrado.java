@@ -215,7 +215,7 @@ public class UsuarioRegistrado extends UsuarioConCuenta implements Serializable{
     	
     	LocalDate fechaAntigua = LocalDate.of(anioBuscado, mesBuscado, 1);
     	
-    	for (int i = this.reproducciones.size() - 1; this.reproducciones.get(i).isAfter(fechaAntigua) ;i--) {
+    	for (int i = this.reproducciones.size() - 1; this.reproducciones.get(i).isBefore(fechaAntigua)==false ;i--) {
     		if (this.reproducciones.get(i).getYear() == anioBuscado &&
     				this.reproducciones.get(i).getMonthValue() == mesBuscado) {
     			cont++;
