@@ -45,7 +45,15 @@ public class UsuarioRegistrado extends UsuarioConCuenta implements Serializable{
         this.nombre = nombre;
         this.fechaNacimiento = fechaNacimiento;
     }
+    
+    public String getNombre(){
+        return this.nombre;
+    }
 
+    public LocalDate geFechaNacimiento(){
+        return this.fechaNacimiento;
+    }
+    
     public ArrayList<UsuarioRegistrado> getSeguidores(){
         return this.seguidores;
     }
@@ -224,6 +232,15 @@ public class UsuarioRegistrado extends UsuarioConCuenta implements Serializable{
     	return cont;
     	 
     }
+
+	public LocalDate getBloqueadoHasta() {
+		return this.bloqueadoHasta;
+	}
+
+	public void setReproducidas(int reproducidas) {
+		this.reproducidas = reproducidas;
+		
+	}
 
 
 

@@ -20,7 +20,7 @@ public abstract class Notificacion implements Serializable{
     }
 
     public void ocultarNotificacion(){
-        visible=false;
+        visible = false;
     }
 
 

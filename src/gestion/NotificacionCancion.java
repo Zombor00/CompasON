@@ -23,4 +23,8 @@ public class NotificacionCancion extends Notificacion implements Serializable{
     public NotificacionCancion(Cancion cancion){
         this.cancion = cancion;
     }
+    
+    public Cancion getCancion() {
+    	return this.cancion;
+    }
 }

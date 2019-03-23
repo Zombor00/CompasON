@@ -21,5 +21,9 @@ public class NotificacionDenuncia extends Notificacion implements Serializable{
     public NotificacionDenuncia(Denuncia denuncia){
         this.denuncia = denuncia;
     }
+    
+    public Denuncia getDenuncia() {
+    	return this.denuncia;
+    }
 
 }

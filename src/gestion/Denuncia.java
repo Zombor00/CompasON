@@ -36,6 +36,10 @@ public class Denuncia implements Serializable{
     public UsuarioRegistrado getDenunciante(){
         return this.denunciante;
     }
+    
+    public String getComentario(){
+        return this.comentario;
+    }
 
 
 }

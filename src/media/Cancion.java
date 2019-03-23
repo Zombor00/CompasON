@@ -47,6 +47,14 @@ public class Cancion extends Buscable implements Serializable{
             /* Gestion de excepxion */
         }
     }
+    
+    public int getId() {
+    	return this.id;
+    }
+    
+    public LocalDate getFechaSubida() {
+    	return this.fechaSubida;
+    }
 
     /**
      * Aniade una cancion a la cola
