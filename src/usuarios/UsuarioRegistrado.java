@@ -5,6 +5,7 @@ import java.util.*;
 import java.time.*;
 import media.*;
 import gestion.*;
+import excepciones.*;
 
 /**
 * Esta clase contiene la informacion comun de los usuarios
@@ -116,14 +117,14 @@ public class UsuarioRegistrado extends UsuarioConCuenta implements Serializable{
     *
     * @param titulo nombre de la lista
     * @param elementos iniciales de la lista
-    * @return boolean sobre si se hace correctamente
+    * @throws ExcepcionNoPremium
     */
-    public boolean crearLista(String titulo, ArrayList <Reproducible> elementos){
+    public void crearLista(String titulo, ArrayList <Reproducible> elementos) throws ExcepcionUsuarioNoPremium{
         if(premiumHasta!=null && premiumHasta.isAfter(LocalDate.now())){
             Lista lista = new Lista(titulo,elementos);
-            return this.listas.add(lista);
+            this.listas.add(lista);
         }
-        return false;
+        throw new ExcepcionUsuarioNoPremium();
     }
 
 
@@ -134,10 +135,11 @@ public class UsuarioRegistrado extends UsuarioConCuenta implements Serializable{
     *
     * @param u usuario a seguir
     */
-    public void seguirUsuario(UsuarioRegistrado u){
-        if (this.seguidos.contains(u) == false){
-            this.seguidos.add(u);
+    public void seguirUsuario(UsuarioRegistrado u) throws ExcepcionUsuarioYaSeguido{
+        if (this.seguidos.contains(u) && u.getSeguidores().contains(this)){
+            throw new ExcepcionUsuarioYaSeguido();
         }
+        this.seguidos.add(u);
         u.getSeguidores().add(this);
     }
 
@@ -147,15 +149,9 @@ public class UsuarioRegistrado extends UsuarioConCuenta implements Serializable{
     *
     * @param u usuario a dejar de seguir
     */
-    public void dejarSeguirUsuario(UsuarioRegistrado u){
-        int indice;
-        indice = this.seguidos.indexOf(u);
-        if (indice != -1){
-            this.seguidos.remove(indice);
-        }
-        indice = u.getSeguidores().indexOf(this);
-        if (indice != -1){
-            u.getSeguidores().remove(indice);
+    public void dejarSeguirUsuario(UsuarioRegistrado u) throws ExcepcionUsuarioNoSeguido{
+        if (this.seguidos.remove(u) == false || u.getSeguidores().remove(this) == false) {
+        	throw new ExcepcionUsuarioNoSeguido();
         }
     }
 

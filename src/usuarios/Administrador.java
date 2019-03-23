@@ -5,6 +5,7 @@ import java.time.*;
 import java.util.*;
 import media.*;
 import gestion.*;
+import excepciones.*;
 
 /**
 * Esta clase contiene la informacion necesaria para
@@ -47,9 +48,9 @@ public class Administrador extends UsuarioConCuenta implements Serializable{
     * @param estado indica si es explicito, no explicito o no validado
     *
     */
-    public void tramitarValidacion(Cancion c, EstadoValidacion estadoValidacion){
+    public void tramitarValidacion(Cancion c, EstadoValidacion estadoValidacion) throws ExcepcionCancionModificable{
     	if (c.getModificableHasta() != null && c.getModificableHasta().isAfter(LocalDateTime.now())) {
-    		return;
+    		throw new ExcepcionCancionModificable();
     	}
         c.validar(estadoValidacion);
         if (estadoValidacion != EstadoValidacion.NOVALIDADA) {
