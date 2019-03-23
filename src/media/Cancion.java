@@ -21,7 +21,7 @@ public class Cancion extends Buscable implements Serializable{
     private UsuarioRegistrado autor;
     private String ficheroAudio;
     private LocalDate fechaSubida;
-    private LocalDateTime modificableHasta;
+    private LocalDate modificableHasta;
     private EstadoValidacion estadoValidacion;
 
     /**
@@ -46,11 +46,11 @@ public class Cancion extends Buscable implements Serializable{
             /* Gestion de excepxion */
         }
     }
-    
+
     public int getId() {
     	return this.id;
     }
-    
+
     public LocalDate getFechaSubida() {
     	return this.fechaSubida;
     }
@@ -77,7 +77,7 @@ public class Cancion extends Buscable implements Serializable{
     public void validar(EstadoValidacion estado){
         if(estado == EstadoValidacion.NOVALIDADA){
             this.estadoValidacion = EstadoValidacion.NOVALIDADA;
-            modificableHasta = LocalDateTime.now().plusDays(3);
+            modificableHasta = LocalDate.now().plusDays(3);
         }
         else if(estado == EstadoValidacion.EXPLICITO){
             this.estadoValidacion = EstadoValidacion.EXPLICITO;
@@ -97,15 +97,20 @@ public class Cancion extends Buscable implements Serializable{
         /*TO DO: file tiene que ser apto*/
         if(this.estadoValidacion == EstadoValidacion.APTOMENORES ||
            this.estadoValidacion == EstadoValidacion.EXPLICITO ||
-           modificableHasta.isBefore(LocalDateTime.now())){
             return false;
         }
+
+        if(this.modificableHasta != NULL && modificableHasta.isBefore(LocalDate.now()))){
+            return false;
+        }
+
         if(file != null){
             this.ficheroAudio = file;
         }
         if(titulo != null){
             setTitulo(titulo);
         }
+        this.modificableHasta = null;
         return true;
     }
 
@@ -129,7 +134,7 @@ public class Cancion extends Buscable implements Serializable{
         return this.autor;
     }
 
-    public LocalDateTime getModificableHasta(){
+    public LocalDate getModificableHasta(){
         return modificableHasta;
     }
 
@@ -144,5 +149,5 @@ public class Cancion extends Buscable implements Serializable{
 	public String toString() {
 		return "Cancion [titulo=" + this.getTitulo() + ", autor=" + autor + ", duracion=" + this.getDuracion() + "]";
 	}
-    
+
 }
