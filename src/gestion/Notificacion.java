@@ -13,7 +13,7 @@ public abstract class Notificacion implements Serializable{
     private boolean visible = true;
 
     public String mostrarNotificacion(){
-        if(visible == true){
+        if (visible == true){
             return this.toString();
         }
         return null;

@@ -86,6 +86,18 @@ public class UsuarioRegistrado extends UsuarioConCuenta implements Serializable{
     public LocalDate getPremiumHasta() {
 		return premiumHasta;
 	}
+    
+    public LocalDate getBloqueadoHasta() {
+		return this.bloqueadoHasta;
+	}
+
+	public void setReproducidas(int reproducidas) {
+		this.reproducidas = reproducidas;		
+	}
+	
+	public void setReproducciones(ArrayList<LocalDate> reproducciones) {
+		this.reproducciones = reproducciones;		
+	}
 
 	public void setPremiumHasta(LocalDate premiumHasta) {
 		this.premiumHasta = premiumHasta;
@@ -124,7 +136,9 @@ public class UsuarioRegistrado extends UsuarioConCuenta implements Serializable{
             Lista lista = new Lista(titulo,elementos);
             this.listas.add(lista);
         }
-        throw new ExcepcionUsuarioNoPremium();
+        else {
+        	throw new ExcepcionUsuarioNoPremium();	
+        }
     }
 
 
@@ -222,21 +236,8 @@ public class UsuarioRegistrado extends UsuarioConCuenta implements Serializable{
     	 
     }
 
-	public LocalDate getBloqueadoHasta() {
-		return this.bloqueadoHasta;
-	}
-
-	public void setReproducidas(int reproducidas) {
-		this.reproducidas = reproducidas;
-		
-	}
-
 	public boolean esMenor() {
-		if (this.fechaNacimiento.isBefore(LocalDate.now().minusYears(18))) {
-			return true;
-		} else {
-			return false;
-		}
+		return this.fechaNacimiento.isAfter(LocalDate.now().minusYears(18));
 	}
 
 
