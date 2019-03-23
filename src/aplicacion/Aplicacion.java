@@ -195,7 +195,7 @@ public class Aplicacion implements Serializable {
     /**
      * Borra un album de la aplicacion
      *
-     * @param Album album que se pretende borrar
+     * @param album album que se pretende borrar
      */
     public void borrarAlbum(Album album) {
         this.buscables.remove(album);
@@ -305,7 +305,7 @@ public class Aplicacion implements Serializable {
     /**
      * Reproduce un elemento
      *
-     * @param elemento Elemento que se pretende reproducir
+     * @param reproducible Elemento que se pretende reproducir
      * @throws Mp3PlayerException 
      * @throws FileNotFoundException 
      * @throws ExcepcionLimiteReproducidasAlcanzado 
@@ -371,7 +371,7 @@ public class Aplicacion implements Serializable {
 
 
         for (Cancion cancion : administrador.getCancionesNuevas()) {
-            if (cancion.getModificableHasta().isBefore(LocalDateTime.now())) {
+            if (cancion.getModificableHasta().isBefore(LocalDate.now())) {
                 noValidadas.add(cancion);
             }
         }

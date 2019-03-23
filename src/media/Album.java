@@ -82,7 +82,7 @@ public class Album extends Buscable implements Serializable{
     /**
      * Te devuelve true si la cancion existe en el album y false si no
      * existe la cancion
-     * @param c Cancion a buscar en el album
+     * @param e Cancion a buscar en el album
      * @return boolean: true si existe la cancion en el album false
      * en caso contrario
      */

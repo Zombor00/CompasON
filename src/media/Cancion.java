@@ -72,7 +72,7 @@ public class Cancion extends Buscable implements Serializable{
 
     /**
      * Valida la canción y pone si la cancion es explicita o no.
-     * @param explicito boolean que identifica si la cancion es explicita o no
+     * @param estado boolean que identifica si la cancion es explicita o no
      */
     public void validar(EstadoValidacion estado){
         if(estado == EstadoValidacion.NOVALIDADA){
@@ -96,11 +96,11 @@ public class Cancion extends Buscable implements Serializable{
     public boolean modificar(String titulo, String file){
         /*TO DO: file tiene que ser apto*/
         if(this.estadoValidacion == EstadoValidacion.APTOMENORES ||
-           this.estadoValidacion == EstadoValidacion.EXPLICITO ||
+           this.estadoValidacion == EstadoValidacion.EXPLICITO) {
             return false;
         }
 
-        if(this.modificableHasta != NULL && modificableHasta.isBefore(LocalDate.now()))){
+        if(modificableHasta != null && modificableHasta.isBefore(LocalDate.now())){
             return false;
         }
 
@@ -116,7 +116,7 @@ public class Cancion extends Buscable implements Serializable{
 
     /**
      * Te devuelve true si el Reproducible pasado es el mismo.
-     * @param c Cancion a comparar
+     * @param e Cancion a comparar
      * @return boolean: true si la cancion es la misma false
      * en caso contrario
      */
