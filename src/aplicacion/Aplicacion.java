@@ -4,7 +4,7 @@ import java.io.*;
 import java.time.*;
 import java.util.*;
 
-import excepciones.Excepcion;
+import excepciones.*;
 import media.*;
 import gestion.*;
 import usuarios.*;
@@ -21,8 +21,6 @@ public class Aplicacion implements Serializable {
 	
 	final String nombreAdministrador = "admin";
 	final String contraseniaAdministrador = "admin";
-	final String mensajeErrorCuentaBloqueada = "Su cuenta se encuentra bloqueada";
-	final String mensajeErrorCredenciales = "Nombre o contrasenia incorrectos";
 
     /**
      * Limite de reproducciones mensuales de la aplicacion
@@ -148,6 +146,14 @@ public class Aplicacion implements Serializable {
                                                 nombreCompleto,
                                                 fechaNacimiento));
     }
+    
+    /**
+     * Getter del atributo usuarioLogeado
+     * @return usuario logeado
+     */
+    public UsuarioRegistrado getUsuarioLogeado() {
+    	return usuarioLogeado;
+    }
 
     /**
      * Aniade una cancion a la aplicacion
@@ -195,7 +201,7 @@ public class Aplicacion implements Serializable {
      * @param contrasenia Contrasenia del usuario que inicia sesion
      * @return true si se inicia sesion correctamente
      */
-    public void login(String nombreUsuario, String contrasenia) throws Excepcion {
+    public void login(String nombreUsuario, String contrasenia) throws ExcepcionLoginErrorCredenciales, ExcepcionLoginBloqueado {
     	if (nombreUsuario == nombreAdministrador && contrasenia == contraseniaAdministrador) {
     		administradorLogeado = true;
     		return;
@@ -209,7 +215,8 @@ public class Aplicacion implements Serializable {
                 
                 /* Si el usuario esta bloqueado, login falla */
                 if (u.getBloqueadoHasta()!= null && u.getBloqueadoHasta().isAfter(LocalDate.now())) {
-                	throw(new Excepcion(mensajeErrorCuentaBloqueada));
+                	usuarioLogeado = null;
+                	throw(new ExcepcionLoginBloqueado());
                 }
                 u.setBloqueadoHasta(null);
                 
@@ -236,7 +243,7 @@ public class Aplicacion implements Serializable {
             }
         }
         /* Si no se consigue iniciar sesion, login falla */
-        throw(new Excepcion(mensajeErrorCredenciales));
+        throw(new ExcepcionLoginErrorCredenciales());
     }
 
     /**
@@ -316,7 +323,6 @@ public class Aplicacion implements Serializable {
         if (usuarioLogeado != null) {
         	usuarioLogeado.aniadirReproducida();
         }
-        /* Aniadir reproduccion */
     }
 
     /**
@@ -402,10 +408,11 @@ public class Aplicacion implements Serializable {
     }
     
     /**
-     * Getter del atributo usuarioLogeado
+     * Borra los usuarios y los buscables de la aplicacion
      */
-    public UsuarioRegistrado getUsuarioLogeado() {
-    	return usuarioLogeado;
+    public void borrarDatos() {
+    	this.usuarios = new ArrayList<UsuarioRegistrado>();
+        this.buscables = new ArrayList<Buscable>();
     }
     
     /**

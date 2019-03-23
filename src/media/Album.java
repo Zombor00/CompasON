@@ -111,4 +111,11 @@ public class Album extends Buscable implements Serializable{
         return count;
     }
 
+	@Override
+	public String toString() {
+		return "Album [titulo=" + this.getTitulo() + "canciones=" + canciones + ", anio=" + anio + "]";
+	}
+    
+    
+
 }

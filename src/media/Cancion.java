@@ -61,6 +61,7 @@ public class Cancion extends Buscable implements Serializable{
      * @param mp3 Cola donde se añade la cancion
      */
     public void reproducir(Mp3Player mp3){
+    	this.autor.aniadirReproduccion();
         try {
             mp3.add(ficheroAudio);
         }
@@ -139,4 +140,10 @@ public class Cancion extends Buscable implements Serializable{
             this.setEstado(Estado.NOBLOQUEADO);
         }
     }
+
+	@Override
+	public String toString() {
+		return "Cancion [titulo=" + this.getTitulo() + ", autor=" + autor + ", duracion=" + duracion + "]";
+	}
+    
 }
