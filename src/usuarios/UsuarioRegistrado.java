@@ -58,7 +58,11 @@ public class UsuarioRegistrado extends UsuarioConCuenta implements Serializable{
         return this.seguidores;
     }
 
-    public ArrayList<Buscable> getBuscables(){
+    public ArrayList<UsuarioRegistrado> getSeguidos() {
+		return seguidos;
+	}
+
+	public ArrayList<Buscable> getBuscables(){
         return this.buscables;
     }
 
@@ -96,17 +100,6 @@ public class UsuarioRegistrado extends UsuarioConCuenta implements Serializable{
     }
 
 
-
-    /**
-    * Este metodo hace Premium a un usuario
-    *
-    */
-    public void hacerPremium(){
-        //to do: pago
-        if (premiumHasta == null){
-            this.premiumHasta = LocalDate.now().plusDays(30);
-        }
-    }
 
     /**
     * Este metodo se usa para aniadir una cancion o album al usuario
