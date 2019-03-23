@@ -1,7 +1,6 @@
 package media;
 
 import java.io.*;
-import java.sql.Time;
 import pads.musicPlayer.Mp3Player;
 
 
@@ -19,7 +18,7 @@ import pads.musicPlayer.Mp3Player;
 public abstract class Reproducible implements Serializable{
 
   private String titulo;
-  private Time duracion;
+  private double duracion;
   private Estado estado;
 
   /**
@@ -40,7 +39,7 @@ public abstract class Reproducible implements Serializable{
       return this.titulo;
   }
 
-  public Time getDuracion(){
+  public double getDuracion(){
       return this.duracion;
   }
 
@@ -54,6 +53,17 @@ public abstract class Reproducible implements Serializable{
 
   public void setEstado(Estado estado){
       this.estado = estado;
+  }
+  
+  public void setDuracion(double duracion){
+      this.duracion = duracion;
+  }
+  
+  public boolean esAptoParaMenores() {
+	  /* Esto hay que sobreescribirlo en las subclases 
+	   * Una cancion es apta si su estadoValidacion es APTOMENORES
+	   * Un album o lista es apto si todos los reproducibles que contienen son aptos*/
+	  return true;
   }
 
 }

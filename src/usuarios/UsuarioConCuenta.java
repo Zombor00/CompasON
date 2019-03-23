@@ -59,6 +59,10 @@ public abstract class UsuarioConCuenta implements Serializable{
     public boolean aniadirCancion(Cancion c){
         return this.cancionesNuevas.add(c);
     }
+    
+    public String toString() {
+    	return this.nombreUsuario;
+    }
 
 
 }

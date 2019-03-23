@@ -7,7 +7,6 @@ package excepciones;
  * @author Antonio Garcia antonio.garcian@estudiante.uam.es
  * @version 1.0 (05-03-2019)
  */
-
 public class ExcepcionLoginBloqueado extends Exception {
 
 }

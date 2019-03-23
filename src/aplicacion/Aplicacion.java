@@ -130,6 +130,13 @@ public class Aplicacion implements Serializable {
     }
     
     /**
+     * Getter para el atributo cola
+     */
+    public Mp3Player getCola() {
+    	return cola;
+    }
+    
+    /**
      * Aniade un usario a la aplicacion
      *
      * @param nombreUsuario Nombre del usuario
@@ -299,30 +306,29 @@ public class Aplicacion implements Serializable {
      * Reproduce un elemento
      *
      * @param elemento Elemento que se pretende reproducir
+     * @throws Mp3PlayerException 
+     * @throws FileNotFoundException 
+     * @throws ExcepcionLimiteReproducidasAlcanzado 
+     * @throws ExcepcionNoAptoParaMenores 
      */
-    public void reproducirReproducible(Reproducible reproducible) {
-    	/* Si no ha iniciado sesion, el usuario no tiene cola de reproduccion.
-    	 * Simulamos este comportamiento creando una nueva cola cada vez que reproduce algo*/
-        if (usuarioLogeado == null && administradorLogeado == false) {
-            try {
-                this.cola = new Mp3Player();
-            }
-            catch(Mp3PlayerException e) {
-                System.out.println(e);
-            }
-            catch(FileNotFoundException e) {
-                System.out.println(e);
-            }
-        } else if (usuarioLogeado != null && 
+    public void reproducirReproducible(Reproducible reproducible) throws FileNotFoundException, Mp3PlayerException, ExcepcionLimiteReproducidasAlcanzado, ExcepcionNoAptoParaMenores {
+    	this.cola.stop();
+    	this.cola = new Mp3Player();
+        if (usuarioLogeado != null && 
         		   usuarioLogeado.getReproducidas() >= limiteReproducciones && 
         		   usuarioLogeado.getPremiumHasta() == null) {
-        	System.out.println("\nHa alcanzado el numero maximo de reproducciones este mes.\n");
-        	return;
+        	throw new ExcepcionLimiteReproducidasAlcanzado();
         }
+        
+        if (usuarioLogeado != null && usuarioLogeado.esMenor() && reproducible.esAptoParaMenores() == false) {
+        	throw new ExcepcionNoAptoParaMenores();
+        }
+        
         reproducible.reproducir(cola);
         if (usuarioLogeado != null) {
         	usuarioLogeado.aniadirReproducida();
         }
+        this.cola.play();
     }
 
     /**

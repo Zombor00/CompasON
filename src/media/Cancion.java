@@ -23,7 +23,6 @@ public class Cancion extends Buscable implements Serializable{
     private LocalDate fechaSubida;
     private LocalDateTime modificableHasta;
     private EstadoValidacion estadoValidacion;
-    private double duracion;
 
     /**
      * Constructor de la clase cancion que llama al constructor de elemento
@@ -41,8 +40,8 @@ public class Cancion extends Buscable implements Serializable{
         this.ficheroAudio = file;
         this.fechaSubida = LocalDate.now();
         try {
-            this.duracion = Mp3Player.getDuration(file);
-        }
+            this.setDuracion(Mp3Player.getDuration(file));
+            }
         catch(FileNotFoundException e) {
             /* Gestion de excepxion */
         }
@@ -66,7 +65,7 @@ public class Cancion extends Buscable implements Serializable{
             mp3.add(ficheroAudio);
         }
         catch(Mp3InvalidFileException e) {
-            /* Gestion de excepxion */
+        	System.out.println(e);
         }
     }
 
@@ -143,7 +142,7 @@ public class Cancion extends Buscable implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Cancion [titulo=" + this.getTitulo() + ", autor=" + autor + ", duracion=" + duracion + "]";
+		return "Cancion [titulo=" + this.getTitulo() + ", autor=" + autor + ", duracion=" + this.getDuracion() + "]";
 	}
     
 }

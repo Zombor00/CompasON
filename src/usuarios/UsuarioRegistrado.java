@@ -235,7 +235,13 @@ public class UsuarioRegistrado extends UsuarioConCuenta implements Serializable{
 		
 	}
 
-
+	public boolean esMenor() {
+		if (this.fechaNacimiento.isBefore(LocalDate.now().minusYears(18))) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 
 
 
