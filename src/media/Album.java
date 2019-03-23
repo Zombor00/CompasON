@@ -71,6 +71,11 @@ public class Album extends Buscable implements Serializable{
         if(index == -1)return false;
 
         canciones.remove(index);
+
+        if(this.canciones.size() == 0){
+            this.estado = Estado.BORRADO;
+        }
+
         return true;
     }
 
@@ -115,7 +120,7 @@ public class Album extends Buscable implements Serializable{
 	public String toString() {
 		return "Album [titulo=" + this.getTitulo() + "canciones=" + canciones + ", anio=" + anio + "]";
 	}
-    
-    
+
+
 
 }
