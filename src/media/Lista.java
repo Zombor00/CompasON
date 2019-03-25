@@ -22,6 +22,7 @@ public class Lista extends Reproducible implements Serializable{
     public Lista(String titulo){
         super(titulo);
         this.reproducibles = new ArrayList<Reproducible>();
+        this.duracion = 0;
     }
 
     /**
@@ -33,7 +34,6 @@ public class Lista extends Reproducible implements Serializable{
     public Lista(String titulo,ArrayList <Reproducible> reproducibles){
         this(titulo);
         this.reproducibles=reproducibles;
-
     }
 
     /**
@@ -98,4 +98,3 @@ public class Lista extends Reproducible implements Serializable{
     }
 
 }
-

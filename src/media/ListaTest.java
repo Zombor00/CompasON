@@ -1,12 +1,10 @@
 package media;
 
-import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.LocalDate;
-
-import org.junit.jupiter.api.Test;
-
 import usuarios.UsuarioRegistrado;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Implementamos un tester para la clase Lista.
@@ -20,11 +18,12 @@ public class ListaTest {
 	void testContieneReproducible() {
 		Lista lista = new Lista("nombre lista");
 		UsuarioRegistrado usuario = new UsuarioRegistrado("nombre usuario","contrasenia","nombre",LocalDate.now());
-		Cancion cancion = new Cancion("nombre cancion","ruta cancion",usuario);
-		lista.aniadirReproducible(cancion);
-		assertTrue(lista.contieneReproducible(cancion));
-		lista.quitarReproducible(cancion);
-		assertFalse(lista.contieneReproducible(cancion));
+		Cancion cancion1 = new Cancion("cancion1","ruta cancion1",usuario);
+		Cancion cancion2 = new Cancion("cancion2","ruta cancion2",usuario);
+		lista.aniadirReproducible(cancion1);
+		assertTrue(lista.contieneReproducible(cancion1));
+		lista.quitarReproducible(cancion1);
+		assertFalse(lista.contieneReproducible(cancion1));
 	}
 
 }
