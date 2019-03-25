@@ -371,7 +371,7 @@ public class Aplicacion implements Serializable {
 
 
         for (Cancion cancion : administrador.getCancionesNuevas()) {
-            if (cancion.getModificableHasta().isBefore(LocalDateTime.now())) {
+            if (cancion.getModificableHasta().isBefore(LocalDate.now())) {
                 noValidadas.add(cancion);
             }
         }

@@ -49,7 +49,7 @@ public class Administrador extends UsuarioConCuenta implements Serializable{
     *
     */
     public void tramitarValidacion(Cancion c, EstadoValidacion estadoValidacion) throws ExcepcionCancionModificable{
-    	if (c.getModificableHasta() != null && c.getModificableHasta().isAfter(LocalDateTime.now())) {
+    	if (c.getModificableHasta() != null && c.getModificableHasta().isAfter(LocalDate.now())) {
     		throw new ExcepcionCancionModificable();
     	}
         c.validar(estadoValidacion);
