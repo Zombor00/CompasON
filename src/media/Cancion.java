@@ -141,7 +141,7 @@ public class Cancion extends Buscable implements Serializable{
     }
 
     public String getFicheroAudio() {
-        return this.ficheroAudio
+        return this.ficheroAudio;
     }
 
     public LocalDate getFechaSubida() {

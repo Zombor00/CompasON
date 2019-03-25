@@ -48,21 +48,22 @@ public class Administrador extends UsuarioConCuenta implements Serializable{
     * @param estado indica si es explicito, no explicito o no validado
     *
     */
-    public void tramitarValidacion(Cancion c, EstadoValidacion estadoValidacion) throws ExcepcionCancionModificable{
+    public void tramitarValidacion(Cancion c, EstadoValidacion estadoValidacion) throws ExcepcionCancionModificable, ExcepcionCancionYaValidada{
+    	if (c.getEstadoValidacion()==EstadoValidacion.APTOMENORES || c.getEstadoValidacion()==EstadoValidacion.EXPLICITO) {
+    		throw new ExcepcionCancionYaValidada();
+    	}
     	if (c.getModificableHasta() != null && c.getModificableHasta().isAfter(LocalDate.now())) {
     		throw new ExcepcionCancionModificable();
     	}
+    	
         c.validar(estadoValidacion);
-        if (estadoValidacion != EstadoValidacion.NOVALIDADA) {
-        	cancionesNuevas.remove(c);
-        }
     }
 
     /**
     * Este metodo se usa para tramitar una denuncia
     *
     * @param d denuncia a tramitar
-    * @param ganada indica si la denuncia tiene fundamento
+    * @param plagio indica si la denuncia tiene fundamento
     *
     */
     public void tramitarDenuncia(Denuncia d, boolean plagio){
