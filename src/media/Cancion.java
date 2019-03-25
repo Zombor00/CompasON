@@ -32,7 +32,7 @@ public class Cancion extends Buscable implements Serializable{
      * @param file fichero con el audio de la cancion
      * @param autor autor de la cancion
      */
-    public Cancion(String titulo, String file, UsuarioRegistrado autor){
+    public Cancion(String titulo, String file, UsuarioRegistrado autor) {
         super(titulo);
         this.id = Cancion.maxId +1;
         Cancion.maxId += 1;
@@ -47,19 +47,11 @@ public class Cancion extends Buscable implements Serializable{
         }
     }
 
-    public int getId() {
-    	return this.id;
-    }
-
-    public LocalDate getFechaSubida() {
-    	return this.fechaSubida;
-    }
-
     /**
      * Aniade una cancion a la cola
      * @param mp3 Cola donde se añade la cancion
      */
-    public void reproducir(Mp3Player mp3){
+    public void reproducir(Mp3Player mp3) {
     	this.autor.aniadirReproduccion();
         try {
             mp3.add(ficheroAudio);
@@ -74,8 +66,8 @@ public class Cancion extends Buscable implements Serializable{
      * Valida la canción y pone si la cancion es explicita o no.
      * @param estado boolean que identifica si la cancion es explicita o no
      */
-    public void validar(EstadoValidacion estado){
-        if(estado == EstadoValidacion.NOVALIDADA){
+    public void validar(EstadoValidacion estado) {
+        if(estado == EstadoValidacion.NOVALIDADA) {
             this.estadoValidacion = EstadoValidacion.NOVALIDADA;
             modificableHasta = LocalDate.now().plusDays(3);
         }
@@ -93,23 +85,29 @@ public class Cancion extends Buscable implements Serializable{
      * @param file fichero de audio de la cancion
      * @return true si se puede modificar, false en caso contrario
      */
-    public boolean modificar(String titulo, String file){
+    public boolean modificar(String titulo, String file) {
         /*TO DO: file tiene que ser apto*/
         if(this.estadoValidacion == EstadoValidacion.APTOMENORES ||
            this.estadoValidacion == EstadoValidacion.EXPLICITO) {
             return false;
         }
 
-        if(modificableHasta != null && modificableHasta.isBefore(LocalDate.now())){
+        if(modificableHasta != null && modificableHasta.isBefore(LocalDate.now())) {
             return false;
         }
 
-        if(file != null){
-            this.ficheroAudio = file;
+        if(file != null) {
+            if(Mp3Player.isValidMp3File(file)) {
+                    this.ficheroAudio = file;
+            }else{
+                return false;
+            }
         }
-        if(titulo != null){
+
+        if(titulo != null) {
             setTitulo(titulo);
         }
+
         this.modificableHasta = null;
         return true;
     }
@@ -121,26 +119,38 @@ public class Cancion extends Buscable implements Serializable{
      * en caso contrario
      */
     @Override
-    public boolean contieneReproducible(Reproducible e){
+    public boolean contieneReproducible(Reproducible e) {
         if(e.equals(this)) return true;
         return false;
     }
 
-    public EstadoValidacion getEstadoValidacion(){
+    public EstadoValidacion getEstadoValidacion() {
         return this.estadoValidacion;
     }
 
-    public UsuarioRegistrado getAutor(){
+    public UsuarioRegistrado getAutor() {
         return this.autor;
     }
 
-    public LocalDate getModificableHasta(){
+    public LocalDate getModificableHasta() {
         return modificableHasta;
     }
 
+    public int getId() {
+    	return this.id;
+    }
+
+    public String getFicheroAudio() {
+        return this.ficheroAudio
+    }
+
+    public LocalDate getFechaSubida() {
+    	return this.fechaSubida;
+    }
+
     @Override
-    public void desbloquear(Cancion c){
-        if(this.equals(c)){
+    public void desbloquear(Cancion c) {
+        if(this.equals(c)) {
             this.setEstado(Estado.NOBLOQUEADO);
         }
     }
