@@ -86,7 +86,6 @@ public class Cancion extends Buscable implements Serializable{
      * @return true si se puede modificar, false en caso contrario
      */
     public boolean modificar(String titulo, String file) {
-        /*TO DO: file tiene que ser apto*/
         if(this.estadoValidacion == EstadoValidacion.APTOMENORES ||
            this.estadoValidacion == EstadoValidacion.EXPLICITO) {
             return false;

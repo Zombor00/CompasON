@@ -22,7 +22,6 @@ public class Lista extends Reproducible implements Serializable{
     public Lista(String titulo){
         super(titulo);
         this.reproducibles = new ArrayList<Reproducible>();
-        this.duracion = 0;
     }
 
     /**
@@ -33,7 +32,12 @@ public class Lista extends Reproducible implements Serializable{
      */
     public Lista(String titulo,ArrayList <Reproducible> reproducibles){
         this(titulo);
+        double duracion = 0;
         this.reproducibles=reproducibles;
+        for(Reproducible r: reproducibles) {
+        	duracion += r.getDuracion();
+        }
+        this.setDuracion(duracion);
     }
 
     /**
@@ -54,7 +58,7 @@ public class Lista extends Reproducible implements Serializable{
      * @return false si el Reproducible ya esta en la lista true en caso contrario
      */
     public boolean aniadirReproducible(Reproducible r){
-        if(reproducibles.contains(r) == true) return false;
+        if(this.contieneReproducible(r)) return false;
         reproducibles.add(r);
         return true;
     }

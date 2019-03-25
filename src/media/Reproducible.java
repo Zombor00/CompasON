@@ -29,6 +29,7 @@ public abstract class Reproducible implements Serializable{
   public Reproducible(String titulo){
       this.titulo = titulo;
       this.estado = Estado.NOBLOQUEADO;
+      this.duracion = 0;
   }
 
   public abstract boolean contieneReproducible(Reproducible e);
