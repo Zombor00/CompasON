@@ -2,6 +2,7 @@ package aplicacion;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.io.FileNotFoundException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -10,6 +11,8 @@ import org.junit.jupiter.api.Test;
 
 import excepciones.*;
 import media.Buscable;
+import media.Cancion;
+import pads.musicPlayer.exceptions.Mp3PlayerException;
 import usuarios.UsuarioRegistrado;
 
 /**
@@ -20,11 +23,12 @@ import usuarios.UsuarioRegistrado;
  */
 public class AplicacionTest {
 	
-	Aplicacion aplicacion = Aplicacion.getInstance();
+	static Aplicacion aplicacion = null;
 
 	@BeforeAll
-	static void before() {
-		Aplicacion.getInstance().aniadirUsuario("nombre usuario", "contrasenia", "nombre", LocalDate.now());
+	static void before() throws FileNotFoundException, Mp3PlayerException, ExcepcionParametrosDeEntradaIncorrectos, ExcepcionNombreDeUsuarioNoDisponible {
+		aplicacion = Aplicacion.getInstance(10,10,10);
+		aplicacion.aniadirUsuario("nombre usuario", "contrasenia", "nombre", LocalDate.now());
 	}
 	
 	@Test /* Login correcto de un usuario registrado */
@@ -37,6 +41,9 @@ public class AplicacionTest {
 		}
 		catch(ExcepcionLoginErrorCredenciales e) {
 			fail("Lanzada excepcion no esperada ExcepcionLoginErrorCredenciales");
+		}
+		catch (ExcepcionParametrosDeEntradaIncorrectos e) {
+			fail("Lanzada excepcion no esperada ExcepcionParametrosDeEntradaIncorrectos");
 		}
 		assertTrue(aplicacion.getUsuarioLogeado()!=null);
 		assertFalse(aplicacion.getAdministradorLogeado());
@@ -56,6 +63,9 @@ public class AplicacionTest {
 		catch(ExcepcionLoginErrorCredenciales e) {
 			fail("Lanzada excepcion no esperada ExcepcionLoginErrorCredenciales");
 		}
+		catch (ExcepcionParametrosDeEntradaIncorrectos e) {
+			fail("Lanzada excepcion no esperada ExcepcionParametrosDeEntradaIncorrectos");
+		}
 		assertTrue(aplicacion.getUsuarioLogeado()==null);
 		assertTrue(aplicacion.getAdministradorLogeado());
 		aplicacion.logout();
@@ -65,6 +75,7 @@ public class AplicacionTest {
 	
 	@Test /* Login fallido. Nombre o contrasenia incorrectos */
 	void testLog3() {
+		boolean excepcionLanzada = false;
 		try {
 			aplicacion.login("nombre invalido","contrasenia");
 			fail("Se esperaba excepcion ExcepcionLoginErrorCredenciales");
@@ -73,8 +84,12 @@ public class AplicacionTest {
 			fail("Lanzada excepcion no esperada ExcepcionLoginBloqueado");
 		}
 		catch(ExcepcionLoginErrorCredenciales e) {
-			
+			excepcionLanzada = true;
 		}
+		catch (ExcepcionParametrosDeEntradaIncorrectos e) {
+			fail("Lanzada excepcion no esperada ExcepcionParametrosDeEntradaIncorrectos");
+		}
+		assertTrue(excepcionLanzada);
 		assertTrue(aplicacion.getUsuarioLogeado()==null);
 		assertFalse(aplicacion.getAdministradorLogeado());
 		aplicacion.logout();
@@ -85,6 +100,7 @@ public class AplicacionTest {
 	@Test /* Login fallido. Usuario bloqueado */
 	void testLog4() {
 		UsuarioRegistrado u = null;
+		boolean excepcionLanzada = false;
 		
 		/* Inicio normal de sesion */
 		try {
@@ -95,6 +111,9 @@ public class AplicacionTest {
 		}
 		catch(ExcepcionLoginErrorCredenciales e) {
 			fail("Lanzada excepcion no esperada ExcepcionLoginErrorCredenciales");
+		}
+		catch (ExcepcionParametrosDeEntradaIncorrectos e) {
+			fail("Lanzada excepcion no esperada ExcepcionParametrosDeEntradaIncorrectos");
 		}
 		u = aplicacion.getUsuarioLogeado();
 		aplicacion.logout();
@@ -108,11 +127,15 @@ public class AplicacionTest {
 			fail("Se esperaba excepcion ExcepcionLoginBloqueado");
 		}
 		catch(ExcepcionLoginBloqueado e) {
-			
+			excepcionLanzada = true;
 		}
 		catch(ExcepcionLoginErrorCredenciales e) {
 			fail("Lanzada excepcion no esperada ExcepcionLoginErrorCredenciales");
 		}
+		catch (ExcepcionParametrosDeEntradaIncorrectos e) {
+			fail("Lanzada excepcion no esperada ExcepcionParametrosDeEntradaIncorrectos");
+		}
+		assertTrue(excepcionLanzada);
 		assertTrue(aplicacion.getUsuarioLogeado()==null);
 		assertFalse(aplicacion.getAdministradorLogeado());
 		
@@ -129,6 +152,9 @@ public class AplicacionTest {
 		catch(ExcepcionLoginErrorCredenciales e) {
 			fail("Lanzada excepcion no esperada ExcepcionLoginErrorCredenciales");
 		}
+		catch (ExcepcionParametrosDeEntradaIncorrectos e) {
+			fail("Lanzada excepcion no esperada ExcepcionParametrosDeEntradaIncorrectos");
+		}
 		assertTrue(aplicacion.getUsuarioLogeado()!=null);
 		assertFalse(aplicacion.getAdministradorLogeado());
 		aplicacion.logout();
@@ -137,7 +163,7 @@ public class AplicacionTest {
 	}
 	
 	@Test 
-	void testBuscarCancionesPorTitulo() {
+	void testBuscarCancionesPorTitulo() throws ExcepcionParametrosDeEntradaIncorrectos {
 		int numDebeEncontrar = 10; /* Numero de canciones que la busqueda debe encontrar */
 		int numDebeObviar = 5; /* Numero de canciones que la busqueda debe obviar */
 		ArrayList<String> nombresQueDebeEncontrar = new ArrayList<>();
@@ -155,10 +181,10 @@ public class AplicacionTest {
 		}
 		
 		for (int i = 0; i < numDebeEncontrar; i++) {
-			aplicacion.aniadirCancion(nombresQueDebeEncontrar.get(i),"Ruta");
+			aplicacion.aniadirCancion(new Cancion(nombresQueDebeEncontrar.get(i),"Ruta",null));
 		}
 		for (int i = 0; i < numDebeObviar; i++) {
-			aplicacion.aniadirCancion(nombresQueDebeObviar.get(i),"Ruta");
+			aplicacion.aniadirCancion(new Cancion(nombresQueDebeObviar.get(i),"Ruta",null));
 		}
 		
 		encontradas = aplicacion.buscarPorTitulo("debeEncontrar");
@@ -177,13 +203,14 @@ public class AplicacionTest {
 	}
 	
 	@Test 
-	void testBuscarAlbumesPorTitulo() {
+	void testBuscarAlbumesPorTitulo() throws ExcepcionErrorCreandoAlbum, ExcepcionParametrosDeEntradaIncorrectos {
 		int numDebeEncontrar = 10; /* Numero de albumes que la busqueda debe encontrar */
 		int numDebeObviar = 5; /* Numero de albumes que la busqueda debe obviar */
 		ArrayList<String> nombresQueDebeEncontrar = new ArrayList<>();
 		ArrayList<String> nombresQueDebeObviar = new ArrayList<>();
 		ArrayList<Buscable> encontrados = new ArrayList<>();
 		ArrayList<String> nombresQueHaEncontrado = new ArrayList<>();
+		ArrayList<Cancion> listaCancionesAuxiliar = new ArrayList<>();
 		
 		aplicacion.borrarDatos();	
 		
@@ -195,10 +222,10 @@ public class AplicacionTest {
 		}
 		
 		for (int i = 0; i < numDebeEncontrar; i++) {
-			aplicacion.aniadirAlbum(nombresQueDebeEncontrar.get(i), LocalDate.now(), null);
+			aplicacion.aniadirAlbum(nombresQueDebeEncontrar.get(i), LocalDate.now(),listaCancionesAuxiliar);
 		}
 		for (int i = 0; i < numDebeObviar; i++) {
-			aplicacion.aniadirAlbum(nombresQueDebeObviar.get(i), LocalDate.now(), null);
+			aplicacion.aniadirAlbum(nombresQueDebeObviar.get(i), LocalDate.now(),listaCancionesAuxiliar);
 		}
 		
 		encontrados = aplicacion.buscarPorTitulo("debeEncontrar");

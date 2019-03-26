@@ -4,6 +4,7 @@ import java.io.*;
 import java.util.*;
 import java.time.*;
 import pads.musicPlayer.Mp3Player;
+import usuarios.UsuarioRegistrado;
 
 /**
  * Esta clase tiene toda la informacion relevante a los Albumes.
@@ -36,8 +37,10 @@ public class Album extends Buscable implements Serializable{
         double duracion = 0;
         this.anio = anio;
         this.canciones = canciones;
-        for(Cancion c: canciones) {
-        	duracion += c.getDuracion();
+        if (canciones != null) {
+        	for(Cancion c: canciones) {
+            	duracion += c.getDuracion();
+            }
         }
         this.setDuracion(duracion);
     }
@@ -146,7 +149,15 @@ public class Album extends Buscable implements Serializable{
         }
         return true;
 	}
-
-
+    
+    public UsuarioRegistrado getAutor() {
+    	if (this.canciones == null){
+    		return null;
+    	}
+    	if (this.canciones.get(0) == null) {
+    		return null;
+    	}
+    	return this.canciones.get(0).getAutor();
+    }
 
 }

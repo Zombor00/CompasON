@@ -2,6 +2,8 @@ package media;
 
 import java.io.*;
 import java.time.*;
+
+import excepciones.ExcepcionDuracionLimiteSuperada;
 import pads.musicPlayer.Mp3Player;
 import pads.musicPlayer.exceptions.Mp3InvalidFileException;
 import usuarios.*;
@@ -39,6 +41,7 @@ public class Cancion extends Buscable implements Serializable{
         this.autor = autor;
         this.ficheroAudio = file;
         this.fechaSubida = LocalDate.now();
+        this.estadoValidacion = EstadoValidacion.NOVALIDADA;
         try {
             this.setDuracion(Mp3Player.getDuration(file));
             }
@@ -84,8 +87,10 @@ public class Cancion extends Buscable implements Serializable{
      * @param titulo titulo de la cancion
      * @param file fichero de audio de la cancion
      * @return true si se puede modificar, false en caso contrario
+     * @throws ExcepcionDuracionLimiteSuperada 
+     * @throws FileNotFoundException 
      */
-    public boolean modificar(String titulo, String file) {
+    public boolean modificar(String titulo, String file) throws FileNotFoundException, ExcepcionDuracionLimiteSuperada {
         if(this.estadoValidacion == EstadoValidacion.APTOMENORES ||
            this.estadoValidacion == EstadoValidacion.EXPLICITO) {
             return false;
@@ -106,6 +111,10 @@ public class Cancion extends Buscable implements Serializable{
         if(titulo != null) {
             setTitulo(titulo);
         }
+        
+        if (file != null && Mp3Player.getDuration(file) > 30*60) {
+    		throw new ExcepcionDuracionLimiteSuperada();
+    	}
 
         this.modificableHasta = null;
         return true;

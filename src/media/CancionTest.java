@@ -1,9 +1,13 @@
 package media;
 
+import java.io.FileNotFoundException;
 import java.time.LocalDate;
 
 import usuarios.UsuarioRegistrado;
 import org.junit.jupiter.api.Test;
+
+import excepciones.ExcepcionDuracionLimiteSuperada;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class CancionTest {
@@ -23,7 +27,7 @@ public class CancionTest {
 	}
 	
 	@Test 
-	void testCancionModificar() {
+	void testCancionModificar() throws FileNotFoundException, ExcepcionDuracionLimiteSuperada {
 		UsuarioRegistrado usuario1 = new UsuarioRegistrado("nombre usuario","contrasenia","nombre",LocalDate.now());
 	    Cancion cancion1 = new Cancion("cancion1","ruta cancion1",usuario1);
 	    Cancion cancion2 = new Cancion("cancion2","ruta cancion2",usuario1);
