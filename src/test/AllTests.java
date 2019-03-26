@@ -7,6 +7,8 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 import aplicacion.AplicacionTest;
+import media.AlbumTest;
+import media.CancionTest;
 import media.ListaTest;
 import usuarios.UsuarioRegistradoTest;
 import usuarios.AdministradorTest;
@@ -16,9 +18,11 @@ import usuarios.AdministradorTest;
 	AplicacionTest.class,
     ListaTest.class,
     UsuarioRegistradoTest.class,
-    AdministradorTest.class
+    AdministradorTest.class,
+    CancionTest.class,
+    AlbumTest.class
 })
 
-class AllTests {
+public class AllTests {
 
 }

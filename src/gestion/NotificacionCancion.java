@@ -27,4 +27,11 @@ public class NotificacionCancion extends Notificacion implements Serializable{
     public Cancion getCancion() {
     	return this.cancion;
     }
+
+	@Override
+	public String toString() {
+		return "Nueva cancion: " + cancion;
+	}
+    
+    
 }
