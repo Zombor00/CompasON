@@ -13,6 +13,7 @@ import pads.musicPlayer.Mp3Player;
 public class Lista extends Reproducible implements Serializable{
 
     private ArrayList <Reproducible> reproducibles;
+    private ArrayList <Lista> contenidaEn;
 
     /**
      * Constructor de la clase lista que inicializa el array de reproducibles y
@@ -22,6 +23,7 @@ public class Lista extends Reproducible implements Serializable{
     public Lista(String titulo){
         super(titulo);
         this.reproducibles = new ArrayList<Reproducible>();
+        this.contenidaEn = new ArrayList<>();
     }
 
     /**
@@ -58,8 +60,11 @@ public class Lista extends Reproducible implements Serializable{
      * @return false si el Reproducible ya esta en la lista true en caso contrario
      */
     public boolean aniadirReproducible(Reproducible r){
-        if(this.contieneReproducible(r)) return false;
+
+
+        if(this.contenidoEnPadres(r)) return false;
         reproducibles.add(r);
+        r.aniadirContenidoEn(this);
         return true;
     }
 
@@ -75,6 +80,7 @@ public class Lista extends Reproducible implements Serializable{
         if(index == -1)return false;
 
         reproducibles.remove(index);
+        r.quitarContenidoEn(this);
         return true;
     }
 
@@ -88,6 +94,7 @@ public class Lista extends Reproducible implements Serializable{
 
     @Override
     public boolean contieneReproducible(Reproducible r){
+
         for(Reproducible eLista: reproducibles){
             if(eLista.contieneReproducible(r)){
                 return true;
@@ -95,13 +102,47 @@ public class Lista extends Reproducible implements Serializable{
         }
         return false;
     }
+
     @Override
     public void setEstado(Estado estado){
       if (estado == Estado.BLOQUEADO) return;
       this.setEstado(estado);
     }
-    
-	@Override
+
+    public ArrayList<Lista> getContenidoEn() {
+    	return this.contenidaEn;
+    }
+
+    public void aniadirContenidoEn(Lista lista) {
+		this.contenidaEn.add(lista);
+	}
+
+    public void quitarContenidoEn(Lista lista) {
+		this.contenidaEn.remove(lista);
+	}
+
+    /**
+     * Devuelve true si en cualquier lista padre(y recursivamente) el elemento reproducible r
+     * esta contenido. False en caso contrario
+     * @param r: reproducible a buscar en las listas padre
+     */
+    public boolean contenidoEnPadres(Reproducible r) {
+    	boolean aux = false;
+    	if(this.getContenidoEn().isEmpty()) {
+    		if(this.contieneReproducible(r)) {
+    			aux = true;
+    		}
+    	}else {
+    		for(Lista l: this.getContenidoEn()) {
+    			if(l.contenidoEnPadres(r)) {
+    				aux = true;
+    			}
+    		}
+    	}
+    	return aux;
+    }
+
+    @Override
 	public boolean esAptoParaMenores() {
         for(Reproducible r: reproducibles){
             if(r.esAptoParaMenores() == false){

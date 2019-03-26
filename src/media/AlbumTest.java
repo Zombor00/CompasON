@@ -1,6 +1,7 @@
 package media;
 
 import usuarios.UsuarioRegistrado;
+import java.util.ArrayList;
 import java.time.LocalDate;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -35,10 +36,10 @@ public class AlbumTest {
 		UsuarioRegistrado usuario = new UsuarioRegistrado("nombre usuario","contrasenia","nombre",LocalDate.now());
 	    Cancion cancion1 = new Cancion("cancion1","ruta cancion1",usuario);
 	    Cancion cancion2 = new Cancion("cancion2","ruta cancion2",usuario);
-	    Album album1 = new Album("nombre album",LocalDate.now());
-	    
-	    album1.aniadirCancion(cancion1);
-	    album1.aniadirCancion(cancion2);
+	    ArrayList<Cancion> canciones = new ArrayList<>();
+	    canciones.add(cancion1);
+	    canciones.add(cancion2);
+	    Album album1 = new Album("nombre album",LocalDate.now(),canciones);
 	    
 	    assertTrue(album1.quitarCancion(cancion2));
 	    assertFalse(album1.contieneReproducible(cancion2));

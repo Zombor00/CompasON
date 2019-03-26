@@ -55,11 +55,25 @@ public abstract class Reproducible implements Serializable{
   public void setEstado(Estado estado){
       this.estado = estado;
   }
-  
+
   public void setDuracion(double duracion){
       this.duracion = duracion;
   }
-  
-  public abstract boolean esAptoParaMenores(); 
 
+  /**
+   * Si es una lista aniade al array de listas que la contienen una lista.
+   * Si no es una lista no hace nada.
+   * @param lista
+   */
+  public abstract void aniadirContenidoEn(Lista lista);
+  
+  public abstract boolean esAptoParaMenores();
+
+
+  /**
+   * Si es una lista del array de listas que la contienen una lista
+   * Si no es una lista no hace nada
+   * @param lista
+   */
+  public abstract void quitarContenidoEn(Lista lista);
 }

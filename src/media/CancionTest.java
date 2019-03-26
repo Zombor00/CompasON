@@ -39,7 +39,7 @@ public class CancionTest {
 	    assertFalse(cancion1.modificar("My Shot",null));
 	    
 	    cancion2.validar(EstadoValidacion.NOVALIDADA);
-	    assertFalse(cancion2.modificar("Thats What I Like","DOENSTEXIST.mp3"));
+	    assertFalse(cancion2.modificar(null,"DOENSTEXIST.mp3"));
 	    
 	    cancion2.validar(EstadoValidacion.NOVALIDADA);
 	    assertTrue(cancion2.modificar("Thats What I Like","canciones/Thats What I Like.mp3"));
