@@ -33,8 +33,13 @@ public class Album extends Buscable implements Serializable{
      */
     public Album(String titulo, LocalDate anio, ArrayList <Cancion> canciones){
         super(titulo);
+        double duracion = 0;
         this.anio = anio;
         this.canciones = canciones;
+        for(Cancion c: canciones) {
+        	duracion += c.getDuracion();
+        }
+        this.setDuracion(duracion);
     }
 
     /**
@@ -56,6 +61,7 @@ public class Album extends Buscable implements Serializable{
     public boolean aniadirCancion(Cancion c){
         if(canciones.contains(c))return false;
         canciones.add(c);
+        this.setDuracion(this.getDuracion() + c.getDuracion());
         return true;
     }
 
