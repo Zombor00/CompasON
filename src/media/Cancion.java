@@ -8,151 +8,164 @@ import usuarios.*;
 
 /**
  * Esta clase tiene toda la informacion relevante a las canciones.
- * @author Alejandro Bravo(alejandro.bravodela@estudiante.uam.es)
- *         Grupo CompasON
+ * 
+ * @author Alejandro Bravo(alejandro.bravodela@estudiante.uam.es) Grupo CompasON
  *
  */
 
+public class Cancion extends Buscable implements Serializable {
 
-public class Cancion extends Buscable implements Serializable{
+	private static int maxId = 0;
+	private int id;
+	private UsuarioRegistrado autor;
+	private String ficheroAudio;
+	private LocalDate fechaSubida;
+	private LocalDate modificableHasta;
+	private EstadoValidacion estadoValidacion;
 
-    private static int maxId = 0;
-    private int id;
-    private UsuarioRegistrado autor;
-    private String ficheroAudio;
-    private LocalDate fechaSubida;
-    private LocalDate modificableHasta;
-    private EstadoValidacion estadoValidacion;
+	/**
+	 * Constructor de la clase cancion que llama al constructor de elemento con
+	 * titulo, inicializa validada a false y pone el atributo fechaDeSubida a la
+	 * fecha actual.
+	 * 
+	 * @param titulo string que identifica el titulo de la cancion
+	 * @param file   fichero con el audio de la cancion
+	 * @param autor  autor de la cancion
+	 */
+	public Cancion(String titulo, String file, UsuarioRegistrado autor) {
+		super(titulo);
+		this.id = Cancion.maxId + 1;
+		Cancion.maxId += 1;
+		this.autor = autor;
+		this.ficheroAudio = file;
+		this.fechaSubida = LocalDate.now();
+		try {
+			this.setDuracion(Mp3Player.getDuration(file));
+		} catch (FileNotFoundException e) {
+			/* Gestion de excepxion */
+		}
+	}
 
-    /**
-     * Constructor de la clase cancion que llama al constructor de elemento
-     * con titulo, inicializa validada a false y pone el atributo fechaDeSubida
-     * a la fecha actual.
-     * @param titulo string que identifica el titulo de la cancion
-     * @param file fichero con el audio de la cancion
-     * @param autor autor de la cancion
-     */
-    public Cancion(String titulo, String file, UsuarioRegistrado autor) {
-        super(titulo);
-        this.id = Cancion.maxId +1;
-        Cancion.maxId += 1;
-        this.autor = autor;
-        this.ficheroAudio = file;
-        this.fechaSubida = LocalDate.now();
-        try {
-            this.setDuracion(Mp3Player.getDuration(file));
-            }
-        catch(FileNotFoundException e) {
-            /* Gestion de excepxion */
-        }
-    }
+	/**
+	 * Aniade una cancion a la cola
+	 * 
+	 * @param mp3 Cola donde se añade la cancion
+	 */
+	public void reproducir(Mp3Player mp3) {
+		this.autor.aniadirReproduccion();
+		try {
+			mp3.add(ficheroAudio);
+		} catch (Mp3InvalidFileException e) {
+			System.out.println(e);
+		}
+	}
 
-    /**
-     * Aniade una cancion a la cola
-     * @param mp3 Cola donde se añade la cancion
-     */
-    public void reproducir(Mp3Player mp3) {
-    	this.autor.aniadirReproduccion();
-        try {
-            mp3.add(ficheroAudio);
-        }
-        catch(Mp3InvalidFileException e) {
-        	System.out.println(e);
-        }
-    }
+	/**
+	 * Valida la canción y pone si la cancion es explicita o no.
+	 * 
+	 * @param estado boolean que identifica si la cancion es explicita o no
+	 */
+	public void validar(EstadoValidacion estado) {
+		if (estado == EstadoValidacion.NOVALIDADA) {
+			this.estadoValidacion = EstadoValidacion.NOVALIDADA;
+			modificableHasta = LocalDate.now().plusDays(3);
+		} else if (estado == EstadoValidacion.EXPLICITO) {
+			this.estadoValidacion = EstadoValidacion.EXPLICITO;
+		} else {
+			this.estadoValidacion = EstadoValidacion.APTOMENORES;
+		}
+	}
 
+	/**
+	 * Modifica el titulo el fichero de audio a los que han sido pasados por
+	 * parametros si son distintos de null
+	 * 
+	 * @param titulo titulo de la cancion
+	 * @param file   fichero de audio de la cancion
+	 * @return true si se puede modificar, false en caso contrario
+	 */
+	public boolean modificar(String titulo, String file) {
+		if (this.estadoValidacion == EstadoValidacion.APTOMENORES
+				|| this.estadoValidacion == EstadoValidacion.EXPLICITO) {
+			return false;
+		}
 
-    /**
-     * Valida la canción y pone si la cancion es explicita o no.
-     * @param estado boolean que identifica si la cancion es explicita o no
-     */
-    public void validar(EstadoValidacion estado) {
-        if(estado == EstadoValidacion.NOVALIDADA) {
-            this.estadoValidacion = EstadoValidacion.NOVALIDADA;
-            modificableHasta = LocalDate.now().plusDays(3);
-        }
-        else if(estado == EstadoValidacion.EXPLICITO){
-            this.estadoValidacion = EstadoValidacion.EXPLICITO;
-        }else{
-            this.estadoValidacion = EstadoValidacion.APTOMENORES;
-        }
-    }
+		if (modificableHasta != null && modificableHasta.isBefore(LocalDate.now())) {
+			return false;
+		}
 
-    /**
-     *  Modifica el titulo el fichero de audio a los que han sido pasados
-     *  por parametros si son distintos de null
-     * @param titulo titulo de la cancion
-     * @param file fichero de audio de la cancion
-     * @return true si se puede modificar, false en caso contrario
-     */
-    public boolean modificar(String titulo, String file) {
-        if(this.estadoValidacion == EstadoValidacion.APTOMENORES ||
-           this.estadoValidacion == EstadoValidacion.EXPLICITO) {
-            return false;
-        }
+		if (file != null) {
+			try {
+				if (Mp3Player.isValidMp3File(file) && Mp3Player.getDuration(file) <= 30 * 60) {
+					this.ficheroAudio = file;
+					this.setDuracion(Mp3Player.getDuration(file));
+				} else {
+					return false;
+				}
+			} catch (FileNotFoundException e) {
+				/* Gestionar excepcion */
+			}
+		}
 
-        if(modificableHasta != null && modificableHasta.isBefore(LocalDate.now())) {
-            return false;
-        }
+		if (titulo != null) {
+			setTitulo(titulo);
+		}
 
-        if(file != null) {
-            if(Mp3Player.isValidMp3File(file)) {
-                    this.ficheroAudio = file;
-            }else{
-                return false;
-            }
-        }
+		this.modificableHasta = null;
+		return true;
+	}
 
-        if(titulo != null) {
-            setTitulo(titulo);
-        }
+	/**
+	 * Te devuelve true si el Reproducible pasado es el mismo.
+	 * 
+	 * @param e Cancion a comparar
+	 * @return boolean: true si la cancion es la misma false en caso contrario
+	 */
+	@Override
+	public boolean contieneReproducible(Reproducible e) {
+		if (e.equals(this))
+			return true;
+		return false;
+	}
 
-        this.modificableHasta = null;
-        return true;
-    }
+	public EstadoValidacion getEstadoValidacion() {
+		return this.estadoValidacion;
+	}
 
-    /**
-     * Te devuelve true si el Reproducible pasado es el mismo.
-     * @param e Cancion a comparar
-     * @return boolean: true si la cancion es la misma false
-     * en caso contrario
-     */
-    @Override
-    public boolean contieneReproducible(Reproducible e) {
-        if(e.equals(this)) return true;
-        return false;
-    }
+	public UsuarioRegistrado getAutor() {
+		return this.autor;
+	}
 
-    public EstadoValidacion getEstadoValidacion() {
-        return this.estadoValidacion;
-    }
+	public LocalDate getModificableHasta() {
+		return modificableHasta;
+	}
 
-    public UsuarioRegistrado getAutor() {
-        return this.autor;
-    }
+	public int getId() {
+		return this.id;
+	}
 
-    public LocalDate getModificableHasta() {
-        return modificableHasta;
-    }
+	public String getFicheroAudio() {
+		return this.ficheroAudio;
+	}
 
-    public int getId() {
-    	return this.id;
-    }
+	public LocalDate getFechaSubida() {
+		return this.fechaSubida;
+	}
 
-    public String getFicheroAudio() {
-        return this.ficheroAudio;
-    }
+	@Override
+	public void desbloquear(Cancion c) {
+		if (this.equals(c)) {
+			this.setEstado(Estado.NOBLOQUEADO);
+		}
+	}
 
-    public LocalDate getFechaSubida() {
-    	return this.fechaSubida;
-    }
-
-    @Override
-    public void desbloquear(Cancion c) {
-        if(this.equals(c)) {
-            this.setEstado(Estado.NOBLOQUEADO);
-        }
-    }
+	@Override
+	public boolean esAptoParaMenores() {
+		if (estadoValidacion == EstadoValidacion.APTOMENORES) {
+			return true;
+		}
+		return false;
+	}
 
 	@Override
 	public String toString() {

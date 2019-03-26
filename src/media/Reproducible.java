@@ -60,11 +60,6 @@ public abstract class Reproducible implements Serializable{
       this.duracion = duracion;
   }
   
-  public boolean esAptoParaMenores() {
-	  /* Esto hay que sobreescribirlo en las subclases 
-	   * Una cancion es apta si su estadoValidacion es APTOMENORES
-	   * Un album o lista es apto si todos los reproducibles que contienen son aptos*/
-	  return true;
-  }
+  public abstract boolean esAptoParaMenores(); 
 
 }

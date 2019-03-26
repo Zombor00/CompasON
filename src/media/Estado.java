@@ -1,5 +1,5 @@
 package media;
 
-public enum Estado{
- BORRADO,BLOQUEADO,NOBLOQUEADO
+public enum Estado {
+	BORRADO, BLOQUEADO, NOBLOQUEADO
 }

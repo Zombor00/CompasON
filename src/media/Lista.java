@@ -100,5 +100,15 @@ public class Lista extends Reproducible implements Serializable{
       if (estado == Estado.BLOQUEADO) return;
       this.setEstado(estado);
     }
+    
+	@Override
+	public boolean esAptoParaMenores() {
+        for(Reproducible r: reproducibles){
+            if(r.esAptoParaMenores() == false){
+                return false;
+            }
+        }
+        return true;
+	}
 
 }

@@ -126,6 +126,16 @@ public class Album extends Buscable implements Serializable{
 	public String toString() {
 		return "Album [titulo=" + this.getTitulo() + "canciones=" + canciones + ", anio=" + anio + "]";
 	}
+	
+	@Override
+	public boolean esAptoParaMenores() {
+        for(Cancion can: canciones){
+            if(can.getEstadoValidacion() == EstadoValidacion.EXPLICITO){
+                return false;
+            }
+        }
+        return true;
+	}
 
 
 

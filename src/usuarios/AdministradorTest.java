@@ -41,7 +41,7 @@ public class AdministradorTest {
 			fail("Lanzada excepcion no esperada ExcepcionCancionYaValidada");
 		}
 		assertThrows(ExcepcionCancionModificable.class, () -> {
-	        admin.tramitarValidacion(c, EstadoValidacion.NOVALIDADA);;
+	        admin.tramitarValidacion(c, EstadoValidacion.NOVALIDADA);
 	    });
 	}
 	
@@ -57,7 +57,7 @@ public class AdministradorTest {
 			fail("Lanzada excepcion no esperada ExcepcionCancionYaValidada");
 		}
 		assertThrows(ExcepcionCancionYaValidada.class, () -> {
-	        admin.tramitarValidacion(c, EstadoValidacion.EXPLICITO);;
+	        admin.tramitarValidacion(c, EstadoValidacion.EXPLICITO);
 	    });
 	}
 	

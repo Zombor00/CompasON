@@ -125,11 +125,10 @@ public class UsuarioRegistrado extends UsuarioConCuenta implements Serializable{
     }
 
     /**
-    * Este metodo se usa para aniadir un elemento al usuario
+    * Este metodo se usa para crear una lista 
     *
     * @param titulo nombre de la lista
     * @param elementos iniciales de la lista
-    * @throws ExcepcionNoPremium
     */
     public void crearLista(String titulo, ArrayList <Reproducible> elementos) throws ExcepcionUsuarioNoPremium{
         if(premiumHasta!=null && premiumHasta.isAfter(LocalDate.now())){
@@ -140,6 +139,22 @@ public class UsuarioRegistrado extends UsuarioConCuenta implements Serializable{
         	throw new ExcepcionUsuarioNoPremium();	
         }
     }
+    
+    /**
+     * Este metodo se usa para crear una lista 
+     *
+     * @param titulo nombre de la lista
+     * @param elementos iniciales de la lista
+     */
+     public void crearLista(String titulo) throws ExcepcionUsuarioNoPremium{
+         if(premiumHasta!=null && premiumHasta.isAfter(LocalDate.now())){
+             Lista lista = new Lista(titulo);
+             this.listas.add(lista);
+         }
+         else {
+         	throw new ExcepcionUsuarioNoPremium();	
+         }
+     }
 
 
 
@@ -179,6 +194,17 @@ public class UsuarioRegistrado extends UsuarioConCuenta implements Serializable{
     public boolean aniadirNotificacion(Notificacion n){
         return this.notificaciones.add(n);
     }
+    
+    /**
+    * Este metodo se usa para borrar una notificacion del usuario
+    *
+    * @param n notificacion a borrar
+    * @return boolean sobre si se hace correctamente
+    */
+    public boolean borrarNotificacion(Notificacion n){
+        return this.notificaciones.remove(n);
+    }    
+   
 
     /**
     * Este metodo se usa para aumentar las reproducciones del usuario

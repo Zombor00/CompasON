@@ -7,7 +7,6 @@ import java.util.ArrayList;
 
 import org.junit.jupiter.api.*;
 
-import media.*;
 import excepciones.ExcepcionUsuarioNoPremium;
 import excepciones.ExcepcionUsuarioNoSeguido;
 import excepciones.ExcepcionUsuarioYaSeguido;
@@ -71,7 +70,7 @@ public class UsuarioRegistradoTest {
 	void testCrearLista1() {
 		u1.setPremiumHasta(LocalDate.now().plusDays(1));
 		try {
-			u1.crearLista("a", new ArrayList<Reproducible>());
+			u1.crearLista("a");
 		} catch (ExcepcionUsuarioNoPremium e) {
 			fail("Lanzada excepcion no esperada ExcepcionUsuarioNoPremium");
 		}
@@ -81,7 +80,7 @@ public class UsuarioRegistradoTest {
 	@Test /*Un usuario no Premium intenta crear una lista*/
 	void testCrearLista2() {
 		assertThrows(ExcepcionUsuarioNoPremium.class, () -> {
-	        u1.crearLista("a",new ArrayList<Reproducible>());
+	        u1.crearLista("a");
 	    });
 	}
 	
@@ -89,7 +88,7 @@ public class UsuarioRegistradoTest {
 	void testCrearLista3() {
 		u1.setPremiumHasta(LocalDate.now());
 		assertThrows(ExcepcionUsuarioNoPremium.class, () -> {
-	        u1.crearLista("a",new ArrayList<Reproducible>());
+	        u1.crearLista("a");
 	    });
 	}
 	
