@@ -10,7 +10,7 @@ import excepciones.ExcepcionCancionYaValidada;
 import gestion.Denuncia;
 import media.*;
 
-class AdministradorTest {
+public class AdministradorTest {
 
 	private Administrador admin = new Administrador("admin","admin");
 	

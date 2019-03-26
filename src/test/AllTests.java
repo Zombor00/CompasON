@@ -9,12 +9,14 @@ import org.junit.runners.Suite.SuiteClasses;
 import aplicacion.AplicacionTest;
 import media.ListaTest;
 import usuarios.UsuarioRegistradoTest;
+import usuarios.AdministradorTest;
 
 @RunWith(Suite.class)
 @SuiteClasses({
 	AplicacionTest.class,
     ListaTest.class,
-    UsuarioRegistradoTest.class
+    UsuarioRegistradoTest.class,
+    AdministradorTest.class
 })
 
 class AllTests {
