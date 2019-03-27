@@ -17,6 +17,7 @@ public class CancionTest {
 		UsuarioRegistrado usuario1 = new UsuarioRegistrado("nombre usuario","contrasenia","nombre",LocalDate.now());
 	    Cancion cancion1 = new Cancion("cancion1","ruta cancion1",usuario1);
 	    
+	    cancion1.toString();
 	    cancion1.validar(EstadoValidacion.NOVALIDADA);
 	    assertSame(cancion1.getEstadoValidacion(),EstadoValidacion.NOVALIDADA);
 	    /*(cancion1.getModificableHasta(),LocalDate.now().plusDays(3));*/

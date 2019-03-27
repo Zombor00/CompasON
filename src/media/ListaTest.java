@@ -2,7 +2,7 @@ package media;
 
 
 import java.time.LocalDate;
-
+import java.util.ArrayList;
 import usuarios.UsuarioRegistrado;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -34,13 +34,14 @@ public class ListaTest {
 	
 	@Test
 	void testListaContenidoEnPadres() {
-		Lista lista1 = new Lista("nombre lista1");
+		Lista lista1;
 		Lista lista2 = new Lista("nombre lista2");
 		UsuarioRegistrado usuario = new UsuarioRegistrado("nombre usuario","contrasenia","nombre",LocalDate.now());
 		Cancion cancion1 = new Cancion("cancion1","ruta cancion1",usuario);
-		
-		lista1.aniadirReproducible(cancion1);
-		lista1.aniadirReproducible(lista2);
+		ArrayList<Reproducible> reproducibles = new ArrayList<>();
+		reproducibles.add(cancion1);
+		reproducibles.add(lista2);
+		lista1 =  new Lista("nombre lista1",reproducibles);
 		
 		assertFalse(lista2.aniadirReproducible(cancion1));
 		lista1.quitarReproducible(cancion1);
@@ -81,6 +82,19 @@ public class ListaTest {
 		assertTrue(lista.contieneReproducible(cancion1));
 		lista.quitarReproducible(cancion1);
 		assertFalse(lista.contieneReproducible(cancion1));
+	}
+	
+	@Test
+	void testListAptoMenores() {
+		Lista lista = new Lista("nombre lista");
+		UsuarioRegistrado usuario = new UsuarioRegistrado("nombre usuario","contrasenia","nombre",LocalDate.now());
+		Cancion cancion1 = new Cancion("cancion1","ruta cancion1",usuario);
+		
+		lista.aniadirReproducible(cancion1);
+		assertFalse(lista.esAptoParaMenores());
+		cancion1.validar(EstadoValidacion.APTOMENORES);
+		assertTrue(lista.esAptoParaMenores());
+	
 	}
 
 }

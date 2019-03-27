@@ -38,6 +38,7 @@ public class Lista extends Reproducible implements Serializable{
         this.reproducibles=reproducibles;
         for(Reproducible r: reproducibles) {
         	duracion += r.getDuracion();
+        	r.aniadirContenidoEn(this);
         }
         this.setDuracion(duracion);
     }
@@ -122,7 +123,7 @@ public class Lista extends Reproducible implements Serializable{
 	}
 
     /**
-     * Devuelve true si en cualquier lista padre(y recursivamente) el elemento reproducible r
+     * Devuelve true si en cualquier lista padre(y recursivamente padres e hijos) el elemento reproducible r
      * esta contenido. False en caso contrario
      * @param r: reproducible a buscar en las listas padre
      */
@@ -145,11 +146,12 @@ public class Lista extends Reproducible implements Serializable{
     @Override
 	public boolean esAptoParaMenores() {
         for(Reproducible r: reproducibles){
-            if(r.esAptoParaMenores() == false){
+            if(!r.esAptoParaMenores()){
                 return false;
             }
         }
         return true;
 	}
+   
 
 }

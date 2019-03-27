@@ -36,11 +36,13 @@ public class Album extends Buscable implements Serializable{
         super(titulo);
         double duracion = 0;
         this.anio = anio;
-        this.canciones = canciones;
         if (canciones != null) {
+            this.canciones = canciones;
         	for(Cancion c: canciones) {
             	duracion += c.getDuracion();
             }
+        }else {
+        	this.canciones = new ArrayList<>();
         }
         this.setDuracion(duracion);
     }
@@ -143,14 +145,19 @@ public class Album extends Buscable implements Serializable{
     @Override
 	public boolean esAptoParaMenores() {
         for(Cancion can: canciones){
-            if(can.getEstadoValidacion() == EstadoValidacion.EXPLICITO){
+            if(can.getEstadoValidacion() != EstadoValidacion.APTOMENORES){
                 return false;
             }
         }
         return true;
 	}
     
+    /**
+     * Devuelve el autor del album
+     * @return UsuarioRegistrado
+     */
     public UsuarioRegistrado getAutor() {
+    	
     	if (this.canciones == null){
     		return null;
     	}

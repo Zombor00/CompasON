@@ -17,6 +17,8 @@ public class AlbumTest {
 	    assertTrue(album1.aniadirCancion(cancion1));
 	    assertFalse(album1.aniadirCancion(cancion1));
 	    
+	    album1.toString();
+	    
 	}
 	
 	@Test
@@ -68,7 +70,7 @@ public class AlbumTest {
 		UsuarioRegistrado usuario = new UsuarioRegistrado("nombre usuario","contrasenia","nombre",LocalDate.now());
 	    Cancion cancion1 = new Cancion("cancion1","ruta cancion1",usuario);
 	    Cancion cancion2 = new Cancion("cancion2","ruta cancion2",usuario);
-	    Album album1 = new Album("nombre album",LocalDate.now());
+	    Album album1 = new Album("nombre album",LocalDate.now(),null);
 	    album1.aniadirCancion(cancion1);
 	    album1.aniadirCancion(cancion2);
 	    
@@ -83,5 +85,27 @@ public class AlbumTest {
 	   
 	}
 	
+	@Test
+	void testAlbumAptoParaMenores() {
+		UsuarioRegistrado usuario = new UsuarioRegistrado("nombre usuario","contrasenia","nombre",LocalDate.now());
+	    Cancion cancion1 = new Cancion("cancion1","ruta cancion1",usuario);
+	    Album album1 = new Album("nombre album",LocalDate.now(),null);
+	    
+	    album1.aniadirCancion(cancion1);
+	    assertFalse(album1.esAptoParaMenores());
+	    cancion1.validar(EstadoValidacion.APTOMENORES);
+	    assertTrue(album1.esAptoParaMenores());
+	}
+	
+	@Test
+	void testAlbumGetAutor() {
+		UsuarioRegistrado usuario = new UsuarioRegistrado("nombre usuario","contrasenia","nombre",LocalDate.now());
+	    Cancion cancion1 = new Cancion("cancion1","ruta cancion1",usuario);
+	    Album album1 = new Album("nombre album",LocalDate.now());
+	    
+	    album1.aniadirCancion(cancion1);
+	    assertSame(album1.getAutor(),usuario);
+	}
+
 
 }

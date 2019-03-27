@@ -15,12 +15,12 @@ import java.io.*;
      public Buscable(String titulo){
          super(titulo);
      }
-
+   
      /**
       * Desbloquea la cancion c y el album donde este la cancion
       * c si no tiene otras canciones bloqueadas.
       *@param c cancion a desbloquear
       */
      public abstract void desbloquear(Cancion c);
-
+     
 }

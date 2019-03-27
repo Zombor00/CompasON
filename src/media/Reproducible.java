@@ -67,6 +67,12 @@ public abstract class Reproducible implements Serializable{
    */
   public abstract void aniadirContenidoEn(Lista lista);
   
+  
+  /**
+   * Devuelve True si el elemento reproducible es apto para menores y
+   * False en caso contrario.
+   * @return boolean
+   */
   public abstract boolean esAptoParaMenores();
 
 
@@ -76,4 +82,5 @@ public abstract class Reproducible implements Serializable{
    * @param lista
    */
   public abstract void quitarContenidoEn(Lista lista);
+  
 }
