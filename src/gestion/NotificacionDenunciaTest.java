@@ -15,8 +15,8 @@ class NotificacionDenunciaTest {
 	
 	@Test
 	void test() {
-		not = new NotificacionDenuncia(new Denuncia(new UsuarioRegistrado("denunciante","a","a",LocalDate.now()),
-				new Cancion("denunciada","file",new UsuarioRegistrado("autor","a","a",LocalDate.now())),"Es plagio"));
+		not = new NotificacionDenuncia(
+				new Cancion("denunciada","file",new UsuarioRegistrado("autor","a","a",LocalDate.now())));
 		assertNotNull(not.mostrarNotificacion());
 		not.ocultarNotificacion();
 		assertNull(not.mostrarNotificacion());

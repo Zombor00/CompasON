@@ -1,6 +1,7 @@
 package aplicacion;
 
 import java.io.*;
+import java.nio.file.*;
 import java.time.*;
 import java.util.*;
 
@@ -204,12 +205,12 @@ public class Aplicacion implements Serializable {
      *
      * @param titulo Titulo de la cancion
      * @param fichero Fichero de audio de la cancion
-     * @throws FileNotFoundException 
      * @throws ExcepcionDuracionLimiteSuperada 
      * @throws Mp3InvalidFileException 
      * @throws ExcepcionParametrosDeEntradaIncorrectos 
+     * @throws IOException 
      */
-    public void subirCancion(String titulo, String fichero) throws FileNotFoundException, ExcepcionDuracionLimiteSuperada, Mp3InvalidFileException, ExcepcionParametrosDeEntradaIncorrectos {
+    public void subirCancion(String titulo, String fichero) throws ExcepcionDuracionLimiteSuperada, Mp3InvalidFileException, ExcepcionParametrosDeEntradaIncorrectos, IOException {
     	if (titulo == null || fichero == null) {
     		throw new ExcepcionParametrosDeEntradaIncorrectos();
     	}
@@ -219,7 +220,10 @@ public class Aplicacion implements Serializable {
     	if (Mp3Player.getDuration(fichero) > 30*60) {
     		throw new ExcepcionDuracionLimiteSuperada();
     	}
-    	Cancion cancion = new Cancion(titulo,fichero,this.usuarioLogeado);
+    	
+        Files.copy(Paths.get(fichero), Paths.get("canciones/"+ titulo + ".mp3"), StandardCopyOption.REPLACE_EXISTING);
+    	
+    	Cancion cancion = new Cancion(titulo,"canciones/"+ titulo + ".mp3",this.usuarioLogeado);
         this.administrador.aniadirCancion(cancion);
         this.usuarioLogeado.aniadirCancion(cancion);
     }
@@ -469,6 +473,7 @@ public class Aplicacion implements Serializable {
             }
         }
         this.administrador.aniadirDenuncia(new Denuncia(this.usuarioLogeado,cancion, comentario));
+        cancion.getAutor().aniadirNotificacion(new NotificacionDenuncia(cancion));
     }
 
     /**
@@ -489,7 +494,11 @@ public class Aplicacion implements Serializable {
         }
         for (Cancion cancion : validadas) {
             buscables.add(cancion);
-            cancion.getAutor().getBuscables().add(cancion);
+            cancion.getAutor().aniadirBuscable(cancion);
+            NotificacionCancion notificacion = new NotificacionCancion(cancion);
+            for (UsuarioRegistrado seguidor : cancion.getAutor().getSeguidores()) {
+            	seguidor.aniadirNotificacion(notificacion);
+            }
         }
         administrador.getCancionesNuevas().removeAll(validadas);
         for (Cancion cancion : validadas) {

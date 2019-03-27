@@ -1,6 +1,7 @@
 package test;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +27,7 @@ import pads.musicPlayer.exceptions.Mp3PlayerException;
  * @version 1.0 (23-03-2019)
  */
 class Simulacion {
-	public static void main(String[] args) throws Mp3PlayerException, InterruptedException, FileNotFoundException, ExcepcionLimiteReproducidasAlcanzado, ExcepcionNoAptoParaMenores, ExcepcionLoginErrorCredenciales, ExcepcionLoginBloqueado, ExcepcionDuracionLimiteSuperada, ExcepcionCancionModificable, ExcepcionCancionYaValidada, ExcepcionParametrosDeEntradaIncorrectos, ExcepcionNombreDeUsuarioNoDisponible {
+	public static void main(String[] args) throws Mp3PlayerException, InterruptedException, ExcepcionLimiteReproducidasAlcanzado, ExcepcionNoAptoParaMenores, ExcepcionLoginErrorCredenciales, ExcepcionLoginBloqueado, ExcepcionDuracionLimiteSuperada, ExcepcionCancionModificable, ExcepcionCancionYaValidada, ExcepcionParametrosDeEntradaIncorrectos, ExcepcionNombreDeUsuarioNoDisponible, IOException {
 		List<Buscable> busqueda = new ArrayList<Buscable>();
 		System.out.println("INICIO DE SIMULACION");
 		//Thread.sleep(3000);
@@ -43,7 +44,7 @@ class Simulacion {
 		
 		System.out.println("El usuario1 sube Thats What I Like");
 		//Thread.sleep(3000);
-		aplicacion.subirCancion("Thats What I Like", "canciones/Thats What I Like.mp3");
+		aplicacion.subirCancion("Thats What I Like", "Thats What I Like.mp3");
 		
 		System.out.println("El usuario1 sube This Is Nightlife");
 		//Thread.sleep(3000);
@@ -51,15 +52,15 @@ class Simulacion {
 		
 		System.out.println("El usuario1 sube chicle3");
 		//Thread.sleep(3000);
-		aplicacion.subirCancion("deprueba chicle3", "canciones/chicle3.mp3");
+		aplicacion.subirCancion("deprueba chicle3", "canciones/deprueba chicle3.mp3");
 		
 		System.out.println("El usuario1 sube hive");
 		//Thread.sleep(3000);
-		aplicacion.subirCancion("deprueba hive", "canciones/hive.mp3");
+		aplicacion.subirCancion("deprueba hive", "canciones/deprueba hive.mp3");
 		
 		System.out.println("El usuario1 sube np");
 		//Thread.sleep(3000);
-		aplicacion.subirCancion("deprueba np", "canciones/np.mp3");
+		aplicacion.subirCancion("deprueba np", "canciones/deprueba np.mp3");
 		
 		System.out.println("El usuario1 cierra sesion");
 		//Thread.sleep(3000);
@@ -73,10 +74,11 @@ class Simulacion {
 		//Thread.sleep(3000);
 		System.out.println(aplicacion.getAdministrador().getCancionesNuevas());
 		
-		System.out.println("El administrador valida 4 de las 5 canciones subidas por el usuario1");
+		System.out.println("El administrador valida 4 de las 5 canciones subidas por el usuario1 y una no la valida");
 		//Thread.sleep(3000);
 		aplicacion.getAdministrador().tramitarValidacion(aplicacion.getAdministrador().getCancionesNuevas().get(0), EstadoValidacion.APTOMENORES);
 		aplicacion.getAdministrador().tramitarValidacion(aplicacion.getAdministrador().getCancionesNuevas().get(1), EstadoValidacion.APTOMENORES);
+		aplicacion.getAdministrador().tramitarValidacion(aplicacion.getAdministrador().getCancionesNuevas().get(2), EstadoValidacion.NOVALIDADA);
 		aplicacion.getAdministrador().tramitarValidacion(aplicacion.getAdministrador().getCancionesNuevas().get(3), EstadoValidacion.APTOMENORES);
 		aplicacion.getAdministrador().tramitarValidacion(aplicacion.getAdministrador().getCancionesNuevas().get(4), EstadoValidacion.APTOMENORES);
 		
@@ -120,9 +122,56 @@ class Simulacion {
 		aplicacion.reproducirReproducible(busqueda.get(0));
 		aplicacion.aniadirALaCola(busqueda.get(1));
 
-		//Thread.sleep(60000);
+		Thread.sleep(10000);
 		
-		//aplicacion.getCola().stop();
+		aplicacion.getCola().stop();
+		
+		System.out.println("El usuario2 cierra sesion");
+		//Thread.sleep(3000);
+		aplicacion.logout();
+		
+		System.out.println("El usuario1 inicia sesion");
+		//Thread.sleep(3000);
+		aplicacion.login("usuario1", "contrasenia1");
+		
+		System.out.println("El usuario1 consulta si hay alguna cancion que no ha pasado la validacion");
+		//Thread.sleep(3000);
+		System.out.println(aplicacion.getUsuarioLogeado().getCancionesNuevas());
+		
+		System.out.println("El usuario1 modifica la cancion no validada");
+		//Thread.sleep(3000);
+		aplicacion.getUsuarioLogeado().getCancionesNuevas().get(0).modificar("deprueba chicle3 modificada", null);
+		
+		System.out.println("El usuario1 cierra sesion");
+		//Thread.sleep(3000);
+		aplicacion.logout();
+		
+		System.out.println("El administrador inicia sesion");
+		//Thread.sleep(3000);
+		aplicacion.login("admin", "admin");
+		
+		System.out.println("El administrador accede a la lista de canciones nuevas");
+		//Thread.sleep(3000);
+		System.out.println(aplicacion.getAdministrador().getCancionesNuevas());
+		
+		System.out.println("El administrador marca como explicita la cancion modificada");
+		//Thread.sleep(3000);
+		aplicacion.getAdministrador().tramitarValidacion(aplicacion.getAdministrador().getCancionesNuevas().get(0), EstadoValidacion.EXPLICITO);
+		
+		System.out.println("El administrador cierra sesion");
+		//Thread.sleep(3000);
+		aplicacion.logout();
+		
+		System.out.println("El usuario2 inicia sesion");
+		//Thread.sleep(3000);
+		aplicacion.login("usuario2", "contrasenia2");
+		
+		System.out.println("El usuario2 realiza una busqueda por titulo: 'deprueba'");
+		Thread.sleep(3000);
+		busqueda = aplicacion.buscarPorTitulo("deprueba");
+		System.out.println(busqueda);
+		Thread.sleep(3000);
+		
 		
 	}
 }

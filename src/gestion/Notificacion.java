@@ -2,6 +2,8 @@ package gestion;
 
 import java.io.*;
 
+import media.Cancion;
+
 /**
 * Esta clase contiene la informacion comun a las notificaciones
 *
@@ -11,6 +13,20 @@ import java.io.*;
 */
 public abstract class Notificacion implements Serializable{
     private boolean visible = true;
+    protected Cancion cancion;
+
+    /**
+    * Constructor, con la cancion
+    *
+    * @param cancion a notificar
+    */
+    public Notificacion(Cancion cancion){
+        this.cancion = cancion;
+    }
+    
+    public Cancion getCancion() {
+    	return this.cancion;
+    }
 
     public String mostrarNotificacion(){
         if (visible == true){
