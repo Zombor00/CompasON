@@ -219,7 +219,9 @@ public class Aplicacion implements Serializable {
     	if (Mp3Player.getDuration(fichero) > 30*60) {
     		throw new ExcepcionDuracionLimiteSuperada();
     	}
-        this.administrador.aniadirCancion(new Cancion(titulo,fichero,this.usuarioLogeado));
+    	Cancion cancion = new Cancion(titulo,fichero,this.usuarioLogeado);
+        this.administrador.aniadirCancion(cancion);
+        this.usuarioLogeado.aniadirCancion(cancion);
     }
 
     /**
