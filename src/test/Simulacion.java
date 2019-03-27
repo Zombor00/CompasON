@@ -17,7 +17,6 @@ import excepciones.ExcepcionNombreDeUsuarioNoDisponible;
 import excepciones.ExcepcionParametrosDeEntradaIncorrectos;
 import media.Buscable;
 import media.EstadoValidacion;
-import pads.musicPlayer.Mp3Player;
 import pads.musicPlayer.exceptions.Mp3PlayerException;
 
 /**
@@ -121,7 +120,7 @@ class Simulacion {
 		aplicacion.reproducirReproducible(busqueda.get(0));
 		aplicacion.aniadirALaCola(busqueda.get(1));
 
-		Thread.sleep(60000);
+		//Thread.sleep(60000);
 		
 		//aplicacion.getCola().stop();
 		
