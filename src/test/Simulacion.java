@@ -50,6 +50,18 @@ class Simulacion {
 		//Thread.sleep(3000);
 		aplicacion.subirCancion("This Is Nightlife", "canciones/This Is Nightlife.mp3");
 		
+		System.out.println("El usuario1 sube chicle3");
+		//Thread.sleep(3000);
+		aplicacion.subirCancion("deprueba chicle3", "canciones/chicle3.mp3");
+		
+		System.out.println("El usuario1 sube hive");
+		//Thread.sleep(3000);
+		aplicacion.subirCancion("deprueba hive", "canciones/hive.mp3");
+		
+		System.out.println("El usuario1 sube np");
+		//Thread.sleep(3000);
+		aplicacion.subirCancion("deprueba np", "canciones/np.mp3");
+		
 		System.out.println("El usuario1 cierra sesion");
 		//Thread.sleep(3000);
 		aplicacion.logout();
@@ -62,10 +74,12 @@ class Simulacion {
 		//Thread.sleep(3000);
 		System.out.println(aplicacion.getAdministrador().getCancionesNuevas());
 		
-		System.out.println("El administrador valida las dos canciones subidas por el usuario1");
+		System.out.println("El administrador valida 4 de las 5 canciones subidas por el usuario1");
 		//Thread.sleep(3000);
 		aplicacion.getAdministrador().tramitarValidacion(aplicacion.getAdministrador().getCancionesNuevas().get(0), EstadoValidacion.APTOMENORES);
 		aplicacion.getAdministrador().tramitarValidacion(aplicacion.getAdministrador().getCancionesNuevas().get(1), EstadoValidacion.APTOMENORES);
+		aplicacion.getAdministrador().tramitarValidacion(aplicacion.getAdministrador().getCancionesNuevas().get(3), EstadoValidacion.APTOMENORES);
+		aplicacion.getAdministrador().tramitarValidacion(aplicacion.getAdministrador().getCancionesNuevas().get(4), EstadoValidacion.APTOMENORES);
 		
 		System.out.println("El administrador cierra sesion");
 		//Thread.sleep(3000);
@@ -82,21 +96,34 @@ class Simulacion {
 		//Thread.sleep(6000);
 
 		
-		System.out.println("El usuario2 reproduce la primera cancion que aparece en la busqueda");
+		/*System.out.println("El usuario2 reproduce la primera cancion que aparece en la busqueda");
 		Thread.sleep(3000);
 		aplicacion.reproducirReproducible(busqueda.get(0));
 		
 		System.out.println("El usuario2 espera 10 segundos");
-		Thread.sleep(10000);
+		Thread.sleep(10000);*/
 		
 		System.out.println("El usuario2 reproduce la segunda cancion que aparece en la busqueda");
 		Thread.sleep(3000);
 		aplicacion.reproducirReproducible(busqueda.get(1));
+		
+		System.out.println("El usuario2 espera 5 segundos");
+		Thread.sleep(5000);
+		
+		System.out.println("El usuario2 realiza una busqueda por titulo: 'deprueba'");
+		Thread.sleep(3000);
+		busqueda = aplicacion.buscarPorTitulo("deprueba");
+		System.out.println(busqueda);
+		Thread.sleep(3000);
+		
+		System.out.println("El usuario2 reproduce la primera cancion que aparece en la busqueda y aniade a la cola la segunda");
+		Thread.sleep(5000);
+		aplicacion.reproducirReproducible(busqueda.get(0));
+		aplicacion.aniadirALaCola(busqueda.get(1));
 
-		Mp3Player player = aplicacion.getCola();
 		Thread.sleep(60000);
 		
-		player.stop();
+		//aplicacion.getCola().stop();
 		
 	}
 }

@@ -28,11 +28,30 @@ public class AplicacionTest {
 	@BeforeAll
 	static void before() throws FileNotFoundException, Mp3PlayerException, ExcepcionParametrosDeEntradaIncorrectos, ExcepcionNombreDeUsuarioNoDisponible {
 		aplicacion = Aplicacion.getInstance(10,10,10);
-		aplicacion.aniadirUsuario("nombre usuario", "contrasenia", "nombre", LocalDate.now());
+	}
+	
+	@Test
+	void testAniadirUsuario() {
+		boolean excepcionLanzada = false;
+		try {
+			aplicacion.aniadirUsuario("nombre usuario repetido", "contrasenia", "nombre", LocalDate.now());
+			aplicacion.aniadirUsuario("nombre usuario repetido", "contrasenia", "nombre", LocalDate.now());
+		} catch (ExcepcionParametrosDeEntradaIncorrectos e) {
+			fail("Lanzada excepcion no esperada ExcepcionParametrosDeEntradaIncorrectos");
+		} catch (ExcepcionNombreDeUsuarioNoDisponible e) {
+			excepcionLanzada = true;
+		}
+		assertTrue(excepcionLanzada);
 	}
 	
 	@Test /* Login correcto de un usuario registrado */
-	void testLog1() {
+	void testLog1() throws ExcepcionParametrosDeEntradaIncorrectos{
+		try {
+			aplicacion.aniadirUsuario("nombre usuario", "contrasenia", "nombre", LocalDate.now());
+		} catch (ExcepcionNombreDeUsuarioNoDisponible e) {
+			
+		}
+
 		try {
 			aplicacion.login("nombre usuario", "contrasenia");
 		}
@@ -98,9 +117,15 @@ public class AplicacionTest {
 	}
 	
 	@Test /* Login fallido. Usuario bloqueado */
-	void testLog4() {
+	void testLog4() throws ExcepcionParametrosDeEntradaIncorrectos {
 		UsuarioRegistrado u = null;
 		boolean excepcionLanzada = false;
+		
+		try {
+			aplicacion.aniadirUsuario("nombre usuario", "contrasenia", "nombre", LocalDate.now());
+		} catch (ExcepcionNombreDeUsuarioNoDisponible e) {
+			
+		}
 		
 		/* Inicio normal de sesion */
 		try {

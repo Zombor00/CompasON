@@ -149,6 +149,13 @@ public class Aplicacion implements Serializable {
     }
     
     /**
+     * Getter para el atributo usuarios
+     */
+    public List<UsuarioRegistrado> getUsuarios() {
+    	return usuarios;
+    }
+    
+    /**
      * Getter del atributo usuarioLogeado
      * @return usuario logeado
      */
@@ -206,7 +213,7 @@ public class Aplicacion implements Serializable {
     	if (titulo == null || fichero == null) {
     		throw new ExcepcionParametrosDeEntradaIncorrectos();
     	}
-    	if (Mp3Player.isValidMp3File(fichero)) {
+    	if (Mp3Player.isValidMp3File(fichero) == false) {
     		throw new Mp3InvalidFileException("");
     	}
     	if (Mp3Player.getDuration(fichero) > 30*60) {
@@ -424,7 +431,23 @@ public class Aplicacion implements Serializable {
         this.cola.play();
     }
     
-    /* Aniadir a cola de reproduccion */
+    public void aniadirALaCola(Reproducible reproducible) throws ExcepcionParametrosDeEntradaIncorrectos, ExcepcionLimiteReproducidasAlcanzado, ExcepcionNoAptoParaMenores {
+    	if (reproducible == null) {
+    		throw new ExcepcionParametrosDeEntradaIncorrectos();
+    	}
+    	if (usuarioLogeado != null && 
+    			usuarioLogeado.getReproducidas() >= limiteReproducciones && 
+    			usuarioLogeado.getPremiumHasta() == null) {
+    		throw new ExcepcionLimiteReproducidasAlcanzado();
+    	}
+    	if (usuarioLogeado != null && usuarioLogeado.esMenor() && reproducible.esAptoParaMenores() == false) {
+        	throw new ExcepcionNoAptoParaMenores();
+        }
+    	reproducible.reproducir(cola);
+        if (usuarioLogeado != null) {
+        	usuarioLogeado.aniadirReproducida();
+        }
+    }
 
     /**
      * Bloquea la cancion denunciada y crea una denuncia que sera
