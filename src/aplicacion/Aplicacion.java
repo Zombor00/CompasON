@@ -189,6 +189,9 @@ public class Aplicacion implements Serializable {
     	if (nombreUsuario == null || contrasenia == null || nombreCompleto == null || fechaNacimiento == null) {
     		throw new ExcepcionParametrosDeEntradaIncorrectos();
     	}
+    	if (nombreUsuario == "admin") {
+    		throw new ExcepcionNombreDeUsuarioNoDisponible();
+    	}
     	for (UsuarioRegistrado usuario : usuarios) {
     		if (usuario.getNombreUsuario() == nombreUsuario) {
     			throw new ExcepcionNombreDeUsuarioNoDisponible();
@@ -331,13 +334,19 @@ public class Aplicacion implements Serializable {
                 	/* Comprobamos si en el mes anterior obtuvo reproducciones suficientes 
                 	 * como para pasar a ser premium */
                     if (u.reproduccionesUltimoMes() >= reproduccionesPremium) {
-                        u.setPremiumHasta(LocalDate.now().plusMonths(1));
+                        u.setPremiumHasta(LocalDate.now().plusMonths(1).withDayOfMonth(1).minusDays(1));
+                        for (Lista l : u.getListas()) {
+                    		l.setEstado(Estado.NOBLOQUEADO);
+                    	}
                     }
                 }
                 
                 /* Comprobamos si debe dejar de ser premium */
                 if (u.getPremiumHasta() != null && u.getPremiumHasta().isBefore(LocalDate.now())) {
                 	u.setPremiumHasta(null);
+                	for (Lista l : u.getListas()) {
+                		l.setEstado(Estado.BLOQUEADO);
+                	}
                 }
                 
                 return;
@@ -376,7 +385,7 @@ public class Aplicacion implements Serializable {
     	}
         ArrayList<Buscable> coincidencias = new ArrayList<>();
         for (Buscable buscable : this.buscables) {
-            if (buscable.getTitulo().startsWith(s)) {
+            if (buscable.getEstado() == Estado.NOBLOQUEADO && buscable.getTitulo().startsWith(s)) {
                 coincidencias.add(buscable);
             }
         }
@@ -398,7 +407,11 @@ public class Aplicacion implements Serializable {
         ArrayList<Buscable> coincidencias = new ArrayList<>();
         for (UsuarioRegistrado autor : this.usuarios) {
             if (autor.getNombreUsuario().startsWith(s)) {
-                coincidencias.addAll(autor.getBuscables());
+            	for (Buscable b : autor.getBuscables()) {
+            		if (b.getEstado() == Estado.NOBLOQUEADO) {
+            			coincidencias.add(b);
+            		}
+            	}
             }
         }
         return coincidencias;
@@ -413,8 +426,10 @@ public class Aplicacion implements Serializable {
      * @throws ExcepcionLimiteReproducidasAlcanzado 
      * @throws ExcepcionNoAptoParaMenores 
      * @throws ExcepcionParametrosDeEntradaIncorrectos 
+     * @throws ExcepcionReproducirProhibido 
      */
-    public void reproducirReproducible(Reproducible reproducible) throws FileNotFoundException, Mp3PlayerException, ExcepcionLimiteReproducidasAlcanzado, ExcepcionNoAptoParaMenores, ExcepcionParametrosDeEntradaIncorrectos {
+    public void reproducirReproducible(Reproducible reproducible) throws FileNotFoundException, Mp3PlayerException, ExcepcionLimiteReproducidasAlcanzado, ExcepcionNoAptoParaMenores, ExcepcionParametrosDeEntradaIncorrectos, ExcepcionReproducirProhibido {
+    	
     	if (reproducible == null) {
     		throw new ExcepcionParametrosDeEntradaIncorrectos();
     	}
@@ -430,14 +445,22 @@ public class Aplicacion implements Serializable {
         	throw new ExcepcionNoAptoParaMenores();
         }
         
-        reproducible.reproducir(cola);
+        if (usuarioLogeado == null && administradorLogeado == false && reproducible.esAptoParaMenores() == false) {
+        	throw new ExcepcionNoAptoParaMenores();
+        }
+        
+        if (reproducible.getEstado() != Estado.NOBLOQUEADO) {
+        	throw new ExcepcionReproducirProhibido();
+        }
+        
+        int reproducidas = reproducible.reproducir(cola);
         if (usuarioLogeado != null) {
-        	usuarioLogeado.aniadirReproducida();
+        	usuarioLogeado.setReproducidas(usuarioLogeado.getReproducidas() + reproducidas);
         }
         this.cola.play();
     }
     
-    public void aniadirALaCola(Reproducible reproducible) throws ExcepcionParametrosDeEntradaIncorrectos, ExcepcionLimiteReproducidasAlcanzado, ExcepcionNoAptoParaMenores {
+    public void aniadirALaCola(Reproducible reproducible) throws ExcepcionParametrosDeEntradaIncorrectos, ExcepcionLimiteReproducidasAlcanzado, ExcepcionNoAptoParaMenores, ExcepcionReproducirProhibido {
     	if (reproducible == null) {
     		throw new ExcepcionParametrosDeEntradaIncorrectos();
     	}
@@ -562,6 +585,9 @@ public class Aplicacion implements Serializable {
     	}
 		TeleChargeAndPaySystem.charge(cardNumStr, subject, precioPremium, true);
 		usuario.setPremiumHasta(LocalDate.now().plusDays(30));
+		for (Lista l : usuario.getListas()) {
+    		l.setEstado(Estado.NOBLOQUEADO);
+    	}
 
 	}
 

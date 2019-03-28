@@ -1,6 +1,6 @@
 package test;
 
-import java.io.FileNotFoundException;
+
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -16,6 +16,7 @@ import excepciones.ExcepcionLoginErrorCredenciales;
 import excepciones.ExcepcionNoAptoParaMenores;
 import excepciones.ExcepcionNombreDeUsuarioNoDisponible;
 import excepciones.ExcepcionParametrosDeEntradaIncorrectos;
+import excepciones.ExcepcionReproducirProhibido;
 import media.Buscable;
 import media.EstadoValidacion;
 import pads.musicPlayer.exceptions.Mp3PlayerException;
@@ -27,7 +28,7 @@ import pads.musicPlayer.exceptions.Mp3PlayerException;
  * @version 1.0 (23-03-2019)
  */
 class Simulacion {
-	public static void main(String[] args) throws Mp3PlayerException, InterruptedException, ExcepcionLimiteReproducidasAlcanzado, ExcepcionNoAptoParaMenores, ExcepcionLoginErrorCredenciales, ExcepcionLoginBloqueado, ExcepcionDuracionLimiteSuperada, ExcepcionCancionModificable, ExcepcionCancionYaValidada, ExcepcionParametrosDeEntradaIncorrectos, ExcepcionNombreDeUsuarioNoDisponible, IOException {
+	public static void main(String[] args) throws Mp3PlayerException, InterruptedException, ExcepcionLimiteReproducidasAlcanzado, ExcepcionNoAptoParaMenores, ExcepcionLoginErrorCredenciales, ExcepcionLoginBloqueado, ExcepcionDuracionLimiteSuperada, ExcepcionCancionModificable, ExcepcionCancionYaValidada, ExcepcionParametrosDeEntradaIncorrectos, ExcepcionNombreDeUsuarioNoDisponible, IOException, ExcepcionReproducirProhibido {
 		List<Buscable> busqueda = new ArrayList<Buscable>();
 		System.out.println("INICIO DE SIMULACION");
 		//Thread.sleep(3000);
@@ -162,15 +163,15 @@ class Simulacion {
 		//Thread.sleep(3000);
 		aplicacion.logout();
 		
-		System.out.println("El usuario2 inicia sesion");
-		//Thread.sleep(3000);
-		aplicacion.login("usuario2", "contrasenia2");
-		
-		System.out.println("El usuario2 realiza una busqueda por titulo: 'deprueba'");
+		System.out.println("Un usuario anonimo realiza una busqueda por titulo: 'deprueba'");
 		Thread.sleep(3000);
 		busqueda = aplicacion.buscarPorTitulo("deprueba");
 		System.out.println(busqueda);
 		Thread.sleep(3000);
+		
+		System.out.println("Trata de reproducir la tercera cancion que aparece en la busqueda");
+		Thread.sleep(3000);
+		aplicacion.reproducirReproducible(busqueda.get(2));
 		
 		
 	}

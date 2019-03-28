@@ -2,6 +2,8 @@ package media;
 
 import java.io.*;
 import java.util.*;
+
+import excepciones.ExcepcionReproducirProhibido;
 import pads.musicPlayer.Mp3Player;
 
 /**
@@ -47,12 +49,18 @@ public class Lista extends Reproducible implements Serializable{
      * Reproduce una lista en orden entrando recursivamente en las listas
      * contenidas en las listas
      * @param mp3 Cola donde se añade la cancion
+     * @throws ExcepcionReproducirProhibido 
      */
     @Override
-    public void reproducir(Mp3Player mp3){
+    public int reproducir(Mp3Player mp3) throws ExcepcionReproducirProhibido{
+    	int reproducciones = 0;
+    	if (this.getEstado() != Estado.NOBLOQUEADO) {
+    		throw new ExcepcionReproducirProhibido();
+    	}
         for(Reproducible r: reproducibles){
-            r.reproducir(mp3);
+            reproducciones += r.reproducir(mp3);
         }
+        return reproducciones;
     }
 
     /**

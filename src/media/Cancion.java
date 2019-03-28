@@ -4,6 +4,7 @@ import java.io.*;
 import java.time.*;
 
 import excepciones.ExcepcionDuracionLimiteSuperada;
+import excepciones.ExcepcionReproducirProhibido;
 import pads.musicPlayer.Mp3Player;
 import pads.musicPlayer.exceptions.Mp3InvalidFileException;
 import usuarios.*;
@@ -53,8 +54,13 @@ public class Cancion extends Buscable implements Serializable{
     /**
      * Aniade una cancion a la cola
      * @param mp3 Cola donde se añade la cancion
+     * @return numero de reproducciones realizadas
+     * @throws ExcepcionReproducirProhibido 
      */
-    public void reproducir(Mp3Player mp3) {
+    public int reproducir(Mp3Player mp3) throws ExcepcionReproducirProhibido {
+    	if (this.getEstado() != Estado.NOBLOQUEADO) {
+    		throw new ExcepcionReproducirProhibido();
+    	}
     	this.autor.aniadirReproduccion();
         try {
             mp3.add(ficheroAudio);
@@ -62,6 +68,7 @@ public class Cancion extends Buscable implements Serializable{
         catch(Mp3InvalidFileException e) {
         	System.out.println(e);
         }
+        return 1;
     }
 
 

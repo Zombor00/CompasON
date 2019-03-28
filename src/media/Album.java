@@ -2,6 +2,9 @@ package media;
 
 import java.io.*;
 import java.util.*;
+
+import excepciones.ExcepcionReproducirProhibido;
+
 import java.time.*;
 import pads.musicPlayer.Mp3Player;
 import usuarios.UsuarioRegistrado;
@@ -50,12 +53,18 @@ public class Album extends Buscable implements Serializable{
     /**
      * Reproduce un album en orden
      * @param mp3 Cola donde se añade la cancion
+     * @throws ExcepcionReproducirProhibido 
      */
 
-    public void reproducir(Mp3Player mp3){
+    public int reproducir(Mp3Player mp3) throws ExcepcionReproducirProhibido{
+    	int reproducciones = 0;
+    	if (this.getEstado() != Estado.NOBLOQUEADO) {
+    		throw new ExcepcionReproducirProhibido();
+    	}
         for(Cancion c: canciones){
-            c.reproducir(mp3);
+            reproducciones += c.reproducir(mp3);
         }
+        return reproducciones;
     }
 
     /**
