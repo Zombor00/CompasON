@@ -160,6 +160,11 @@ public class Lista extends Reproducible implements Serializable{
         }
         return true;
 	}
+    
+	@Override
+	public String toString() {
+		return "Lista [titulo=" + this.getTitulo() + " elementos=" + reproducibles + "]";
+	}
    
 
 }

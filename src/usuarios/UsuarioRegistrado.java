@@ -91,6 +91,10 @@ public class UsuarioRegistrado extends UsuarioConCuenta implements Serializable{
 		return this.bloqueadoHasta;
 	}
 
+	public ArrayList<Notificacion> getNotificaciones() {
+		return this.notificaciones;
+	}
+
 	public void setReproducidas(int reproducidas) {
 		this.reproducidas = reproducidas;		
 	}
@@ -262,9 +266,19 @@ public class UsuarioRegistrado extends UsuarioConCuenta implements Serializable{
     	 
     }
 
+    /**
+     * Devuelve si el usuario es menor de edad
+     *
+     * @return true si el usuario es menor
+     */
+
 	public boolean esMenor() {
 		return this.fechaNacimiento.isAfter(LocalDate.now().minusYears(18));
 	}
+	
+	public String toString() {
+    	return nombre+" ("+super.toString()+")";
+    }
 
 
 

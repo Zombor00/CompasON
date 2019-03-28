@@ -2,6 +2,8 @@ package media;
 
 import java.io.*;
 
+import usuarios.UsuarioRegistrado;
+
 /**
  * Esta clase contiene todos los atributos y metodos comunes a los elementos
  * buscables.
@@ -22,5 +24,7 @@ import java.io.*;
       *@param c cancion a desbloquear
       */
      public abstract void desbloquear(Cancion c);
+     
+     public abstract UsuarioRegistrado getAutor();
      
 }

@@ -30,7 +30,13 @@ public class Administrador extends UsuarioConCuenta implements Serializable{
 
 
 
-    /**
+    public ArrayList<Denuncia> getDenuncias() {
+		return denuncias;
+	}
+
+
+
+	/**
     * Este metodo se usa para aniadir una denuncia
     * pendiente de tramitar
     *

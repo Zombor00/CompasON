@@ -278,7 +278,9 @@ public class Aplicacion implements Serializable {
     			throw new ExcepcionErrorCreandoAlbum();
     		}
     	}
-        this.buscables.add(new Album(titulo,anio,canciones));
+    	Album album = new Album(titulo,anio,canciones);
+        this.buscables.add(album);
+        this.usuarioLogeado.aniadirBuscable(album);
     }
 
     /**
@@ -406,7 +408,7 @@ public class Aplicacion implements Serializable {
     	}
         ArrayList<Buscable> coincidencias = new ArrayList<>();
         for (UsuarioRegistrado autor : this.usuarios) {
-            if (autor.getNombreUsuario().startsWith(s)) {
+            if (autor.getNombreUsuario().startsWith(s) || autor.getNombre().startsWith(s)) {
             	for (Buscable b : autor.getBuscables()) {
             		if (b.getEstado() == Estado.NOBLOQUEADO) {
             			coincidencias.add(b);
@@ -472,9 +474,9 @@ public class Aplicacion implements Serializable {
     	if (usuarioLogeado != null && usuarioLogeado.esMenor() && reproducible.esAptoParaMenores() == false) {
         	throw new ExcepcionNoAptoParaMenores();
         }
-    	reproducible.reproducir(cola);
+    	int reproducidas = reproducible.reproducir(cola);
         if (usuarioLogeado != null) {
-        	usuarioLogeado.aniadirReproducida();
+        	usuarioLogeado.setReproducidas(usuarioLogeado.getReproducidas() + reproducidas);
         }
     }
 
@@ -579,13 +581,16 @@ public class Aplicacion implements Serializable {
 	 * @throws InvalidCardNumberException 
 	 * @throws ExcepcionParametrosDeEntradaIncorrectos 
 	 */
-	public void pagarPremium(UsuarioRegistrado usuario, String cardNumStr, String subject) throws InvalidCardNumberException, FailedInternetConnectionException, OrderRejectedException, ExcepcionParametrosDeEntradaIncorrectos {
-		if (usuario == null || cardNumStr == null || subject == null) {
+	public void pagarPremium(String cardNumStr, String subject) throws InvalidCardNumberException, FailedInternetConnectionException, OrderRejectedException, ExcepcionParametrosDeEntradaIncorrectos {
+		if (cardNumStr == null || subject == null) {
     		throw new ExcepcionParametrosDeEntradaIncorrectos();
     	}
+		if (usuarioLogeado == null) {
+			return;
+		}
 		TeleChargeAndPaySystem.charge(cardNumStr, subject, precioPremium, true);
-		usuario.setPremiumHasta(LocalDate.now().plusDays(30));
-		for (Lista l : usuario.getListas()) {
+		usuarioLogeado.setPremiumHasta(LocalDate.now().plusDays(30));
+		for (Lista l : usuarioLogeado.getListas()) {
     		l.setEstado(Estado.NOBLOQUEADO);
     	}
 
