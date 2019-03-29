@@ -177,10 +177,10 @@ class Simulacion {
 		System.out.println(busqueda);
 		Thread.sleep(3000);
 		
-		System.out.println("Trata de reproducir la tercera cancion que aparece en la busqueda");
+		System.out.println("Trata de reproducir la cuarta cancion que aparece en la busqueda");
 		Thread.sleep(3000);
 		try {
-			aplicacion.reproducirReproducible(busqueda.get(2));
+			aplicacion.reproducirReproducible(busqueda.get(3));
 		} catch (ExcepcionNoAptoParaMenores e) {
 			System.out.println("Error al reproducir: Contenido explicito");
 		}
