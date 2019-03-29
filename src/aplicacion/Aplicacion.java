@@ -320,7 +320,7 @@ public class Aplicacion implements Serializable {
     	/* Intentamos un login normal de un usuario registrado */
         for (UsuarioRegistrado u : usuarios){
             if (u.getNombreUsuario() == nombreUsuario &&
-                u.getContrasenia() == this.hashContrasenia(contrasenia)) {
+                u.getContrasenia().equals(this.hashContrasenia(contrasenia))) {
                 usuarioLogeado = u;
                 
                 /* Si el usuario esta bloqueado, login falla */
