@@ -2,7 +2,7 @@ package excepciones;
 
 /**
  * Esta excepcion se lanza cuando el administrador trata de validar
- * una cancion ya validada
+ * una cancion ya validada o el autor modificar una cancion validada
  *
  * @author Alvaro Zaera alvaro.zaeradela@estudiante.uam.es
  * @version 1.0 (25-03-2019)

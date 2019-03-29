@@ -1,6 +1,8 @@
 package aplicacion;
 
 import java.io.*;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.nio.file.*;
 import java.time.*;
 import java.util.*;
@@ -181,11 +183,12 @@ public class Aplicacion implements Serializable {
      * @param fechaNacimiento Fecha de nacimiento del usuario
      * @throws ExcepcionParametrosDeEntradaIncorrectos 
      * @throws ExcepcionNombreDeUsuarioNoDisponible 
+     * @throws NoSuchAlgorithmException 
      */
     public void aniadirUsuario(String nombreUsuario,
                                String contrasenia,
                                String nombreCompleto,
-                               LocalDate fechaNacimiento) throws ExcepcionParametrosDeEntradaIncorrectos, ExcepcionNombreDeUsuarioNoDisponible {
+                               LocalDate fechaNacimiento) throws ExcepcionParametrosDeEntradaIncorrectos, ExcepcionNombreDeUsuarioNoDisponible, NoSuchAlgorithmException {
     	if (nombreUsuario == null || contrasenia == null || nombreCompleto == null || fechaNacimiento == null) {
     		throw new ExcepcionParametrosDeEntradaIncorrectos();
     	}
@@ -198,7 +201,7 @@ public class Aplicacion implements Serializable {
     		}
     	}
         this.usuarios.add(new UsuarioRegistrado(nombreUsuario,
-                                                contrasenia,
+                                                this.hashContrasenia(contrasenia),
                                                 nombreCompleto,
                                                 fechaNacimiento));
     }
@@ -303,8 +306,9 @@ public class Aplicacion implements Serializable {
      * @param contrasenia Contrasenia del usuario que inicia sesion
      * @return true si se inicia sesion correctamente
      * @throws ExcepcionParametrosDeEntradaIncorrectos 
+     * @throws NoSuchAlgorithmException 
      */
-    public void login(String nombreUsuario, String contrasenia) throws ExcepcionLoginErrorCredenciales, ExcepcionLoginBloqueado, ExcepcionParametrosDeEntradaIncorrectos {
+    public void login(String nombreUsuario, String contrasenia) throws ExcepcionLoginErrorCredenciales, ExcepcionLoginBloqueado, ExcepcionParametrosDeEntradaIncorrectos, NoSuchAlgorithmException {
     	if (nombreUsuario == null || contrasenia == null) {
     		throw new ExcepcionParametrosDeEntradaIncorrectos();
     	}
@@ -316,7 +320,7 @@ public class Aplicacion implements Serializable {
     	/* Intentamos un login normal de un usuario registrado */
         for (UsuarioRegistrado u : usuarios){
             if (u.getNombreUsuario() == nombreUsuario &&
-                u.getContrasenia() == contrasenia) {
+                u.getContrasenia() == this.hashContrasenia(contrasenia)) {
                 usuarioLogeado = u;
                 
                 /* Si el usuario esta bloqueado, login falla */
@@ -595,5 +599,20 @@ public class Aplicacion implements Serializable {
     	}
 
 	}
-
+	
+	/**
+	 * Pasa una contrasenia a su hash en MD5
+	 * @param contrasenia sin hashear
+	 * @return String: contrasenia haseada
+	 * @throws NoSuchAlgorithmException 
+	 */
+	public String hashContrasenia(String contrasenia) throws NoSuchAlgorithmException {
+		byte[] hashBytes;
+		String hash;
+		MessageDigest mD = MessageDigest.getInstance("MD5");
+		mD.update(contrasenia.getBytes());
+		hashBytes = mD.digest();
+		hash = new String(hashBytes);
+		return hash;
+	}
 }

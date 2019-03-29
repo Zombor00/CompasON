@@ -5,6 +5,11 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import usuarios.UsuarioRegistrado;
 import org.junit.jupiter.api.Test;
+
+import excepciones.ExcepcionCancionNoContenida;
+import excepciones.ExcepcionCancionYaContenida;
+import excepciones.ExcepcionMp3NoValido;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -23,13 +28,29 @@ public class ListaTest {
 		Cancion cancion1 = new Cancion("cancion1","ruta cancion1",usuario);
 		Cancion cancion2 = new Cancion("cancion2","ruta cancion2",usuario);
 		
-		assertTrue(lista1.aniadirReproducible(cancion1));
-		assertFalse(lista1.aniadirReproducible(cancion1));
+		try {
+			assertTrue(lista1.aniadirReproducible(cancion1));
+		} catch (ExcepcionCancionYaContenida e) {
+			fail("Lanzada excepcion no esperada");
+		}
+		assertThrows(ExcepcionCancionYaContenida.class, () -> {
+			lista1.aniadirReproducible(cancion1);
+	    });
 		
-		lista2.aniadirReproducible(cancion2);
-		lista1.aniadirReproducible(lista2);
+		try {
+			lista2.aniadirReproducible(cancion2);
+		} catch (ExcepcionCancionYaContenida e) {
+			fail("Lanzada excepcion no esperada");
+		}
+		try {
+			lista1.aniadirReproducible(lista2);
+		} catch (ExcepcionCancionYaContenida e) {
+			fail("Lanzada excepcion no esperada");
+		}
 		
-		assertFalse(lista1.aniadirReproducible(cancion2));
+		assertThrows(ExcepcionCancionYaContenida.class, () -> {
+			lista1.aniadirReproducible(cancion2);
+	    });
 	}
 	
 	@Test
@@ -43,9 +64,20 @@ public class ListaTest {
 		reproducibles.add(lista2);
 		lista1 =  new Lista("nombre lista1",reproducibles);
 		
-		assertFalse(lista2.aniadirReproducible(cancion1));
-		lista1.quitarReproducible(cancion1);
-		assertTrue(lista2.aniadirReproducible(cancion1));
+		assertThrows(ExcepcionCancionYaContenida.class, () -> {
+			lista2.aniadirReproducible(cancion1);
+	    });
+	
+		try {
+			lista1.quitarReproducible(cancion1);
+		} catch (ExcepcionCancionNoContenida e1) {
+			fail("Lanzada excepcion no esperada");
+		}
+		try {
+			assertTrue(lista2.aniadirReproducible(cancion1));
+		} catch (ExcepcionCancionYaContenida e) {
+			fail("Lanzada excepcion no esperada");
+		}
 	
 	}
 	
@@ -53,8 +85,16 @@ public class ListaTest {
 	void testQuitarContenidoEn() {
 		Lista lista1 = new Lista("nombre lista1");
 		Lista lista2 = new Lista("nombre lista2");
-		lista1.aniadirReproducible(lista2);
-		lista1.quitarReproducible(lista2);
+		try {
+			lista1.aniadirReproducible(lista2);
+		} catch (ExcepcionCancionYaContenida e) {
+			fail("Lanzada excepcion no esperada");
+		}
+		try {
+			lista1.quitarReproducible(lista2);
+		} catch (ExcepcionCancionNoContenida e) {
+			fail("Lanzada excepcion no esperada");
+		}
 		
 		assertTrue(lista2.getContenidoEn().isEmpty());
 	}
@@ -65,10 +105,20 @@ public class ListaTest {
 		UsuarioRegistrado usuario = new UsuarioRegistrado("nombre usuario","contrasenia","nombre",LocalDate.now());
 		Cancion cancion1 = new Cancion("cancion1","ruta cancion1",usuario);
 		
-		lista.aniadirReproducible(cancion1);
-		assertTrue(lista.quitarReproducible(cancion1));
+		try {
+			lista.aniadirReproducible(cancion1);
+		} catch (ExcepcionCancionYaContenida e1) {
+			fail("Lanzada excepcion no esperada");
+		}
+		try {
+			assertTrue(lista.quitarReproducible(cancion1));
+		} catch (ExcepcionCancionNoContenida e) {
+			fail("Lanzada excepcion no esperada");
+		}
 		assertFalse(lista.contieneReproducible(cancion1));
-		assertFalse(lista.quitarReproducible(cancion1));
+		assertThrows(ExcepcionCancionNoContenida.class, () -> {
+			lista.quitarReproducible(cancion1);
+	    });
 		
 	}
 
@@ -78,9 +128,16 @@ public class ListaTest {
 		UsuarioRegistrado usuario = new UsuarioRegistrado("nombre usuario","contrasenia","nombre",LocalDate.now());
 		Cancion cancion1 = new Cancion("cancion1","ruta cancion1",usuario);
 		
-		lista.aniadirReproducible(cancion1);
+		try {
+			lista.aniadirReproducible(cancion1);
+		} catch (ExcepcionCancionYaContenida e1) {
+			fail("Lanzada excepcion no esperada");
+		}
 		assertTrue(lista.contieneReproducible(cancion1));
-		lista.quitarReproducible(cancion1);
+		try {
+			lista.quitarReproducible(cancion1);
+		} catch (ExcepcionCancionNoContenida e) {
+			fail("Lanzada excepcion no esperada");		}
 		assertFalse(lista.contieneReproducible(cancion1));
 	}
 	
@@ -90,7 +147,11 @@ public class ListaTest {
 		UsuarioRegistrado usuario = new UsuarioRegistrado("nombre usuario","contrasenia","nombre",LocalDate.now());
 		Cancion cancion1 = new Cancion("cancion1","ruta cancion1",usuario);
 		
-		lista.aniadirReproducible(cancion1);
+		try {
+			lista.aniadirReproducible(cancion1);
+		} catch (ExcepcionCancionYaContenida e) {
+			fail("Lanzada excepcion no esperada");
+		}
 		assertFalse(lista.esAptoParaMenores());
 		cancion1.validar(EstadoValidacion.APTOMENORES);
 		assertTrue(lista.esAptoParaMenores());

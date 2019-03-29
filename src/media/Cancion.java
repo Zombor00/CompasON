@@ -5,6 +5,10 @@ import java.time.*;
 
 import excepciones.ExcepcionDuracionLimiteSuperada;
 import excepciones.ExcepcionReproducirProhibido;
+import excepciones.ExcepcionCancionYaValidada;
+import excepciones.ExcepcionCancionYaNoModificable;
+import excepciones.ExcepcionMp3NoValido;
+import excepciones.ExcepcionNoAptoParaMenores;
 import pads.musicPlayer.Mp3Player;
 import pads.musicPlayer.exceptions.Mp3InvalidFileException;
 import usuarios.*;
@@ -97,21 +101,23 @@ public class Cancion extends Buscable implements Serializable{
      * @throws ExcepcionDuracionLimiteSuperada 
      * @throws FileNotFoundException 
      */
-    public boolean modificar(String titulo, String file) throws FileNotFoundException, ExcepcionDuracionLimiteSuperada {
+    public boolean modificar(String titulo, String file) throws ExcepcionCancionYaValidada,
+    FileNotFoundException, ExcepcionDuracionLimiteSuperada,ExcepcionCancionYaNoModificable,
+    ExcepcionMp3NoValido {
         if(this.estadoValidacion == EstadoValidacion.APTOMENORES ||
            this.estadoValidacion == EstadoValidacion.EXPLICITO) {
-            return false;
+            throw new ExcepcionCancionYaValidada();
         }
 
         if(modificableHasta != null && modificableHasta.isBefore(LocalDate.now())) {
-            return false;
+            throw new ExcepcionCancionYaNoModificable();
         }
 
         if(file != null) {
             if(Mp3Player.isValidMp3File(file)) {
                     this.ficheroAudio = file;
             }else{
-                return false;
+            	throw new ExcepcionMp3NoValido();
             }
         }
 

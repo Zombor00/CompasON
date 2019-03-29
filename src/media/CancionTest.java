@@ -6,7 +6,11 @@ import java.time.LocalDate;
 import usuarios.UsuarioRegistrado;
 import org.junit.jupiter.api.Test;
 
+import excepciones.ExcepcionCancionYaNoModificable;
+import excepciones.ExcepcionCancionYaValidada;
 import excepciones.ExcepcionDuracionLimiteSuperada;
+import excepciones.ExcepcionMp3NoValido;
+import excepciones.ExcepcionUsuarioNoSeguido;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -34,20 +38,36 @@ public class CancionTest {
 	    Cancion cancion2 = new Cancion("cancion2","ruta cancion2",usuario1);
 	    
 	    cancion1.validar(EstadoValidacion.NOVALIDADA);
-	    assertTrue(cancion1.modificar("Wait for it",null));
+	    try {
+			assertTrue(cancion1.modificar("Wait for it",null));
+		} catch (ExcepcionCancionYaValidada | ExcepcionCancionYaNoModificable | ExcepcionMp3NoValido e) {
+			fail("Lanzada excepcion no esperada");
+		}
+	    
 	    assertSame(cancion1.getTitulo(),"Wait for it");
 	    assertSame(cancion1.getModificableHasta(),null);
 ;	    
 	    cancion1.validar(EstadoValidacion.APTOMENORES);
-	    assertFalse(cancion1.modificar("CANTCHANGENAME", null));
+	    assertThrows(ExcepcionCancionYaValidada.class, () -> {
+	    	cancion1.modificar("CANTCHANGENAME", null);
+	    });
+	    
 	    cancion1.validar(EstadoValidacion.EXPLICITO);
-	    assertFalse(cancion1.modificar("My Shot",null));
+	    assertThrows(ExcepcionCancionYaValidada.class, () -> {
+	    	cancion1.modificar("My Shot",null);
+	    });
 	    
 	    cancion2.validar(EstadoValidacion.NOVALIDADA);
-	    assertFalse(cancion2.modificar(null,"DOENSTEXIST.mp3"));
+	    assertThrows(ExcepcionMp3NoValido.class, () -> {
+	    	cancion2.modificar(null,"DOENSTEXIST.mp3");
+	    });
 	    
 	    cancion2.validar(EstadoValidacion.NOVALIDADA);
-	    assertTrue(cancion2.modificar("Thats What I Like","canciones/Thats What I Like.mp3"));
+	    try {
+			assertTrue(cancion2.modificar("Thats What I Like","canciones/Thats What I Like.mp3"));
+		} catch (ExcepcionCancionYaValidada | ExcepcionCancionYaNoModificable | ExcepcionMp3NoValido e) {
+			fail("Lanzada excepcion no esperada");
+		}
 	}
 	
 	@Test 

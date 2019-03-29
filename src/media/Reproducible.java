@@ -2,6 +2,7 @@ package media;
 
 import java.io.*;
 
+import excepciones.ExcepcionNoAptoParaMenores;
 import excepciones.ExcepcionReproducirProhibido;
 import pads.musicPlayer.Mp3Player;
 
@@ -74,6 +75,7 @@ public abstract class Reproducible implements Serializable{
    * Devuelve True si el elemento reproducible es apto para menores y
    * False en caso contrario.
    * @return boolean
+ * @throws ExcepcionNoAptoParaMenores 
    */
   public abstract boolean esAptoParaMenores();
 

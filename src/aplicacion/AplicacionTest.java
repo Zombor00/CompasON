@@ -3,6 +3,7 @@ package aplicacion;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.FileNotFoundException;
+import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -40,6 +41,8 @@ public class AplicacionTest {
 			fail("Lanzada excepcion no esperada ExcepcionParametrosDeEntradaIncorrectos");
 		} catch (ExcepcionNombreDeUsuarioNoDisponible e) {
 			excepcionLanzada = true;
+		} catch (NoSuchAlgorithmException e) {
+			fail("Lanzada excepcion no esperada: NoSuchAlgorithmException");
 		}
 		assertTrue(excepcionLanzada);
 	}
@@ -50,6 +53,8 @@ public class AplicacionTest {
 			aplicacion.aniadirUsuario("nombre usuario", "contrasenia", "nombre", LocalDate.now());
 		} catch (ExcepcionNombreDeUsuarioNoDisponible e) {
 			
+		} catch (NoSuchAlgorithmException e) {
+			fail("Lanzada excepcion no esperada: NoSuchAlgorithmException");
 		}
 
 		try {
@@ -63,6 +68,8 @@ public class AplicacionTest {
 		}
 		catch (ExcepcionParametrosDeEntradaIncorrectos e) {
 			fail("Lanzada excepcion no esperada ExcepcionParametrosDeEntradaIncorrectos");
+		} catch (NoSuchAlgorithmException e) {
+			fail("Lanzada excepcion no esperada: NoSuchAlgorithmException");
 		}
 		assertTrue(aplicacion.getUsuarioLogeado()!=null);
 		assertFalse(aplicacion.getAdministradorLogeado());
@@ -84,6 +91,8 @@ public class AplicacionTest {
 		}
 		catch (ExcepcionParametrosDeEntradaIncorrectos e) {
 			fail("Lanzada excepcion no esperada ExcepcionParametrosDeEntradaIncorrectos");
+		} catch (NoSuchAlgorithmException e) {
+			fail("Lanzada excepcion no esperada: NoSuchAlgorithmException");
 		}
 		assertTrue(aplicacion.getUsuarioLogeado()==null);
 		assertTrue(aplicacion.getAdministradorLogeado());
@@ -107,6 +116,8 @@ public class AplicacionTest {
 		}
 		catch (ExcepcionParametrosDeEntradaIncorrectos e) {
 			fail("Lanzada excepcion no esperada ExcepcionParametrosDeEntradaIncorrectos");
+		} catch (NoSuchAlgorithmException e) {
+			fail("Lanzada excepcion no esperada: NoSuchAlgorithmException");
 		}
 		assertTrue(excepcionLanzada);
 		assertTrue(aplicacion.getUsuarioLogeado()==null);
@@ -125,6 +136,8 @@ public class AplicacionTest {
 			aplicacion.aniadirUsuario("nombre usuario", "contrasenia", "nombre", LocalDate.now());
 		} catch (ExcepcionNombreDeUsuarioNoDisponible e) {
 			
+		} catch (NoSuchAlgorithmException e) {
+			fail("Lanzada excepcion no esperada: NoSuchAlgorithmException");
 		}
 		
 		/* Inicio normal de sesion */
@@ -139,6 +152,8 @@ public class AplicacionTest {
 		}
 		catch (ExcepcionParametrosDeEntradaIncorrectos e) {
 			fail("Lanzada excepcion no esperada ExcepcionParametrosDeEntradaIncorrectos");
+		} catch (NoSuchAlgorithmException e) {
+			fail("Lanzada excepcion no esperada: NoSuchAlgorithmException");
 		}
 		u = aplicacion.getUsuarioLogeado();
 		aplicacion.logout();
@@ -159,6 +174,8 @@ public class AplicacionTest {
 		}
 		catch (ExcepcionParametrosDeEntradaIncorrectos e) {
 			fail("Lanzada excepcion no esperada ExcepcionParametrosDeEntradaIncorrectos");
+		} catch (NoSuchAlgorithmException e) {
+			fail("Lanzada excepcion no esperada: NoSuchAlgorithmException");
 		}
 		assertTrue(excepcionLanzada);
 		assertTrue(aplicacion.getUsuarioLogeado()==null);
@@ -179,6 +196,8 @@ public class AplicacionTest {
 		}
 		catch (ExcepcionParametrosDeEntradaIncorrectos e) {
 			fail("Lanzada excepcion no esperada ExcepcionParametrosDeEntradaIncorrectos");
+		} catch (NoSuchAlgorithmException e) {
+			fail("Lanzada excepcion no esperada: NoSuchAlgorithmException");
 		}
 		assertTrue(aplicacion.getUsuarioLogeado()!=null);
 		assertFalse(aplicacion.getAdministradorLogeado());

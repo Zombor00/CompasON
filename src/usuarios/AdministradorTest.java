@@ -6,6 +6,7 @@ import java.time.*;
 import org.junit.jupiter.api.Test;
 
 import excepciones.ExcepcionCancionModificable;
+import excepciones.ExcepcionCancionYaContenida;
 import excepciones.ExcepcionCancionYaValidada;
 import gestion.Denuncia;
 import media.*;
@@ -69,7 +70,11 @@ public class AdministradorTest {
 		Cancion denunciada = new Cancion("tit","file",autor);
 		Album a = new Album("tit",LocalDate.now());
 		/*Aniadimos la cancion a un album para probar todas las funcionalidades*/
-		a.aniadirCancion(denunciada);
+		try {
+			a.aniadirCancion(denunciada);
+		} catch (ExcepcionCancionYaContenida e) {
+			fail("Lanzada excepcion no esperada");
+		}
 		Denuncia d = new Denuncia(denunciante, denunciada, "Es plagio");
 		autor.aniadirBuscable(denunciada);
 		autor.aniadirBuscable(a);
@@ -91,7 +96,11 @@ public class AdministradorTest {
 		Cancion denunciada = new Cancion("tit","file",autor);
 		Album a = new Album("tit",LocalDate.now());
 		/*Aniadimos la cancion a un album para probar todas las funcionalidades*/
-		a.aniadirCancion(denunciada);
+		try {
+			a.aniadirCancion(denunciada);
+		} catch (ExcepcionCancionYaContenida e) {
+			fail("Lanzada excepcion no esperada");
+		}
 		Denuncia d = new Denuncia(denunciante, denunciada, "Es plagio");
 		autor.aniadirBuscable(denunciada);
 		autor.aniadirBuscable(a);

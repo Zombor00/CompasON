@@ -2,7 +2,9 @@ package media;
 
 import java.io.*;
 import java.util.*;
-
+import excepciones.ExcepcionCancionNoContenida;
+import excepciones.ExcepcionCancionNoContenida;
+import excepciones.ExcepcionCancionYaContenida;
 import excepciones.ExcepcionReproducirProhibido;
 import pads.musicPlayer.Mp3Player;
 
@@ -68,10 +70,12 @@ public class Lista extends Reproducible implements Serializable{
      * @param r Cancion a aniadir en el album
      * @return false si el Reproducible ya esta en la lista true en caso contrario
      */
-    public boolean aniadirReproducible(Reproducible r){
+    public boolean aniadirReproducible(Reproducible r) throws ExcepcionCancionYaContenida{
 
 
-        if(this.contenidoEnPadres(r)) return false;
+        if(this.contenidoEn(r)) {
+        	throw new ExcepcionCancionYaContenida();
+        }
         reproducibles.add(r);
         r.aniadirContenidoEn(this);
         return true;
@@ -82,11 +86,13 @@ public class Lista extends Reproducible implements Serializable{
      * @param r Reproducible a quitar de la lista
      * @return true si existe el reproducible a quitar false en caso contrario
      */
-    public boolean quitarReproducible(Reproducible r){
+    public boolean quitarReproducible(Reproducible r) throws ExcepcionCancionNoContenida{
         int index;
 
         index = reproducibles.indexOf(r);
-        if(index == -1)return false;
+        if(index == -1) {
+        	throw new ExcepcionCancionNoContenida();
+        }
 
         reproducibles.remove(index);
         r.quitarContenidoEn(this);
@@ -135,7 +141,7 @@ public class Lista extends Reproducible implements Serializable{
      * esta contenido. False en caso contrario
      * @param r: reproducible a buscar en las listas padre
      */
-    public boolean contenidoEnPadres(Reproducible r) {
+    public boolean contenidoEn(Reproducible r) {
     	boolean aux = false;
     	if(this.getContenidoEn().isEmpty()) {
     		if(this.contieneReproducible(r)) {
@@ -143,7 +149,7 @@ public class Lista extends Reproducible implements Serializable{
     		}
     	}else {
     		for(Lista l: this.getContenidoEn()) {
-    			if(l.contenidoEnPadres(r)) {
+    			if(l.contenidoEn(r)) {
     				aux = true;
     			}
     		}

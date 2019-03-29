@@ -4,7 +4,8 @@ import java.io.*;
 import java.util.*;
 
 import excepciones.ExcepcionReproducirProhibido;
-
+import excepciones.ExcepcionCancionYaContenida;
+import excepciones.ExcepcionCancionNoContenida;
 import java.time.*;
 import pads.musicPlayer.Mp3Player;
 import usuarios.UsuarioRegistrado;
@@ -72,8 +73,10 @@ public class Album extends Buscable implements Serializable{
      * @param c Cancion a aniadir en el album
      * @return false si la cancion ya esta en el album true en caso contrario
      */
-    public boolean aniadirCancion(Cancion c){
-        if(canciones.contains(c))return false;
+    public boolean aniadirCancion(Cancion c) throws ExcepcionCancionYaContenida{
+        if(canciones.contains(c)) {
+        	throw new ExcepcionCancionYaContenida();
+        }
         canciones.add(c);
         this.setDuracion(this.getDuracion() + c.getDuracion());
         return true;
@@ -84,11 +87,13 @@ public class Album extends Buscable implements Serializable{
      * @param c Cancion a quitar del album
      * @return true si existe la cancion a quitar false en caso contrario
      */
-    public boolean quitarCancion(Cancion c){
+    public boolean quitarCancion(Cancion c) throws ExcepcionCancionNoContenida{
         int index;
 
         index = canciones.indexOf(c);
-        if(index == -1)return false;
+        if(index == -1) {
+        	throw new ExcepcionCancionNoContenida();
+        }
 
         canciones.remove(index);
 
