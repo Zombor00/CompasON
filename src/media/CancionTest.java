@@ -10,7 +10,6 @@ import excepciones.ExcepcionCancionYaNoModificable;
 import excepciones.ExcepcionCancionYaValidada;
 import excepciones.ExcepcionDuracionLimiteSuperada;
 import excepciones.ExcepcionMp3NoValido;
-import excepciones.ExcepcionUsuarioNoSeguido;
 
 import static org.junit.jupiter.api.Assertions.*;
 

@@ -8,7 +8,6 @@ import excepciones.ExcepcionReproducirProhibido;
 import excepciones.ExcepcionCancionYaValidada;
 import excepciones.ExcepcionCancionYaNoModificable;
 import excepciones.ExcepcionMp3NoValido;
-import excepciones.ExcepcionNoAptoParaMenores;
 import pads.musicPlayer.Mp3Player;
 import pads.musicPlayer.exceptions.Mp3InvalidFileException;
 import usuarios.*;
