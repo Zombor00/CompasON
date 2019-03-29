@@ -7,10 +7,7 @@ import java.nio.file.*;
 import java.time.*;
 import java.util.*;
 
-import es.uam.eps.padsof.telecard.FailedInternetConnectionException;
-import es.uam.eps.padsof.telecard.InvalidCardNumberException;
-import es.uam.eps.padsof.telecard.OrderRejectedException;
-import es.uam.eps.padsof.telecard.TeleChargeAndPaySystem;
+import es.uam.eps.padsof.telecard.*;
 import excepciones.*;
 import media.*;
 import gestion.*;
@@ -376,6 +373,7 @@ public class Aplicacion implements Serializable {
     		this.usuarioLogeado.setUltimoLogin(LocalDate.now());
     		this.usuarioLogeado = null;
     	}
+    	this.cola.stop();
     }
 
     /**
@@ -590,6 +588,9 @@ public class Aplicacion implements Serializable {
     		throw new ExcepcionParametrosDeEntradaIncorrectos();
     	}
 		if (usuarioLogeado == null) {
+			return;
+		}
+		if (usuarioLogeado.getPremiumHasta() != null && LocalDate.now().isBefore(usuarioLogeado.getPremiumHasta())) {
 			return;
 		}
 		TeleChargeAndPaySystem.charge(cardNumStr, subject, precioPremium, true);

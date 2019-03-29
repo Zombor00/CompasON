@@ -291,5 +291,10 @@ class Simulacion {
 		System.out.println(aplicacion.getUsuarioLogeado().getListas());
 		
 		
+		Thread.sleep(3000);		
+		System.out.println("El usuario3 cierra sesion");
+		aplicacion.logout();
+		
+		
 	}
 }
