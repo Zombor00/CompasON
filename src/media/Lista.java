@@ -6,6 +6,8 @@ import excepciones.ExcepcionCancionNoContenida;
 import excepciones.ExcepcionCancionYaContenida;
 import excepciones.ExcepcionReproducirProhibido;
 import pads.musicPlayer.Mp3Player;
+import pads.musicPlayer.exceptions.Mp3InvalidFileException;
+import usuarios.UsuarioRegistrado;
 
 /**
  * Esta clase tiene toda la informacion relevante a las listas.
@@ -51,15 +53,16 @@ public class Lista extends Reproducible implements Serializable{
      * contenidas en las listas
      * @param mp3 Cola donde se añade la cancion
      * @throws ExcepcionReproducirProhibido 
+     * @throws Mp3InvalidFileException 
      */
     @Override
-    public int reproducir(Mp3Player mp3) throws ExcepcionReproducirProhibido{
+    public int reproducir(Mp3Player mp3, UsuarioRegistrado usuarioLogeado) throws ExcepcionReproducirProhibido, Mp3InvalidFileException{
     	int reproducciones = 0;
     	if (this.getEstado() != Estado.NOBLOQUEADO) {
     		throw new ExcepcionReproducirProhibido();
     	}
         for(Reproducible r: reproducibles){
-            reproducciones += r.reproducir(mp3);
+            reproducciones += r.reproducir(mp3,usuarioLogeado);
         }
         return reproducciones;
     }
@@ -70,7 +73,10 @@ public class Lista extends Reproducible implements Serializable{
      * @return false si el Reproducible ya esta en la lista true en caso contrario
      */
     public boolean aniadirReproducible(Reproducible r) throws ExcepcionCancionYaContenida{
-
+    	
+    	/*if(r.esValido()==false) {
+    		return false;
+    	}*/
 
         if(this.contenidoEn(r)) {
         	throw new ExcepcionCancionYaContenida();
@@ -169,6 +175,16 @@ public class Lista extends Reproducible implements Serializable{
 	@Override
 	public String toString() {
 		return "Lista [titulo=" + this.getTitulo() + " elementos=" + reproducibles + "]";
+	}
+	
+	@Override
+    public boolean esValido() {
+    	for (Reproducible r : this.reproducibles) {
+    		if (r.esValido() == false) {
+    			return false;
+    		}
+    	}
+    	return true;
 	}
    
 

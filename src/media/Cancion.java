@@ -59,19 +59,22 @@ public class Cancion extends Buscable implements Serializable{
      * @param mp3 Cola donde se añade la cancion
      * @return numero de reproducciones realizadas
      * @throws ExcepcionReproducirProhibido 
+     * @throws Mp3InvalidFileException 
      */
-    public int reproducir(Mp3Player mp3) throws ExcepcionReproducirProhibido {
+    public int reproducir(Mp3Player mp3, UsuarioRegistrado usuarioLogeado) throws ExcepcionReproducirProhibido, Mp3InvalidFileException {
     	if (this.getEstado() != Estado.NOBLOQUEADO) {
     		throw new ExcepcionReproducirProhibido();
     	}
-    	this.autor.aniadirReproduccion();
-        try {
-            mp3.add(ficheroAudio);
-        }
-        catch(Mp3InvalidFileException e) {
-        	System.out.println(e);
-        }
-        return 1;
+    	if (this.autor == usuarioLogeado) {
+    		return 0;
+    	}
+    	mp3.add(ficheroAudio);
+    	if (this.autor == usuarioLogeado) {
+    		return 0;
+    	} else {
+    		this.autor.aniadirReproduccion();
+    		return 1;
+    	}
     }
 
 
@@ -197,5 +200,22 @@ public class Cancion extends Buscable implements Serializable{
 		}
 		return false;
 	}
+    
+    @Override
+    public boolean esValido() {
+    	if (this.estadoValidacion != EstadoValidacion.NOVALIDADA) {
+    		return true;
+    	} else {
+    		return false;
+    	}
+    }
+    
+    public boolean equals(Cancion c) {
+    	if (this.getTitulo().equals(c.getTitulo())){
+    		return true;
+    	} else {
+    		return false;
+    	}
+    }
 
 }

@@ -5,6 +5,8 @@ import java.io.*;
 import excepciones.ExcepcionNoAptoParaMenores;
 import excepciones.ExcepcionReproducirProhibido;
 import pads.musicPlayer.Mp3Player;
+import pads.musicPlayer.exceptions.Mp3InvalidFileException;
+import usuarios.UsuarioRegistrado;
 
 
 /**
@@ -37,7 +39,7 @@ public abstract class Reproducible implements Serializable{
 
   public abstract boolean contieneReproducible(Reproducible e);
 
-  public abstract int reproducir(Mp3Player mp3) throws ExcepcionReproducirProhibido;
+  public abstract int reproducir(Mp3Player mp3, UsuarioRegistrado usuarioLogeado) throws ExcepcionReproducirProhibido, Mp3InvalidFileException;
 
   public String getTitulo(){
       return this.titulo;
@@ -75,9 +77,17 @@ public abstract class Reproducible implements Serializable{
    * Devuelve True si el elemento reproducible es apto para menores y
    * False en caso contrario.
    * @return boolean
- * @throws ExcepcionNoAptoParaMenores 
+   * @throws ExcepcionNoAptoParaMenores 
    */
   public abstract boolean esAptoParaMenores();
+  
+  /**
+   * Devuelve True si es valido
+   * 
+   * @return boolean
+   * @throws ExcepcionNoAptoParaMenores 
+   */
+  public abstract boolean esValido();
 
 
   /**

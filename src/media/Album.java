@@ -8,6 +8,7 @@ import excepciones.ExcepcionCancionYaContenida;
 import excepciones.ExcepcionCancionNoContenida;
 import java.time.*;
 import pads.musicPlayer.Mp3Player;
+import pads.musicPlayer.exceptions.Mp3InvalidFileException;
 import usuarios.UsuarioRegistrado;
 
 /**
@@ -55,15 +56,16 @@ public class Album extends Buscable implements Serializable{
      * Reproduce un album en orden
      * @param mp3 Cola donde se añade la cancion
      * @throws ExcepcionReproducirProhibido 
+     * @throws Mp3InvalidFileException 
      */
 
-    public int reproducir(Mp3Player mp3) throws ExcepcionReproducirProhibido{
+    public int reproducir(Mp3Player mp3, UsuarioRegistrado usuarioLogeado) throws ExcepcionReproducirProhibido, Mp3InvalidFileException{
     	int reproducciones = 0;
     	if (this.getEstado() != Estado.NOBLOQUEADO) {
     		throw new ExcepcionReproducirProhibido();
     	}
         for(Cancion c: canciones){
-            reproducciones += c.reproducir(mp3);
+            reproducciones += c.reproducir(mp3,usuarioLogeado);
         }
         return reproducciones;
     }
@@ -77,6 +79,9 @@ public class Album extends Buscable implements Serializable{
         if(canciones.contains(c)) {
         	throw new ExcepcionCancionYaContenida();
         }
+        /*if (c.getEstadoValidacion() == EstadoValidacion.NOVALIDADA) {
+        	return false;
+        }*/
         canciones.add(c);
         this.setDuracion(this.getDuracion() + c.getDuracion());
         return true;
@@ -179,6 +184,16 @@ public class Album extends Buscable implements Serializable{
     		return null;
     	}
     	return this.canciones.get(0).getAutor();
+    }
+    
+    @Override
+    public boolean esValido() {
+    	for (Cancion c : this.canciones) {
+    		if (c.esValido() == false) {
+    			return false;
+    		}
+    	}
+    	return true;
     }
 
 }

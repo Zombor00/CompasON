@@ -1,8 +1,9 @@
 package excepciones;
 
 /**
- * Esta excepcion se lanza cuando el nombre y/o la contrasenia utilizados
- * al hacer un login son incorrectos
+ * Esta excepcion se lanza cuando el login no es viable, o bien porque la 
+ * cuenta a la que se pretende acceder esta bloqueada, o bien porque ya hay 
+ * un usuario logeado
  *
  * @author Antonio Garcia antonio.garcian@estudiante.uam.es
  * @version 1.0 (05-03-2019)

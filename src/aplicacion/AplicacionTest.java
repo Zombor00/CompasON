@@ -3,13 +3,18 @@ package aplicacion;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import es.uam.eps.padsof.telecard.FailedInternetConnectionException;
+import es.uam.eps.padsof.telecard.InvalidCardNumberException;
+import es.uam.eps.padsof.telecard.OrderRejectedException;
 import excepciones.*;
 import media.Buscable;
 import media.Cancion;
@@ -48,7 +53,7 @@ public class AplicacionTest {
 	}
 	
 	@Test /* Login correcto de un usuario registrado */
-	void testLog1() throws ExcepcionParametrosDeEntradaIncorrectos{
+	void testLog1() throws ExcepcionParametrosDeEntradaIncorrectos, FileNotFoundException, Mp3PlayerException{
 		try {
 			aplicacion.aniadirUsuario("nombre usuario", "contrasenia", "nombre", LocalDate.now());
 		} catch (ExcepcionNombreDeUsuarioNoDisponible e) {
@@ -79,7 +84,7 @@ public class AplicacionTest {
 	}
 	
 	@Test /* Login correcto del administrador */
-	void testLog2() {
+	void testLog2() throws FileNotFoundException, Mp3PlayerException {
 		try {
 			aplicacion.login(aplicacion.nombreAdministrador, aplicacion.contraseniaAdministrador);
 		}
@@ -102,7 +107,7 @@ public class AplicacionTest {
 	}
 	
 	@Test /* Login fallido. Nombre o contrasenia incorrectos */
-	void testLog3() {
+	void testLog3() throws FileNotFoundException, Mp3PlayerException {
 		boolean excepcionLanzada = false;
 		try {
 			aplicacion.login("nombre invalido","contrasenia");
@@ -128,7 +133,7 @@ public class AplicacionTest {
 	}
 	
 	@Test /* Login fallido. Usuario bloqueado */
-	void testLog4() throws ExcepcionParametrosDeEntradaIncorrectos {
+	void testLog4() throws ExcepcionParametrosDeEntradaIncorrectos, FileNotFoundException, Mp3PlayerException {
 		UsuarioRegistrado u = null;
 		boolean excepcionLanzada = false;
 		
@@ -247,7 +252,7 @@ public class AplicacionTest {
 	}
 	
 	@Test 
-	void testBuscarAlbumesPorTitulo() throws ExcepcionErrorCreandoAlbum, ExcepcionParametrosDeEntradaIncorrectos {
+	void testBuscarAlbumesPorTitulo() throws ExcepcionErrorCreandoAlbum, ExcepcionParametrosDeEntradaIncorrectos, NoSuchAlgorithmException, ExcepcionNombreDeUsuarioNoDisponible, ExcepcionLoginErrorCredenciales, ExcepcionLoginBloqueado, FileNotFoundException, Mp3PlayerException {
 		int numDebeEncontrar = 10; /* Numero de albumes que la busqueda debe encontrar */
 		int numDebeObviar = 5; /* Numero de albumes que la busqueda debe obviar */
 		ArrayList<String> nombresQueDebeEncontrar = new ArrayList<>();
@@ -256,7 +261,11 @@ public class AplicacionTest {
 		ArrayList<String> nombresQueHaEncontrado = new ArrayList<>();
 		ArrayList<Cancion> listaCancionesAuxiliar = new ArrayList<>();
 		
-		aplicacion.borrarDatos();	
+		aplicacion.borrarDatos();
+		
+		/* Es ecesario que haya algun usuario logeado para poder aniadir un album */
+		aplicacion.aniadirUsuario("nombre usuario", "contrasenia", "nombre", LocalDate.now());
+		aplicacion.login("nombre usuario", "contrasenia");	
 		
 		for (int i=0; i< numDebeEncontrar; i++) {
 			nombresQueDebeEncontrar.add("debeEncontrar"+i);
@@ -284,8 +293,90 @@ public class AplicacionTest {
 			assertTrue(nombresQueHaEncontrado.get(i) == nombresQueDebeEncontrar.get(i));
 		}
 		
+		aplicacion.logout();
+		
 		aplicacion.borrarDatos();	
 	}
 	
+	@Test
+	void testBuscarPorAutor() throws NoSuchAlgorithmException, ExcepcionParametrosDeEntradaIncorrectos, ExcepcionNombreDeUsuarioNoDisponible, ExcepcionLoginErrorCredenciales, ExcepcionLoginBloqueado, FileNotFoundException, Mp3PlayerException {
+		
+		int numDebeEncontrar = 10; /* Numero de albumes que la busqueda debe encontrar */
+		int numDebeObviar = 5; /* Numero de albumes que la busqueda debe obviar */
+		ArrayList<String> nombresQueDebeEncontrar = new ArrayList<>();
+		ArrayList<String> nombresQueDebeObviar = new ArrayList<>();
+		ArrayList<Buscable> encontrados = new ArrayList<>();
+		ArrayList<String> nombresQueHaEncontrado = new ArrayList<>();
+		Cancion c = null;
+		
+		aplicacion.borrarDatos();
+		
+		/* Es ecesario que haya algun usuario logeado para que haya autor */
+		aplicacion.aniadirUsuario("autor", "contrasenia", "autor", LocalDate.now());
+		aplicacion.login("autor", "contrasenia");
+		
+		for (int i=0; i< numDebeEncontrar; i++) {
+			nombresQueDebeEncontrar.add("debeEncontrar"+i);
+		}
+		for (int i=0; i< numDebeObviar; i++) {
+			nombresQueDebeObviar.add("debeObviar"+i);
+		}
+		
+		for (int i = 0; i < numDebeEncontrar; i++) {
+			c = new Cancion(nombresQueDebeEncontrar.get(i),"Ruta",aplicacion.getUsuarioLogeado());
+			aplicacion.aniadirCancion(c);
+			aplicacion.getUsuarioLogeado().aniadirBuscable(c);
+		}
+		for (int i = 0; i < numDebeObviar; i++) {
+			aplicacion.aniadirCancion(new Cancion(nombresQueDebeObviar.get(i),"Ruta",null));
+		}
+		
+		encontrados = aplicacion.buscarPorAutor("auto");
+		
+		for (Buscable b : encontrados) {
+			nombresQueHaEncontrado.add(b.getTitulo());
+		}
+		
+		assertTrue(nombresQueHaEncontrado.size()==numDebeEncontrar);
+		
+		for (int i=0; i< numDebeEncontrar; i++) {
+			assertTrue(nombresQueHaEncontrado.get(i) == nombresQueDebeEncontrar.get(i));
+		}
+		
+		aplicacion.logout();
+		
+		aplicacion.borrarDatos();	
+
+	}
+	
+	@Test
+	void testPagarPremium() throws NoSuchAlgorithmException, ExcepcionParametrosDeEntradaIncorrectos, ExcepcionNombreDeUsuarioNoDisponible, ExcepcionLoginErrorCredenciales, ExcepcionLoginBloqueado, InvalidCardNumberException, FailedInternetConnectionException, OrderRejectedException {
+		aplicacion.aniadirUsuario("usuario que va ser premium", "contrasenia", "nombreCompleto", LocalDate.now());
+		aplicacion.login("usuario que va ser premium", "contrasenia");
+		aplicacion.pagarPremium("5390700823285988", "test");
+		assertTrue(aplicacion.getUsuarioLogeado().getPremiumHasta().equals(LocalDate.now().plusDays(30)));
+	}
+	
+	@Test
+	void testGuardarCargar() throws ExcepcionParametrosDeEntradaIncorrectos, NoSuchAlgorithmException, ExcepcionNombreDeUsuarioNoDisponible, IOException, ClassNotFoundException, Mp3PlayerException {
+		List<Buscable> canciones = null;
+		List<UsuarioRegistrado> usuarios = null;
+		aplicacion.borrarDatos();
+		
+		aplicacion.aniadirCancion(new Cancion("nombre cancion","ruta",null));
+		aplicacion.aniadirUsuario("nombreUsuario", "contrasenia", "nombreCompleto", LocalDate.now());
+		canciones = aplicacion.getBuscables();
+		usuarios = aplicacion.getUsuarios();
+		aplicacion.guardarDatos();
+		
+		aplicacion.borrarDatos();
+		
+		aplicacion.cargarDatos();
+		aplicacion = Aplicacion.getInstance(0, 0, 0);
+		
+		assertTrue(usuarios.get(0).equals(aplicacion.getUsuarios().get(0)));
+		assertTrue(((Cancion)canciones.get(0)).equals((Cancion)aplicacion.getBuscables().get(0)));
+		
+	}
 
 }

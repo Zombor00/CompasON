@@ -172,6 +172,33 @@ public class Aplicacion implements Serializable {
     }
     
     /**
+     * Setter del atributo limiteReproducciones
+     * 
+     * @param limiteReproducciones Nuevo limite de reproducciones
+     */
+    public void setLimiteReproducciones(int limiteReproducciones) {
+    	this.limiteReproducciones = limiteReproducciones;
+    }
+    
+    /**
+     * Setter del atributo reproduccionesPremium
+     * 
+     * @param reproduccionesPremium Nuevo valor de reproducciones premium
+     */
+    public void setReproduccionesPremium(int reproduccionesPremium) {
+    	this.reproduccionesPremium = reproduccionesPremium;
+    }
+    
+    /**
+     * Setter del atributo precioPremium
+     * 
+     * @param precioPremium Nuevo precio premium
+     */
+    public void setPrecioPremium(int precioPremium) {
+    	this.precioPremium = precioPremium;
+    }
+    
+    /**
      * Aniade un usario a la aplicacion
      *
      * @param nombreUsuario Nombre del usuario
@@ -274,7 +301,7 @@ public class Aplicacion implements Serializable {
     		throw new ExcepcionParametrosDeEntradaIncorrectos();
     	}
     	for (Cancion cancion : canciones) {
-    		if (cancion.getAutor() != usuarioLogeado) {
+    		if (cancion.getAutor() != usuarioLogeado || cancion.getEstadoValidacion() == EstadoValidacion.NOVALIDADA) {
     			throw new ExcepcionErrorCreandoAlbum();
     		}
     	}
@@ -306,6 +333,9 @@ public class Aplicacion implements Serializable {
      * @throws NoSuchAlgorithmException 
      */
     public void login(String nombreUsuario, String contrasenia) throws ExcepcionLoginErrorCredenciales, ExcepcionLoginBloqueado, ExcepcionParametrosDeEntradaIncorrectos, NoSuchAlgorithmException {
+    	if (usuarioLogeado != null) {
+    		throw(new ExcepcionLoginBloqueado());
+    	}
     	if (nombreUsuario == null || contrasenia == null) {
     		throw new ExcepcionParametrosDeEntradaIncorrectos();
     	}
@@ -327,7 +357,7 @@ public class Aplicacion implements Serializable {
                 }
                 u.setBloqueadoHasta(null);
                 
-                /* Si es la primera vez que inicia sesio este mes... */
+                /* Si es la primera vez que inicia sesion este mes... */
                 if (u.getUltimoLogin()!=null &&
                     u.getUltimoLogin().getMonth() == LocalDate.now().minusMonths(1).getMonth()) {
                 	
@@ -361,8 +391,10 @@ public class Aplicacion implements Serializable {
 
     /**
      * Cierra la sesion del usuario que esta logeado
+     * @throws Mp3PlayerException 
+     * @throws FileNotFoundException 
      */
-    public void logout() {
+    public void logout() throws FileNotFoundException, Mp3PlayerException {
     	actualizarCanciones();
     	if (administradorLogeado == false && usuarioLogeado ==null) {
     		return;
@@ -374,6 +406,7 @@ public class Aplicacion implements Serializable {
     		this.usuarioLogeado = null;
     	}
     	this.cola.stop();
+    	this.cola = new Mp3Player();
     }
 
     /**
@@ -411,11 +444,7 @@ public class Aplicacion implements Serializable {
         ArrayList<Buscable> coincidencias = new ArrayList<>();
         for (UsuarioRegistrado autor : this.usuarios) {
             if (autor.getNombreUsuario().startsWith(s) || autor.getNombre().startsWith(s)) {
-            	for (Buscable b : autor.getBuscables()) {
-            		if (b.getEstado() == Estado.NOBLOQUEADO) {
-            			coincidencias.add(b);
-            		}
-            	}
+            	coincidencias.addAll(autor.getBuscables());
             }
         }
         return coincidencias;
@@ -445,7 +474,8 @@ public class Aplicacion implements Serializable {
         	throw new ExcepcionLimiteReproducidasAlcanzado();
         }
         
-        if (usuarioLogeado != null && usuarioLogeado.esMenor() && reproducible.esAptoParaMenores() == false) {
+        if ((usuarioLogeado != null && usuarioLogeado.esMenor() && reproducible.esAptoParaMenores() == false) ||
+        	(usuarioLogeado == null && reproducible.esAptoParaMenores() == false)){
         	throw new ExcepcionNoAptoParaMenores();
         }
         
@@ -457,16 +487,31 @@ public class Aplicacion implements Serializable {
         	throw new ExcepcionReproducirProhibido();
         }
         
-        int reproducidas = reproducible.reproducir(cola);
+        int reproducidas = reproducible.reproducir(cola,this.usuarioLogeado);
         if (usuarioLogeado != null) {
         	usuarioLogeado.setReproducidas(usuarioLogeado.getReproducidas() + reproducidas);
         }
         this.cola.play();
     }
     
-    public void aniadirALaCola(Reproducible reproducible) throws ExcepcionParametrosDeEntradaIncorrectos, ExcepcionLimiteReproducidasAlcanzado, ExcepcionNoAptoParaMenores, ExcepcionReproducirProhibido {
+    /**
+     * Aniadie un elemento a la cola de reproduccion
+     *
+     * @param reproducible Elemento que se pretende reproducir
+     * @throws Mp3PlayerException 
+     * @throws ExcepcionLimiteReproducidasAlcanzado 
+     * @throws ExcepcionNoAptoParaMenores 
+     * @throws ExcepcionParametrosDeEntradaIncorrectos 
+     * @throws ExcepcionReproducirProhibido 
+     * @throws Mp3InvalidFileException 
+     * @throws ExcepcionUsuarioSinCuenta 
+     */
+    public void aniadirALaCola(Reproducible reproducible) throws ExcepcionParametrosDeEntradaIncorrectos, ExcepcionLimiteReproducidasAlcanzado, ExcepcionNoAptoParaMenores, ExcepcionReproducirProhibido, Mp3InvalidFileException, ExcepcionUsuarioSinCuenta {
     	if (reproducible == null) {
     		throw new ExcepcionParametrosDeEntradaIncorrectos();
+    	}
+    	if (usuarioLogeado == null && administradorLogeado == false) {
+    		throw new ExcepcionUsuarioSinCuenta();
     	}
     	if (usuarioLogeado != null && 
     			usuarioLogeado.getReproducidas() >= limiteReproducciones && 
@@ -476,7 +521,7 @@ public class Aplicacion implements Serializable {
     	if (usuarioLogeado != null && usuarioLogeado.esMenor() && reproducible.esAptoParaMenores() == false) {
         	throw new ExcepcionNoAptoParaMenores();
         }
-    	int reproducidas = reproducible.reproducir(cola);
+    	int reproducidas = reproducible.reproducir(cola,this.usuarioLogeado);
         if (usuarioLogeado != null) {
         	usuarioLogeado.setReproducidas(usuarioLogeado.getReproducidas() + reproducidas);
         }
@@ -489,10 +534,14 @@ public class Aplicacion implements Serializable {
      *
      * @param cancion Cancion que se denuncia
      * @throws ExcepcionParametrosDeEntradaIncorrectos 
+     * @throws ExcepcionUsuarioSinCuenta 
      */
-    public void denunciarPlagio(Cancion cancion, String comentario) throws ExcepcionParametrosDeEntradaIncorrectos {
+    public void denunciarPlagio(Cancion cancion, String comentario) throws ExcepcionParametrosDeEntradaIncorrectos, ExcepcionUsuarioSinCuenta {
     	if (cancion == null || comentario == null) {
     		throw new ExcepcionParametrosDeEntradaIncorrectos();
+    	}
+    	if (this.usuarioLogeado == null) {
+    		throw new ExcepcionUsuarioSinCuenta();
     	}
         for (Buscable buscable : cancion.getAutor().getBuscables()) {
             if (buscable.contieneReproducible(cancion)) {
@@ -545,6 +594,9 @@ public class Aplicacion implements Serializable {
      * Guarda los datos de la aplicacion
      */
     public void guardarDatos() throws IOException {
+    	
+    	this.cola = null;
+    	
         ObjectOutputStream salidaObjetos = 
             new ObjectOutputStream(
                 new FileOutputStream( "aplicacion.objectData" ) );
@@ -558,14 +610,17 @@ public class Aplicacion implements Serializable {
      * @throws IOException 
      * @throws FileNotFoundException 
      * @throws ClassNotFoundException 
+     * @throws Mp3PlayerException 
      */
-    public void cargarDatos() throws FileNotFoundException, IOException, ClassNotFoundException {
+    public void cargarDatos() throws FileNotFoundException, IOException, ClassNotFoundException, Mp3PlayerException {
         ObjectInputStream entradaObjetos = null;
         entradaObjetos =
         		new ObjectInputStream(
         				new FileInputStream( "aplicacion.objectData" ) );
         INSTANCE = (Aplicacion) entradaObjetos.readObject();
         entradaObjetos.close();
+        
+        this.cola = new Mp3Player();
     }
     
     /**
@@ -574,6 +629,7 @@ public class Aplicacion implements Serializable {
     public void borrarDatos() {
     	this.usuarios = new ArrayList<UsuarioRegistrado>();
         this.buscables = new ArrayList<Buscable>();
+        this.usuarioLogeado = null;
     }
 
 	/**
@@ -593,7 +649,7 @@ public class Aplicacion implements Serializable {
 		if (usuarioLogeado.getPremiumHasta() != null && LocalDate.now().isBefore(usuarioLogeado.getPremiumHasta())) {
 			return;
 		}
-		TeleChargeAndPaySystem.charge(cardNumStr, subject, precioPremium, true);
+		TeleChargeAndPaySystem.charge(cardNumStr, subject, precioPremium, false);
 		usuarioLogeado.setPremiumHasta(LocalDate.now().plusDays(30));
 		for (Lista l : usuarioLogeado.getListas()) {
     		l.setEstado(Estado.NOBLOQUEADO);

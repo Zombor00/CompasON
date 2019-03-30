@@ -22,7 +22,7 @@ import pads.musicPlayer.exceptions.Mp3PlayerException;
  * @version 1.0 (23-03-2019)
  */
 class Simulacion {
-	public static void main(String[] args) throws Mp3PlayerException, InterruptedException, ExcepcionLimiteReproducidasAlcanzado, ExcepcionNoAptoParaMenores, ExcepcionLoginErrorCredenciales, ExcepcionLoginBloqueado, ExcepcionDuracionLimiteSuperada, ExcepcionCancionModificable, ExcepcionCancionYaValidada, ExcepcionParametrosDeEntradaIncorrectos, ExcepcionNombreDeUsuarioNoDisponible, IOException, ExcepcionReproducirProhibido, ExcepcionUsuarioYaSeguido, ExcepcionUsuarioNoSeguido, ExcepcionErrorCreandoAlbum, InvalidCardNumberException, FailedInternetConnectionException, OrderRejectedException, ExcepcionUsuarioNoPremium, NoSuchAlgorithmException, ExcepcionCancionYaNoModificable, ExcepcionMp3NoValido {
+	public static void main(String[] args) throws Mp3PlayerException, InterruptedException, ExcepcionLimiteReproducidasAlcanzado, ExcepcionNoAptoParaMenores, ExcepcionLoginErrorCredenciales, ExcepcionLoginBloqueado, ExcepcionDuracionLimiteSuperada, ExcepcionCancionModificable, ExcepcionCancionYaValidada, ExcepcionParametrosDeEntradaIncorrectos, ExcepcionNombreDeUsuarioNoDisponible, IOException, ExcepcionReproducirProhibido, ExcepcionUsuarioYaSeguido, ExcepcionUsuarioNoSeguido, ExcepcionErrorCreandoAlbum, InvalidCardNumberException, FailedInternetConnectionException, OrderRejectedException, ExcepcionUsuarioNoPremium, NoSuchAlgorithmException, ExcepcionCancionYaNoModificable, ExcepcionMp3NoValido, ExcepcionUsuarioSinCuenta {
 		List<Buscable> busqueda = new ArrayList<Buscable>();
 		System.out.println("INICIO DE SIMULACION");
 		Thread.sleep(3000);
