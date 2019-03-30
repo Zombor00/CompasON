@@ -428,7 +428,7 @@ public class Aplicacion implements Serializable {
         }
         return coincidencias;
     }
-
+    
     /**
      * Implementa la busqueda por autor
      *
@@ -444,7 +444,11 @@ public class Aplicacion implements Serializable {
         ArrayList<Buscable> coincidencias = new ArrayList<>();
         for (UsuarioRegistrado autor : this.usuarios) {
             if (autor.getNombreUsuario().startsWith(s) || autor.getNombre().startsWith(s)) {
-            	coincidencias.addAll(autor.getBuscables());
+            	for (Buscable buscable : autor.getBuscables()) {
+                    if (buscable.getEstado() == Estado.NOBLOQUEADO) {
+                        coincidencias.add(buscable);
+                    }
+                }
             }
         }
         return coincidencias;
