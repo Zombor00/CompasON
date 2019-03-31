@@ -13,9 +13,12 @@ import usuarios.UsuarioRegistrado;
  */
 
  public abstract class Buscable extends Reproducible implements Serializable{
+	 
+	 private UsuarioRegistrado autor;
 
-     public Buscable(String titulo){
+     public Buscable(String titulo, UsuarioRegistrado autor){
          super(titulo);
+         this.autor = autor;
      }
    
      /**
@@ -25,6 +28,8 @@ import usuarios.UsuarioRegistrado;
       */
      public abstract void desbloquear(Cancion c);
      
-     public abstract UsuarioRegistrado getAutor();
+     public UsuarioRegistrado getAutor() {
+    	 return this.autor;
+     }
      
 }

@@ -149,7 +149,7 @@ class Simulacion {
 		ArrayList<Cancion> cancionesAlbum = new ArrayList<>();
 		cancionesAlbum.add((Cancion) aplicacion.getUsuarioLogeado().getBuscables().get(2));
 		cancionesAlbum.add((Cancion) aplicacion.getUsuarioLogeado().getBuscables().get(3));
-		aplicacion.aniadirAlbum("depruebazz", LocalDate.now(), cancionesAlbum);
+		aplicacion.aniadirAlbum("depruebazz", cancionesAlbum);
 		
 		System.out.println("El usuario1 cierra sesion");
 		Thread.sleep(3000);

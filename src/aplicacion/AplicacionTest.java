@@ -18,6 +18,7 @@ import es.uam.eps.padsof.telecard.OrderRejectedException;
 import excepciones.*;
 import media.Buscable;
 import media.Cancion;
+import media.Estado;
 import pads.musicPlayer.exceptions.Mp3PlayerException;
 import usuarios.UsuarioRegistrado;
 
@@ -33,7 +34,7 @@ public class AplicacionTest {
 
 	@BeforeAll
 	static void before() throws FileNotFoundException, Mp3PlayerException, ExcepcionParametrosDeEntradaIncorrectos, ExcepcionNombreDeUsuarioNoDisponible {
-		aplicacion = Aplicacion.getInstance(10,10,10);
+		aplicacion = Aplicacion.getInstance(0,0,0);
 	}
 	
 	@Test
@@ -212,6 +213,22 @@ public class AplicacionTest {
 	}
 	
 	@Test 
+	void testLog5() throws NoSuchAlgorithmException, ExcepcionParametrosDeEntradaIncorrectos, ExcepcionNombreDeUsuarioNoDisponible, ExcepcionLoginErrorCredenciales, ExcepcionLoginBloqueado {
+		try {
+			aplicacion.aniadirUsuario("nombre usuario", "contrasenia", "nombre", LocalDate.now());
+		} catch (ExcepcionNombreDeUsuarioNoDisponible e) {
+			
+		}
+		aplicacion.login("nombre usuario", "contrasenia");
+		aplicacion.getUsuarioLogeado().setUltimoLogin(LocalDate.now().minusMonths(1));
+		aplicacion.getUsuarioLogeado().aniadirReproducida();
+		aplicacion.getUsuarioLogeado().aniadirReproduccion();
+		aplicacion.setUsuarioLogeado(null);
+		aplicacion.login("nombre usuario", "contrasenia");
+		assertTrue(aplicacion.getUsuarioLogeado().getReproducidas() == 0);
+	}
+	
+	@Test 
 	void testBuscarCancionesPorTitulo() throws ExcepcionParametrosDeEntradaIncorrectos {
 		int numDebeEncontrar = 10; /* Numero de canciones que la busqueda debe encontrar */
 		int numDebeObviar = 5; /* Numero de canciones que la busqueda debe obviar */
@@ -252,7 +269,7 @@ public class AplicacionTest {
 	}
 	
 	@Test 
-	void testBuscarAlbumesPorTitulo() throws ExcepcionErrorCreandoAlbum, ExcepcionParametrosDeEntradaIncorrectos, NoSuchAlgorithmException, ExcepcionNombreDeUsuarioNoDisponible, ExcepcionLoginErrorCredenciales, ExcepcionLoginBloqueado, FileNotFoundException, Mp3PlayerException {
+	void testBuscarAlbumesPorTitulo() throws ExcepcionErrorCreandoAlbum, ExcepcionParametrosDeEntradaIncorrectos, NoSuchAlgorithmException, ExcepcionNombreDeUsuarioNoDisponible, ExcepcionLoginErrorCredenciales, ExcepcionLoginBloqueado, FileNotFoundException, Mp3PlayerException, ExcepcionUsuarioSinCuenta {
 		int numDebeEncontrar = 10; /* Numero de albumes que la busqueda debe encontrar */
 		int numDebeObviar = 5; /* Numero de albumes que la busqueda debe obviar */
 		ArrayList<String> nombresQueDebeEncontrar = new ArrayList<>();
@@ -275,10 +292,10 @@ public class AplicacionTest {
 		}
 		
 		for (int i = 0; i < numDebeEncontrar; i++) {
-			aplicacion.aniadirAlbum(nombresQueDebeEncontrar.get(i), LocalDate.now(),listaCancionesAuxiliar);
+			aplicacion.aniadirAlbum(nombresQueDebeEncontrar.get(i), listaCancionesAuxiliar);
 		}
 		for (int i = 0; i < numDebeObviar; i++) {
-			aplicacion.aniadirAlbum(nombresQueDebeObviar.get(i), LocalDate.now(),listaCancionesAuxiliar);
+			aplicacion.aniadirAlbum(nombresQueDebeObviar.get(i), listaCancionesAuxiliar);
 		}
 		
 		encontrados = aplicacion.buscarPorTitulo("debeEncontrar");
@@ -377,6 +394,22 @@ public class AplicacionTest {
 		assertTrue(usuarios.get(0).equals(aplicacion.getUsuarios().get(0)));
 		assertTrue(((Cancion)canciones.get(0)).equals((Cancion)aplicacion.getBuscables().get(0)));
 		
+	}
+	
+	@Test
+	void testBorrarEfectivamente() throws ExcepcionParametrosDeEntradaIncorrectos, NoSuchAlgorithmException, ExcepcionNombreDeUsuarioNoDisponible, ExcepcionLoginErrorCredenciales, ExcepcionLoginBloqueado {
+		aplicacion.borrarDatos();
+		aplicacion.aniadirUsuario("autor", "contrasenia", "nombre completo", LocalDate.now());
+		aplicacion.login("autor", "contrasenia");
+		Cancion cancion = new Cancion("titulo","ruta",aplicacion.getUsuarioLogeado());
+		aplicacion.getUsuarioLogeado().aniadirBuscable(cancion);
+		aplicacion.aniadirCancion(cancion);
+		
+		assertTrue(aplicacion.getBuscables().size() == 1);
+		cancion.setEstado(Estado.BORRADO);
+		assertTrue(aplicacion.getBuscables().size() == 1);
+		aplicacion.borrarEfectivamente();
+		assertTrue(aplicacion.getBuscables().size() == 0);
 	}
 
 }

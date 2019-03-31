@@ -24,7 +24,6 @@ public class Cancion extends Buscable implements Serializable{
 
     private static int maxId = 0;
     private int id;
-    private UsuarioRegistrado autor;
     private String ficheroAudio;
     private LocalDate fechaSubida;
     private LocalDate modificableHasta;
@@ -39,10 +38,9 @@ public class Cancion extends Buscable implements Serializable{
      * @param autor autor de la cancion
      */
     public Cancion(String titulo, String file, UsuarioRegistrado autor) {
-        super(titulo);
+        super(titulo, autor);
         this.id = Cancion.maxId +1;
         Cancion.maxId += 1;
-        this.autor = autor;
         this.ficheroAudio = file;
         this.fechaSubida = LocalDate.now();
         this.estadoValidacion = EstadoValidacion.NOVALIDADA;
@@ -65,14 +63,14 @@ public class Cancion extends Buscable implements Serializable{
     	if (this.getEstado() != Estado.NOBLOQUEADO) {
     		throw new ExcepcionReproducirProhibido();
     	}
-    	if (this.autor == usuarioLogeado) {
+    	if (this.getAutor() == usuarioLogeado) {
     		return 0;
     	}
     	mp3.add(ficheroAudio);
-    	if (this.autor == usuarioLogeado) {
+    	if (this.getAutor() == usuarioLogeado) {
     		return 0;
     	} else {
-    		this.autor.aniadirReproduccion();
+    		this.getAutor().aniadirReproduccion();
     		return 1;
     	}
     }
@@ -151,10 +149,6 @@ public class Cancion extends Buscable implements Serializable{
         return this.estadoValidacion;
     }
 
-    public UsuarioRegistrado getAutor() {
-        return this.autor;
-    }
-
     public LocalDate getModificableHasta() {
         return modificableHasta;
     }
@@ -174,13 +168,16 @@ public class Cancion extends Buscable implements Serializable{
     @Override
     public void desbloquear(Cancion c) {
         if(this.equals(c)) {
+        	if (this.getEstado() == Estado.BORRADO) {
+        		return;
+        	}
             this.setEstado(Estado.NOBLOQUEADO);
         }
     }
 
 	@Override
 	public String toString() {
-		return "Cancion [titulo=" + this.getTitulo() + ", autor=" + autor + ", duracion=" + this.getDuracion() + "]";
+		return "Cancion [titulo=" + this.getTitulo() + ", autor=" + this.getAutor() + ", duracion=" + this.getDuracion() + "]";
 	}
 
     @Override
@@ -211,7 +208,7 @@ public class Cancion extends Buscable implements Serializable{
     }
     
     public boolean equals(Cancion c) {
-    	if (this.getTitulo().equals(c.getTitulo())){
+    	if (this.id == c.id){
     		return true;
     	} else {
     		return false;

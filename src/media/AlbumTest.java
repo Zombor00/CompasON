@@ -16,7 +16,7 @@ public class AlbumTest {
 	void testAlbumAniadirCancion() {
 		UsuarioRegistrado usuario = new UsuarioRegistrado("nombre usuario","contrasenia","nombre",LocalDate.now());
 	    Cancion cancion1 = new Cancion("cancion1","ruta cancion1",usuario);
-	    Album album1 = new Album("nombre album",LocalDate.now());
+	    Album album1 = new Album("nombre album",null);
 	    
 	    try {
 			assertTrue(album1.aniadirCancion(cancion1));
@@ -37,7 +37,7 @@ public class AlbumTest {
 		UsuarioRegistrado usuario = new UsuarioRegistrado("nombre usuario","contrasenia","nombre",LocalDate.now());
 	    Cancion cancion1 = new Cancion("cancion1","ruta cancion1",usuario);
 	    Cancion cancion2 = new Cancion("cancion2","ruta cancion2",usuario);
-	    Album album1 = new Album("nombre album",LocalDate.now());
+	    Album album1 = new Album("nombre album",null);
 	    
 	    try {
 			album1.aniadirCancion(cancion1);
@@ -56,7 +56,7 @@ public class AlbumTest {
 	    ArrayList<Cancion> canciones = new ArrayList<>();
 	    canciones.add(cancion1);
 	    canciones.add(cancion2);
-	    Album album1 = new Album("nombre album",LocalDate.now(),canciones);
+	    Album album1 = new Album("nombre album",null,canciones);
 	    
 	    try {
 			assertTrue(album1.quitarCancion(cancion2));
@@ -81,7 +81,7 @@ public class AlbumTest {
 		UsuarioRegistrado usuario = new UsuarioRegistrado("nombre usuario","contrasenia","nombre",LocalDate.now());
 	    Cancion cancion1 = new Cancion("cancion1","ruta cancion1",usuario);
 	    Cancion cancion2 = new Cancion("cancion2","ruta cancion2",usuario);
-	    Album album1 = new Album("nombre album",LocalDate.now());
+	    Album album1 = new Album("nombre album",null);
 	    try {
 			album1.aniadirCancion(cancion1);
 			album1.aniadirCancion(cancion2);
@@ -99,7 +99,7 @@ public class AlbumTest {
 		UsuarioRegistrado usuario = new UsuarioRegistrado("nombre usuario","contrasenia","nombre",LocalDate.now());
 	    Cancion cancion1 = new Cancion("cancion1","ruta cancion1",usuario);
 	    Cancion cancion2 = new Cancion("cancion2","ruta cancion2",usuario);
-	    Album album1 = new Album("nombre album",LocalDate.now(),null);
+	    Album album1 = new Album("nombre album",null);
 	    try {
 			album1.aniadirCancion(cancion1);
 			album1.aniadirCancion(cancion2);
@@ -122,7 +122,7 @@ public class AlbumTest {
 	void testAlbumAptoParaMenores() {
 		UsuarioRegistrado usuario = new UsuarioRegistrado("nombre usuario","contrasenia","nombre",LocalDate.now());
 	    Cancion cancion1 = new Cancion("cancion1","ruta cancion1",usuario);
-	    Album album1 = new Album("nombre album",LocalDate.now(),null);
+	    Album album1 = new Album("nombre album",null);
 	    
 	    try {
 			album1.aniadirCancion(cancion1);
@@ -138,7 +138,7 @@ public class AlbumTest {
 	void testAlbumGetAutor() {
 		UsuarioRegistrado usuario = new UsuarioRegistrado("nombre usuario","contrasenia","nombre",LocalDate.now());
 	    Cancion cancion1 = new Cancion("cancion1","ruta cancion1",usuario);
-	    Album album1 = new Album("nombre album",LocalDate.now());
+	    Album album1 = new Album("nombre album",usuario);
 	    
 	    try {
 			album1.aniadirCancion(cancion1);

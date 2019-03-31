@@ -64,6 +64,13 @@ public class UsuarioRegistrado extends UsuarioConCuenta implements Serializable{
 	}
 
 	public ArrayList<Buscable> getBuscables(){
+		ArrayList<Buscable> borrados = new ArrayList<>();
+		for (Buscable buscable : this.buscables) {
+			if (buscable.getEstado() == Estado.BORRADO){
+				borrados.add(buscable);
+			}
+		}
+		this.buscables.removeAll(borrados);
         return this.buscables;
     }
 
@@ -253,7 +260,7 @@ public class UsuarioRegistrado extends UsuarioConCuenta implements Serializable{
     	
     	LocalDate fechaAntigua = LocalDate.of(anioBuscado, mesBuscado, 1);
     	
-    	for (int i = this.reproducciones.size() - 1; this.reproducciones.get(i).isBefore(fechaAntigua)==false ;i--) {
+    	for (int i = this.reproducciones.size() - 1; i>0 && this.reproducciones.get(i).isBefore(fechaAntigua)==false ;i--) {
     		if (this.reproducciones.get(i).getYear() == anioBuscado &&
     				this.reproducciones.get(i).getMonthValue() == mesBuscado) {
     			cont++;

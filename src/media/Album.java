@@ -20,15 +20,15 @@ import usuarios.UsuarioRegistrado;
 public class Album extends Buscable implements Serializable{
 
     private ArrayList <Cancion> canciones;
-    private LocalDate anio;
+    private int anio;
 
     /**
      * Constructor de la clase album que inicializa el array de canciones y
      * pone titulo al album.
      * @param titulo string que identifica el titulo del album
      */
-    public Album(String titulo,LocalDate anio){
-        this(titulo, anio, new ArrayList<Cancion>() );
+    public Album(String titulo,UsuarioRegistrado autor){
+        this(titulo, autor, new ArrayList<Cancion>() );
     }
 
     /**
@@ -37,10 +37,10 @@ public class Album extends Buscable implements Serializable{
      * @param titulo string que identifica el titulo del album
      * @param canciones array de canciones a meter en el album
      */
-    public Album(String titulo, LocalDate anio, ArrayList <Cancion> canciones){
-        super(titulo);
+    public Album(String titulo, UsuarioRegistrado autor, ArrayList <Cancion> canciones){
+        super(titulo, autor);
         double duracion = 0;
-        this.anio = anio;
+        this.anio = LocalDate.now().getYear();
         if (canciones != null) {
             this.canciones = canciones;
         	for(Cancion c: canciones) {
@@ -170,21 +170,6 @@ public class Album extends Buscable implements Serializable{
         }
         return true;
 	}
-    
-    /**
-     * Devuelve el autor del album
-     * @return UsuarioRegistrado
-     */
-    public UsuarioRegistrado getAutor() {
-    	
-    	if (this.canciones == null){
-    		return null;
-    	}
-    	if (this.canciones.get(0) == null) {
-    		return null;
-    	}
-    	return this.canciones.get(0).getAutor();
-    }
     
     @Override
     public boolean esValido() {

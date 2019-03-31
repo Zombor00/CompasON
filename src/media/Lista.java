@@ -27,8 +27,8 @@ public class Lista extends Reproducible implements Serializable{
      */
     public Lista(String titulo){
         super(titulo);
-        this.reproducibles = new ArrayList<Reproducible>();
-        this.contenidaEn = new ArrayList<>();
+        this.reproducibles = new ArrayList<Reproducible>(); 
+        this.contenidaEn = new ArrayList<>(); /* A esto llamalo padres */
     }
 
     /**
@@ -78,8 +78,8 @@ public class Lista extends Reproducible implements Serializable{
     		return false;
     	}*/
 
-        if(this.contenidoEn(r)) {
-        	throw new ExcepcionCancionYaContenida();
+        if(this.contenidoEn(r)) { /* this.esViableAniadir(r) */
+        	throw new ExcepcionCancionYaContenida(); /* InsercionInvalida */
         }
         reproducibles.add(r);
         r.aniadirContenidoEn(this);
@@ -122,12 +122,8 @@ public class Lista extends Reproducible implements Serializable{
         }
         return false;
     }
-
-    @Override
-    public void setEstado(Estado estado){
-      if (estado == Estado.BLOQUEADO) return;
-      this.setEstado(estado);
-    }
+    
+    /* getPadres, aniadirPadre, quitarPadre */
 
     public ArrayList<Lista> getContenidoEn() {
     	return this.contenidaEn;
@@ -161,6 +157,19 @@ public class Lista extends Reproducible implements Serializable{
     	}
     	return aux;
     }
+    /* Devuelve true si se puede aniadir r a la lista 
+    public boolean esViableAniadir(Reproducible r) {
+    	if(this.contieneReproducible(r)) {
+    		return false;
+    	}
+    	for(Lista padre: this.getPadres()) {
+    		if(l.contieneReproducible(r)) {
+    			return false;
+    		}
+    	}
+    	return true;
+    }
+    */
 
     @Override
 	public boolean esAptoParaMenores() {
@@ -186,6 +195,14 @@ public class Lista extends Reproducible implements Serializable{
     	}
     	return true;
 	}
+	
+	@Override
+	public void setEstado(Estado estado){
+		  if (estado == Estado.BORRADO) {
+			  return;
+		  }
+	      super.setEstado(estado);
+	  }
    
 
 }

@@ -68,7 +68,7 @@ public class AdministradorTest {
 		UsuarioRegistrado denunciante = new UsuarioRegistrado("a","a","a",LocalDate.now());
 		UsuarioRegistrado autor = new UsuarioRegistrado("b","b","b",LocalDate.now());
 		Cancion denunciada = new Cancion("tit","file",autor);
-		Album a = new Album("tit",LocalDate.now());
+		Album a = new Album("tit",autor);
 		/*Aniadimos la cancion a un album para probar todas las funcionalidades*/
 		try {
 			a.aniadirCancion(denunciada);
@@ -94,7 +94,7 @@ public class AdministradorTest {
 		UsuarioRegistrado denunciante = new UsuarioRegistrado("a","a","a",LocalDate.now());
 		UsuarioRegistrado autor = new UsuarioRegistrado("b","b","b",LocalDate.now());
 		Cancion denunciada = new Cancion("tit","file",autor);
-		Album a = new Album("tit",LocalDate.now());
+		Album a = new Album("tit",autor);
 		/*Aniadimos la cancion a un album para probar todas las funcionalidades*/
 		try {
 			a.aniadirCancion(denunciada);

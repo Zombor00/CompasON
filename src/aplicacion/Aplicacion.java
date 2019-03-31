@@ -135,6 +135,14 @@ public class Aplicacion implements Serializable {
     }
     
     /**
+     * Setter para el atributo usuarioLogeado
+     * Con privacidad de paquete para que solo sea usado por AplicacionTest
+     */
+    void setUsuarioLogeado(UsuarioRegistrado u) {
+    	this.usuarioLogeado = u;
+    }
+    
+    /**
      * Getter para el atributo cola
      */
     public Mp3Player getCola() {
@@ -239,10 +247,14 @@ public class Aplicacion implements Serializable {
      * @throws Mp3InvalidFileException 
      * @throws ExcepcionParametrosDeEntradaIncorrectos 
      * @throws IOException 
+     * @throws ExcepcionUsuarioSinCuenta 
      */
-    public void subirCancion(String titulo, String fichero) throws ExcepcionDuracionLimiteSuperada, Mp3InvalidFileException, ExcepcionParametrosDeEntradaIncorrectos, IOException {
+    public void subirCancion(String titulo, String fichero) throws ExcepcionDuracionLimiteSuperada, Mp3InvalidFileException, ExcepcionParametrosDeEntradaIncorrectos, IOException, ExcepcionUsuarioSinCuenta {
     	if (titulo == null || fichero == null) {
     		throw new ExcepcionParametrosDeEntradaIncorrectos();
+    	}
+    	if (usuarioLogeado == null) {
+    		throw new ExcepcionUsuarioSinCuenta();
     	}
     	if (Mp3Player.isValidMp3File(fichero) == false) {
     		throw new Mp3InvalidFileException("");
@@ -295,17 +307,21 @@ public class Aplicacion implements Serializable {
      * @param canciones Canciones que forman el album
      * @throws ExcepcionErrorCreandoAlbum 
      * @throws ExcepcionParametrosDeEntradaIncorrectos 
+     * @throws ExcepcionUsuarioSinCuenta 
      */
-    public void aniadirAlbum(String titulo, LocalDate anio, ArrayList <Cancion> canciones) throws ExcepcionErrorCreandoAlbum, ExcepcionParametrosDeEntradaIncorrectos {
-    	if (titulo == null || anio == null || canciones==null) {
+    public void aniadirAlbum(String titulo, ArrayList <Cancion> canciones) throws ExcepcionErrorCreandoAlbum, ExcepcionParametrosDeEntradaIncorrectos, ExcepcionUsuarioSinCuenta {
+    	if (titulo == null || canciones==null) {
     		throw new ExcepcionParametrosDeEntradaIncorrectos();
+    	}
+    	if (usuarioLogeado == null) {
+    		throw new ExcepcionUsuarioSinCuenta();
     	}
     	for (Cancion cancion : canciones) {
     		if (cancion.getAutor() != usuarioLogeado || cancion.getEstadoValidacion() == EstadoValidacion.NOVALIDADA) {
     			throw new ExcepcionErrorCreandoAlbum();
     		}
     	}
-    	Album album = new Album(titulo,anio,canciones);
+    	Album album = new Album(titulo,usuarioLogeado,canciones);
         this.buscables.add(album);
         this.usuarioLogeado.aniadirBuscable(album);
     }
@@ -396,6 +412,7 @@ public class Aplicacion implements Serializable {
      */
     public void logout() throws FileNotFoundException, Mp3PlayerException {
     	actualizarCanciones();
+    	borrarEfectivamente();
     	if (administradorLogeado == false && usuarioLogeado ==null) {
     		return;
     	}
@@ -675,5 +692,22 @@ public class Aplicacion implements Serializable {
 		hashBytes = mD.digest();
 		hash = new String(hashBytes);
 		return hash;
+	}
+	
+	/**
+	 * Borra de la aplicacion de forma efectiva todas las canciones marcadas como borradas
+	 */
+	public void borrarEfectivamente() {
+        List<Buscable> borrar = new ArrayList<>();
+
+        for (Buscable buscable : buscables) {
+            if (buscable.getEstado() == Estado.BORRADO) {
+                borrar.add(buscable);
+            }
+        }
+        for (Buscable buscable : borrar) {
+            buscable.getAutor().getBuscables().remove(buscable);
+        }
+        buscables.removeAll(borrar);
 	}
 }

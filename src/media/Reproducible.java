@@ -58,6 +58,9 @@ public abstract class Reproducible implements Serializable{
   }
 
   public void setEstado(Estado estado){
+	  if (this.estado == Estado.BORRADO) {
+		  return;
+	  }
       this.estado = estado;
   }
 
