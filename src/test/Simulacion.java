@@ -22,7 +22,7 @@ import pads.musicPlayer.exceptions.Mp3PlayerException;
  * @version 1.0 (23-03-2019)
  */
 class Simulacion {
-	public static void main(String[] args) throws Mp3PlayerException, InterruptedException, ExcepcionLimiteReproducidasAlcanzado, ExcepcionNoAptoParaMenores, ExcepcionLoginErrorCredenciales, ExcepcionLoginBloqueado, ExcepcionDuracionLimiteSuperada, ExcepcionCancionModificable, ExcepcionCancionYaValidada, ExcepcionParametrosDeEntradaIncorrectos, ExcepcionNombreDeUsuarioNoDisponible, IOException, ExcepcionReproducirProhibido, ExcepcionUsuarioYaSeguido, ExcepcionUsuarioNoSeguido, ExcepcionErrorCreandoAlbum, InvalidCardNumberException, FailedInternetConnectionException, OrderRejectedException, ExcepcionUsuarioNoPremium, NoSuchAlgorithmException, ExcepcionCancionYaNoModificable, ExcepcionMp3NoValido, ExcepcionUsuarioSinCuenta {
+	public static void main(String[] args) throws Mp3PlayerException, InterruptedException, ExcepcionLimiteReproducidasAlcanzado, ExcepcionNoAptoParaMenores, ExcepcionLoginErrorCredenciales, ExcepcionLoginBloqueado, ExcepcionDuracionLimiteSuperada, ExcepcionCancionModificable, ExcepcionCancionYaValidada, ExcepcionParametrosDeEntradaIncorrectos, ExcepcionNombreDeUsuarioNoDisponible, IOException, ExcepcionReproducirProhibido, ExcepcionUsuarioYaSeguido, ExcepcionUsuarioNoSeguido, ExcepcionErrorCreandoAlbum, InvalidCardNumberException, FailedInternetConnectionException, OrderRejectedException, ExcepcionUsuarioNoPremium, NoSuchAlgorithmException, ExcepcionCancionYaNoModificable, ExcepcionMp3NoValido, ExcepcionUsuarioSinCuenta, ClassNotFoundException {
 		List<Buscable> busqueda = new ArrayList<Buscable>();
 		System.out.println("INICIO DE SIMULACION");
 		Thread.sleep(3000);
@@ -244,6 +244,12 @@ class Simulacion {
 		} catch (ExcepcionLoginBloqueado e) {
 			System.out.println("No puede iniciar sesion, su cuenta esta bloqueada");
 		}
+		
+		System.out.println("Guardamos los datos, los borramos (simulando que cerramos la app) y los volvemos a cargar");		
+		aplicacion.guardarDatos();
+		aplicacion.borrarDatos();
+		aplicacion.cargarDatos();
+		aplicacion = Aplicacion.getInstance(0, 0, 0);
 		
 		System.out.println("Se intenta registrar un usuario con el nombre de usuario2");
 		Thread.sleep(3000);
