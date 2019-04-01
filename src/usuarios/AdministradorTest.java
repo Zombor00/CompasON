@@ -6,7 +6,7 @@ import java.time.*;
 import org.junit.jupiter.api.Test;
 
 import excepciones.ExcepcionCancionModificable;
-import excepciones.ExcepcionCancionYaContenida;
+import excepciones.ExcepcionInsercionInvalida;
 import excepciones.ExcepcionCancionYaValidada;
 import gestion.Denuncia;
 import media.*;
@@ -73,7 +73,7 @@ public class AdministradorTest {
 		try {
 			denunciada.validar(EstadoValidacion.APTOMENORES);
 			a.aniadirCancion(denunciada);
-		} catch (ExcepcionCancionYaContenida e) {
+		} catch (ExcepcionInsercionInvalida e) {
 			fail("Lanzada excepcion no esperada");
 		}
 		Denuncia d = new Denuncia(denunciante, denunciada, "Es plagio");
@@ -99,7 +99,7 @@ public class AdministradorTest {
 		/*Aniadimos la cancion a un album para probar todas las funcionalidades*/
 		try {
 			a.aniadirCancion(denunciada);
-		} catch (ExcepcionCancionYaContenida e) {
+		} catch (ExcepcionInsercionInvalida e) {
 			fail("Lanzada excepcion no esperada");
 		}
 		Denuncia d = new Denuncia(denunciante, denunciada, "Es plagio");
