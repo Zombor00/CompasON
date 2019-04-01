@@ -19,8 +19,8 @@ public class Denuncia implements Serializable{
     /**
     * Constructor, con el denunciante, cancion denunciada y un comentario 
     * 
-    * @param nombreUsuario
-    * @param contrasenia clave del usuario
+    * @param denunciante usuario que ha denunciaod
+    * @param denunciada cancion que ha sido denunciada
     * @param c comentario de la denuncia
     */
     public Denuncia(UsuarioRegistrado denunciante, Cancion denunciada, String c){

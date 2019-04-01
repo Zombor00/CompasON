@@ -17,7 +17,7 @@ public class NotificacionDenuncia extends Notificacion implements Serializable{
     /**
     * Constructor, con la cancion denunciada
     *
-    * @param cancion
+    * @param cancion cancion que ha sido denunciada
     */
     public NotificacionDenuncia(Cancion cancion){
         super(cancion);

@@ -29,8 +29,8 @@ public class Lista extends Reproducible implements Serializable{
      */
     public Lista(String titulo){
         super(titulo);
-        this.reproducibles = new ArrayList<Reproducible>(); 
-        this.padres = new ArrayList<>(); 
+        this.reproducibles = new ArrayList<Reproducible>();
+        this.padres = new ArrayList<>();
     }
 
     /**
@@ -38,8 +38,8 @@ public class Lista extends Reproducible implements Serializable{
      * pone titulo a la lista.
      * @param titulo string que identifica el titulo de la lista
      * @param reproducibles array de Reproducibles a meter en el album
-     * @throws ExcepcionInsercionInvalida 
-     * @throws ExcepcionReproducibleNoValido 
+     * @throws ExcepcionInsercionInvalida
+     * @throws ExcepcionReproducibleNoValido
      */
     public Lista(String titulo,ArrayList <Reproducible> reproducibles) throws ExcepcionInsercionInvalida, ExcepcionReproducibleNoValido{
         this(titulo);
@@ -56,8 +56,8 @@ public class Lista extends Reproducible implements Serializable{
      * Reproduce una lista en orden entrando recursivamente en las listas
      * contenidas en las listas
      * @param mp3 Cola donde se añade la cancion
-     * @throws ExcepcionReproducirProhibido 
-     * @throws Mp3InvalidFileException 
+     * @throws ExcepcionReproducirProhibido
+     * @throws Mp3InvalidFileException
      */
     @Override
     public int reproducir(Mp3Player mp3, UsuarioRegistrado usuarioLogeado) throws ExcepcionReproducirProhibido, Mp3InvalidFileException{
@@ -75,9 +75,10 @@ public class Lista extends Reproducible implements Serializable{
      * Sirve para meter un reproducible pasado como argumento en la lista
      * @param r Cancion a aniadir en el album
      * @return false si el Reproducible ya esta en la lista true en caso contrario
+     * @throws ExcepcionInsercionInvalida
      */
     public boolean aniadirReproducible(Reproducible r) throws ExcepcionInsercionInvalida,ExcepcionReproducibleNoValido{
-    	
+
     	if(r.esValido()==false) {
     		throw new ExcepcionReproducibleNoValido();
     	}
@@ -93,7 +94,7 @@ public class Lista extends Reproducible implements Serializable{
     /**
      * Sirve para quitar un reproducible de la lista
      * @param r Reproducible a quitar de la lista
-     * @return true si existe el reproducible a quitar false en caso contrario
+     * @throws ExcepcionCancionNoContenida
      */
     public void quitarReproducible(Reproducible r) throws ExcepcionCancionNoContenida{
         int index;
@@ -137,7 +138,7 @@ public class Lista extends Reproducible implements Serializable{
     public void quitarPadre(Lista lista) {
 		this.padres.remove(lista);
 	}
-   
+
     @Override
     public boolean sePuedeMeterEn(Lista l) {
     	for(Reproducible r: this.reproducibles) {
@@ -147,7 +148,7 @@ public class Lista extends Reproducible implements Serializable{
     	}
     	return true;
     }
-    
+
 
     @Override
 	public boolean esAptoParaMenores() {
@@ -158,12 +159,12 @@ public class Lista extends Reproducible implements Serializable{
         }
         return true;
 	}
-    
+
 	@Override
 	public String toString() {
 		return "Lista [titulo=" + this.getTitulo() + " elementos=" + reproducibles + "]";
 	}
-	
+
 	@Override
     public boolean esValido() {
     	for (Reproducible r : this.reproducibles) {
@@ -173,7 +174,7 @@ public class Lista extends Reproducible implements Serializable{
     	}
     	return true;
 	}
-	
+
 	@Override
 	public void setEstado(Estado estado){
 		  if (estado == Estado.BORRADO) {
@@ -181,10 +182,10 @@ public class Lista extends Reproducible implements Serializable{
 		  }
 	      super.setEstado(estado);
 	  }
-	
+
 	public ArrayList<Reproducible> getReproducibles(){
 		return this.getReproducibles();
 	}
-   
+
 
 }

@@ -1,7 +1,7 @@
 package excepciones;
 
 /**
- * Esta excepcion se lanza cuando el administrasor intenta
+ * Esta excepcion se lanza cuando el administrador intenta
  * validar una cancion que esta en periodo de modificacion
  *
  * @author Alvaro Zaera alvaro.zaeradela@estudiante.uam.es

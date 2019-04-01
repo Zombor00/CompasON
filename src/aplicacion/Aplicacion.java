@@ -110,8 +110,12 @@ public class Aplicacion implements Serializable {
     }
 
     /**
-     * Getter de la instancia de Aplicacion
+     * Getter de la instancia de Aplicacion (los atributos solo se tendran en cuenta si
+     * no hay aplicacion creada aun)
      *
+     * @param limiteReproducciones limite de escuchas mensuales para usuarios no Premium
+     * @param precioPremium precio que cuesta pagar el servicio Premium
+     * @param reproduccionesPremium reproducciones a alcanzar en un mes para ser Premium
      * @return la instancia de Aplicacion 
      * @throws Mp3PlayerException 
      * @throws FileNotFoundException 
@@ -210,7 +214,7 @@ public class Aplicacion implements Serializable {
      * Aniade un usario a la aplicacion
      *
      * @param nombreUsuario Nombre del usuario
-     * @param contraseña Contrasenia del usuario
+     * @param contrasenia Contrasenia del usuario
      * @param nombreCompleto Nombre completo del usuario
      * @param fechaNacimiento Fecha de nacimiento del usuario
      * @throws ExcepcionParametrosDeEntradaIncorrectos 
@@ -224,11 +228,11 @@ public class Aplicacion implements Serializable {
     	if (nombreUsuario == null || contrasenia == null || nombreCompleto == null || fechaNacimiento == null) {
     		throw new ExcepcionParametrosDeEntradaIncorrectos();
     	}
-    	if (nombreUsuario == "admin") {
+    	if (nombreUsuario.equals("admin")) {
     		throw new ExcepcionNombreDeUsuarioNoDisponible();
     	}
     	for (UsuarioRegistrado usuario : usuarios) {
-    		if (usuario.getNombreUsuario() == nombreUsuario) {
+    		if (usuario.getNombreUsuario().equals(nombreUsuario)) {
     			throw new ExcepcionNombreDeUsuarioNoDisponible();
     		}
     	}
@@ -273,8 +277,7 @@ public class Aplicacion implements Serializable {
     /**
      * Aniade una cancion a la aplicacion
      *
-     * @param titulo Titulo de la cancion
-     * @param fichero Fichero de audio de la cancion
+     * @param cancion cancion que se aniade
      * @throws ExcepcionParametrosDeEntradaIncorrectos 
      * @throws FileNotFoundException 
      * @throws ExcepcionDuracionLimiteSuperada 
@@ -296,14 +299,15 @@ public class Aplicacion implements Serializable {
     	if (cancion == null ) {
     		throw new ExcepcionParametrosDeEntradaIncorrectos();
     	}
-        this.buscables.remove(cancion);
+    	if (cancion.getAutor() == usuarioLogeado) {
+    		cancion.setEstado(Estado.BORRADO);
+    	}
     }
 
     /**
      * Aniade un album a la aplicacion
      *
      * @param titulo Titulo del album
-     * @param anio Anio del album
      * @param canciones Canciones que forman el album
      * @throws ExcepcionErrorCreandoAlbum 
      * @throws ExcepcionParametrosDeEntradaIncorrectos 
@@ -344,9 +348,10 @@ public class Aplicacion implements Serializable {
      *
      * @param nombreUsuario Nombre del usuario que inicia sesion
      * @param contrasenia Contrasenia del usuario que inicia sesion
-     * @return true si se inicia sesion correctamente
      * @throws ExcepcionParametrosDeEntradaIncorrectos 
      * @throws NoSuchAlgorithmException 
+     * @throws ExcepcionLoginBloqueado
+     * @throws ExcepcionLoginErrorCredenciales
      */
     public void login(String nombreUsuario, String contrasenia) throws ExcepcionLoginErrorCredenciales, ExcepcionLoginBloqueado, ExcepcionParametrosDeEntradaIncorrectos, NoSuchAlgorithmException {
     	if (usuarioLogeado != null) {
@@ -487,6 +492,7 @@ public class Aplicacion implements Serializable {
     	if (reproducible == null) {
     		throw new ExcepcionParametrosDeEntradaIncorrectos();
     	}
+    	
     	this.cola.stop();
     	this.cola = new Mp3Player();
         if (usuarioLogeado != null && 
@@ -554,6 +560,7 @@ public class Aplicacion implements Serializable {
      * Bloquea la cancion y todos los albumes en los que aparezca
      *
      * @param cancion Cancion que se denuncia
+     * @param comentario Comentario que se realiza en la denuncia
      * @throws ExcepcionParametrosDeEntradaIncorrectos 
      * @throws ExcepcionUsuarioSinCuenta 
      */
@@ -613,6 +620,7 @@ public class Aplicacion implements Serializable {
 
     /**
      * Guarda los datos de la aplicacion
+     * @throws IOException
      */
     public void guardarDatos() throws IOException {
     	
@@ -628,12 +636,13 @@ public class Aplicacion implements Serializable {
 
     /**
      * Carga los datos de la aplicacion
+     * @return la instancia de la aplicacion con los datos cargados
      * @throws IOException 
      * @throws FileNotFoundException 
      * @throws ClassNotFoundException 
      * @throws Mp3PlayerException 
      */
-    public void cargarDatos() throws FileNotFoundException, IOException, ClassNotFoundException, Mp3PlayerException {
+    public static Aplicacion cargarDatos() throws FileNotFoundException, IOException, ClassNotFoundException, Mp3PlayerException {
         ObjectInputStream entradaObjetos = null;
         entradaObjetos =
         		new ObjectInputStream(
@@ -641,7 +650,8 @@ public class Aplicacion implements Serializable {
         INSTANCE = (Aplicacion) entradaObjetos.readObject();
         entradaObjetos.close();
         
-        this.cola = new Mp3Player();
+        INSTANCE.cola = new Mp3Player();
+        return INSTANCE;
     }
     
     /**
@@ -655,6 +665,8 @@ public class Aplicacion implements Serializable {
 
 	/**
 	 * Gestiona el pago que hace un usuario para pasar a ser premium
+	 * @param cardNumStr String con el numero de trajeta
+	 * @param subject motivo de la compra
 	 * @throws OrderRejectedException 
 	 * @throws FailedInternetConnectionException 
 	 * @throws InvalidCardNumberException 

@@ -99,9 +99,11 @@ public class Cancion extends Buscable implements Serializable{
      *  por parametros si son distintos de null
      * @param titulo titulo de la cancion
      * @param file fichero de audio de la cancion
-     * @return true si se puede modificar, false en caso contrario
      * @throws ExcepcionDuracionLimiteSuperada 
      * @throws FileNotFoundException 
+     * @throws ExcepcionCancionYaNoModificable
+     * @throws ExcepcionCancionYaValidada
+     * @throws ExcepcionMp3NoValido
      */
     public void modificar(String titulo, String file) throws ExcepcionCancionYaValidada,
     FileNotFoundException, ExcepcionDuracionLimiteSuperada,ExcepcionCancionYaNoModificable,

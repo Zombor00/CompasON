@@ -12,7 +12,6 @@ import media.Cancion;
 *
 */
 public abstract class Notificacion implements Serializable{
-    private boolean visible = true;
     protected Cancion cancion;
 
     /**
@@ -26,17 +25,6 @@ public abstract class Notificacion implements Serializable{
     
     public Cancion getCancion() {
     	return this.cancion;
-    }
-
-    public String mostrarNotificacion(){
-        if (visible == true){
-            return this.toString();
-        }
-        return null;
-    }
-
-    public void ocultarNotificacion(){
-        visible = false;
     }
 
 

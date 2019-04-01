@@ -7,9 +7,7 @@ import java.util.ArrayList;
 
 import org.junit.jupiter.api.*;
 
-import excepciones.ExcepcionUsuarioNoPremium;
-import excepciones.ExcepcionUsuarioNoSeguido;
-import excepciones.ExcepcionUsuarioYaSeguido;
+import excepciones.*;
 
 public class UsuarioRegistradoTest {
 	

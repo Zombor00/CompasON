@@ -71,7 +71,7 @@ public abstract class Reproducible implements Serializable{
   /**
    * Si es una lista aniade al array de listas que la contienen una lista.
    * Si no es una lista no hace nada.
-   * @param lista
+   * @param lista lista en la que esta contenida
    */
   public abstract void aniadirPadre(Lista lista);
   
@@ -96,7 +96,7 @@ public abstract class Reproducible implements Serializable{
   /**
    * Si es una lista del array de listas que la contienen una lista
    * Si no es una lista no hace nada
-   * @param lista
+   * @param lista lista en la que deja de estar contenida
    */
   public abstract void quitarPadre(Lista lista);
   
