@@ -388,8 +388,7 @@ public class AplicacionTest {
 		
 		aplicacion.borrarDatos();
 		
-		aplicacion.cargarDatos();
-		aplicacion = Aplicacion.getInstance(0, 0, 0);
+		aplicacion = Aplicacion.cargarDatos();
 		
 		assertTrue(usuarios.get(0).equals(aplicacion.getUsuarios().get(0)));
 		assertTrue(((Cancion)canciones.get(0)).equals((Cancion)aplicacion.getBuscables().get(0)));

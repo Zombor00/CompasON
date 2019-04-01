@@ -296,7 +296,9 @@ public class Aplicacion implements Serializable {
     	if (cancion == null ) {
     		throw new ExcepcionParametrosDeEntradaIncorrectos();
     	}
-        this.buscables.remove(cancion);
+    	if (cancion.getAutor() == usuarioLogeado) {
+    		cancion.setEstado(Estado.BORRADO);
+    	}
     }
 
     /**
@@ -487,11 +489,14 @@ public class Aplicacion implements Serializable {
     	if (reproducible == null) {
     		throw new ExcepcionParametrosDeEntradaIncorrectos();
     	}
+    	
     	this.cola.stop();
     	this.cola = new Mp3Player();
         if (usuarioLogeado != null && 
         		   usuarioLogeado.getReproducidas() >= limiteReproducciones && 
         		   usuarioLogeado.getPremiumHasta() == null) {
+        	this.cola.stop();
+        	this.cola = new Mp3Player();
         	throw new ExcepcionLimiteReproducidasAlcanzado();
         }
         
@@ -633,7 +638,7 @@ public class Aplicacion implements Serializable {
      * @throws ClassNotFoundException 
      * @throws Mp3PlayerException 
      */
-    public void cargarDatos() throws FileNotFoundException, IOException, ClassNotFoundException, Mp3PlayerException {
+    public static Aplicacion cargarDatos() throws FileNotFoundException, IOException, ClassNotFoundException, Mp3PlayerException {
         ObjectInputStream entradaObjetos = null;
         entradaObjetos =
         		new ObjectInputStream(
@@ -641,7 +646,8 @@ public class Aplicacion implements Serializable {
         INSTANCE = (Aplicacion) entradaObjetos.readObject();
         entradaObjetos.close();
         
-        this.cola = new Mp3Player();
+        INSTANCE.cola = new Mp3Player();
+        return INSTANCE;
     }
     
     /**
