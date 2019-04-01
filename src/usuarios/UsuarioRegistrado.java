@@ -168,6 +168,16 @@ public class UsuarioRegistrado extends UsuarioConCuenta implements Serializable{
          	throw new ExcepcionUsuarioNoPremium();	
          }
      }
+     
+     /**
+      * Este metodo se usa para borrar una lista 
+      *
+      * @param l lista que se quiere borrar
+      * @return true si se ha borrado correctamente
+      */
+     public boolean borrarLista(Lista l) {
+    	 return this.listas.remove(l);
+     }
 
 
 
@@ -260,7 +270,7 @@ public class UsuarioRegistrado extends UsuarioConCuenta implements Serializable{
     	
     	LocalDate fechaAntigua = LocalDate.of(anioBuscado, mesBuscado, 1);
     	
-    	for (int i = this.reproducciones.size() - 1; i>0 && this.reproducciones.get(i).isBefore(fechaAntigua)==false ;i--) {
+    	for (int i = this.reproducciones.size() - 1; i>=0 && this.reproducciones.get(i).isBefore(fechaAntigua)==false ;i--) {
     		if (this.reproducciones.get(i).getYear() == anioBuscado &&
     				this.reproducciones.get(i).getMonthValue() == mesBuscado) {
     			cont++;

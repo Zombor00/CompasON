@@ -69,8 +69,9 @@ public class AdministradorTest {
 		UsuarioRegistrado autor = new UsuarioRegistrado("b","b","b",LocalDate.now());
 		Cancion denunciada = new Cancion("tit","file",autor);
 		Album a = new Album("tit",autor);
-		/*Aniadimos la cancion a un album para probar todas las funcionalidades*/
+		/*Aniadimos la cancion tras validarla a un album para probar todas las funcionalidades*/
 		try {
+			denunciada.validar(EstadoValidacion.APTOMENORES);
 			a.aniadirCancion(denunciada);
 		} catch (ExcepcionCancionYaContenida e) {
 			fail("Lanzada excepcion no esperada");
