@@ -78,8 +78,8 @@ public class Album extends Buscable implements Serializable{
     /**
      * Sirve para meter la cancion pasada como argumento en el album
      * @param c Cancion a aniadir en el album
-     * @return false si la cancion ya esta en el album true en caso contrario
      * @throws ExcepcionInsercionInvalida
+     * @throws ExcepcionCancionNoValidada
      */
     public void aniadirCancion(Cancion c) throws ExcepcionInsercionInvalida, ExcepcionCancionNoValidada{
         if(canciones.contains(c)) {

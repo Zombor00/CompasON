@@ -1,7 +1,6 @@
 package media;
 
 import java.io.Serializable;
-import excepciones.ExcepcionNoAptoParaMenores;
 import excepciones.ExcepcionReproducirProhibido;
 import pads.musicPlayer.Mp3Player;
 import pads.musicPlayer.exceptions.Mp3InvalidFileException;
@@ -78,7 +77,6 @@ public abstract class Reproducible implements Serializable{
    * Devuelve True si el elemento reproducible es apto para menores y
    * False en caso contrario.
    * @return boolean
-   * @throws ExcepcionNoAptoParaMenores 
    */
   public abstract boolean esAptoParaMenores();
   
@@ -86,7 +84,6 @@ public abstract class Reproducible implements Serializable{
    * Devuelve True si es valido
    * 
    * @return boolean
-   * @throws ExcepcionNoAptoParaMenores 
    */
   public abstract boolean esValido();
 
@@ -101,7 +98,7 @@ public abstract class Reproducible implements Serializable{
   /**
    * Devuelve true si en cualquier lista padre(y recursivamente padres e hijos) el elemento reproducible 
    * esta contenido en l. False en caso contrario
-   * @param l: lista a buscar
+   * @param l lista a buscar
    * @return boolean
    */
   public abstract boolean sePuedeMeterEn(Lista l);
