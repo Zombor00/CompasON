@@ -2,12 +2,14 @@ package media;
 
 import usuarios.UsuarioRegistrado;
 import java.util.ArrayList;
+import java.io.FileNotFoundException;
 import java.time.LocalDate;
 import org.junit.jupiter.api.Test;
 
 import excepciones.ExcepcionCancionNoContenida;
 import excepciones.ExcepcionCancionNoValidada;
 import excepciones.ExcepcionInsercionInvalida;
+import excepciones.ExcepcionMp3NoValido;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -16,12 +18,26 @@ public class AlbumTest {
 	@Test
 	void testAlbumAniadirCancion() {
 		UsuarioRegistrado usuario = new UsuarioRegistrado("nombre usuario","contrasenia","nombre",LocalDate.now());
-	    Cancion cancion1 = new Cancion("cancion1","ruta cancion1",usuario);
+		boolean lanzadaExcepcion = false;
+		Cancion cancion1 = null;
+		try {
+			cancion1 = new Cancion("cancion1","canciones/Thats What I Like.mp3",usuario);
+		} catch (FileNotFoundException | ExcepcionMp3NoValido e) {
+			fail("Lanzada excepcion no esperada");
+		}
+		
 	    Album album1 = new Album("nombre album",usuario);
 	    
-	    assertThrows(ExcepcionCancionNoValidada.class, () -> {
+	    try {
 	    	album1.aniadirCancion(cancion1);
-	    });
+	    	fail("Esperada excepcion ExcepcionCancionNoValidada");
+	    }catch(ExcepcionCancionNoValidada e) {
+	    	lanzadaExcepcion = true;
+	    } catch (ExcepcionInsercionInvalida e) {
+	    	fail("Lanzada excepcion no esperada");
+		}
+	    assertTrue(lanzadaExcepcion);
+	    lanzadaExcepcion = false;
 	    
 	    cancion1.validar(EstadoValidacion.EXPLICITO);
 	    
@@ -33,9 +49,15 @@ public class AlbumTest {
 			fail("Lanzada excepcion no esperada");
 		}
 	    
-	    assertThrows(ExcepcionInsercionInvalida.class, () -> {
-	    	album1.aniadirCancion(cancion1);
-	    });
+	    try {
+			album1.aniadirCancion(cancion1);
+			fail("Esperada excepcion ExcepcionInsercionInvalida");
+		} catch (ExcepcionInsercionInvalida e) {
+			lanzadaExcepcion = true;
+		} catch (ExcepcionCancionNoValidada e) {
+			fail("Lanzada excepcion no esperada");
+		}
+	    assertTrue(lanzadaExcepcion);
 	    
 	    album1.toString();
 	    
@@ -44,11 +66,19 @@ public class AlbumTest {
 	@Test
 	void testAlbumContieneReproducible() {
 		UsuarioRegistrado usuario = new UsuarioRegistrado("nombre usuario","contrasenia","nombre",LocalDate.now());
-	    Cancion cancion1 = new Cancion("cancion1","ruta cancion1",usuario);
-	    cancion1.validar(EstadoValidacion.EXPLICITO);
-	    Cancion cancion2 = new Cancion("cancion2","ruta cancion2",usuario);
+		
+		Cancion cancion1 = null;
+	    Cancion cancion2 = null;
 	    Album album1 = new Album("nombre album",usuario);
-	    
+		try {
+			cancion1 = new Cancion("cancion1","canciones/Thats What I Like.mp3",usuario);
+			cancion2 = new Cancion("cancion2","canciones/Thats What I Like.mp3",usuario);
+		} catch (FileNotFoundException | ExcepcionMp3NoValido e) {
+			fail("Lanzada excepcion no esperada");
+		}
+
+	    cancion1.validar(EstadoValidacion.EXPLICITO);
+		
 	    try {
 			album1.aniadirCancion(cancion1);
 		} catch (ExcepcionInsercionInvalida e) {
@@ -64,25 +94,32 @@ public class AlbumTest {
 	void testAlbumQuitarCancion() {
 		UsuarioRegistrado usuario = new UsuarioRegistrado("nombre usuario","contrasenia","nombre",LocalDate.now());
 		boolean excepcionLanzada = false;
-		Cancion cancion1 = new Cancion("cancion1","ruta cancion1",usuario);
+		
+		Cancion cancion1 = null;
+	    Cancion cancion2 = null;
+	    Album album1 = null;
+		try {
+			cancion1 = new Cancion("cancion1","canciones/Thats What I Like.mp3",usuario);
+			cancion2 = new Cancion("cancion2","canciones/Thats What I Like.mp3",usuario);
+		} catch (FileNotFoundException | ExcepcionMp3NoValido e) {
+			fail("Lanzada excepcion no esperada");
+		}
 	    cancion1.validar(EstadoValidacion.EXPLICITO);
-	    Cancion cancion2 = new Cancion("cancion2","ruta cancion2",usuario);
 	    cancion2.validar(EstadoValidacion.EXPLICITO);
 	    ArrayList<Cancion> canciones = new ArrayList<>();
 	    canciones.add(cancion1);
 	    canciones.add(cancion2);
-	    Album album1 = null;
 		try {
 			album1 = new Album("nombre album",usuario,canciones);
 		} catch (ExcepcionInsercionInvalida e1) {
 			fail("Lanzada excepcion no esperada");
-		} catch (ExcepcionCancionNoValidada e) {
+		} catch (ExcepcionCancionNoValidada e2) {
 			fail("Lanzada excepcion no esperada");
 		}
 	    
 	    try {
 	    	album1.quitarCancion(cancion2);
-		} catch (ExcepcionCancionNoContenida e) {
+		} catch (ExcepcionCancionNoContenida e3) {
 			fail("Lanzada excepcion no esperada");
 		}
 	    assertFalse(album1.contieneReproducible(cancion2));
@@ -96,7 +133,7 @@ public class AlbumTest {
 	    assertTrue(excepcionLanzada);
 	    try {
 			album1.quitarCancion(cancion1);
-		} catch (ExcepcionCancionNoContenida e) {
+		} catch (ExcepcionCancionNoContenida e4) {
 			fail("Lanzada excepcion no esperada");
 		}
 	    assertSame(album1.getEstado(),Estado.BORRADO);
@@ -106,10 +143,18 @@ public class AlbumTest {
 	@Test
 	void testAlbumContBloqueadas() {
 		UsuarioRegistrado usuario = new UsuarioRegistrado("nombre usuario","contrasenia","nombre",LocalDate.now());
-	    Cancion cancion1 = new Cancion("cancion1","ruta cancion1",usuario);
+	    Cancion cancion1 = null;
+	    Cancion cancion2 = null;
+		try {
+			cancion1 = new Cancion("cancion1","canciones/Thats What I Like.mp3",usuario);
+			cancion2 = new Cancion("cancion2","canciones/Thats What I Like.mp3",usuario);
+		} catch (FileNotFoundException | ExcepcionMp3NoValido e) {
+			fail("Lanzada excepcion no esperada");
+		}
+
 	    cancion1.validar(EstadoValidacion.EXPLICITO);
-	    Cancion cancion2 = new Cancion("cancion2","ruta cancion2",usuario);
 	    cancion2.validar(EstadoValidacion.EXPLICITO);
+		
 	    Album album1 = new Album("nombre album",usuario);
 	    try {
 			album1.aniadirCancion(cancion1);
@@ -128,11 +173,18 @@ public class AlbumTest {
 	@Test
 	void testAlbumDesbloquear() {
 		UsuarioRegistrado usuario = new UsuarioRegistrado("nombre usuario","contrasenia","nombre",LocalDate.now());
-	    Cancion cancion1 = new Cancion("cancion1","ruta cancion1",usuario);
-	    cancion1.validar(EstadoValidacion.EXPLICITO);
-	    Cancion cancion2 = new Cancion("cancion2","ruta cancion2",usuario);
-	    cancion2.validar(EstadoValidacion.EXPLICITO);
+	    Cancion cancion1 = null;
+	    Cancion cancion2 = null;
 	    Album album1 = new Album("nombre album",usuario);
+	    try {
+			cancion1 = new Cancion("cancion1","canciones/Thats What I Like.mp3",usuario);
+			cancion2 = new Cancion("cancion2","canciones/Thats What I Like.mp3",usuario);
+		} catch (FileNotFoundException | ExcepcionMp3NoValido e) {
+			fail("Lanzada excepcion no esperada");
+		}
+	    cancion1.validar(EstadoValidacion.EXPLICITO);
+	    cancion2.validar(EstadoValidacion.EXPLICITO);
+	    
 	    try {
 			album1.aniadirCancion(cancion1);
 			album1.aniadirCancion(cancion2);
@@ -156,7 +208,13 @@ public class AlbumTest {
 	@Test
 	void testAlbumAptoParaMenores() {
 		UsuarioRegistrado usuario = new UsuarioRegistrado("nombre usuario","contrasenia","nombre",LocalDate.now());
-	    Cancion cancion1 = new Cancion("cancion1","ruta cancion1",usuario);
+	    Cancion cancion1 = null;
+	    try {
+			cancion1 = new Cancion("cancion1","canciones/Thats What I Like.mp3",usuario);
+
+		} catch (FileNotFoundException | ExcepcionMp3NoValido e) {
+			fail("Lanzada excepcion no esperada");
+		}
 	    cancion1.validar(EstadoValidacion.APTOMENORES);
 	    Album album1 = new Album("nombre album",usuario);
 	    
@@ -173,7 +231,12 @@ public class AlbumTest {
 	@Test
 	void testAlbumGetAutor() {
 		UsuarioRegistrado usuario = new UsuarioRegistrado("nombre usuario","contrasenia","nombre",LocalDate.now());
-	    Cancion cancion1 = new Cancion("cancion1","ruta cancion1",usuario);
+	    Cancion cancion1 = null;
+	    try {
+			cancion1 = new Cancion("cancion1","canciones/Thats What I Like.mp3",usuario);
+		} catch (FileNotFoundException | ExcepcionMp3NoValido e) {
+			fail("Lanzada excepcion no esperada");
+		}
 	    cancion1.validar(EstadoValidacion.EXPLICITO);
 	    Album album1 = new Album("nombre album",usuario);
 	    
@@ -190,9 +253,15 @@ public class AlbumTest {
 	@Test
 	void testAlbumEsValido() {
 		UsuarioRegistrado usuario = new UsuarioRegistrado("nombre usuario","contrasenia","nombre",LocalDate.now());
-	    Cancion cancion1 = new Cancion("cancion1","ruta cancion1",usuario);
+	    Cancion cancion1 = null;
+	    Cancion cancion2 = null;
+	    try {
+			cancion1 = new Cancion("cancion1","canciones/Thats What I Like.mp3",usuario);
+			cancion2 = new Cancion("cancion2","canciones/Thats What I Like.mp3",usuario);
+		} catch (FileNotFoundException | ExcepcionMp3NoValido e) {
+			fail("Lanzada excepcion no esperada");
+		}
 	    cancion1.validar(EstadoValidacion.EXPLICITO);
-	    Cancion cancion2 = new Cancion("cancion2","ruta cancion2",usuario);
 	    cancion2.validar(EstadoValidacion.EXPLICITO);
 	    Album album1 = new Album("nombre album",usuario);
 	    

@@ -77,7 +77,7 @@ public class Lista extends Reproducible implements Serializable{
      * @return false si el Reproducible ya esta en la lista true en caso contrario
      * @throws ExcepcionInsercionInvalida
      */
-    public boolean aniadirReproducible(Reproducible r) throws ExcepcionInsercionInvalida,ExcepcionReproducibleNoValido{
+    public void aniadirReproducible(Reproducible r) throws ExcepcionInsercionInvalida,ExcepcionReproducibleNoValido{
 
     	if(r.esValido()==false) {
     		throw new ExcepcionReproducibleNoValido();
@@ -88,7 +88,6 @@ public class Lista extends Reproducible implements Serializable{
         }
         reproducibles.add(r);
         r.aniadirPadre(this);
-        return true;
     }
 
     /**

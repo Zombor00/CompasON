@@ -40,6 +40,7 @@ public class CancionTest {
 		UsuarioRegistrado usuario1 = new UsuarioRegistrado("nombre usuario","contrasenia","nombre",LocalDate.now());
 	    Cancion cancion1 = null;
 	    Cancion cancion2 = null;
+	    boolean lanzadaExcepcion = false;
 		try {
 			cancion1 = new Cancion("cancion1","canciones/Thats What I Like.mp3",usuario1);
 		    cancion2 = new Cancion("cancion2","canciones/Thats What I Like.mp3",usuario1);
@@ -58,19 +59,36 @@ public class CancionTest {
 	    assertSame(cancion1.getModificableHasta(),null);
 ;	    
 	    cancion1.validar(EstadoValidacion.APTOMENORES);
-	    assertThrows(ExcepcionCancionYaValidada.class, () -> {
+	    try {
 	    	cancion1.modificar("CANTCHANGENAME", null);
-	    });
-	    
-	    cancion1.validar(EstadoValidacion.EXPLICITO);
-	    assertThrows(ExcepcionCancionYaValidada.class, () -> {
+	    	fail("Esperada excepcion no lanzada");
+		} catch (ExcepcionCancionYaValidada | ExcepcionCancionYaNoModificable | ExcepcionMp3NoValido e) {
+			lanzadaExcepcion = true;
+		}
+	   assertTrue(lanzadaExcepcion);
+	   lanzadaExcepcion = false;
+
+	    try {
 	    	cancion1.modificar("My Shot",null);
-	    });
-	    
-	    cancion2.validar(EstadoValidacion.NOVALIDADA);
-	    assertThrows(ExcepcionMp3NoValido.class, () -> {
+	    	fail("Esperada excepcion no lanzada");
+		} catch (ExcepcionCancionYaValidada e) {
+			lanzadaExcepcion = true;
+		} catch(ExcepcionCancionYaNoModificable | ExcepcionMp3NoValido e1){
+			fail("Lanzada excepcion no esperada");
+		}
+	   assertTrue(lanzadaExcepcion);
+	   lanzadaExcepcion = false;
+	   
+
+	   cancion2.validar(EstadoValidacion.NOVALIDADA);
+	   try {
 	    	cancion2.modificar(null,"DOENSTEXIST.mp3");
-	    });
+	    	fail("Esperada excepcion no lanzada");
+		} catch ( ExcepcionMp3NoValido e) {
+			lanzadaExcepcion = true;
+		} catch(ExcepcionCancionYaNoModificable | ExcepcionCancionYaValidada e1){
+			fail("Lanzada excepcion no esperada");
+		}
 	    
 	    cancion2.validar(EstadoValidacion.NOVALIDADA);
 	    try {
@@ -83,9 +101,14 @@ public class CancionTest {
 	@Test 
 	void testCancionContieneReproducible() {
 		UsuarioRegistrado usuario1 = new UsuarioRegistrado("nombre usuario","contrasenia","nombre",LocalDate.now());
-	    Cancion cancion1 = new Cancion("cancion1","ruta cancion1",usuario1);
-	    Cancion cancion2 = new Cancion("cancion2","ruta cancion2",usuario1);
-	    
+	    Cancion cancion1 = null;
+	    Cancion cancion2 = null;
+		try {
+			cancion1 = new Cancion("cancion1","canciones/Thats What I Like.mp3",usuario1);
+		    cancion2 = new Cancion("cancion2","canciones/Thats What I Like.mp3",usuario1);
+		} catch (FileNotFoundException | ExcepcionMp3NoValido e) {
+			fail("Lanzada excepcion no esperada");
+		}
 	    assertTrue(cancion1.contieneReproducible(cancion1));
 	    assertFalse(cancion1.contieneReproducible(cancion2));
 	}
@@ -93,8 +116,15 @@ public class CancionTest {
 	@Test
 	void testCancionDesbloquear() {
 		UsuarioRegistrado usuario1 = new UsuarioRegistrado("nombre usuario","contrasenia","nombre",LocalDate.now());
-	    Cancion cancion1 = new Cancion("cancion1","ruta cancion1",usuario1);
-	    Cancion cancion2 = new Cancion("cancion2","ruta cancion2",usuario1);
+		Cancion cancion1 = null;
+	    Cancion cancion2 = null;
+		try {
+			cancion1 = new Cancion("cancion1","canciones/Thats What I Like.mp3",usuario1);
+		    cancion2 = new Cancion("cancion2","canciones/Thats What I Like.mp3",usuario1);
+		} catch (FileNotFoundException | ExcepcionMp3NoValido e) {
+			fail("Lanzada excepcion no esperada");
+		}
+		
 	    
 		cancion1.setEstado(Estado.BLOQUEADO);
 		cancion1.desbloquear(cancion2);
@@ -109,7 +139,12 @@ public class CancionTest {
 	@Test
 	void testCancionEsAptoMenores() {
 		UsuarioRegistrado usuario1 = new UsuarioRegistrado("nombre usuario","contrasenia","nombre",LocalDate.now());
-	    Cancion cancion1 = new Cancion("cancion1","ruta cancion1",usuario1);
+		Cancion cancion1 = null;
+		try {
+			cancion1 = new Cancion("cancion1","canciones/Thats What I Like.mp3",usuario1);
+		} catch (FileNotFoundException | ExcepcionMp3NoValido e) {
+			fail("Lanzada excepcion no esperada");
+		}
 	    
 	    cancion1.validar(EstadoValidacion.EXPLICITO);
 	    assertFalse(cancion1.esAptoParaMenores());
