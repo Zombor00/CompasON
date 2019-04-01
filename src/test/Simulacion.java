@@ -278,14 +278,14 @@ class Simulacion {
 		
 		System.out.println("El usuario3 reproduce el album y le gusta tanto que lo aniade a la cola 5 veces");
 		try {
-			aplicacion.reproducirReproducible(busqueda.get(4));
+			aplicacion.reproducirReproducible(busqueda.get(3));
 			for(int i = 0; i < 5; i++) {
-				aplicacion.aniadirALaCola(busqueda.get(4));
+				aplicacion.aniadirALaCola(busqueda.get(3));
 			}
 		} catch (ExcepcionLimiteReproducidasAlcanzado e) {
 			System.out.println("No podras reproducir mas veces este mes, limite alcanzado");
 		}
-		Thread.sleep(5000);
+		Thread.sleep(10000);
 		aplicacion.getCola().stop();
 		
 		System.out.println("El usuario3 decide, por tanto, pagar el servicio Premium");
