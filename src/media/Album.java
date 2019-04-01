@@ -178,5 +178,19 @@ public class Album extends Buscable implements Serializable{
     	}
     	return true;
     }
+    
+    public ArrayList<Cancion> getCanciones(){
+    	return this.canciones;
+    }
+    
+    @Override
+    public boolean sePuedeMeterEn(Lista l) {
+    	for(Cancion c: this.canciones) {
+    		if(!c.sePuedeMeterEn(l)) {
+    			return false;
+    		}
+    	}
+    	return true;
+    }
 
 }

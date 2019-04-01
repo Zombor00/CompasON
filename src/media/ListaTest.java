@@ -27,7 +27,7 @@ public class ListaTest {
 		Cancion cancion1 = new Cancion("cancion1","ruta cancion1",usuario);
 		cancion1.validar(EstadoValidacion.EXPLICITO);
 		Cancion cancion2 = new Cancion("cancion2","ruta cancion2",usuario);
-		cancion1.validar(EstadoValidacion.EXPLICITO);
+		cancion2.validar(EstadoValidacion.EXPLICITO);
 		
 		try {
 			assertTrue(lista1.aniadirReproducible(cancion1));
@@ -166,7 +166,7 @@ public class ListaTest {
 		cancion2.validar(EstadoValidacion.EXPLICITO);
 	    
 	    try {
-			assertTrue(album1.aniadirCancion(cancion1));
+			assertTrue(album1.aniadirCancion(cancion2));
 		} catch (ExcepcionInsercionInvalida e) {
 			fail("Lanzada excepcion no esperada");
 		}
@@ -177,7 +177,7 @@ public class ListaTest {
 			fail("Lanzada excepcion no esperada");
 		}
 	    
-	    assertTrue(lista.esAptoParaMenores());
+	    assertFalse(lista.esAptoParaMenores());
 	
 	}
 

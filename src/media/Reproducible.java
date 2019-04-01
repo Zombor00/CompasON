@@ -100,4 +100,12 @@ public abstract class Reproducible implements Serializable{
    */
   public abstract void quitarPadre(Lista lista);
   
+  /**
+   * Devuelve true si en cualquier lista padre(y recursivamente padres e hijos) el elemento reproducible 
+   * esta contenido en l. False en caso contrario
+   * @param l: lista a buscar
+   * @return boolean
+   */
+  public abstract boolean sePuedeMeterEn(Lista l);
+  
 }

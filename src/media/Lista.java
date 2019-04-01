@@ -79,7 +79,7 @@ public class Lista extends Reproducible implements Serializable{
     		return false;
     	}
 
-        if(!this.esViableAniadir(r)) { /* this.esViableAniadir(r) */
+        if(!r.sePuedeMeterEn(this)) { /* this.esViableAniadir(r) */
         	throw new ExcepcionInsercionInvalida(); /* InsercionInvalida */
         }
         reproducibles.add(r);
@@ -134,39 +134,12 @@ public class Lista extends Reproducible implements Serializable{
     public void quitarPadre(Lista lista) {
 		this.padres.remove(lista);
 	}
-
-    /**
-     * Devuelve true si en cualquier lista padre(y recursivamente padres e hijos) el elemento reproducible r
-     * esta contenido. False en caso contrario
-     * @param r: reproducible a buscar en las listas padre
-     */
-    /*
-    public boolean esViableAniadir(Reproducible r) {
-    	boolean aux = false;
-    	if(this.getPadres().isEmpty()) {
-    		if(this.contieneReproducible(r)) {
-    			aux = true;
-    		}
-    	}else {
-    		for(Lista l: this.getPadres()) {
-    			if(l.esViableAniadir(r)) {
-    				aux = true;
-    			}
-    		}
-    	}
-    	return aux;
-    }*/
-    /* Devuelve true si se puede aniadir r a la lista */
-    public boolean esViableAniadir(Reproducible r) {
-    	if(this.getPadres().isEmpty()) {
-    		if(this.contieneReproducible(r)){
+   
+    @Override
+    public boolean sePuedeMeterEn(Lista l) {
+    	for(Reproducible r: this.reproducibles) {
+    		if(!r.sePuedeMeterEn(l)) {
     			return false;
-    		}
-    	} else{
-    		for(Lista padre: this.getPadres()) {
-    			if(!padre.esViableAniadir(r)) {
-    				return false;
-    			}
     		}
     	}
     	return true;
@@ -205,6 +178,10 @@ public class Lista extends Reproducible implements Serializable{
 		  }
 	      super.setEstado(estado);
 	  }
+	
+	public ArrayList<Reproducible> getReproducibles(){
+		return this.getReproducibles();
+	}
    
 
 }

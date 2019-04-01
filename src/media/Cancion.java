@@ -213,5 +213,22 @@ public class Cancion extends Buscable implements Serializable{
     		return false;
     	}
     }
+    
+    @Override
+    
+    public boolean sePuedeMeterEn(Lista l) {
+    	if(l.getPadres().isEmpty()) {
+    		if(l.contieneReproducible(this)){
+    			return false;
+    		}
+    	} else{
+    		for(Lista padre: l.getPadres()) {
+    			if(!this.sePuedeMeterEn(padre)) {
+    				return false;
+    			}
+    		}
+    	}
+    	return true;
+    }
 
 }
