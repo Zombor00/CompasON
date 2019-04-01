@@ -143,6 +143,10 @@ class Simulacion {
 		cancionesAlbum.add((Cancion) aplicacion.getUsuarioLogeado().getBuscables().get(3));
 		aplicacion.aniadirAlbum("depruebazz", cancionesAlbum);
 		
+		System.out.println("El usuario1 decide borrar su cancion numero1");
+		Thread.sleep(sleep);
+		aplicacion.borrarCancion((Cancion)aplicacion.getUsuarioLogeado().getBuscables().get(1));
+		
 		System.out.println("El usuario1 cierra sesion");
 		Thread.sleep(sleep);
 		aplicacion.logout();
@@ -210,6 +214,11 @@ class Simulacion {
 		System.out.println("El usuario1 consulta sus notificaciones y se da cuenta de que le han denunciado y puede ser bloqueado proximamente");
 		Thread.sleep(sleep);
 		System.out.println(aplicacion.getUsuarioLogeado().getNotificaciones());
+		
+		System.out.println("El usuario1 decide borrar su album");
+		Thread.sleep(sleep);
+		aplicacion.borrarAlbum((Album)aplicacion.getUsuarioLogeado().getBuscables().get(3));
+		
 		
 		System.out.println("El usuario1 cierra sesion");
 		Thread.sleep(sleep);
@@ -296,7 +305,9 @@ class Simulacion {
 		aplicacion.getUsuarioLogeado().crearLista("Favoritas", cancionesLista);
 		System.out.println(aplicacion.getUsuarioLogeado().getListas());
 		
-			
+		System.out.println("A el usuario3 no le convence la lista y decide borrarla");
+		aplicacion.getUsuarioLogeado().borrarLista(aplicacion.getUsuarioLogeado().getListas().get(0));
+		
 		System.out.println("El usuario3 cierra sesion");
 		aplicacion.logout();
 		

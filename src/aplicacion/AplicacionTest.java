@@ -16,9 +16,12 @@ import es.uam.eps.padsof.telecard.FailedInternetConnectionException;
 import es.uam.eps.padsof.telecard.InvalidCardNumberException;
 import es.uam.eps.padsof.telecard.OrderRejectedException;
 import excepciones.*;
+import media.Album;
 import media.Buscable;
 import media.Cancion;
 import media.Estado;
+import media.EstadoValidacion;
+import pads.musicPlayer.exceptions.Mp3InvalidFileException;
 import pads.musicPlayer.exceptions.Mp3PlayerException;
 import usuarios.UsuarioRegistrado;
 
@@ -53,12 +56,14 @@ public class AplicacionTest {
 		assertTrue(excepcionLanzada);
 	}
 	
+	
+	
 	@Test /* Login correcto de un usuario registrado */
 	void testLog1() throws ExcepcionParametrosDeEntradaIncorrectos, FileNotFoundException, Mp3PlayerException{
 		try {
 			aplicacion.aniadirUsuario("nombre usuario", "contrasenia", "nombre", LocalDate.now());
 		} catch (ExcepcionNombreDeUsuarioNoDisponible e) {
-			
+			fail("Lanzada excepcion no esperada: ExcepcionNombreDeUsuarioNoDisponible");
 		} catch (NoSuchAlgorithmException e) {
 			fail("Lanzada excepcion no esperada: NoSuchAlgorithmException");
 		}
@@ -274,6 +279,237 @@ public class AplicacionTest {
 		}
 		
 		aplicacion.borrarDatos();	
+		
+		
+	}
+	
+	@Test
+	void testSubirCancionYBorrarCancion() {
+		boolean lanzadaExcepcion = false;
+		Cancion cancion1 = null;
+		try {
+			aplicacion.logout();
+		} catch (FileNotFoundException | Mp3PlayerException e2) {
+		}
+		
+		try {
+			aplicacion.aniadirUsuario("nombre usuario3", "contrasenia", "nombre", LocalDate.now());
+		} catch (ExcepcionParametrosDeEntradaIncorrectos e) {
+			fail("Lanzada excepcion no esperada ExcepcionParametrosDeEntradaIncorrectos");
+		} catch (ExcepcionNombreDeUsuarioNoDisponible e) {
+			fail("Lanzada excepcion no esperada ExcepcionNombreDeUsuarioNoDisponible");
+		} catch (NoSuchAlgorithmException e) {
+			fail("Lanzada excepcion no esperada: NoSuchAlgorithmException");
+		}
+		
+		try {
+			aplicacion.subirCancion("What I like", "canciones/Thats Like.mp3");
+			fail("Excepcion esperada no lanzada");
+		} catch (Mp3InvalidFileException | ExcepcionDuracionLimiteSuperada | ExcepcionParametrosDeEntradaIncorrectos
+				| IOException | ExcepcionMp3NoValido e) {
+			fail("Lanzada excepcion no esperada");
+		} catch (ExcepcionUsuarioSinCuenta e) {
+			lanzadaExcepcion = true;
+		}
+		
+		assertTrue(lanzadaExcepcion);
+		lanzadaExcepcion = false;
+		
+		try {
+			aplicacion.login("nombre usuario3", "contrasenia");
+		}
+		catch(ExcepcionLoginBloqueado e) {
+			fail("Lanzada excepcion no esperada ExcepcionLoginBloqueado");
+		}
+		catch(ExcepcionLoginErrorCredenciales e) {
+			fail("Lanzada excepcion no esperada ExcepcionLoginErrorCredenciales");
+		}
+		catch (ExcepcionParametrosDeEntradaIncorrectos e) {
+			fail("Lanzada excepcion no esperada ExcepcionParametrosDeEntradaIncorrectos");
+		} catch (NoSuchAlgorithmException e) {
+			fail("Lanzada excepcion no esperada: NoSuchAlgorithmException");
+		}
+		
+		try {
+			aplicacion.subirCancion("What I like", "canciones/Thats Like.mp3");
+			fail("Excepcion esperada no lanzada");
+		} catch (ExcepcionDuracionLimiteSuperada | ExcepcionParametrosDeEntradaIncorrectos
+				| IOException | ExcepcionUsuarioSinCuenta | ExcepcionMp3NoValido e) {
+			fail("Lanzada excepcion no esperada");
+		} catch (Mp3InvalidFileException e) {
+			lanzadaExcepcion = true;
+		}
+		
+		assertTrue(lanzadaExcepcion);
+		lanzadaExcepcion = false;
+		
+		try {
+			aplicacion.subirCancion(null, "canciones/Thats What I Like.mp3");
+			fail("Excepcion esperada no lanzada");
+		} catch (Mp3InvalidFileException | ExcepcionDuracionLimiteSuperada
+				| IOException | ExcepcionUsuarioSinCuenta | ExcepcionMp3NoValido e) {
+			fail("Lanzada excepcion no esperada");
+		} catch(ExcepcionParametrosDeEntradaIncorrectos e1) {
+			lanzadaExcepcion = true;
+		}
+		assertTrue(lanzadaExcepcion);
+		
+		try {
+			aplicacion.subirCancion("What I like", "canciones/Thats What I Like.mp3");
+		} catch (Mp3InvalidFileException | ExcepcionDuracionLimiteSuperada | ExcepcionParametrosDeEntradaIncorrectos
+				| IOException | ExcepcionUsuarioSinCuenta | ExcepcionMp3NoValido e) {
+			fail("Lanzada excepcion no esperada");
+		}
+		
+		try {
+			aplicacion.borrarCancion(null);
+			fail("Excepcion esperada no lanzada");
+		} catch (ExcepcionParametrosDeEntradaIncorrectos e) {
+			lanzadaExcepcion = true;
+		}
+		
+		assertTrue(lanzadaExcepcion);
+		
+		try {
+			cancion1 = new Cancion("cancion1","canciones/Thats What I Like.mp3",aplicacion.getUsuarioLogeado());
+		} catch (FileNotFoundException | ExcepcionMp3NoValido e) {
+			fail("Lanzada excepcion no esperada");
+		}
+	    cancion1.validar(EstadoValidacion.EXPLICITO);
+		
+		try {
+			aplicacion.aniadirCancion(cancion1);
+		} catch (ExcepcionParametrosDeEntradaIncorrectos e1) {
+			fail("Lanzada excepcion no esperada");
+		}
+		
+		try {
+			aplicacion.borrarCancion(cancion1);
+		} catch (ExcepcionParametrosDeEntradaIncorrectos e) {
+			fail("Lanzada excepcion no esperada");
+		}
+		
+		try {
+			aplicacion.logout();
+		} catch (FileNotFoundException | Mp3PlayerException e) {
+			fail("Lanzada excepcion no esperada");
+		}
+		
+	}
+
+	@Test
+	void testAniadirYBorrarAlbum() {
+		boolean lanzadaExcepcion = false;
+		ArrayList<Cancion> canciones = new ArrayList<>();
+		Cancion cancion1 = null;
+		
+		try {
+			aplicacion.logout();
+		} catch (FileNotFoundException | Mp3PlayerException e2) {
+		}
+		
+		try {
+			aplicacion.aniadirUsuario("nombre usuario2", "contrasenia", "nombre", LocalDate.now());
+		} catch (NoSuchAlgorithmException | ExcepcionParametrosDeEntradaIncorrectos
+				| ExcepcionNombreDeUsuarioNoDisponible e3) {
+			fail("Lanzada excepcion no esperada");
+		}
+		
+		try {
+			aplicacion.login("nombre usuario2", "contrasenia");
+		}
+		catch(ExcepcionLoginBloqueado e) {
+			fail("Lanzada excepcion no esperada ExcepcionLoginBloqueado");
+		}
+		catch(ExcepcionLoginErrorCredenciales e) {
+			fail("Lanzada excepcion no esperada ExcepcionLoginErrorCredenciales");
+		}
+		catch (ExcepcionParametrosDeEntradaIncorrectos e) {
+			fail("Lanzada excepcion no esperada ExcepcionParametrosDeEntradaIncorrectos");
+		} catch (NoSuchAlgorithmException e) {
+			fail("Lanzada excepcion no esperada: NoSuchAlgorithmException");
+		}
+		
+		try {
+			aplicacion.aniadirAlbum("Hola", null);
+			fail("Excepcion esperada no lanzada");
+		} catch (ExcepcionErrorCreandoAlbum | ExcepcionUsuarioSinCuenta
+				| ExcepcionInsercionInvalida | ExcepcionCancionNoValidada e) {
+			fail("Lanzada excepcion no esperada");
+		} catch (ExcepcionParametrosDeEntradaIncorrectos e) {
+			lanzadaExcepcion = true;
+		}
+		assertTrue(lanzadaExcepcion);
+		lanzadaExcepcion = false;
+		
+		try {
+			cancion1 = new Cancion("cancion1","canciones/Thats What I Like.mp3",aplicacion.getUsuarioLogeado());
+		} catch (FileNotFoundException | ExcepcionMp3NoValido e) {
+			fail("Lanzada excepcion no esperada");
+		}
+		
+		cancion1.validar(EstadoValidacion.APTOMENORES);
+		
+		canciones.add(cancion1);
+		
+		try {
+			aplicacion.aniadirAlbum("Increible", canciones);
+		} catch (ExcepcionErrorCreandoAlbum | ExcepcionParametrosDeEntradaIncorrectos | ExcepcionUsuarioSinCuenta
+				| ExcepcionInsercionInvalida | ExcepcionCancionNoValidada e2) {
+			fail("Lanzada excepcion no esperada");
+		}
+		
+		try {
+			aplicacion.logout();
+		} catch (FileNotFoundException | Mp3PlayerException e) {
+			fail("Lanzada excepcion no esperada");
+		}
+		
+		try {
+			aplicacion.aniadirAlbum("Nada", canciones);
+			fail("Excepcion esperada no lanzada");
+		} catch (ExcepcionErrorCreandoAlbum | ExcepcionParametrosDeEntradaIncorrectos
+				| ExcepcionInsercionInvalida | ExcepcionCancionNoValidada e) {
+			fail("Lanzada excepcion no esperada");
+		} catch(ExcepcionUsuarioSinCuenta e1) {
+			lanzadaExcepcion = true;
+		}
+		assertTrue(lanzadaExcepcion);
+		lanzadaExcepcion = false;
+		
+		try {
+			aplicacion.borrarAlbum(null);
+			fail("Excepcion esperada no lanzada");
+		} catch (ExcepcionParametrosDeEntradaIncorrectos e) {
+			lanzadaExcepcion = true;
+		}
+		assertTrue(lanzadaExcepcion);
+		
+		try {
+			aplicacion.login("nombre usuario2", "contrasenia");
+		} catch (NoSuchAlgorithmException | ExcepcionLoginErrorCredenciales | ExcepcionLoginBloqueado
+				| ExcepcionParametrosDeEntradaIncorrectos e1) {
+			fail("Excepcion lanzada no esperada");
+		}
+		
+		Album album = null;
+		try {
+			album = new Album("Increible",aplicacion.getUsuarioLogeado(),canciones);
+		} catch (ExcepcionInsercionInvalida | ExcepcionCancionNoValidada e1) {
+			fail("Lanzada excepcion no esperada");
+		}
+		try {
+			aplicacion.borrarAlbum(album);
+		} catch (ExcepcionParametrosDeEntradaIncorrectos e) {
+
+			fail("Excepcion lanzada no esperada");
+		}
+		
+		try {
+			aplicacion.logout();
+		} catch (FileNotFoundException | Mp3PlayerException e) {
+			fail("Excepcion lanzada no esperada");
+		}
 	}
 	
 	@Test 
