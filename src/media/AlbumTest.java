@@ -63,14 +63,15 @@ public class AlbumTest {
 	@Test
 	void testAlbumQuitarCancion() {
 		UsuarioRegistrado usuario = new UsuarioRegistrado("nombre usuario","contrasenia","nombre",LocalDate.now());
-	    Cancion cancion1 = new Cancion("cancion1","ruta cancion1",usuario);
+		boolean excepcionLanzada = false;
+		Cancion cancion1 = new Cancion("cancion1","ruta cancion1",usuario);
 	    cancion1.validar(EstadoValidacion.EXPLICITO);
 	    Cancion cancion2 = new Cancion("cancion2","ruta cancion2",usuario);
 	    cancion2.validar(EstadoValidacion.EXPLICITO);
 	    ArrayList<Cancion> canciones = new ArrayList<>();
 	    canciones.add(cancion1);
 	    canciones.add(cancion2);
-	    Album album1 = new Album("nombre album",usuario);
+	    Album album1 = null;
 		try {
 			album1 = new Album("nombre album",usuario,canciones);
 		} catch (ExcepcionInsercionInvalida e1) {
@@ -86,9 +87,13 @@ public class AlbumTest {
 		}
 	    assertFalse(album1.contieneReproducible(cancion2));
 	    
-	    assertThrows(ExcepcionCancionNoContenida.class, () -> {
-	    	album1.quitarCancion(cancion2);
-	    });
+	    try {
+			album1.quitarCancion(cancion2);
+			fail("Se esperaba excepcion ExcepcionCancionNoContenida");
+		} catch (ExcepcionCancionNoContenida e1) {
+			excepcionLanzada = true;
+		}
+	    assertTrue(excepcionLanzada);
 	    try {
 			album1.quitarCancion(cancion1);
 		} catch (ExcepcionCancionNoContenida e) {

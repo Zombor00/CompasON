@@ -1,13 +1,11 @@
 package media;
 
-import java.io.*;
-
+import java.io.Serializable;
 import excepciones.ExcepcionNoAptoParaMenores;
 import excepciones.ExcepcionReproducirProhibido;
 import pads.musicPlayer.Mp3Player;
 import pads.musicPlayer.exceptions.Mp3InvalidFileException;
 import usuarios.UsuarioRegistrado;
-
 
 /**
  * Esta clase contiene todos los atributos y metodos comunes a los elementos

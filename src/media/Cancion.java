@@ -36,20 +36,28 @@ public class Cancion extends Buscable implements Serializable{
      * @param titulo string que identifica el titulo de la cancion
      * @param file fichero con el audio de la cancion
      * @param autor autor de la cancion
+     * @throws ExcepcionMp3NoValido 
      * @throws FileNotFoundException 
      */
-    public Cancion(String titulo, String file, UsuarioRegistrado autor) {
+    public Cancion(String titulo, String file, UsuarioRegistrado autor) throws ExcepcionMp3NoValido, FileNotFoundException {
         super(titulo, autor);
         this.id = Cancion.maxId +1;
         Cancion.maxId += 1;
         this.ficheroAudio = file;
         this.fechaSubida = LocalDate.now();
+        if(file != null) {
+            if(Mp3Player.isValidMp3File(file)) {
+                    this.ficheroAudio = file;
+            }else{
+            	throw new ExcepcionMp3NoValido();
+            }
+        }
         this.estadoValidacion = EstadoValidacion.NOVALIDADA;
         try {
             this.setDuracion(Mp3Player.getDuration(file));
         }
         catch(FileNotFoundException e){
-        	
+        	throw new FileNotFoundException();
         }
             
     }

@@ -18,7 +18,12 @@ public class CancionTest {
 	@Test 
 	void testCancionValidar() {
 		UsuarioRegistrado usuario1 = new UsuarioRegistrado("nombre usuario","contrasenia","nombre",LocalDate.now());
-	    Cancion cancion1 = new Cancion("cancion1","ruta cancion1",usuario1);
+	    Cancion cancion1 = null;
+		try {
+			cancion1 = new Cancion("cancion1","canciones/Thats What I Like.mp3",usuario1);
+		} catch (FileNotFoundException | ExcepcionMp3NoValido e) {
+			fail("Lanzada excepcion no esperada");
+		}
 	    
 	    cancion1.toString();
 	    cancion1.validar(EstadoValidacion.NOVALIDADA);
@@ -33,8 +38,14 @@ public class CancionTest {
 	@Test 
 	void testCancionModificar() throws FileNotFoundException, ExcepcionDuracionLimiteSuperada {
 		UsuarioRegistrado usuario1 = new UsuarioRegistrado("nombre usuario","contrasenia","nombre",LocalDate.now());
-	    Cancion cancion1 = new Cancion("cancion1","ruta cancion1",usuario1);
-	    Cancion cancion2 = new Cancion("cancion2","ruta cancion2",usuario1);
+	    Cancion cancion1 = null;
+	    Cancion cancion2 = null;
+		try {
+			cancion1 = new Cancion("cancion1","canciones/Thats What I Like.mp3",usuario1);
+		    cancion2 = new Cancion("cancion2","canciones/Thats What I Like.mp3",usuario1);
+		} catch (FileNotFoundException | ExcepcionMp3NoValido e) {
+			fail("Lanzada excepcion no esperada");
+		}
 	    
 	    cancion1.validar(EstadoValidacion.NOVALIDADA);
 	    try {
