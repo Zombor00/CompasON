@@ -211,19 +211,11 @@ public class Cancion extends Buscable implements Serializable{
     
     @Override
     public boolean esValido() {
-    	if (this.estadoValidacion != EstadoValidacion.NOVALIDADA) {
-    		return true;
-    	} else {
-    		return false;
-    	}
+    	return this.estadoValidacion != EstadoValidacion.NOVALIDADA;
     }
     
     public boolean equals(Cancion c) {
-    	if (this.id == c.id){
-    		return true;
-    	} else {
-    		return false;
-    	}
+    	return this.id == c.id;
     }
     
     @Override

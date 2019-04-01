@@ -74,8 +74,8 @@ public class Lista extends Reproducible implements Serializable{
     /**
      * Sirve para meter un reproducible pasado como argumento en la lista
      * @param r Cancion a aniadir en el album
-     * @return false si el Reproducible ya esta en la lista true en caso contrario
      * @throws ExcepcionInsercionInvalida
+     * @throws ExcepcionReproducibleNoValido
      */
     public void aniadirReproducible(Reproducible r) throws ExcepcionInsercionInvalida,ExcepcionReproducibleNoValido{
 

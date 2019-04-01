@@ -280,8 +280,6 @@ public class Aplicacion implements Serializable {
      *
      * @param cancion cancion que se aniade
      * @throws ExcepcionParametrosDeEntradaIncorrectos 
-     * @throws FileNotFoundException 
-     * @throws ExcepcionDuracionLimiteSuperada 
      */
     public void aniadirCancion(Cancion cancion) throws ExcepcionParametrosDeEntradaIncorrectos {
     	if (cancion == null ) {
@@ -528,7 +526,6 @@ public class Aplicacion implements Serializable {
      * Aniadie un elemento a la cola de reproduccion
      *
      * @param reproducible Elemento que se pretende reproducir
-     * @throws Mp3PlayerException 
      * @throws ExcepcionLimiteReproducidasAlcanzado 
      * @throws ExcepcionNoAptoParaMenores 
      * @throws ExcepcionParametrosDeEntradaIncorrectos 
