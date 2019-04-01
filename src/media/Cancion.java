@@ -101,7 +101,7 @@ public class Cancion extends Buscable implements Serializable{
      * @throws ExcepcionDuracionLimiteSuperada 
      * @throws FileNotFoundException 
      */
-    public boolean modificar(String titulo, String file) throws ExcepcionCancionYaValidada,
+    public void modificar(String titulo, String file) throws ExcepcionCancionYaValidada,
     FileNotFoundException, ExcepcionDuracionLimiteSuperada,ExcepcionCancionYaNoModificable,
     ExcepcionMp3NoValido {
         if(this.estadoValidacion == EstadoValidacion.APTOMENORES ||
@@ -130,7 +130,6 @@ public class Cancion extends Buscable implements Serializable{
     	}
 
         this.modificableHasta = null;
-        return true;
     }
 
     /**
@@ -181,12 +180,12 @@ public class Cancion extends Buscable implements Serializable{
 	}
 
     @Override
-	public void aniadirContenidoEn(Lista lista) {
+	public void aniadirPadre(Lista lista) {
 
 	}
 
     @Override
-	public void quitarContenidoEn(Lista lista) {
+	public void quitarPadre(Lista lista) {
 
 	}
 

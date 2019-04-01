@@ -38,7 +38,7 @@ public class CancionTest {
 	    
 	    cancion1.validar(EstadoValidacion.NOVALIDADA);
 	    try {
-			assertTrue(cancion1.modificar("Wait for it",null));
+	    	cancion1.modificar("Wait for it",null);
 		} catch (ExcepcionCancionYaValidada | ExcepcionCancionYaNoModificable | ExcepcionMp3NoValido e) {
 			fail("Lanzada excepcion no esperada");
 		}
@@ -63,7 +63,7 @@ public class CancionTest {
 	    
 	    cancion2.validar(EstadoValidacion.NOVALIDADA);
 	    try {
-			assertTrue(cancion2.modificar("Thats What I Like","canciones/Thats What I Like.mp3"));
+			cancion2.modificar("Thats What I Like","canciones/Thats What I Like.mp3");
 		} catch (ExcepcionCancionYaValidada | ExcepcionCancionYaNoModificable | ExcepcionMp3NoValido e) {
 			fail("Lanzada excepcion no esperada");
 		}
@@ -80,7 +80,6 @@ public class CancionTest {
 	}
 	
 	@Test
-	
 	void testCancionDesbloquear() {
 		UsuarioRegistrado usuario1 = new UsuarioRegistrado("nombre usuario","contrasenia","nombre",LocalDate.now());
 	    Cancion cancion1 = new Cancion("cancion1","ruta cancion1",usuario1);
@@ -91,6 +90,20 @@ public class CancionTest {
 		assertSame(cancion1.getEstado(),Estado.BLOQUEADO);
 	    cancion1.desbloquear(cancion1);
 	    assertSame(cancion1.getEstado(),Estado.NOBLOQUEADO);
+	    cancion1.setEstado(Estado.BORRADO);
+	    cancion1.desbloquear(cancion1);
+	    assertSame(cancion1.getEstado(),Estado.BORRADO);
+	}
+	
+	@Test
+	void testCancionEsAptoMenores() {
+		UsuarioRegistrado usuario1 = new UsuarioRegistrado("nombre usuario","contrasenia","nombre",LocalDate.now());
+	    Cancion cancion1 = new Cancion("cancion1","ruta cancion1",usuario1);
+	    
+	    cancion1.validar(EstadoValidacion.EXPLICITO);
+	    assertFalse(cancion1.esAptoParaMenores());
+	    cancion1.validar(EstadoValidacion.APTOMENORES);
+	    assertTrue(cancion1.esAptoParaMenores());
 	}
 	
     

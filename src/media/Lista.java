@@ -1,9 +1,10 @@
 package media;
 
 import java.io.*;
+
 import java.util.*;
 import excepciones.ExcepcionCancionNoContenida;
-import excepciones.ExcepcionCancionYaContenida;
+import excepciones.ExcepcionInsercionInvalida;
 import excepciones.ExcepcionReproducirProhibido;
 import pads.musicPlayer.Mp3Player;
 import pads.musicPlayer.exceptions.Mp3InvalidFileException;
@@ -18,7 +19,7 @@ import usuarios.UsuarioRegistrado;
 public class Lista extends Reproducible implements Serializable{
 
     private ArrayList <Reproducible> reproducibles;
-    private ArrayList <Lista> contenidaEn;
+    private ArrayList <Lista> padres;
 
     /**
      * Constructor de la clase lista que inicializa el array de reproducibles y
@@ -28,7 +29,7 @@ public class Lista extends Reproducible implements Serializable{
     public Lista(String titulo){
         super(titulo);
         this.reproducibles = new ArrayList<Reproducible>(); 
-        this.contenidaEn = new ArrayList<>(); /* A esto llamalo padres */
+        this.padres = new ArrayList<>(); /* A esto llamalo padres */
     }
 
     /**
@@ -43,7 +44,7 @@ public class Lista extends Reproducible implements Serializable{
         this.reproducibles=reproducibles;
         for(Reproducible r: reproducibles) {
         	duracion += r.getDuracion();
-        	r.aniadirContenidoEn(this);
+        	r.aniadirPadre(this);
         }
         this.setDuracion(duracion);
     }
@@ -72,17 +73,17 @@ public class Lista extends Reproducible implements Serializable{
      * @param r Cancion a aniadir en el album
      * @return false si el Reproducible ya esta en la lista true en caso contrario
      */
-    public boolean aniadirReproducible(Reproducible r) throws ExcepcionCancionYaContenida{
+    public boolean aniadirReproducible(Reproducible r) throws ExcepcionInsercionInvalida{
     	
-    	/*if(r.esValido()==false) {
+    	if(r.esValido()==false) {
     		return false;
-    	}*/
+    	}
 
-        if(this.contenidoEn(r)) { /* this.esViableAniadir(r) */
-        	throw new ExcepcionCancionYaContenida(); /* InsercionInvalida */
+        if(!this.esViableAniadir(r)) { /* this.esViableAniadir(r) */
+        	throw new ExcepcionInsercionInvalida(); /* InsercionInvalida */
         }
         reproducibles.add(r);
-        r.aniadirContenidoEn(this);
+        r.aniadirPadre(this);
         return true;
     }
 
@@ -91,7 +92,7 @@ public class Lista extends Reproducible implements Serializable{
      * @param r Reproducible a quitar de la lista
      * @return true si existe el reproducible a quitar false en caso contrario
      */
-    public boolean quitarReproducible(Reproducible r) throws ExcepcionCancionNoContenida{
+    public void quitarReproducible(Reproducible r) throws ExcepcionCancionNoContenida{
         int index;
 
         index = reproducibles.indexOf(r);
@@ -100,8 +101,7 @@ public class Lista extends Reproducible implements Serializable{
         }
 
         reproducibles.remove(index);
-        r.quitarContenidoEn(this);
-        return true;
+        r.quitarPadre(this);
     }
 
     /**
@@ -122,19 +122,17 @@ public class Lista extends Reproducible implements Serializable{
         }
         return false;
     }
-    
-    /* getPadres, aniadirPadre, quitarPadre */
 
-    public ArrayList<Lista> getContenidoEn() {
-    	return this.contenidaEn;
+    public ArrayList<Lista> getPadres() {
+    	return this.padres;
     }
 
-    public void aniadirContenidoEn(Lista lista) {
-		this.contenidaEn.add(lista);
+    public void aniadirPadre(Lista lista) {
+		this.padres.add(lista);
 	}
 
-    public void quitarContenidoEn(Lista lista) {
-		this.contenidaEn.remove(lista);
+    public void quitarPadre(Lista lista) {
+		this.padres.remove(lista);
 	}
 
     /**
@@ -142,34 +140,38 @@ public class Lista extends Reproducible implements Serializable{
      * esta contenido. False en caso contrario
      * @param r: reproducible a buscar en las listas padre
      */
-    public boolean contenidoEn(Reproducible r) {
+    /*
+    public boolean esViableAniadir(Reproducible r) {
     	boolean aux = false;
-    	if(this.getContenidoEn().isEmpty()) {
+    	if(this.getPadres().isEmpty()) {
     		if(this.contieneReproducible(r)) {
     			aux = true;
     		}
     	}else {
-    		for(Lista l: this.getContenidoEn()) {
-    			if(l.contenidoEn(r)) {
+    		for(Lista l: this.getPadres()) {
+    			if(l.esViableAniadir(r)) {
     				aux = true;
     			}
     		}
     	}
     	return aux;
-    }
-    /* Devuelve true si se puede aniadir r a la lista 
+    }*/
+    /* Devuelve true si se puede aniadir r a la lista */
     public boolean esViableAniadir(Reproducible r) {
-    	if(this.contieneReproducible(r)) {
-    		return false;
-    	}
-    	for(Lista padre: this.getPadres()) {
-    		if(l.contieneReproducible(r)) {
+    	if(this.getPadres().isEmpty()) {
+    		if(this.contieneReproducible(r)){
     			return false;
+    		}
+    	} else{
+    		for(Lista padre: this.getPadres()) {
+    			if(!padre.esViableAniadir(r)) {
+    				return false;
+    			}
     		}
     	}
     	return true;
     }
-    */
+    
 
     @Override
 	public boolean esAptoParaMenores() {
