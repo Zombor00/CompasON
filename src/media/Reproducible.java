@@ -73,7 +73,7 @@ public abstract class Reproducible implements Serializable{
    * Si no es una lista no hace nada.
    * @param lista
    */
-  public abstract void aniadirContenidoEn(Lista lista);
+  public abstract void aniadirPadre(Lista lista);
   
   
   /**
@@ -98,6 +98,6 @@ public abstract class Reproducible implements Serializable{
    * Si no es una lista no hace nada
    * @param lista
    */
-  public abstract void quitarContenidoEn(Lista lista);
+  public abstract void quitarPadre(Lista lista);
   
 }

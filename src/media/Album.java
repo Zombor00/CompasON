@@ -4,7 +4,7 @@ import java.io.*;
 import java.util.*;
 
 import excepciones.ExcepcionReproducirProhibido;
-import excepciones.ExcepcionCancionYaContenida;
+import excepciones.ExcepcionInsercionInvalida;
 import excepciones.ExcepcionCancionNoContenida;
 import java.time.*;
 import pads.musicPlayer.Mp3Player;
@@ -28,7 +28,7 @@ public class Album extends Buscable implements Serializable{
      * @param titulo string que identifica el titulo del album
      */
     public Album(String titulo,UsuarioRegistrado autor){
-        this(titulo, autor, new ArrayList<Cancion>() );
+        this(titulo, autor, null );
     }
 
     /**
@@ -75,13 +75,13 @@ public class Album extends Buscable implements Serializable{
      * @param c Cancion a aniadir en el album
      * @return false si la cancion ya esta en el album true en caso contrario
      */
-    public boolean aniadirCancion(Cancion c) throws ExcepcionCancionYaContenida{
+    public boolean aniadirCancion(Cancion c) throws ExcepcionInsercionInvalida{
         if(canciones.contains(c)) {
-        	throw new ExcepcionCancionYaContenida();
+        	throw new ExcepcionInsercionInvalida();
         }
-        /*if (c.getEstadoValidacion() == EstadoValidacion.NOVALIDADA) {
+        if (c.getEstadoValidacion() == EstadoValidacion.NOVALIDADA) {
         	return false;
-        }*/
+        }
         canciones.add(c);
         this.setDuracion(this.getDuracion() + c.getDuracion());
         return true;
@@ -92,7 +92,7 @@ public class Album extends Buscable implements Serializable{
      * @param c Cancion a quitar del album
      * @return true si existe la cancion a quitar false en caso contrario
      */
-    public boolean quitarCancion(Cancion c) throws ExcepcionCancionNoContenida{
+    public void quitarCancion(Cancion c) throws ExcepcionCancionNoContenida{
         int index;
 
         index = canciones.indexOf(c);
@@ -105,8 +105,6 @@ public class Album extends Buscable implements Serializable{
         if(this.canciones.size() == 0){
             this.setEstado(Estado.BORRADO);
         }
-
-        return true;
     }
 
     /**
@@ -152,12 +150,12 @@ public class Album extends Buscable implements Serializable{
 	}
 
 	@Override
-	public void aniadirContenidoEn(Lista lista) {
+	public void aniadirPadre(Lista lista) {
 
 	}
 
 	@Override
-	public void quitarContenidoEn(Lista lista) {
+	public void quitarPadre(Lista lista) {
 
 	}
 
@@ -174,7 +172,7 @@ public class Album extends Buscable implements Serializable{
     @Override
     public boolean esValido() {
     	for (Cancion c : this.canciones) {
-    		if (c.esValido() == false) {
+    		if (!c.esValido()) {
     			return false;
     		}
     	}
