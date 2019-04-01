@@ -7,6 +7,7 @@ import usuarios.UsuarioRegistrado;
 import org.junit.jupiter.api.Test;
 
 import excepciones.ExcepcionCancionNoContenida;
+import excepciones.ExcepcionCancionNoValidada;
 import excepciones.ExcepcionInsercionInvalida;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -27,7 +28,7 @@ public class ListaTest {
 		Cancion cancion1 = new Cancion("cancion1","ruta cancion1",usuario);
 		cancion1.validar(EstadoValidacion.EXPLICITO);
 		Cancion cancion2 = new Cancion("cancion2","ruta cancion2",usuario);
-		cancion2.validar(EstadoValidacion.EXPLICITO);
+		cancion1.validar(EstadoValidacion.EXPLICITO);
 		
 		try {
 			assertTrue(lista1.aniadirReproducible(cancion1));
@@ -56,7 +57,7 @@ public class ListaTest {
 	
 	@Test
 	void testListaContenidoEnPadres() {
-		Lista lista1;
+		Lista lista1 = null;
 		Lista lista2 = new Lista("nombre lista2");
 		UsuarioRegistrado usuario = new UsuarioRegistrado("nombre usuario","contrasenia","nombre",LocalDate.now());
 		Cancion cancion1 = new Cancion("cancion1","ruta cancion1",usuario);
@@ -64,7 +65,11 @@ public class ListaTest {
 		ArrayList<Reproducible> reproducibles = new ArrayList<>();
 		reproducibles.add(cancion1);
 		reproducibles.add(lista2);
-		lista1 =  new Lista("nombre lista1",reproducibles);
+		try {
+			lista1 =  new Lista("nombre lista1",reproducibles);
+		} catch (ExcepcionInsercionInvalida e2) {
+			fail("Lanzada excepcion no esperada");
+		}
 		
 		assertThrows(ExcepcionInsercionInvalida.class, () -> {
 			lista2.aniadirReproducible(cancion1);
@@ -166,8 +171,10 @@ public class ListaTest {
 		cancion2.validar(EstadoValidacion.EXPLICITO);
 	    
 	    try {
-			assertTrue(album1.aniadirCancion(cancion2));
+			album1.aniadirCancion(cancion1);
 		} catch (ExcepcionInsercionInvalida e) {
+			fail("Lanzada excepcion no esperada");
+		} catch (ExcepcionCancionNoValidada e) {
 			fail("Lanzada excepcion no esperada");
 		}
 	    
@@ -177,7 +184,7 @@ public class ListaTest {
 			fail("Lanzada excepcion no esperada");
 		}
 	    
-	    assertFalse(lista.esAptoParaMenores());
+	    assertTrue(lista.esAptoParaMenores());
 	
 	}
 

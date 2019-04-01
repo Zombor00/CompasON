@@ -6,6 +6,7 @@ import java.util.*;
 import excepciones.ExcepcionCancionNoContenida;
 import excepciones.ExcepcionInsercionInvalida;
 import excepciones.ExcepcionReproducirProhibido;
+import excepciones.ExcepcionReproducibleNoValido;
 import pads.musicPlayer.Mp3Player;
 import pads.musicPlayer.exceptions.Mp3InvalidFileException;
 import usuarios.UsuarioRegistrado;
@@ -29,7 +30,7 @@ public class Lista extends Reproducible implements Serializable{
     public Lista(String titulo){
         super(titulo);
         this.reproducibles = new ArrayList<Reproducible>(); 
-        this.padres = new ArrayList<>(); /* A esto llamalo padres */
+        this.padres = new ArrayList<>(); 
     }
 
     /**
@@ -37,12 +38,14 @@ public class Lista extends Reproducible implements Serializable{
      * pone titulo a la lista.
      * @param titulo string que identifica el titulo de la lista
      * @param reproducibles array de Reproducibles a meter en el album
+     * @throws ExcepcionInsercionInvalida 
+     * @throws ExcepcionReproducibleNoValido 
      */
-    public Lista(String titulo,ArrayList <Reproducible> reproducibles){
+    public Lista(String titulo,ArrayList <Reproducible> reproducibles) throws ExcepcionInsercionInvalida, ExcepcionReproducibleNoValido{
         this(titulo);
         double duracion = 0;
-        this.reproducibles=reproducibles;
         for(Reproducible r: reproducibles) {
+        	this.aniadirReproducible(r);
         	duracion += r.getDuracion();
         	r.aniadirPadre(this);
         }
@@ -73,10 +76,10 @@ public class Lista extends Reproducible implements Serializable{
      * @param r Cancion a aniadir en el album
      * @return false si el Reproducible ya esta en la lista true en caso contrario
      */
-    public boolean aniadirReproducible(Reproducible r) throws ExcepcionInsercionInvalida{
+    public boolean aniadirReproducible(Reproducible r) throws ExcepcionInsercionInvalida,ExcepcionReproducibleNoValido{
     	
     	if(r.esValido()==false) {
-    		return false;
+    		throw new ExcepcionReproducibleNoValido();
     	}
 
         if(!r.sePuedeMeterEn(this)) { /* this.esViableAniadir(r) */

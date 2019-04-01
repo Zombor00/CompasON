@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import org.junit.jupiter.api.Test;
 
 import excepciones.ExcepcionCancionNoContenida;
+import excepciones.ExcepcionCancionNoValidada;
 import excepciones.ExcepcionInsercionInvalida;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -18,17 +19,17 @@ public class AlbumTest {
 	    Cancion cancion1 = new Cancion("cancion1","ruta cancion1",usuario);
 	    Album album1 = new Album("nombre album",usuario);
 	    
-	    try {
-			assertFalse(album1.aniadirCancion(cancion1));
-		} catch (ExcepcionInsercionInvalida e) {
-			fail("Lanzada excepcion no esperada");
-		}
+	    assertThrows(ExcepcionCancionNoValidada.class, () -> {
+	    	album1.aniadirCancion(cancion1);
+	    });
 	    
 	    cancion1.validar(EstadoValidacion.EXPLICITO);
 	    
 	    try {
-			assertTrue(album1.aniadirCancion(cancion1));
+			album1.aniadirCancion(cancion1);
 		} catch (ExcepcionInsercionInvalida e) {
+			fail("Lanzada excepcion no esperada");
+		} catch (ExcepcionCancionNoValidada e) {
 			fail("Lanzada excepcion no esperada");
 		}
 	    
@@ -52,6 +53,8 @@ public class AlbumTest {
 			album1.aniadirCancion(cancion1);
 		} catch (ExcepcionInsercionInvalida e) {
 			fail("Lanzada excepcion no esperada");
+		} catch (ExcepcionCancionNoValidada e) {
+			fail("Lanzada excepcion no esperada");
 		}
 	    assertTrue(album1.contieneReproducible(cancion1));
 	    assertFalse(album1.contieneReproducible(cancion2));
@@ -67,7 +70,14 @@ public class AlbumTest {
 	    ArrayList<Cancion> canciones = new ArrayList<>();
 	    canciones.add(cancion1);
 	    canciones.add(cancion2);
-	    Album album1 = new Album("nombre album",usuario,canciones);
+	    Album album1 = new Album("nombre album",usuario);
+		try {
+			album1 = new Album("nombre album",usuario,canciones);
+		} catch (ExcepcionInsercionInvalida e1) {
+			fail("Lanzada excepcion no esperada");
+		} catch (ExcepcionCancionNoValidada e) {
+			fail("Lanzada excepcion no esperada");
+		}
 	    
 	    try {
 	    	album1.quitarCancion(cancion2);
@@ -75,6 +85,7 @@ public class AlbumTest {
 			fail("Lanzada excepcion no esperada");
 		}
 	    assertFalse(album1.contieneReproducible(cancion2));
+	    
 	    assertThrows(ExcepcionCancionNoContenida.class, () -> {
 	    	album1.quitarCancion(cancion2);
 	    });
@@ -100,6 +111,8 @@ public class AlbumTest {
 			album1.aniadirCancion(cancion2);
 		} catch (ExcepcionInsercionInvalida e) {
 			fail("Lanzada excepcion no esperada");
+		} catch (ExcepcionCancionNoValidada e) {
+			fail("Lanzada excepcion no esperada");
 		}
 	    
 	    assertSame(album1.contBloqueadas(),0);
@@ -119,6 +132,8 @@ public class AlbumTest {
 			album1.aniadirCancion(cancion1);
 			album1.aniadirCancion(cancion2);
 		} catch (ExcepcionInsercionInvalida e) {
+			fail("Lanzada excepcion no esperada");
+		} catch (ExcepcionCancionNoValidada e) {
 			fail("Lanzada excepcion no esperada");
 		}
 	    
@@ -144,6 +159,8 @@ public class AlbumTest {
 			album1.aniadirCancion(cancion1);
 		} catch (ExcepcionInsercionInvalida e) {
 			fail("Lanzada excepcion no esperada");
+		} catch (ExcepcionCancionNoValidada e) {
+			fail("Lanzada excepcion no esperada");
 		}
 	    assertTrue(album1.esAptoParaMenores());
 	}
@@ -158,6 +175,8 @@ public class AlbumTest {
 	    try {
 			album1.aniadirCancion(cancion1);
 		} catch (ExcepcionInsercionInvalida e) {
+			fail("Lanzada excepcion no esperada");
+		} catch (ExcepcionCancionNoValidada e) {
 			fail("Lanzada excepcion no esperada");
 		}
 	    assertSame(album1.getAutor(),usuario);
@@ -176,6 +195,8 @@ public class AlbumTest {
 			album1.aniadirCancion(cancion1);
 			album1.aniadirCancion(cancion2);
 		} catch (ExcepcionInsercionInvalida e) {
+			fail("Lanzada excepcion no esperada");
+		} catch (ExcepcionCancionNoValidada e) {
 			fail("Lanzada excepcion no esperada");
 		}
 	    assertTrue(album1.esValido());

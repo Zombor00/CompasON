@@ -6,6 +6,8 @@ import java.util.*;
 import excepciones.ExcepcionReproducirProhibido;
 import excepciones.ExcepcionInsercionInvalida;
 import excepciones.ExcepcionCancionNoContenida;
+import excepciones.ExcepcionCancionNoValidada;
+
 import java.time.*;
 import pads.musicPlayer.Mp3Player;
 import pads.musicPlayer.exceptions.Mp3InvalidFileException;
@@ -26,9 +28,13 @@ public class Album extends Buscable implements Serializable{
      * Constructor de la clase album que inicializa el array de canciones y
      * pone titulo al album.
      * @param titulo string que identifica el titulo del album
+     * @throws ExcepcionInsercionInvalida 
      */
-    public Album(String titulo,UsuarioRegistrado autor){
-        this(titulo, autor, null );
+    public Album(String titulo, UsuarioRegistrado autor) {
+        super(titulo, autor);
+        this.setDuracion(0);
+        this.anio = LocalDate.now().getYear();
+        this.canciones = new ArrayList<>();
     }
 
     /**
@@ -36,18 +42,17 @@ public class Album extends Buscable implements Serializable{
      las canciones que tendrá el album inicialmente.
      * @param titulo string que identifica el titulo del album
      * @param canciones array de canciones a meter en el album
+     * @throws ExcepcionInsercionInvalida 
+     * @throws ExcepcionCancionNoValidada 
      */
-    public Album(String titulo, UsuarioRegistrado autor, ArrayList <Cancion> canciones){
-        super(titulo, autor);
+    public Album(String titulo, UsuarioRegistrado autor, ArrayList <Cancion> canciones) throws ExcepcionInsercionInvalida, ExcepcionCancionNoValidada{
+        this(titulo, autor);
         double duracion = 0;
-        this.anio = LocalDate.now().getYear();
         if (canciones != null) {
-            this.canciones = canciones;
         	for(Cancion c: canciones) {
+        		this.aniadirCancion(c);
             	duracion += c.getDuracion();
             }
-        }else {
-        	this.canciones = new ArrayList<>();
         }
         this.setDuracion(duracion);
     }
@@ -75,16 +80,15 @@ public class Album extends Buscable implements Serializable{
      * @param c Cancion a aniadir en el album
      * @return false si la cancion ya esta en el album true en caso contrario
      */
-    public boolean aniadirCancion(Cancion c) throws ExcepcionInsercionInvalida{
+    public void aniadirCancion(Cancion c) throws ExcepcionInsercionInvalida, ExcepcionCancionNoValidada{
         if(canciones.contains(c)) {
         	throw new ExcepcionInsercionInvalida();
         }
         if (c.getEstadoValidacion() == EstadoValidacion.NOVALIDADA) {
-        	return false;
+        	throw new ExcepcionCancionNoValidada();
         }
         canciones.add(c);
         this.setDuracion(this.getDuracion() + c.getDuracion());
-        return true;
     }
 
     /**

@@ -36,6 +36,7 @@ public class Cancion extends Buscable implements Serializable{
      * @param titulo string que identifica el titulo de la cancion
      * @param file fichero con el audio de la cancion
      * @param autor autor de la cancion
+     * @throws FileNotFoundException 
      */
     public Cancion(String titulo, String file, UsuarioRegistrado autor) {
         super(titulo, autor);
@@ -46,10 +47,11 @@ public class Cancion extends Buscable implements Serializable{
         this.estadoValidacion = EstadoValidacion.NOVALIDADA;
         try {
             this.setDuracion(Mp3Player.getDuration(file));
-            }
-        catch(FileNotFoundException e) {
-            /* Gestion de excepxion */
         }
+        catch(FileNotFoundException e){
+        	
+        }
+            
     }
 
     /**
@@ -215,12 +217,14 @@ public class Cancion extends Buscable implements Serializable{
     }
     
     @Override
-    
     public boolean sePuedeMeterEn(Lista l) {
+    	/*Si la lista no tiene padres buscamos recursivamente hacia abajo */
     	if(l.getPadres().isEmpty()) {
     		if(l.contieneReproducible(this)){
     			return false;
     		}
+    	/*Si la lista tiene padres seguimos buscando hasta que no tenga ninguno
+    	 * para poder hacer la recursión hacia abajo desde los padres mas altos*/
     	} else{
     		for(Lista padre: l.getPadres()) {
     			if(!this.sePuedeMeterEn(padre)) {
