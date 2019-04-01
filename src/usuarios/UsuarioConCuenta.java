@@ -20,8 +20,8 @@ public abstract class UsuarioConCuenta implements Serializable{
     /**
     * Constructor, con el nombre de usuario y contrasenia
     *
-    * @param nombreUsuario
-    * @param contrasenia del usuario
+    * @param nombreUsuario nombre de usuario
+    * @param contrasenia clave del usuario
     */
     public UsuarioConCuenta(String nombreUsuario, String contrasenia){
         this.nombreUsuario = nombreUsuario;

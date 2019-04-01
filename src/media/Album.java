@@ -26,6 +26,7 @@ public class Album extends Buscable implements Serializable{
      * Constructor de la clase album que inicializa el array de canciones y
      * pone titulo al album.
      * @param titulo string que identifica el titulo del album
+     * @param autor usuario que ha hecho el album
      */
     public Album(String titulo,UsuarioRegistrado autor){
         this(titulo, autor, null );
@@ -35,6 +36,7 @@ public class Album extends Buscable implements Serializable{
     * Constructor de la clase album que pone titulo al album y al que se le pasa
      las canciones que tendrá el album inicialmente.
      * @param titulo string que identifica el titulo del album
+     * @param autor usuario que ha hecho el album
      * @param canciones array de canciones a meter en el album
      */
     public Album(String titulo, UsuarioRegistrado autor, ArrayList <Cancion> canciones){
@@ -74,6 +76,7 @@ public class Album extends Buscable implements Serializable{
      * Sirve para meter la cancion pasada como argumento en el album
      * @param c Cancion a aniadir en el album
      * @return false si la cancion ya esta en el album true en caso contrario
+     * @throws ExcepcionInsercionInvalida
      */
     public boolean aniadirCancion(Cancion c) throws ExcepcionInsercionInvalida{
         if(canciones.contains(c)) {
@@ -90,9 +93,9 @@ public class Album extends Buscable implements Serializable{
     /**
      * Sirve para quitar una cancion del album
      * @param c Cancion a quitar del album
-     * @return true si existe la cancion a quitar false en caso contrario
+     * @throws ExcepcionCancionNoContenida
      */
-    public void quitarCancion(Cancion c) throws ExcepcionCancionNoContenida{
+    public void quitarCancion(Cancion c) throws ExcepcionCancionNoContenida {
         int index;
 
         index = canciones.indexOf(c);

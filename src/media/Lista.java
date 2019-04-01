@@ -72,6 +72,7 @@ public class Lista extends Reproducible implements Serializable{
      * Sirve para meter un reproducible pasado como argumento en la lista
      * @param r Cancion a aniadir en el album
      * @return false si el Reproducible ya esta en la lista true en caso contrario
+     * @throws ExcepcionInsercionInvalida
      */
     public boolean aniadirReproducible(Reproducible r) throws ExcepcionInsercionInvalida{
     	
@@ -90,7 +91,7 @@ public class Lista extends Reproducible implements Serializable{
     /**
      * Sirve para quitar un reproducible de la lista
      * @param r Reproducible a quitar de la lista
-     * @return true si existe el reproducible a quitar false en caso contrario
+     * @throws ExcepcionCancionNoContenida
      */
     public void quitarReproducible(Reproducible r) throws ExcepcionCancionNoContenida{
         int index;
@@ -138,7 +139,8 @@ public class Lista extends Reproducible implements Serializable{
     /**
      * Devuelve true si en cualquier lista padre(y recursivamente padres e hijos) el elemento reproducible r
      * esta contenido. False en caso contrario
-     * @param r: reproducible a buscar en las listas padre
+     * @param r reproducible a buscar en las listas padre
+     * @return true si se puede aniadir r a la lista
      */
     /*
     public boolean esViableAniadir(Reproducible r) {

@@ -21,8 +21,8 @@ public class Administrador extends UsuarioConCuenta implements Serializable{
     /**
     * Constructor, con el nombre de usuario y contrasenia
     *
-    * @param nombreUsuario
-    * @param contrasenia del usuario
+    * @param nombreUsuario nombre de usuario del administrador
+    * @param contrasenia contrasenia del administrador
     */
     public Administrador(String nombreUsuario, String contrasenia){
         super(nombreUsuario,contrasenia);
@@ -51,8 +51,9 @@ public class Administrador extends UsuarioConCuenta implements Serializable{
     * Este metodo se usa para tramitar la validacion de una cancion
     *
     * @param c cancion a tramitar
-    * @param estado indica si es explicito, no explicito o no validado
-    *
+    * @param estadoValidacion indica si es explicito, no explicito o no validado
+    * @throws ExcepcionCancionModificable
+    * @throws ExcepcionCancionYaValidada
     */
     public void tramitarValidacion(Cancion c, EstadoValidacion estadoValidacion) throws ExcepcionCancionModificable, ExcepcionCancionYaValidada{
     	if (c.getEstadoValidacion()==EstadoValidacion.APTOMENORES || c.getEstadoValidacion()==EstadoValidacion.EXPLICITO) {

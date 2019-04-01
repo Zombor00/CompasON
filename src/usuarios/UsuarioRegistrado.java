@@ -35,10 +35,10 @@ public class UsuarioRegistrado extends UsuarioConCuenta implements Serializable{
     * Constructor, con el nombre de usuario, contrasenia, nombre y
     * fecha de nacimiento
     *
-    * @param nombreUsuario
-    * @param contrasenia del usuario
-    * @param nombre real del usuario
-    * @param fechaNacimiento
+    * @param nombreUsuario nombre de usuario
+    * @param contrasenia clave del usuario
+    * @param nombre nombre real del usuario
+    * @param fechaNacimiento fecha de nacimiento del usuario
     */
     public UsuarioRegistrado(String nombreUsuario, String contrasenia,
                              String nombre, LocalDate fechaNacimiento){
@@ -140,6 +140,7 @@ public class UsuarioRegistrado extends UsuarioConCuenta implements Serializable{
     *
     * @param titulo nombre de la lista
     * @param elementos iniciales de la lista
+    * @throws ExcepcionUsuarioNoPremium
     */
     public void crearLista(String titulo, ArrayList <Reproducible> elementos) throws ExcepcionUsuarioNoPremium{
         if(premiumHasta!=null && premiumHasta.isAfter(LocalDate.now())){
@@ -157,7 +158,7 @@ public class UsuarioRegistrado extends UsuarioConCuenta implements Serializable{
      * Este metodo se usa para crear una lista 
      *
      * @param titulo nombre de la lista
-     * @param elementos iniciales de la lista
+     * @throws ExcepcionUsuarioNoPremium
      */
      public void crearLista(String titulo) throws ExcepcionUsuarioNoPremium{
          if(premiumHasta!=null && premiumHasta.isAfter(LocalDate.now())){
@@ -186,6 +187,7 @@ public class UsuarioRegistrado extends UsuarioConCuenta implements Serializable{
     * este objeto en la lista de seguidores del que se recibe como argumento
     *
     * @param u usuario a seguir
+    * @throws ExcepcionUsuarioYaSeguido
     */
     public void seguirUsuario(UsuarioRegistrado u) throws ExcepcionUsuarioYaSeguido{
         if (this.seguidos.contains(u) && u.getSeguidores().contains(this)){
@@ -200,6 +202,7 @@ public class UsuarioRegistrado extends UsuarioConCuenta implements Serializable{
     * este objeto de la lista de seguidores del que se recibe como argumento
     *
     * @param u usuario a dejar de seguir
+    * @throws ExcepcionUsuarioNoSeguido
     */
     public void dejarSeguirUsuario(UsuarioRegistrado u) throws ExcepcionUsuarioNoSeguido{
         if (this.seguidos.remove(u) == false || u.getSeguidores().remove(this) == false) {
@@ -259,6 +262,7 @@ public class UsuarioRegistrado extends UsuarioConCuenta implements Serializable{
     	int anio = hoy.getYear();
     	ArrayList<LocalDate> posteriores = new ArrayList<>();
     	
+    	/* Guardamos el numero del mes y anio del mes anterior*/
     	if (mes == 1) {
     		mesBuscado = 12;
     		anioBuscado = anio - 1;
@@ -268,8 +272,13 @@ public class UsuarioRegistrado extends UsuarioConCuenta implements Serializable{
     		anioBuscado = anio;
     	}
     	
+    	/* Nos guardamos el primer dia del mes anterior*/
     	LocalDate fechaAntigua = LocalDate.of(anioBuscado, mesBuscado, 1);
     	
+    	/* Empezamos a contar en el ArrayList desde el final ya que las reproducciones se meten en orden y guardamos las
+    	 * reproducciones que sean del mes actual e incrementamos un contador por las del mes anterior. Devolvemos el contador
+    	 * y eliminamos del ArrayList de fechas de reproducciones todas las que no sean de este mes.
+    	 */
     	for (int i = this.reproducciones.size() - 1; i>=0 && this.reproducciones.get(i).isBefore(fechaAntigua)==false ;i--) {
     		if (this.reproducciones.get(i).getYear() == anioBuscado &&
     				this.reproducciones.get(i).getMonthValue() == mesBuscado) {

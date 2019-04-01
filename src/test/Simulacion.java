@@ -96,10 +96,10 @@ class Simulacion {
 		
 		System.out.println("El usuario2 reproduce la segunda cancion que aparece en la busqueda");
 		Thread.sleep(sleep);
-		//aplicacion.reproducirReproducible(busqueda.get(1));
+		aplicacion.reproducirReproducible(busqueda.get(1));
 		
 		System.out.println("El usuario2 espera unos segundos");
-		Thread.sleep(sleep*2);
+		Thread.sleep(5000);
 		
 		System.out.println("El usuario2 realiza una busqueda por titulo: 'deprueba'");
 		Thread.sleep(sleep);
@@ -108,11 +108,11 @@ class Simulacion {
 		Thread.sleep(sleep);
 		
 		System.out.println("El usuario2 reproduce la primera cancion que aparece en la busqueda y aniade a la cola la segunda");
-		Thread.sleep(sleep*2);
-		//aplicacion.reproducirReproducible(busqueda.get(0));
+		Thread.sleep(sleep);
+		aplicacion.reproducirReproducible(busqueda.get(0));
 		aplicacion.aniadirALaCola(busqueda.get(1));
 
-		Thread.sleep(sleep*4);
+		Thread.sleep(10000);
 		aplicacion.getCola().stop();
 		
 		System.out.println("El usuario2 sigue al usuario1");
@@ -171,11 +171,11 @@ class Simulacion {
 		
 		System.out.println("Trata de reproducir la cuarta cancion que aparece en la busqueda");
 		Thread.sleep(sleep);
-		/*try {
+		try {
 			aplicacion.reproducirReproducible(busqueda.get(3));
 		} catch (ExcepcionNoAptoParaMenores e) {
 			System.out.println("Error al reproducir: Contenido explicito");
-		}*/
+		}
 		
 		System.out.println("El usuario2 inicia sesion");
 		Thread.sleep(sleep);
@@ -189,9 +189,9 @@ class Simulacion {
 		Thread.sleep(sleep);
 		busqueda = aplicacion.buscarPorTitulo("deprueba chicle3 modificada");
 		System.out.println(busqueda);
-		//aplicacion.reproducirReproducible(busqueda.get(0));
+		aplicacion.reproducirReproducible(busqueda.get(0));
 		
-		Thread.sleep(sleep*4);
+		Thread.sleep(5000);
 		aplicacion.getCola().stop();
 		
 		System.out.println("El usuario2 denuncia que la cancion es plagio y deja de seguir al usuario1");
@@ -274,20 +274,19 @@ class Simulacion {
 				aplicacion.aniadirALaCola(busqueda.get(4));
 			}
 		} catch (ExcepcionLimiteReproducidasAlcanzado e) {
-			System.out.println("No puedes reproducir mas veces este mes, limite alcanzado");
+			System.out.println("No podras reproducir mas veces este mes, limite alcanzado");
 		}
-		Thread.sleep(sleep);
+		Thread.sleep(5000);
 		aplicacion.getCola().stop();
 		
-		Thread.sleep(sleep*4);
 		System.out.println("El usuario3 decide, por tanto, pagar el servicio Premium");
 		Thread.sleep(sleep);
 		aplicacion.pagarPremium("5555555555555555", "Pago Premium CompasON");
 		
 		System.out.println("El usuario3 reproduce otra cancion ahora que no tiene limite");
-		//aplicacion.reproducirReproducible(busqueda.get(0));
+		aplicacion.reproducirReproducible(busqueda.get(0));
 		
-		Thread.sleep(sleep*10);
+		Thread.sleep(5000);
 		aplicacion.getCola().stop();
 		
 		System.out.println("El usuario3 se crea una lista de reproduccion con el album y esta cancion:");
@@ -297,13 +296,9 @@ class Simulacion {
 		aplicacion.getUsuarioLogeado().crearLista("Favoritas", cancionesLista);
 		System.out.println(aplicacion.getUsuarioLogeado().getListas());
 		
-		
-		Thread.sleep(sleep);		
+			
 		System.out.println("El usuario3 cierra sesion");
 		aplicacion.logout();
-		
-		aplicacion.getCola().stop();
-		return;
 		
 		
 	}
