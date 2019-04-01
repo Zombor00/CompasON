@@ -247,10 +247,18 @@ public class AplicacionTest {
 		}
 		
 		for (int i = 0; i < numDebeEncontrar; i++) {
-			aplicacion.aniadirCancion(new Cancion(nombresQueDebeEncontrar.get(i),"Ruta",null));
+			try {
+				aplicacion.aniadirCancion(new Cancion(nombresQueDebeEncontrar.get(i),"canciones/Thats What I Like.mp3",null));
+			} catch (FileNotFoundException | ExcepcionMp3NoValido e) {
+				fail("Lanzada excepcion no esperada");
+			}
 		}
 		for (int i = 0; i < numDebeObviar; i++) {
-			aplicacion.aniadirCancion(new Cancion(nombresQueDebeObviar.get(i),"Ruta",null));
+			try {
+				aplicacion.aniadirCancion(new Cancion(nombresQueDebeObviar.get(i),"canciones/Thats What I Like.mp3",null));
+			} catch (FileNotFoundException | ExcepcionMp3NoValido e) {
+				fail("Lanzada excepcion no esperada");
+			}
 		}
 		
 		encontradas = aplicacion.buscarPorTitulo("debeEncontrar");
@@ -292,10 +300,18 @@ public class AplicacionTest {
 		}
 		
 		for (int i = 0; i < numDebeEncontrar; i++) {
-			aplicacion.aniadirAlbum(nombresQueDebeEncontrar.get(i), listaCancionesAuxiliar);
+			try {
+				aplicacion.aniadirAlbum(nombresQueDebeEncontrar.get(i), listaCancionesAuxiliar);
+			} catch (ExcepcionInsercionInvalida | ExcepcionCancionNoValidada e) {
+				fail("Lanzada excepcion no esperada");
+			}
 		}
 		for (int i = 0; i < numDebeObviar; i++) {
-			aplicacion.aniadirAlbum(nombresQueDebeObviar.get(i), listaCancionesAuxiliar);
+			try {
+				aplicacion.aniadirAlbum(nombresQueDebeObviar.get(i), listaCancionesAuxiliar);
+			} catch (ExcepcionInsercionInvalida | ExcepcionCancionNoValidada e) {
+				fail("Lanzada excepcion no esperada");
+			}
 		}
 		
 		encontrados = aplicacion.buscarPorTitulo("debeEncontrar");
@@ -340,12 +356,20 @@ public class AplicacionTest {
 		}
 		
 		for (int i = 0; i < numDebeEncontrar; i++) {
-			c = new Cancion(nombresQueDebeEncontrar.get(i),"Ruta",aplicacion.getUsuarioLogeado());
+			try {
+				c = new Cancion(nombresQueDebeEncontrar.get(i),"canciones/Thats What I Like.mp3",aplicacion.getUsuarioLogeado());
+			} catch (ExcepcionMp3NoValido e) {
+				fail("Lanzada excepcion no esperada");
+			}
 			aplicacion.aniadirCancion(c);
 			aplicacion.getUsuarioLogeado().aniadirBuscable(c);
 		}
 		for (int i = 0; i < numDebeObviar; i++) {
-			aplicacion.aniadirCancion(new Cancion(nombresQueDebeObviar.get(i),"Ruta",null));
+			try {
+				aplicacion.aniadirCancion(new Cancion(nombresQueDebeObviar.get(i),"canciones/Thats What I Like.mp3",null));
+			} catch (ExcepcionMp3NoValido e) {
+				fail("Lanzada excepcion no esperada");
+			}
 		}
 		
 		encontrados = aplicacion.buscarPorAutor("auto");
@@ -380,7 +404,11 @@ public class AplicacionTest {
 		List<UsuarioRegistrado> usuarios = null;
 		aplicacion.borrarDatos();
 		
-		aplicacion.aniadirCancion(new Cancion("nombre cancion","ruta",null));
+		try {
+			aplicacion.aniadirCancion(new Cancion("nombre cancion","canciones/Thats What I Like.mp3",null));
+		} catch (ExcepcionMp3NoValido e) {
+			fail("Lanzada excepcion no esperada");
+		}
 		aplicacion.aniadirUsuario("nombreUsuario", "contrasenia", "nombreCompleto", LocalDate.now());
 		canciones = aplicacion.getBuscables();
 		usuarios = aplicacion.getUsuarios();
@@ -400,7 +428,12 @@ public class AplicacionTest {
 		aplicacion.borrarDatos();
 		aplicacion.aniadirUsuario("autor", "contrasenia", "nombre completo", LocalDate.now());
 		aplicacion.login("autor", "contrasenia");
-		Cancion cancion = new Cancion("titulo","ruta",aplicacion.getUsuarioLogeado());
+		Cancion cancion = null;
+		try {
+			cancion = new Cancion("titulo","canciones/Thats What I Like.mp3",aplicacion.getUsuarioLogeado());
+		} catch (FileNotFoundException | ExcepcionMp3NoValido e) {
+			fail("Lanzada excepcion no esperada");
+		}
 		aplicacion.getUsuarioLogeado().aniadirBuscable(cancion);
 		aplicacion.aniadirCancion(cancion);
 		

@@ -2,11 +2,14 @@ package usuarios;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.io.FileNotFoundException;
 import java.time.*;
 import org.junit.jupiter.api.Test;
 
 import excepciones.ExcepcionCancionModificable;
+import excepciones.ExcepcionCancionNoValidada;
 import excepciones.ExcepcionInsercionInvalida;
+import excepciones.ExcepcionMp3NoValido;
 import excepciones.ExcepcionCancionYaValidada;
 import gestion.Denuncia;
 import media.*;
@@ -17,7 +20,12 @@ public class AdministradorTest {
 	
 	@Test /*El administrador no valida una cancion correctamente*/
 	void testTramitarValidacion1() {
-		Cancion c = new Cancion("tit","file",new UsuarioRegistrado("a","a","a",LocalDate.now()));
+		Cancion c = null;
+		try {
+			c = new Cancion("tit","canciones/Thats What I Like.mp3",new UsuarioRegistrado("a","a","a",LocalDate.now()));
+		} catch (FileNotFoundException | ExcepcionMp3NoValido e1) {
+			fail("Lanzada excepcion no esperada");
+		}
 		admin.aniadirCancion(c);
 		try {
 			admin.tramitarValidacion(c, EstadoValidacion.NOVALIDADA);
@@ -32,7 +40,13 @@ public class AdministradorTest {
 	
 	@Test /*El administrador trata de validar una cancion que aun se puede modificar*/
 	void testTramitarValidacion2() {
-		Cancion c = new Cancion("tit","file",new UsuarioRegistrado("a","a","a",LocalDate.now()));
+		Cancion c = null;
+		boolean lanzadaExcepcion = false;
+		try {
+			c = new Cancion("tit","canciones/Thats What I Like.mp3",new UsuarioRegistrado("a","a","a",LocalDate.now()));
+		} catch (FileNotFoundException | ExcepcionMp3NoValido e1) {
+			fail("Lanzada excepcion no esperada");
+		}
 		admin.aniadirCancion(c);
 		try {
 			admin.tramitarValidacion(c, EstadoValidacion.NOVALIDADA);
@@ -41,14 +55,28 @@ public class AdministradorTest {
 		} catch (ExcepcionCancionYaValidada e) {
 			fail("Lanzada excepcion no esperada ExcepcionCancionYaValidada");
 		}
-		assertThrows(ExcepcionCancionModificable.class, () -> {
-	        admin.tramitarValidacion(c, EstadoValidacion.NOVALIDADA);
-	    });
+		
+		try {
+			admin.tramitarValidacion(c, EstadoValidacion.NOVALIDADA);
+			fail("Esperada excepcion no lanzada");
+		} catch (ExcepcionCancionModificable e) {
+			lanzadaExcepcion = true;
+		} catch (ExcepcionCancionYaValidada e) {
+			fail("Lanzada excepcion no esperada ExcepcionCancionYaValidada");
+		}
+		
+		assertTrue(lanzadaExcepcion);
 	}
 	
 	@Test /*El administrador trata de validar una cancion que ya esta validada*/
 	void testTramitarValidacion3() {
-		Cancion c = new Cancion("tit","file",new UsuarioRegistrado("a","a","a",LocalDate.now()));
+		Cancion c = null;
+		boolean lanzadaExcepcion = false;
+		try {
+			c = new Cancion("tit","canciones/Thats What I Like.mp3",new UsuarioRegistrado("a","a","a",LocalDate.now()));
+		} catch (FileNotFoundException | ExcepcionMp3NoValido e1) {
+			fail("Lanzada excepcion no esperada ExcepcionCancionYaValidada");
+		}
 		admin.aniadirCancion(c);
 		try {
 			admin.tramitarValidacion(c, EstadoValidacion.APTOMENORES);
@@ -57,9 +85,16 @@ public class AdministradorTest {
 		} catch (ExcepcionCancionYaValidada e) {
 			fail("Lanzada excepcion no esperada ExcepcionCancionYaValidada");
 		}
-		assertThrows(ExcepcionCancionYaValidada.class, () -> {
-	        admin.tramitarValidacion(c, EstadoValidacion.EXPLICITO);
-	    });
+		
+		try {
+			admin.tramitarValidacion(c, EstadoValidacion.APTOMENORES);
+			fail("Esperada excepcion no lanzada");
+		} catch (ExcepcionCancionModificable e) {
+			fail("Lanzada excepcion no esperada ExcepcionCancionModificable");
+		} catch (ExcepcionCancionYaValidada e) {
+			lanzadaExcepcion = true;
+		}
+		assertTrue(lanzadaExcepcion);
 	}
 	
 
@@ -67,14 +102,21 @@ public class AdministradorTest {
 	void testTramitarDenuncia1() {
 		UsuarioRegistrado denunciante = new UsuarioRegistrado("a","a","a",LocalDate.now());
 		UsuarioRegistrado autor = new UsuarioRegistrado("b","b","b",LocalDate.now());
-		Cancion denunciada = new Cancion("tit","file",autor);
+		Cancion denunciada = null;
+		try {
+			denunciada = new Cancion("tit","canciones/Thats What I Like.mp3",autor);
+		} catch (FileNotFoundException | ExcepcionMp3NoValido e1) {
+			fail("Lanzada excepcion no esperada ExcepcionCancionYaValidada");
+		}
 		Album a = new Album("tit",autor);
 		/*Aniadimos la cancion tras validarla a un album para probar todas las funcionalidades*/
 		try {
 			denunciada.validar(EstadoValidacion.APTOMENORES);
 			a.aniadirCancion(denunciada);
 		} catch (ExcepcionInsercionInvalida e) {
-			fail("Lanzada excepcion no esperada");
+			fail("Lanzada excepcion no esperada: ExcepcionInsercionInvalida");
+		} catch (ExcepcionCancionNoValidada e) {
+			fail("Lanzada excepcion no esperada: ExcepcionCancionNoValidada");
 		}
 		Denuncia d = new Denuncia(denunciante, denunciada, "Es plagio");
 		autor.aniadirBuscable(denunciada);
@@ -94,12 +136,20 @@ public class AdministradorTest {
 	void testTramitarDenuncia2() {
 		UsuarioRegistrado denunciante = new UsuarioRegistrado("a","a","a",LocalDate.now());
 		UsuarioRegistrado autor = new UsuarioRegistrado("b","b","b",LocalDate.now());
-		Cancion denunciada = new Cancion("tit","file",autor);
+		Cancion denunciada = null;
+		try {
+			denunciada = new Cancion("tit","canciones/Thats What I Like.mp3",autor);
+		} catch (FileNotFoundException | ExcepcionMp3NoValido e1) {
+			fail("Lanzada excepcion no esperada");
+		}
+		denunciada.validar(EstadoValidacion.APTOMENORES);
 		Album a = new Album("tit",autor);
 		/*Aniadimos la cancion a un album para probar todas las funcionalidades*/
 		try {
 			a.aniadirCancion(denunciada);
 		} catch (ExcepcionInsercionInvalida e) {
+			fail("Lanzada excepcion no esperada");
+		} catch (ExcepcionCancionNoValidada e) {
 			fail("Lanzada excepcion no esperada");
 		}
 		Denuncia d = new Denuncia(denunciante, denunciada, "Es plagio");

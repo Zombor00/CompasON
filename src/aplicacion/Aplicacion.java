@@ -252,8 +252,9 @@ public class Aplicacion implements Serializable {
      * @throws ExcepcionParametrosDeEntradaIncorrectos 
      * @throws IOException 
      * @throws ExcepcionUsuarioSinCuenta 
+     * @throws ExcepcionMp3NoValido 
      */
-    public void subirCancion(String titulo, String fichero) throws ExcepcionDuracionLimiteSuperada, Mp3InvalidFileException, ExcepcionParametrosDeEntradaIncorrectos, IOException, ExcepcionUsuarioSinCuenta {
+    public void subirCancion(String titulo, String fichero) throws ExcepcionDuracionLimiteSuperada, Mp3InvalidFileException, ExcepcionParametrosDeEntradaIncorrectos, IOException, ExcepcionUsuarioSinCuenta, ExcepcionMp3NoValido {
     	if (titulo == null || fichero == null) {
     		throw new ExcepcionParametrosDeEntradaIncorrectos();
     	}
@@ -312,8 +313,10 @@ public class Aplicacion implements Serializable {
      * @throws ExcepcionErrorCreandoAlbum 
      * @throws ExcepcionParametrosDeEntradaIncorrectos 
      * @throws ExcepcionUsuarioSinCuenta 
+     * @throws ExcepcionCancionNoValidada 
+     * @throws ExcepcionInsercionInvalida 
      */
-    public void aniadirAlbum(String titulo, ArrayList <Cancion> canciones) throws ExcepcionErrorCreandoAlbum, ExcepcionParametrosDeEntradaIncorrectos, ExcepcionUsuarioSinCuenta {
+    public void aniadirAlbum(String titulo, ArrayList <Cancion> canciones) throws ExcepcionErrorCreandoAlbum, ExcepcionParametrosDeEntradaIncorrectos, ExcepcionUsuarioSinCuenta, ExcepcionInsercionInvalida, ExcepcionCancionNoValidada {
     	if (titulo == null || canciones==null) {
     		throw new ExcepcionParametrosDeEntradaIncorrectos();
     	}
