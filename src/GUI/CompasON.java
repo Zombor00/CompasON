@@ -9,10 +9,15 @@ public class CompasON extends JFrame {
 	public CompasON() {
 		super("CompasON");
 		Container contenedor = this.getContentPane();
-		contenedor.setLayout(new BorderLayout());
+		BorderLayout layout = new BorderLayout();
+		contenedor.setLayout(layout);
 		
 		contenedor.add(new Pestanias(),BorderLayout.CENTER);
+		contenedor.add(new Reproductor(),BorderLayout.SOUTH);
+		contenedor.add(new Sesion(), BorderLayout.EAST);
 		
+        this.setSize(this.getToolkit().getScreenSize());
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setVisible(true);
 	}
 	
