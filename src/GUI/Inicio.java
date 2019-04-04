@@ -4,9 +4,9 @@ import java.awt.Image;
 
 import javax.swing.*;
 
-public class InicioNoRegistrado extends JPanel {
+public class Inicio extends JPanel {
 
-	public InicioNoRegistrado() {
+	public Inicio() {
 		super();
 		SpringLayout layout = new SpringLayout();
 		this.setLayout(layout);

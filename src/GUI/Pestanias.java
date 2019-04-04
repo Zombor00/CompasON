@@ -6,7 +6,7 @@ public class Pestanias extends JTabbedPane {
 	
 	public Pestanias() {
 		super();
-		JPanel inicioNoRegistrado = new InicioNoRegistrado();
+		JPanel inicioNoRegistrado = new Inicio();
 		JPanel busqueda = new Busqueda();
 		
 		this.addTab("Inicio", inicioNoRegistrado);

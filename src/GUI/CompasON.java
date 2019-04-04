@@ -8,6 +8,7 @@ public class CompasON extends JFrame {
 
 	public CompasON() {
 		super("CompasON");
+		this.setIconImage(new ImageIcon("aux/icono-compason.png").getImage());
 		Container contenedor = this.getContentPane();
 		BorderLayout layout = new BorderLayout();
 		contenedor.setLayout(layout);
