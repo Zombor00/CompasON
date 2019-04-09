@@ -13,9 +13,8 @@ public class CompasON extends JFrame {
 		BorderLayout layout = new BorderLayout();
 		contenedor.setLayout(layout);
 		
-		contenedor.add(new Pestanias(),BorderLayout.CENTER);
+		contenedor.add(new ConjuntoPestanias(),BorderLayout.CENTER);
 		contenedor.add(new Reproductor(),BorderLayout.SOUTH);
-		contenedor.add(new Sesion(), BorderLayout.EAST);
 		
         this.setSize(this.getToolkit().getScreenSize());
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

@@ -1,4 +1,4 @@
-package GUI.Inicio;
+package GUI.UsuarioNoRegistrado.Inicio;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -9,9 +9,9 @@ import java.util.Map;
 
 import javax.swing.*;
 
-public class Inicio extends JPanel {
+public class InicioUsuarioNoRegistrado extends JPanel {
 
-	public Inicio() {
+	public InicioUsuarioNoRegistrado() {
 		super();
 		SpringLayout layout = new SpringLayout();
 		this.setLayout(layout);

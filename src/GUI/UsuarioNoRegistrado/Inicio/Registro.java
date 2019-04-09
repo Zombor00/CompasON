@@ -1,4 +1,4 @@
-package GUI.Inicio;
+package GUI.UsuarioNoRegistrado.Inicio;
 
 import java.awt.Color;
 import java.awt.Dimension;
