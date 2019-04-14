@@ -1,4 +1,4 @@
-package GUI.UsuarioNoRegistrado.Inicio;
+package GUI.UsuarioSinCuenta;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -9,9 +9,9 @@ import java.util.Map;
 
 import javax.swing.*;
 
-public class InicioUsuarioNoRegistrado extends JPanel {
+public class InicioUsuarioSinCuenta extends JPanel {
 
-	public InicioUsuarioNoRegistrado() {
+	public InicioUsuarioSinCuenta() {
 		super();
 		SpringLayout layout = new SpringLayout();
 		this.setLayout(layout);
@@ -30,8 +30,9 @@ public class InicioUsuarioNoRegistrado extends JPanel {
 		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, registrarse, 0, SpringLayout.HORIZONTAL_CENTER, this);
 		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, iniciarSesion, 0, SpringLayout.HORIZONTAL_CENTER, this);
 		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, logo, 0, SpringLayout.HORIZONTAL_CENTER, this);
-		layout.putConstraint(SpringLayout.SOUTH, logo, -100, SpringLayout.NORTH, login);
+		
 		layout.putConstraint(SpringLayout.VERTICAL_CENTER, login, 0, SpringLayout.VERTICAL_CENTER, this);
+		layout.putConstraint(SpringLayout.SOUTH, logo, -100, SpringLayout.NORTH, login);
 		layout.putConstraint(SpringLayout.VERTICAL_CENTER, registro, 0, SpringLayout.VERTICAL_CENTER, this);
 		layout.putConstraint(SpringLayout.VERTICAL_CENTER, registrarse, 200, SpringLayout.VERTICAL_CENTER, login);
 		layout.putConstraint(SpringLayout.VERTICAL_CENTER, iniciarSesion, 200, SpringLayout.VERTICAL_CENTER, registro);

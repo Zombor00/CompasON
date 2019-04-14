@@ -1,4 +1,4 @@
-package GUI;
+package GUI.AccesoComun;
 
 import java.awt.FlowLayout;
 

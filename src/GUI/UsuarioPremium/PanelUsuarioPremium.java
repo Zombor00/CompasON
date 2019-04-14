@@ -1,4 +1,4 @@
-package GUI.UsuarioRegistrado;
+package GUI.UsuarioPremium;
 
 import java.awt.BorderLayout;
 
@@ -6,17 +6,16 @@ import javax.swing.JPanel;
 
 import GUI.AccesoComun.Informacion;
 
-public class PanelUsuarioRegistrado extends JPanel {
+public class PanelUsuarioPremium extends JPanel{
 	
-	public PanelUsuarioRegistrado() {
+	public PanelUsuarioPremium() {
 		super();
 		BorderLayout layout = new BorderLayout();		
 		this.setLayout(layout);
 		
-		this.add(new PestaniasUsuarioRegistrado(),BorderLayout.CENTER);
+		this.add(new PestaniasUsuarioPremium(),BorderLayout.CENTER);
 		this.add(new Informacion(),BorderLayout.EAST);
 		
 	}
-	
 
 }

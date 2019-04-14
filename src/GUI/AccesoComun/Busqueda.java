@@ -1,10 +1,11 @@
-package GUI;
+package GUI.AccesoComun;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.time.LocalDate;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 
 public class Busqueda extends JPanel {
 
@@ -33,7 +34,8 @@ public class Busqueda extends JPanel {
 		{"Cancion 9", "Autor 9", LocalDate.now()},
 		{"Cancion 10", "Autor 10", LocalDate.now()},
 		};
-		JTable tabla = new JTable(filas, titulos);
+		DefaultTableModel modeloDatos = new DefaultTableModel(filas, titulos);
+		JTable tabla = new JTable(modeloDatos);
 		tabla.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		tabla.setPreferredScrollableViewportSize(new Dimension(500, 80));
 		JScrollPane scrollTabla = new JScrollPane(tabla);

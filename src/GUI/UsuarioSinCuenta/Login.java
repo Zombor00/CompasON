@@ -1,6 +1,6 @@
-package GUI.UsuarioNoRegistrado.Inicio;
+package GUI.UsuarioSinCuenta;
 
-import java.awt.Color;
+//import java.awt.Color;
 import java.awt.Dimension;
 
 import javax.swing.*;

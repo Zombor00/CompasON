@@ -13,7 +13,7 @@ public class CompasON extends JFrame {
 		BorderLayout layout = new BorderLayout();
 		contenedor.setLayout(layout);
 		
-		contenedor.add(new ConjuntoPestanias(),BorderLayout.CENTER);
+		contenedor.add(new PanelesUsuarios(),BorderLayout.CENTER);
 		contenedor.add(new Reproductor(),BorderLayout.SOUTH);
 		
         this.setSize(this.getToolkit().getScreenSize());
@@ -23,5 +23,6 @@ public class CompasON extends JFrame {
 	
 	public static void main(String[] args) {
 		CompasON a = new CompasON();
+		a.getName();
 	}
 }

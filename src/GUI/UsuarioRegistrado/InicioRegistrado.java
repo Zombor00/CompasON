@@ -1,21 +1,19 @@
 package GUI.UsuarioRegistrado;
 
-import java.awt.Image;
-
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+import javax.swing.JButton;
 import javax.swing.SpringLayout;
+import GUI.AccesoComun.InicioComun;
 
-public class InicioRegistrado extends JPanel {
+public class InicioRegistrado extends InicioComun {
 
 	public InicioRegistrado() {
 		super();
-		SpringLayout layout = new SpringLayout();
-		this.setLayout(layout);
-		JLabel logo = new JLabel();
-		logo.setIcon(new ImageIcon(new ImageIcon("aux/logo-compason.png").getImage().getScaledInstance(200, 75, Image.SCALE_DEFAULT)));
+		JButton hacersePremium = new JButton("Hacerse premium");
+
+		SpringLayout layout = (SpringLayout) this.getLayout();
+		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, hacersePremium, 0, SpringLayout.HORIZONTAL_CENTER, this);
+		layout.putConstraint(SpringLayout.VERTICAL_CENTER, hacersePremium, 200, SpringLayout.VERTICAL_CENTER, this);
 		
-		this.add(logo);
+		this.add(hacersePremium);
 	}
 }

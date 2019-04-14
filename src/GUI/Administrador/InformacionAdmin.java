@@ -4,7 +4,7 @@ import java.awt.FlowLayout;
 
 import javax.swing.*;
 
-import GUI.Sesion;
+import GUI.AccesoComun.Sesion;
 
 public class InformacionAdmin extends JPanel{
 	
