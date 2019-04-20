@@ -110,6 +110,15 @@ public class Aplicacion implements Serializable {
     }
 
     /**
+     * Getter de la instancia de Aplicacion
+     *
+     * @return la instancia de Aplicacion 
+     */
+    public static Aplicacion getInstance() {
+        return INSTANCE;
+    }
+    
+    /**
      * Getter de la instancia de Aplicacion (los atributos solo se tendran en cuenta si
      * no hay aplicacion creada aun)
      *

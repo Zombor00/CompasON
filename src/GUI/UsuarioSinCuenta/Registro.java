@@ -15,7 +15,7 @@ public class Registro extends JPanel{
 		JTextField usuario = new JTextField(20);
 		JPasswordField contrasenia = new JPasswordField(20);
 		JTextField nombre = new JTextField(20);
-		JTextField fecha = new JTextField(20);
+		JDateSelect fecha = new JDateSelect();
 		JLabel usuarioLabel = new JLabel("Nombre de suario:");
 		JLabel contraseniaLabel = new JLabel("Contrasenia:");
 		JLabel nombreLabel = new JLabel("Nombre completo:");

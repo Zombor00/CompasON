@@ -10,9 +10,9 @@ import GUI.UsuarioSinCuenta.PanelUsuarioSinCuenta;
 
 public class PanelesUsuarios extends JPanel {
 	
-	final static String NOMBRE_SIN_CUENTA = "Sin cuenta";
-	final static String NOMBRE_REGISTRADO = "Registrado";
-	final static String NOMBRE_PREMIUM = "Premium";
+	public final static String SIN_CUENTA = "Sin cuenta";
+	public final static String REGISTRADO = "Registrado";
+	public final static String PREMIUM = "Premium";
 	
 	public PanelesUsuarios() {
 		super();
@@ -23,13 +23,19 @@ public class PanelesUsuarios extends JPanel {
 		PanelUsuarioRegistrado panelUsuarioRegistrado = new PanelUsuarioRegistrado();
 		PanelUsuarioPremium panelUsuarioPremium = new PanelUsuarioPremium();
 		
-		this.add(panelUsuarioSinCuenta, NOMBRE_SIN_CUENTA);
-		this.add(panelUsuarioRegistrado, NOMBRE_REGISTRADO);
-		this.add(panelUsuarioPremium, NOMBRE_PREMIUM);
+		this.add(panelUsuarioSinCuenta, SIN_CUENTA);
+		this.add(panelUsuarioRegistrado, REGISTRADO);
+		this.add(panelUsuarioPremium, PREMIUM);
 		
-		layout.show(this, NOMBRE_PREMIUM);
+		layout.show(this, SIN_CUENTA);
 		
-		
-		
+	}
+	
+	public void cambiarPanel(String name) {
+		if (name != PanelesUsuarios.SIN_CUENTA && name != PanelesUsuarios.REGISTRADO && name != PanelesUsuarios.PREMIUM) {
+			return;
+		}
+		CardLayout layout = (CardLayout) this.getLayout();
+		layout.show(this, name);
 	}
 }
