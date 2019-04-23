@@ -27,6 +27,7 @@ public class ControladorLogin implements ActionListener {
 		if (e.getActionCommand().equals("ACCEDER")) {
 			PanelesUsuarios panelesUsuarios = gui.getPanelesUsuarios();
 			panelesUsuarios.cambiarPanel(PanelesUsuarios.REGISTRADO);
+			
 			/* gui.actualizarInformacion()
 			 * aplicacion.login(vista.getUsuaurio(),vista.getConstrasenia())
 			 */
