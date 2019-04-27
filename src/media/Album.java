@@ -104,7 +104,8 @@ public class Album extends Buscable implements Serializable{
         if(index == -1) {
         	throw new ExcepcionCancionNoContenida();
         }
-
+        
+        this.setDuracion(this.getDuracion() - c.getDuracion());
         canciones.remove(index);
 
         if(this.canciones.size() == 0){

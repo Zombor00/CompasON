@@ -86,6 +86,7 @@ public class Lista extends Reproducible implements Serializable{
         if(!r.sePuedeMeterEn(this)) { /* this.esViableAniadir(r) */
         	throw new ExcepcionInsercionInvalida(); /* InsercionInvalida */
         }
+        this.setDuracion(this.getDuracion() + r.getDuracion());
         reproducibles.add(r);
         r.aniadirPadre(this);
     }
@@ -102,7 +103,8 @@ public class Lista extends Reproducible implements Serializable{
         if(index == -1) {
         	throw new ExcepcionCancionNoContenida();
         }
-
+        
+        this.setDuracion(this.getDuracion() - r.getDuracion());
         reproducibles.remove(index);
         r.quitarPadre(this);
     }

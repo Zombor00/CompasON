@@ -6,6 +6,7 @@ import java.time.*;
 import excepciones.ExcepcionDuracionLimiteSuperada;
 import excepciones.ExcepcionReproducirProhibido;
 import excepciones.ExcepcionCancionYaValidada;
+import excepciones.ExcepcionCancionModificable;
 import excepciones.ExcepcionCancionYaNoModificable;
 import excepciones.ExcepcionMp3NoValido;
 import pads.musicPlayer.Mp3Player;
@@ -89,8 +90,18 @@ public class Cancion extends Buscable implements Serializable{
     /**
      * Valida la canción y pone si la cancion es explicita o no.
      * @param estado boolean que identifica si la cancion es explicita o no
+     * @throws ExcepcionCancionYaValidada 
+     * @throws ExcepcionCancionModificable 
      */
-    public void validar(EstadoValidacion estado) {
+    public void validar(EstadoValidacion estado) throws ExcepcionCancionYaValidada, ExcepcionCancionModificable {
+    	if (this.estadoValidacion == EstadoValidacion.APTOMENORES || this.estadoValidacion == EstadoValidacion.EXPLICITO) {
+    		throw new ExcepcionCancionYaValidada();
+    	}
+    	if (this.modificableHasta != null && this.modificableHasta.isAfter(LocalDate.now())) {
+    		throw new ExcepcionCancionModificable();
+    	}
+    	
+    	
         if(estado == EstadoValidacion.NOVALIDADA) {
             this.estadoValidacion = EstadoValidacion.NOVALIDADA;
             modificableHasta = LocalDate.now().plusDays(3);

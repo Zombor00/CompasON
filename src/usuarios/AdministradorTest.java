@@ -117,6 +117,10 @@ public class AdministradorTest {
 			fail("Lanzada excepcion no esperada: ExcepcionInsercionInvalida");
 		} catch (ExcepcionCancionNoValidada e) {
 			fail("Lanzada excepcion no esperada: ExcepcionCancionNoValidada");
+		} catch (ExcepcionCancionYaValidada e) {
+			fail("Lanzada excepcion no esperada: ExcepcionCancionYaValidada");
+		} catch (ExcepcionCancionModificable e) {
+			fail("Lanzada excepcion no esperada: ExcepcionCancionModificable");
 		}
 		Denuncia d = new Denuncia(denunciante, denunciada, "Es plagio");
 		autor.aniadirBuscable(denunciada);
@@ -142,7 +146,11 @@ public class AdministradorTest {
 		} catch (FileNotFoundException | ExcepcionMp3NoValido e1) {
 			fail("Lanzada excepcion no esperada");
 		}
-		denunciada.validar(EstadoValidacion.APTOMENORES);
+		try {
+			denunciada.validar(EstadoValidacion.APTOMENORES);
+		} catch (ExcepcionCancionYaValidada | ExcepcionCancionModificable e1) {
+			fail("Lanzada excepcion no esperada");
+		}
 		Album a = new Album("tit",autor);
 		/*Aniadimos la cancion a un album para probar todas las funcionalidades*/
 		try {

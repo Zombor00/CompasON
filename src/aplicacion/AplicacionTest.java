@@ -375,7 +375,11 @@ public class AplicacionTest {
 		} catch (FileNotFoundException | ExcepcionMp3NoValido e) {
 			fail("Lanzada excepcion no esperada");
 		}
-	    cancion1.validar(EstadoValidacion.EXPLICITO);
+		try {
+			cancion1.validar(EstadoValidacion.EXPLICITO);
+		} catch (ExcepcionCancionYaValidada | ExcepcionCancionModificable e1) {
+			fail("Lanzada excepcion no esperada");
+		}
 		
 		try {
 			aplicacion.aniadirCancion(cancion1);
@@ -448,7 +452,11 @@ public class AplicacionTest {
 			fail("Lanzada excepcion no esperada");
 		}
 		
-		cancion1.validar(EstadoValidacion.APTOMENORES);
+		try {
+			cancion1.validar(EstadoValidacion.APTOMENORES);
+		} catch (ExcepcionCancionYaValidada | ExcepcionCancionModificable e1) {
+			fail("Lanzada excepcion no esperada");
+		}
 		
 		canciones.add(cancion1);
 		

@@ -56,13 +56,6 @@ public class Administrador extends UsuarioConCuenta implements Serializable{
     * @throws ExcepcionCancionYaValidada
     */
     public void tramitarValidacion(Cancion c, EstadoValidacion estadoValidacion) throws ExcepcionCancionModificable, ExcepcionCancionYaValidada{
-    	if (c.getEstadoValidacion()==EstadoValidacion.APTOMENORES || c.getEstadoValidacion()==EstadoValidacion.EXPLICITO) {
-    		throw new ExcepcionCancionYaValidada();
-    	}
-    	if (c.getModificableHasta() != null && c.getModificableHasta().isAfter(LocalDate.now())) {
-    		throw new ExcepcionCancionModificable();
-    	}
-    	
         c.validar(estadoValidacion);
     }
 

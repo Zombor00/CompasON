@@ -6,8 +6,10 @@ import java.io.FileNotFoundException;
 import java.time.LocalDate;
 import org.junit.jupiter.api.Test;
 
+import excepciones.ExcepcionCancionModificable;
 import excepciones.ExcepcionCancionNoContenida;
 import excepciones.ExcepcionCancionNoValidada;
+import excepciones.ExcepcionCancionYaValidada;
 import excepciones.ExcepcionInsercionInvalida;
 import excepciones.ExcepcionMp3NoValido;
 
@@ -39,7 +41,11 @@ public class AlbumTest {
 	    assertTrue(lanzadaExcepcion);
 	    lanzadaExcepcion = false;
 	    
-	    cancion1.validar(EstadoValidacion.EXPLICITO);
+	    try {
+			cancion1.validar(EstadoValidacion.EXPLICITO);
+		} catch (ExcepcionCancionYaValidada | ExcepcionCancionModificable e1) {
+			fail("Lanzada excepcion no esperada");
+		}
 	    
 	    try {
 			album1.aniadirCancion(cancion1);
@@ -77,7 +83,11 @@ public class AlbumTest {
 			fail("Lanzada excepcion no esperada");
 		}
 
-	    cancion1.validar(EstadoValidacion.EXPLICITO);
+		try {
+			cancion1.validar(EstadoValidacion.EXPLICITO);
+		} catch (ExcepcionCancionYaValidada | ExcepcionCancionModificable e1) {
+			fail("Lanzada excepcion no esperada");
+		}
 		
 	    try {
 			album1.aniadirCancion(cancion1);
@@ -104,8 +114,12 @@ public class AlbumTest {
 		} catch (FileNotFoundException | ExcepcionMp3NoValido e) {
 			fail("Lanzada excepcion no esperada");
 		}
-	    cancion1.validar(EstadoValidacion.EXPLICITO);
-	    cancion2.validar(EstadoValidacion.EXPLICITO);
+		try {
+			cancion1.validar(EstadoValidacion.EXPLICITO);
+			cancion2.validar(EstadoValidacion.EXPLICITO);
+		} catch (ExcepcionCancionYaValidada | ExcepcionCancionModificable e1) {
+			fail("Lanzada excepcion no esperada");
+		}
 	    ArrayList<Cancion> canciones = new ArrayList<>();
 	    canciones.add(cancion1);
 	    canciones.add(cancion2);
@@ -152,8 +166,12 @@ public class AlbumTest {
 			fail("Lanzada excepcion no esperada");
 		}
 
-	    cancion1.validar(EstadoValidacion.EXPLICITO);
-	    cancion2.validar(EstadoValidacion.EXPLICITO);
+		try {
+			cancion1.validar(EstadoValidacion.EXPLICITO);
+			cancion2.validar(EstadoValidacion.EXPLICITO);
+		} catch (ExcepcionCancionYaValidada | ExcepcionCancionModificable e1) {
+			fail("Lanzada excepcion no esperada");
+		}
 		
 	    Album album1 = new Album("nombre album",usuario);
 	    try {
@@ -182,8 +200,13 @@ public class AlbumTest {
 		} catch (FileNotFoundException | ExcepcionMp3NoValido e) {
 			fail("Lanzada excepcion no esperada");
 		}
-	    cancion1.validar(EstadoValidacion.EXPLICITO);
-	    cancion2.validar(EstadoValidacion.EXPLICITO);
+	    
+	    try {
+			cancion1.validar(EstadoValidacion.EXPLICITO);
+			cancion2.validar(EstadoValidacion.EXPLICITO);
+		} catch (ExcepcionCancionYaValidada | ExcepcionCancionModificable e1) {
+			fail("Lanzada excepcion no esperada");
+		}
 	    
 	    try {
 			album1.aniadirCancion(cancion1);
@@ -215,7 +238,11 @@ public class AlbumTest {
 		} catch (FileNotFoundException | ExcepcionMp3NoValido e) {
 			fail("Lanzada excepcion no esperada");
 		}
-	    cancion1.validar(EstadoValidacion.APTOMENORES);
+	    try {
+			cancion1.validar(EstadoValidacion.APTOMENORES);
+		} catch (ExcepcionCancionYaValidada | ExcepcionCancionModificable e1) {
+			fail("Lanzada excepcion no esperada");
+		}
 	    Album album1 = new Album("nombre album",usuario);
 	    
 	    try {
@@ -237,7 +264,11 @@ public class AlbumTest {
 		} catch (FileNotFoundException | ExcepcionMp3NoValido e) {
 			fail("Lanzada excepcion no esperada");
 		}
-	    cancion1.validar(EstadoValidacion.EXPLICITO);
+	    try {
+			cancion1.validar(EstadoValidacion.EXPLICITO);
+		} catch (ExcepcionCancionYaValidada | ExcepcionCancionModificable e1) {
+			fail("Lanzada excepcion no esperada");
+		}
 	    Album album1 = new Album("nombre album",usuario);
 	    
 	    try {
@@ -261,8 +292,13 @@ public class AlbumTest {
 		} catch (FileNotFoundException | ExcepcionMp3NoValido e) {
 			fail("Lanzada excepcion no esperada");
 		}
-	    cancion1.validar(EstadoValidacion.EXPLICITO);
-	    cancion2.validar(EstadoValidacion.EXPLICITO);
+	    
+	    try {
+			cancion1.validar(EstadoValidacion.EXPLICITO);
+			cancion2.validar(EstadoValidacion.EXPLICITO);
+		} catch (ExcepcionCancionYaValidada | ExcepcionCancionModificable e1) {
+			fail("Lanzada excepcion no esperada");
+		}
 	    Album album1 = new Album("nombre album",usuario);
 	    
 	    try {
@@ -274,7 +310,11 @@ public class AlbumTest {
 			fail("Lanzada excepcion no esperada");
 		}
 	    assertTrue(album1.esValido());
-	    cancion1.validar(EstadoValidacion.NOVALIDADA);
+	    try {
+			cancion1.validar(EstadoValidacion.EXPLICITO);
+		} catch (ExcepcionCancionYaValidada | ExcepcionCancionModificable e1) {
+			fail("Lanzada excepcion no esperada");
+		}
 	    assertFalse(album1.esValido());
 	}
 
