@@ -20,8 +20,12 @@ public class CancionTest {
 	void testCancionValidar() {
 		UsuarioRegistrado usuario1 = new UsuarioRegistrado("nombre usuario","contrasenia","nombre",LocalDate.now());
 	    Cancion cancion1 = null;
+	    Cancion cancion2 = null;
+	    Cancion cancion3 = null;
 		try {
 			cancion1 = new Cancion("cancion1","canciones/Thats What I Like.mp3",usuario1);
+			cancion2 = new Cancion("cancion2","canciones/Thats What I Like.mp3",usuario1);
+			cancion3 = new Cancion("cancion3","canciones/Thats What I Like.mp3",usuario1);
 		} catch (FileNotFoundException | ExcepcionMp3NoValido e) {
 			fail("Lanzada excepcion no esperada");
 		}
@@ -35,17 +39,17 @@ public class CancionTest {
 	    assertSame(cancion1.getEstadoValidacion(),EstadoValidacion.NOVALIDADA);
 	    /*(cancion1.getModificableHasta(),LocalDate.now().plusDays(3));*/
 	    try {
-			cancion1.validar(EstadoValidacion.EXPLICITO);
+			cancion2.validar(EstadoValidacion.EXPLICITO);
 		} catch (ExcepcionCancionYaValidada | ExcepcionCancionModificable e1) {
 			fail("Lanzada excepcion no esperada");
 		}
-	    assertSame(cancion1.getEstadoValidacion(),EstadoValidacion.EXPLICITO);
+	    assertSame(cancion2.getEstadoValidacion(),EstadoValidacion.EXPLICITO);
 	    try {
-			cancion1.validar(EstadoValidacion.APTOMENORES);
+			cancion3.validar(EstadoValidacion.APTOMENORES);
 		} catch (ExcepcionCancionYaValidada | ExcepcionCancionModificable e1) {
 			fail("Lanzada excepcion no esperada");
 		}
-	    assertSame(cancion1.getEstadoValidacion(),EstadoValidacion.APTOMENORES);
+	    assertSame(cancion3.getEstadoValidacion(),EstadoValidacion.APTOMENORES);
 	}
 	
 	@Test 
@@ -62,8 +66,7 @@ public class CancionTest {
 		}
 	    
 		try {
-			cancion1.validar(EstadoValidacion.EXPLICITO);
-			cancion2.validar(EstadoValidacion.EXPLICITO);
+			cancion1.validar(EstadoValidacion.NOVALIDADA);
 		} catch (ExcepcionCancionYaValidada | ExcepcionCancionModificable e1) {
 			fail("Lanzada excepcion no esperada");
 		}
@@ -75,11 +78,13 @@ public class CancionTest {
 	    
 	    assertSame(cancion1.getTitulo(),"Wait for it");
 	    assertSame(cancion1.getModificableHasta(),null);
+	    
 	    try {
 			cancion1.validar(EstadoValidacion.APTOMENORES);
 		} catch (ExcepcionCancionYaValidada | ExcepcionCancionModificable e1) {
 			fail("Lanzada excepcion no esperada");
 		}
+	    
 	    try {
 	    	cancion1.modificar("CANTCHANGENAME", null);
 	    	fail("Esperada excepcion no lanzada");
@@ -115,11 +120,6 @@ public class CancionTest {
 			fail("Lanzada excepcion no esperada");
 		}
 	    
-	   try {
-			cancion2.validar(EstadoValidacion.NOVALIDADA);
-		} catch (ExcepcionCancionYaValidada | ExcepcionCancionModificable e1) {
-			fail("Lanzada excepcion no esperada");
-		}
 	    try {
 			cancion2.modificar("Thats What I Like","canciones/Thats What I Like.mp3");
 		} catch (ExcepcionCancionYaValidada | ExcepcionCancionYaNoModificable | ExcepcionMp3NoValido e) {
@@ -169,8 +169,10 @@ public class CancionTest {
 	void testCancionEsAptoMenores() {
 		UsuarioRegistrado usuario1 = new UsuarioRegistrado("nombre usuario","contrasenia","nombre",LocalDate.now());
 		Cancion cancion1 = null;
+		Cancion cancion2 = null;
 		try {
 			cancion1 = new Cancion("cancion1","canciones/Thats What I Like.mp3",usuario1);
+			cancion2 = new Cancion("cancion2","canciones/Thats What I Like.mp3",usuario1);
 		} catch (FileNotFoundException | ExcepcionMp3NoValido e) {
 			fail("Lanzada excepcion no esperada");
 		}
@@ -181,11 +183,11 @@ public class CancionTest {
 		}
 	    assertFalse(cancion1.esAptoParaMenores());
 	    try {
-			cancion1.validar(EstadoValidacion.APTOMENORES);
+			cancion2.validar(EstadoValidacion.APTOMENORES);
 		} catch (ExcepcionCancionYaValidada | ExcepcionCancionModificable e1) {
 			fail("Lanzada excepcion no esperada");
 		}
-	    assertTrue(cancion1.esAptoParaMenores());
+	    assertTrue(cancion2.esAptoParaMenores());
 	}
 	
     

@@ -355,7 +355,7 @@ public class AplicacionTest {
 		assertTrue(lanzadaExcepcion);
 		
 		try {
-			aplicacion.subirCancion("What I like", "canciones/Thats What I Like.mp3");
+			aplicacion.subirCancion("What I like.mp3", "canciones/Thats What I Like.mp3");
 		} catch (Mp3InvalidFileException | ExcepcionDuracionLimiteSuperada | ExcepcionParametrosDeEntradaIncorrectos
 				| IOException | ExcepcionUsuarioSinCuenta | ExcepcionMp3NoValido e) {
 			fail("Lanzada excepcion no esperada");

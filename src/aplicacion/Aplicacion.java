@@ -22,7 +22,7 @@ import pads.musicPlayer.exceptions.*;
  * @version 1.0 (05-03-2019)
  */
 public class Aplicacion implements Serializable {
-	
+
 	final String nombreAdministrador = "admin";
 	final String contraseniaAdministrador = "admin";
 
@@ -57,7 +57,7 @@ public class Aplicacion implements Serializable {
      * Administrador de la aplicacion
      */
     private Administrador administrador;
-    
+
     /**
      * Indica si el administrador ha iniciado sesion en la aplicacion
      */
@@ -89,9 +89,9 @@ public class Aplicacion implements Serializable {
      * @param limiteReproducciones
      * @param precioPremium
      * @param reproduccionesPremium
-     * @throws Mp3PlayerException 
-     * @throws FileNotFoundException 
-     * @throws ExcepcionParametrosDeEntradaIncorrectos 
+     * @throws Mp3PlayerException
+     * @throws FileNotFoundException
+     * @throws ExcepcionParametrosDeEntradaIncorrectos
      */
     private Aplicacion(int limiteReproducciones, int precioPremium,
                        int reproduccionesPremium) throws FileNotFoundException, Mp3PlayerException, ExcepcionParametrosDeEntradaIncorrectos {
@@ -112,12 +112,12 @@ public class Aplicacion implements Serializable {
     /**
      * Getter de la instancia de Aplicacion
      *
-     * @return la instancia de Aplicacion 
+     * @return la instancia de Aplicacion
      */
     public static Aplicacion getInstance() {
         return INSTANCE;
     }
-    
+
     /**
      * Getter de la instancia de Aplicacion (los atributos solo se tendran en cuenta si
      * no hay aplicacion creada aun)
@@ -125,14 +125,14 @@ public class Aplicacion implements Serializable {
      * @param limiteReproducciones limite de escuchas mensuales para usuarios no Premium
      * @param precioPremium precio que cuesta pagar el servicio Premium
      * @param reproduccionesPremium reproducciones a alcanzar en un mes para ser Premium
-     * @return la instancia de Aplicacion 
-     * @throws Mp3PlayerException 
-     * @throws FileNotFoundException 
-     * @throws ExcepcionParametrosDeEntradaIncorrectos 
+     * @return la instancia de Aplicacion
+     * @throws Mp3PlayerException
+     * @throws FileNotFoundException
+     * @throws ExcepcionParametrosDeEntradaIncorrectos
      */
     public static Aplicacion getInstance(int limiteReproducciones, int precioPremium, int reproduccionesPremium) throws FileNotFoundException, Mp3PlayerException, ExcepcionParametrosDeEntradaIncorrectos {
         if (INSTANCE==null) INSTANCE = new Aplicacion(limiteReproducciones,precioPremium,reproduccionesPremium);
-        return INSTANCE; 
+        return INSTANCE;
     }
 
 
@@ -146,7 +146,7 @@ public class Aplicacion implements Serializable {
     boolean getAdministradorLogeado() {
     	return administradorLogeado;
     }
-    
+
     /**
      * Setter para el atributo usuarioLogeado
      * Con privacidad de paquete para que solo sea usado por AplicacionTest
@@ -154,28 +154,28 @@ public class Aplicacion implements Serializable {
     void setUsuarioLogeado(UsuarioRegistrado u) {
     	this.usuarioLogeado = u;
     }
-    
+
     /**
      * Getter para el atributo cola
      */
     public Mp3Player getCola() {
     	return cola;
     }
-    
+
     /**
      * Getter para el atributo cancionesNuevas
      */
     public List<Buscable> getBuscables() {
     	return buscables;
     }
-    
+
     /**
      * Getter para el atributo usuarios
      */
     public List<UsuarioRegistrado> getUsuarios() {
     	return usuarios;
     }
-    
+
     /**
      * Getter del atributo usuarioLogeado
      * @return usuario logeado
@@ -183,7 +183,7 @@ public class Aplicacion implements Serializable {
     public UsuarioRegistrado getUsuarioLogeado() {
     	return usuarioLogeado;
     }
-    
+
     /**
      * Getter del atributo administrador
      * @return usuario logeado
@@ -191,34 +191,34 @@ public class Aplicacion implements Serializable {
     public Administrador getAdministrador() {
     	return administrador;
     }
-    
+
     /**
      * Setter del atributo limiteReproducciones
-     * 
+     *
      * @param limiteReproducciones Nuevo limite de reproducciones
      */
     public void setLimiteReproducciones(int limiteReproducciones) {
     	this.limiteReproducciones = limiteReproducciones;
     }
-    
+
     /**
      * Setter del atributo reproduccionesPremium
-     * 
+     *
      * @param reproduccionesPremium Nuevo valor de reproducciones premium
      */
     public void setReproduccionesPremium(int reproduccionesPremium) {
     	this.reproduccionesPremium = reproduccionesPremium;
     }
-    
+
     /**
      * Setter del atributo precioPremium
-     * 
+     *
      * @param precioPremium Nuevo precio premium
      */
     public void setPrecioPremium(int precioPremium) {
     	this.precioPremium = precioPremium;
     }
-    
+
     /**
      * Aniade un usario a la aplicacion
      *
@@ -226,9 +226,9 @@ public class Aplicacion implements Serializable {
      * @param contrasenia Contrasenia del usuario
      * @param nombreCompleto Nombre completo del usuario
      * @param fechaNacimiento Fecha de nacimiento del usuario
-     * @throws ExcepcionParametrosDeEntradaIncorrectos 
-     * @throws ExcepcionNombreDeUsuarioNoDisponible 
-     * @throws NoSuchAlgorithmException 
+     * @throws ExcepcionParametrosDeEntradaIncorrectos
+     * @throws ExcepcionNombreDeUsuarioNoDisponible
+     * @throws NoSuchAlgorithmException
      */
     public void aniadirUsuario(String nombreUsuario,
                                String contrasenia,
@@ -250,18 +250,18 @@ public class Aplicacion implements Serializable {
                                                 nombreCompleto,
                                                 fechaNacimiento));
     }
-    
+
     /**
      * Envia la cancion al administrador para que la valide
      *
      * @param titulo Titulo de la cancion
      * @param fichero Fichero de audio de la cancion
-     * @throws ExcepcionDuracionLimiteSuperada 
-     * @throws Mp3InvalidFileException 
-     * @throws ExcepcionParametrosDeEntradaIncorrectos 
-     * @throws IOException 
-     * @throws ExcepcionUsuarioSinCuenta 
-     * @throws ExcepcionMp3NoValido 
+     * @throws ExcepcionDuracionLimiteSuperada
+     * @throws Mp3InvalidFileException
+     * @throws ExcepcionParametrosDeEntradaIncorrectos
+     * @throws IOException
+     * @throws ExcepcionUsuarioSinCuenta
+     * @throws ExcepcionMp3NoValido
      */
     public void subirCancion(String titulo, String fichero) throws ExcepcionDuracionLimiteSuperada, Mp3InvalidFileException, ExcepcionParametrosDeEntradaIncorrectos, IOException, ExcepcionUsuarioSinCuenta, ExcepcionMp3NoValido {
     	if (titulo == null || fichero == null) {
@@ -276,9 +276,9 @@ public class Aplicacion implements Serializable {
     	if (Mp3Player.getDuration(fichero) > 30*60) {
     		throw new ExcepcionDuracionLimiteSuperada();
     	}
-    	
+
         Files.copy(Paths.get(fichero), Paths.get("canciones/"+ titulo + ".mp3"), StandardCopyOption.REPLACE_EXISTING);
-    	
+
     	Cancion cancion = new Cancion(titulo,"canciones/"+ titulo + ".mp3",this.usuarioLogeado);
         this.administrador.aniadirCancion(cancion);
         this.usuarioLogeado.aniadirCancion(cancion);
@@ -288,7 +288,7 @@ public class Aplicacion implements Serializable {
      * Aniade una cancion a la aplicacion
      *
      * @param cancion cancion que se aniade
-     * @throws ExcepcionParametrosDeEntradaIncorrectos 
+     * @throws ExcepcionParametrosDeEntradaIncorrectos
      */
     public void aniadirCancion(Cancion cancion) throws ExcepcionParametrosDeEntradaIncorrectos {
     	if (cancion == null ) {
@@ -301,7 +301,7 @@ public class Aplicacion implements Serializable {
      * Borra una cancion de la aplicacion
      *
      * @param cancion Cancion que se pretende borrar
-     * @throws ExcepcionParametrosDeEntradaIncorrectos 
+     * @throws ExcepcionParametrosDeEntradaIncorrectos
      */
     public void borrarCancion(Cancion cancion) throws ExcepcionParametrosDeEntradaIncorrectos {
     	if (cancion == null ) {
@@ -317,11 +317,11 @@ public class Aplicacion implements Serializable {
      *
      * @param titulo Titulo del album
      * @param canciones Canciones que forman el album
-     * @throws ExcepcionErrorCreandoAlbum 
-     * @throws ExcepcionParametrosDeEntradaIncorrectos 
-     * @throws ExcepcionUsuarioSinCuenta 
-     * @throws ExcepcionCancionNoValidada 
-     * @throws ExcepcionInsercionInvalida 
+     * @throws ExcepcionErrorCreandoAlbum
+     * @throws ExcepcionParametrosDeEntradaIncorrectos
+     * @throws ExcepcionUsuarioSinCuenta
+     * @throws ExcepcionCancionNoValidada
+     * @throws ExcepcionInsercionInvalida
      */
     public void aniadirAlbum(String titulo, ArrayList <Cancion> canciones) throws ExcepcionErrorCreandoAlbum, ExcepcionParametrosDeEntradaIncorrectos, ExcepcionUsuarioSinCuenta, ExcepcionInsercionInvalida, ExcepcionCancionNoValidada {
     	if (titulo == null || canciones==null) {
@@ -344,7 +344,7 @@ public class Aplicacion implements Serializable {
      * Borra un album de la aplicacion
      *
      * @param album album que se pretende borrar
-     * @throws ExcepcionParametrosDeEntradaIncorrectos 
+     * @throws ExcepcionParametrosDeEntradaIncorrectos
      */
     public void borrarAlbum(Album album) throws ExcepcionParametrosDeEntradaIncorrectos {
     	if (album == null) {
@@ -358,8 +358,8 @@ public class Aplicacion implements Serializable {
      *
      * @param nombreUsuario Nombre del usuario que inicia sesion
      * @param contrasenia Contrasenia del usuario que inicia sesion
-     * @throws ExcepcionParametrosDeEntradaIncorrectos 
-     * @throws NoSuchAlgorithmException 
+     * @throws ExcepcionParametrosDeEntradaIncorrectos
+     * @throws NoSuchAlgorithmException
      * @throws ExcepcionLoginBloqueado
      * @throws ExcepcionLoginErrorCredenciales
      */
@@ -370,32 +370,32 @@ public class Aplicacion implements Serializable {
     	if (nombreUsuario == null || contrasenia == null) {
     		throw new ExcepcionParametrosDeEntradaIncorrectos();
     	}
-    	if (nombreUsuario == nombreAdministrador && contrasenia == contraseniaAdministrador) {
+    	if (nombreUsuario.equals(nombreAdministrador) && contrasenia.equals(contraseniaAdministrador)) {
     		administradorLogeado = true;
     		return;
     	}
-    	
+
     	/* Intentamos un login normal de un usuario registrado */
         for (UsuarioRegistrado u : usuarios){
-            if (u.getNombreUsuario() == nombreUsuario &&
+            if (u.getNombreUsuario().equals(nombreUsuario) &&
                 u.getContrasenia().equals(this.hashContrasenia(contrasenia))) {
                 usuarioLogeado = u;
-                
+
                 /* Si el usuario esta bloqueado, login falla */
                 if (u.getBloqueadoHasta()!= null && u.getBloqueadoHasta().isAfter(LocalDate.now())) {
                 	usuarioLogeado = null;
                 	throw(new ExcepcionLoginBloqueado());
                 }
                 u.setBloqueadoHasta(null);
-                
+
                 /* Si es la primera vez que inicia sesion este mes... */
                 if (u.getUltimoLogin()!=null &&
                     u.getUltimoLogin().getMonth() == LocalDate.now().minusMonths(1).getMonth()) {
-                	
+
                 	/* Ponemos el contador de reproducidas a cero */
                 	u.setReproducidas(0);
-                	
-                	/* Comprobamos si en el mes anterior obtuvo reproducciones suficientes 
+
+                	/* Comprobamos si en el mes anterior obtuvo reproducciones suficientes
                 	 * como para pasar a ser premium */
                     if (u.reproduccionesUltimoMes() >= reproduccionesPremium) {
                         u.setPremiumHasta(LocalDate.now().plusMonths(1).withDayOfMonth(1).minusDays(1));
@@ -404,7 +404,7 @@ public class Aplicacion implements Serializable {
                     	}
                     }
                 }
-                
+
                 /* Comprobamos si debe dejar de ser premium */
                 if (u.getPremiumHasta() != null && u.getPremiumHasta().isBefore(LocalDate.now())) {
                 	u.setPremiumHasta(null);
@@ -412,7 +412,7 @@ public class Aplicacion implements Serializable {
                 		l.setEstado(Estado.BLOQUEADO);
                 	}
                 }
-                
+
                 return;
             }
         }
@@ -422,8 +422,8 @@ public class Aplicacion implements Serializable {
 
     /**
      * Cierra la sesion del usuario que esta logeado
-     * @throws Mp3PlayerException 
-     * @throws FileNotFoundException 
+     * @throws Mp3PlayerException
+     * @throws FileNotFoundException
      */
     public void logout() throws FileNotFoundException, Mp3PlayerException {
     	actualizarCanciones();
@@ -446,7 +446,7 @@ public class Aplicacion implements Serializable {
      *
      * @param s Parametro de la busqueda
      * @return Devuelve la lista de canciones y albumes que empiezan por s
-     * @throws ExcepcionParametrosDeEntradaIncorrectos 
+     * @throws ExcepcionParametrosDeEntradaIncorrectos
      */
     public ArrayList<Buscable> buscarPorTitulo(String s) throws ExcepcionParametrosDeEntradaIncorrectos {
     	if (s == null) {
@@ -460,14 +460,14 @@ public class Aplicacion implements Serializable {
         }
         return coincidencias;
     }
-    
+
     /**
      * Implementa la busqueda por autor
      *
      * @param s Parametro de la busqueda
      * @return Devuelve la lista de canciones y albumes cuyo autor tiene un
      * nombre que empieza por s
-     * @throws ExcepcionParametrosDeEntradaIncorrectos 
+     * @throws ExcepcionParametrosDeEntradaIncorrectos
      */
     public ArrayList<Buscable> buscarPorAutor(String s) throws ExcepcionParametrosDeEntradaIncorrectos {
     	if (s == null) {
@@ -490,57 +490,57 @@ public class Aplicacion implements Serializable {
      * Reproduce un elemento
      *
      * @param reproducible Elemento que se pretende reproducir
-     * @throws Mp3PlayerException 
-     * @throws FileNotFoundException 
-     * @throws ExcepcionLimiteReproducidasAlcanzado 
-     * @throws ExcepcionNoAptoParaMenores 
-     * @throws ExcepcionParametrosDeEntradaIncorrectos 
-     * @throws ExcepcionReproducirProhibido 
+     * @throws Mp3PlayerException
+     * @throws FileNotFoundException
+     * @throws ExcepcionLimiteReproducidasAlcanzado
+     * @throws ExcepcionNoAptoParaMenores
+     * @throws ExcepcionParametrosDeEntradaIncorrectos
+     * @throws ExcepcionReproducirProhibido
      */
     public void reproducirReproducible(Reproducible reproducible) throws FileNotFoundException, Mp3PlayerException, ExcepcionLimiteReproducidasAlcanzado, ExcepcionNoAptoParaMenores, ExcepcionParametrosDeEntradaIncorrectos, ExcepcionReproducirProhibido {
-    	
+
     	if (reproducible == null) {
     		throw new ExcepcionParametrosDeEntradaIncorrectos();
     	}
-    	
+
     	this.cola.stop();
     	this.cola = new Mp3Player();
-        if (usuarioLogeado != null && 
-        		   usuarioLogeado.getReproducidas() >= limiteReproducciones && 
+        if (usuarioLogeado != null &&
+        		   usuarioLogeado.getReproducidas() >= limiteReproducciones &&
         		   usuarioLogeado.getPremiumHasta() == null) {
         	throw new ExcepcionLimiteReproducidasAlcanzado();
         }
-        
+
         if ((usuarioLogeado != null && usuarioLogeado.esMenor() && reproducible.esAptoParaMenores() == false) ||
         	(usuarioLogeado == null && reproducible.esAptoParaMenores() == false)){
         	throw new ExcepcionNoAptoParaMenores();
         }
-        
+
         if (usuarioLogeado == null && administradorLogeado == false && reproducible.esAptoParaMenores() == false) {
         	throw new ExcepcionNoAptoParaMenores();
         }
-        
+
         if (reproducible.getEstado() != Estado.NOBLOQUEADO) {
         	throw new ExcepcionReproducirProhibido();
         }
-        
+
         int reproducidas = reproducible.reproducir(cola,this.usuarioLogeado);
         if (usuarioLogeado != null) {
         	usuarioLogeado.setReproducidas(usuarioLogeado.getReproducidas() + reproducidas);
         }
         this.cola.play();
     }
-    
+
     /**
      * Aniadie un elemento a la cola de reproduccion
      *
      * @param reproducible Elemento que se pretende reproducir
-     * @throws ExcepcionLimiteReproducidasAlcanzado 
-     * @throws ExcepcionNoAptoParaMenores 
-     * @throws ExcepcionParametrosDeEntradaIncorrectos 
-     * @throws ExcepcionReproducirProhibido 
-     * @throws Mp3InvalidFileException 
-     * @throws ExcepcionUsuarioSinCuenta 
+     * @throws ExcepcionLimiteReproducidasAlcanzado
+     * @throws ExcepcionNoAptoParaMenores
+     * @throws ExcepcionParametrosDeEntradaIncorrectos
+     * @throws ExcepcionReproducirProhibido
+     * @throws Mp3InvalidFileException
+     * @throws ExcepcionUsuarioSinCuenta
      */
     public void aniadirALaCola(Reproducible reproducible) throws ExcepcionParametrosDeEntradaIncorrectos, ExcepcionLimiteReproducidasAlcanzado, ExcepcionNoAptoParaMenores, ExcepcionReproducirProhibido, Mp3InvalidFileException, ExcepcionUsuarioSinCuenta {
     	if (reproducible == null) {
@@ -549,8 +549,8 @@ public class Aplicacion implements Serializable {
     	if (usuarioLogeado == null && administradorLogeado == false) {
     		throw new ExcepcionUsuarioSinCuenta();
     	}
-    	if (usuarioLogeado != null && 
-    			usuarioLogeado.getReproducidas() >= limiteReproducciones && 
+    	if (usuarioLogeado != null &&
+    			usuarioLogeado.getReproducidas() >= limiteReproducciones &&
     			usuarioLogeado.getPremiumHasta() == null) {
     		throw new ExcepcionLimiteReproducidasAlcanzado();
     	}
@@ -570,8 +570,8 @@ public class Aplicacion implements Serializable {
      *
      * @param cancion Cancion que se denuncia
      * @param comentario Comentario que se realiza en la denuncia
-     * @throws ExcepcionParametrosDeEntradaIncorrectos 
-     * @throws ExcepcionUsuarioSinCuenta 
+     * @throws ExcepcionParametrosDeEntradaIncorrectos
+     * @throws ExcepcionUsuarioSinCuenta
      */
     public void denunciarPlagio(Cancion cancion, String comentario) throws ExcepcionParametrosDeEntradaIncorrectos, ExcepcionUsuarioSinCuenta {
     	if (cancion == null || comentario == null) {
@@ -632,10 +632,10 @@ public class Aplicacion implements Serializable {
      * @throws IOException
      */
     public void guardarDatos() throws IOException {
-    	
+
     	this.cola = null;
-    	
-        ObjectOutputStream salidaObjetos = 
+
+        ObjectOutputStream salidaObjetos =
             new ObjectOutputStream(
                 new FileOutputStream( "aplicacion.objectData" ) );
 
@@ -646,10 +646,10 @@ public class Aplicacion implements Serializable {
     /**
      * Carga los datos de la aplicacion
      * @return la instancia de la aplicacion con los datos cargados
-     * @throws IOException 
-     * @throws FileNotFoundException 
-     * @throws ClassNotFoundException 
-     * @throws Mp3PlayerException 
+     * @throws IOException
+     * @throws FileNotFoundException
+     * @throws ClassNotFoundException
+     * @throws Mp3PlayerException
      */
     public static Aplicacion cargarDatos() throws FileNotFoundException, IOException, ClassNotFoundException, Mp3PlayerException {
         ObjectInputStream entradaObjetos = null;
@@ -658,11 +658,11 @@ public class Aplicacion implements Serializable {
         				new FileInputStream( "aplicacion.objectData" ) );
         INSTANCE = (Aplicacion) entradaObjetos.readObject();
         entradaObjetos.close();
-        
+
         INSTANCE.cola = new Mp3Player();
         return INSTANCE;
     }
-    
+
     /**
      * Borra los usuarios y los buscables de la aplicacion
      */
@@ -676,10 +676,10 @@ public class Aplicacion implements Serializable {
 	 * Gestiona el pago que hace un usuario para pasar a ser premium
 	 * @param cardNumStr String con el numero de trajeta
 	 * @param subject motivo de la compra
-	 * @throws OrderRejectedException 
-	 * @throws FailedInternetConnectionException 
-	 * @throws InvalidCardNumberException 
-	 * @throws ExcepcionParametrosDeEntradaIncorrectos 
+	 * @throws OrderRejectedException
+	 * @throws FailedInternetConnectionException
+	 * @throws InvalidCardNumberException
+	 * @throws ExcepcionParametrosDeEntradaIncorrectos
 	 */
 	public void pagarPremium(String cardNumStr, String subject) throws InvalidCardNumberException, FailedInternetConnectionException, OrderRejectedException, ExcepcionParametrosDeEntradaIncorrectos {
 		if (cardNumStr == null || subject == null) {
@@ -698,12 +698,12 @@ public class Aplicacion implements Serializable {
     	}
 
 	}
-	
+
 	/**
 	 * Pasa una contrasenia a su hash en MD5
 	 * @param contrasenia sin hashear
 	 * @return String: contrasenia haseada
-	 * @throws NoSuchAlgorithmException 
+	 * @throws NoSuchAlgorithmException
 	 */
 	public String hashContrasenia(String contrasenia) throws NoSuchAlgorithmException {
 		byte[] hashBytes;
@@ -714,7 +714,7 @@ public class Aplicacion implements Serializable {
 		hash = new String(hashBytes);
 		return hash;
 	}
-	
+
 	/**
 	 * Borra de la aplicacion de forma efectiva todas las canciones marcadas como borradas
 	 */

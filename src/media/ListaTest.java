@@ -244,12 +244,15 @@ public class ListaTest {
 	@Test
 	void testListAptoMenores() {
 		Lista lista = new Lista("nombre lista");
+		Lista lista2 = new Lista("nombre lista");
 		UsuarioRegistrado usuario = new UsuarioRegistrado("nombre usuario","contrasenia","nombre",LocalDate.now());
 		Cancion cancion1 = null;
 		Cancion cancion2 = null;
+		Cancion cancion3 = null;
 		try {
 			cancion1 = new Cancion("cancion1","canciones/Thats What I Like.mp3",usuario);
 			cancion2 = new Cancion("cancion2","canciones/Thats What I Like.mp3",usuario);
+			cancion3 = new Cancion("cancion2","canciones/Thats What I Like.mp3",usuario);
 		} catch (FileNotFoundException | ExcepcionMp3NoValido e) {
 			fail("Lanzada excepcion no esperada");
 		}
@@ -268,12 +271,21 @@ public class ListaTest {
 			fail("Lanzada excepcion no esperada");
 		}
 		assertFalse(lista.esAptoParaMenores());
+		
 		try {
-			cancion1.validar(EstadoValidacion.APTOMENORES);
+			cancion3.validar(EstadoValidacion.APTOMENORES);
 		} catch (ExcepcionCancionYaValidada | ExcepcionCancionModificable e1) {
 			fail("Lanzada excepcion no esperada");
 		}
-		assertTrue(lista.esAptoParaMenores());
+		
+		try {
+			lista2.aniadirReproducible(cancion3);
+		} catch (ExcepcionInsercionInvalida e) {
+			fail("Lanzada excepcion no esperada");
+		} catch (ExcepcionReproducibleNoValido e) {
+			fail("Lanzada excepcion no esperada");
+		}
+		assertTrue(lista2.esAptoParaMenores());
 		
 		try {
 			cancion2.validar(EstadoValidacion.EXPLICITO);
