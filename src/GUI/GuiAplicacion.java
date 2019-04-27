@@ -28,7 +28,7 @@ public class GuiAplicacion extends JFrame {
         this.setSize(this.getToolkit().getScreenSize());
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setVisible(true);	
-		
+
 	}
 	
 	public static GuiAplicacion getInstance() {

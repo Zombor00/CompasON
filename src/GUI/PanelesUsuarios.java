@@ -31,7 +31,7 @@ public class PanelesUsuarios extends JPanel {
 		this.add(panelUsuarioPremium, PREMIUM);
 		this.add(panelAdministrador, ADMINISTRADOR);
 		
-		layout.show(this, SIN_CUENTA);
+		layout.show(this, REGISTRADO);
 		
 	}
 	

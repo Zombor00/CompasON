@@ -19,7 +19,7 @@ public class Reproductor extends JPanel{
 		botonPlay.setLocation(0, 0);
 		
 		this.add(botonPlay);
-		
+
 	}
 	
 	@Override
