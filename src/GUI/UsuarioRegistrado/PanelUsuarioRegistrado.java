@@ -8,11 +8,14 @@ import GUI.AccesoComun.Informacion;
 
 public class PanelUsuarioRegistrado extends JPanel {
 	
-	private PestaniasUsuarioRegistrado pestaniasUsuarioRegistrado = new PestaniasUsuarioRegistrado();
-	private Informacion informacion = new Informacion();
+	private PestaniasUsuarioRegistrado pestaniasUsuarioRegistrado;
+	private Informacion informacion;
 	
 	public PanelUsuarioRegistrado() {
 		super();
+		this.pestaniasUsuarioRegistrado = new PestaniasUsuarioRegistrado();
+		this.informacion = new Informacion();
+		
 		BorderLayout layout = new BorderLayout();		
 		this.setLayout(layout);
 		

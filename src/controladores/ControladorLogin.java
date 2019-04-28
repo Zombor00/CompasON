@@ -42,7 +42,16 @@ public class ControladorLogin implements ActionListener {
 			} catch (ExcepcionParametrosDeEntradaIncorrectos e1) {
 				e1.printStackTrace();
 			}
+			
+			if(aplicacion.getAdministradorLogeado()) {
+				vista.limpiarRegistro();
+				gui.actualizarDatos();
+				PanelesUsuarios panelesUsuarios = gui.getPanelesUsuarios();
+				panelesUsuarios.cambiarPanel(PanelesUsuarios.ADMINISTRADOR);
+			}
+			
 			if(aplicacion.getUsuarioLogeado() != null) {
+				vista.limpiarRegistro();
 				gui.actualizarDatos();
 				PanelesUsuarios panelesUsuarios = gui.getPanelesUsuarios();
 				panelesUsuarios.cambiarPanel(PanelesUsuarios.REGISTRADO);

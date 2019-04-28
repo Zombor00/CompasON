@@ -1,12 +1,17 @@
 package GUI.AccesoComun;
 
 import java.awt.*;
+import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import gestion.Notificacion;
+import media.Buscable;
+import usuarios.UsuarioRegistrado;
+import aplicacion.Aplicacion;
 
 public class Notificaciones extends JPanel {
 	
-	private JTable tablaNotificaciones;
+	private DefaultTableModel usuarioNotificacion;
 	
 	public Notificaciones() {
 		super();
@@ -14,12 +19,11 @@ public class Notificaciones extends JPanel {
 		this.setLayout(layout);
 		String[] titulos = {"Usuarios", "Notificacion"};
 		Object[][] filas = {
-		{"OJO: sin actualizar", "Nueva canción"},
-		{"Usuario 2", "Nuevo disco"},
+		{"OJO: sin actualizar", "Nueva canción"}
 		
 		};
-		DefaultTableModel usuarioNotificacion = new DefaultTableModel(filas, titulos);
-		tablaNotificaciones = new JTable(usuarioNotificacion);
+		usuarioNotificacion = new DefaultTableModel(filas, titulos);
+		JTable tablaNotificaciones = new JTable(usuarioNotificacion);
 		tablaNotificaciones.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 		tablaNotificaciones.setPreferredScrollableViewportSize(new Dimension(250, 150));
 		JScrollPane scrolltablaNotificaciones = new JScrollPane(tablaNotificaciones);
@@ -37,7 +41,24 @@ public class Notificaciones extends JPanel {
 	}
 	
 	public void actualizarDatos() {
-		/* TODO Implementar metodo */
+		Aplicacion a = Aplicacion.getInstance();
+		if (a.getUsuarioLogeado() == null) {
+			return;
+		}
+		
+		ArrayList<Notificacion> notificaciones = a.getUsuarioLogeado().getNotificaciones();
+		
+		int numFilas = usuarioNotificacion.getRowCount();
+		for(int i=0; i< numFilas; i++) {
+			usuarioNotificacion.removeRow(0);
+		}
+
+		Object[] rowData = {0,0};
+		for (Notificacion n : notificaciones) {
+			rowData[0] = n.getCancion().getAutor();
+			rowData[1] = n;
+			usuarioNotificacion.addRow(rowData);
+		}
 	}
 
 }

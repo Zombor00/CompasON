@@ -5,9 +5,11 @@ import java.io.IOException;
 
 import javax.swing.*;
 
+import GUI.AccesoComun.Sesion;
 import GUI.UsuarioSinCuenta.Login;
 import aplicacion.Aplicacion;
 import controladores.ControladorLogin;
+import controladores.ControladorLogout;
 import excepciones.ExcepcionParametrosDeEntradaIncorrectos;
 import pads.musicPlayer.exceptions.Mp3PlayerException;
 
@@ -30,6 +32,13 @@ public class GuiAplicacion extends JFrame {
 		
 		Login login = panelesUsuarios.getPanelUsuarioSinCuenta().getPestanias().getInicio().getLogin();
 		login.setControlador(new ControladorLogin(login));
+		
+		Sesion sesion1 = panelesUsuarios.getPanelUsuarioRegstrado().getInformacion().getSesion();
+		sesion1.setControlador(new ControladorLogout());
+		Sesion sesion2 = panelesUsuarios.getPanelAdministrador().getInformacionAdministrador().getSesion();
+		sesion2.setControlador(new ControladorLogout());
+		Sesion sesion3 = panelesUsuarios.getPanelUsuarioPremium().getInformacion().getSesion();
+		sesion3.setControlador(new ControladorLogout());
 		
         this.setSize(this.getToolkit().getScreenSize());
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

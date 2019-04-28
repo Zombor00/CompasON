@@ -1,6 +1,7 @@
 package media;
 
 import java.io.Serializable;
+import java.lang.Math;
 import excepciones.ExcepcionReproducirProhibido;
 import pads.musicPlayer.Mp3Player;
 import pads.musicPlayer.exceptions.Mp3InvalidFileException;
@@ -62,7 +63,7 @@ public abstract class Reproducible implements Serializable{
   }
 
   public void setDuracion(double duracion){
-      this.duracion = duracion;
+      this.duracion = Math.floor(duracion);
   }
 
   /**

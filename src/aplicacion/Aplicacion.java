@@ -167,7 +167,7 @@ public class Aplicacion implements Serializable {
      * Getter para el atributo administradorLogeado
      * Con privacidad de paquete para que solo sea usado por AplicacionTest
      */
-    boolean getAdministradorLogeado() {
+    public boolean getAdministradorLogeado() {
     	return administradorLogeado;
     }
 

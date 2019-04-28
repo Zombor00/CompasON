@@ -21,7 +21,7 @@ public class Login extends JPanel {
 		this.contrasenia = new JPasswordField(20);
 		JLabel usuarioLabel = new JLabel("Nombre de suario:");
 		JLabel contraseniaLabel = new JLabel("Contrasenia:");
-		this.acceder   = new JButton("Acceder");
+		this.acceder = new JButton("Acceder");
 
 		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, usuario, 0, SpringLayout.HORIZONTAL_CENTER, this);
 		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, contrasenia, 0, SpringLayout.HORIZONTAL_CENTER, this);
@@ -56,5 +56,10 @@ public class Login extends JPanel {
 	public void setControlador(ActionListener controlador) {
 		acceder.setActionCommand("ACCEDER");
 		acceder.addActionListener(controlador);
+	}
+	
+	public void limpiarRegistro() {
+		usuario.setText("");
+		contrasenia.setText("");
 	}
 }

@@ -20,11 +20,11 @@ public class Informacion extends JPanel{
 		this.setPreferredSize(new Dimension(300,800));
 	}
 	
-	Sesion getSesion() {
+	public Sesion getSesion() {
 		return this.sesion;
 	}
 	
-	Notificaciones getNotificaciones() {
+	public Notificaciones getNotificaciones() {
 		return this.notificaciones;
 	}
 	
