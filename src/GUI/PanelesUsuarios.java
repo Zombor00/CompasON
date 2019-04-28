@@ -8,6 +8,8 @@ import GUI.Administrador.PanelAdministrador;
 import GUI.UsuarioPremium.PanelUsuarioPremium;
 import GUI.UsuarioRegistrado.PanelUsuarioRegistrado;
 import GUI.UsuarioSinCuenta.PanelUsuarioSinCuenta;
+import aplicacion.Aplicacion;
+import usuarios.UsuarioRegistrado;
 
 public class PanelesUsuarios extends JPanel {
 	
@@ -16,22 +18,22 @@ public class PanelesUsuarios extends JPanel {
 	public final static String PREMIUM = "Premium";
 	public final static String ADMINISTRADOR = "Admin";
 	
+	private PanelUsuarioSinCuenta panelUsuarioSinCuenta = new PanelUsuarioSinCuenta();
+	private PanelUsuarioRegistrado panelUsuarioRegistrado = new PanelUsuarioRegistrado();
+	private PanelUsuarioPremium panelUsuarioPremium = new PanelUsuarioPremium();
+	private PanelAdministrador panelAdministrador = new PanelAdministrador();
+	
 	public PanelesUsuarios() {
 		super();
 		CardLayout layout = new CardLayout();		
 		this.setLayout(layout);
-		
-		PanelUsuarioSinCuenta panelUsuarioSinCuenta = new PanelUsuarioSinCuenta();
-		PanelUsuarioRegistrado panelUsuarioRegistrado = new PanelUsuarioRegistrado();
-		PanelUsuarioPremium panelUsuarioPremium = new PanelUsuarioPremium();
-		PanelAdministrador panelAdministrador = new PanelAdministrador();
 		
 		this.add(panelUsuarioSinCuenta, SIN_CUENTA);
 		this.add(panelUsuarioRegistrado, REGISTRADO);
 		this.add(panelUsuarioPremium, PREMIUM);
 		this.add(panelAdministrador, ADMINISTRADOR);
 		
-		layout.show(this, REGISTRADO);
+		layout.show(this, SIN_CUENTA);
 		
 	}
 	
@@ -42,5 +44,32 @@ public class PanelesUsuarios extends JPanel {
 		}
 		CardLayout layout = (CardLayout) this.getLayout();
 		layout.show(this, name);
+	}
+	
+	public PanelUsuarioSinCuenta getPanelUsuarioSinCuenta() {
+		return this.panelUsuarioSinCuenta;
+	}
+	
+	public PanelUsuarioRegistrado getPanelUsuarioRegstrado() {
+		return this.panelUsuarioRegistrado;
+	}
+	
+	public PanelUsuarioPremium getPanelUsuarioPremium() {
+		return this.panelUsuarioPremium;
+	}
+	
+	public PanelAdministrador getPanelAdministrador() {
+		return this.panelAdministrador;
+	}
+	
+	public void actualizarDatos() {
+		/* TODO Ojo con el login del admin */
+		UsuarioRegistrado u = Aplicacion.getInstance().getUsuarioLogeado();
+		if(u == null) return;
+		if(u.getPremiumHasta() == null) {
+			this.panelUsuarioRegistrado.actualizarDatos();
+		} else {
+			this.panelUsuarioPremium.actualizarDatos();
+		}
 	}
 }

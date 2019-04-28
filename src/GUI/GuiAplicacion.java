@@ -1,11 +1,13 @@
 package GUI;
 
 import java.awt.*;
-import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import javax.swing.*;
 
+import GUI.UsuarioSinCuenta.Login;
 import aplicacion.Aplicacion;
+import controladores.ControladorLogin;
 import excepciones.ExcepcionParametrosDeEntradaIncorrectos;
 import pads.musicPlayer.exceptions.Mp3PlayerException;
 
@@ -14,6 +16,7 @@ public class GuiAplicacion extends JFrame {
 	
 	public static GuiAplicacion INSTANCE = null;
 	private PanelesUsuarios panelesUsuarios = new PanelesUsuarios();
+	private Reproductor reproductor = new Reproductor();
 
 	private GuiAplicacion() {
 		super("CompasON");
@@ -23,7 +26,10 @@ public class GuiAplicacion extends JFrame {
 		contenedor.setLayout(layout);
 		
 		contenedor.add(panelesUsuarios,BorderLayout.CENTER);
-		contenedor.add(new Reproductor(),BorderLayout.SOUTH);
+		contenedor.add(reproductor,BorderLayout.SOUTH);
+		
+		Login login = panelesUsuarios.getPanelUsuarioSinCuenta().getPestanias().getInicio().getLogin();
+		login.setControlador(new ControladorLogin(login));
 		
         this.setSize(this.getToolkit().getScreenSize());
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -40,8 +46,17 @@ public class GuiAplicacion extends JFrame {
 		return this.panelesUsuarios;
 	}
 	
-	public static void main(String[] args) throws FileNotFoundException, Mp3PlayerException, ExcepcionParametrosDeEntradaIncorrectos {
-		Aplicacion a = Aplicacion.getInstance(10, 10, 10);
+	public Reproductor getReproductor() {
+		return this.reproductor;
+	}
+	
+	public void actualizarDatos() {
+		/* TODO Ojo con el login del admin */
+		this.panelesUsuarios.actualizarDatos();
+	}
+	
+	public static void main(String[] args) throws Mp3PlayerException, ExcepcionParametrosDeEntradaIncorrectos, ClassNotFoundException, IOException {
+		Aplicacion a = Aplicacion.cargarDatos();
 		GuiAplicacion g = GuiAplicacion.getInstance();
 		System.out.println("Ejecutando main de Gui.Aplicaion. "+ a + " " + g);
 	}

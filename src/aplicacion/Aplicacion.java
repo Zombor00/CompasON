@@ -140,6 +140,30 @@ public class Aplicacion implements Serializable {
 
 
     /**
+     * Getter del atributo precioPremium
+     * @return precioPremium
+     */
+    public int getPrecioPremium() {
+    	return this.precioPremium;
+    }
+    
+    /**
+     * Getter del atributo limiteReproducciones
+     * @return limiteReproducciones
+     */
+    public int getLimiteReproducciones() {
+    	return this.limiteReproducciones;
+    }
+    
+    /**
+     * Getter del atributo reproduccionesPremium
+     * @return reproduccionesPremium
+     */
+    public int getReproduccionesPremium() {
+    	return this.reproduccionesPremium;
+    }
+    
+    /**
      * Getter para el atributo administradorLogeado
      * Con privacidad de paquete para que solo sea usado por AplicacionTest
      */

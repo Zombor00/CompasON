@@ -17,5 +17,9 @@ public class PanelUsuarioPremium extends JPanel{
 		this.add(new Informacion(),BorderLayout.EAST);
 		
 	}
+	
+	public void actualizarDatos() {
+		/* TODO Implementar metodo */
+	}
 
 }

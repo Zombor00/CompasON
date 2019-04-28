@@ -29,14 +29,14 @@ public class Tramitar extends JPanel {
 		DefaultTableModel modeloDatos = new DefaultTableModel(filas, titulos);
 		JTable tabla = new JTable(modeloDatos);
 		tabla.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-		tabla.setPreferredScrollableViewportSize(new Dimension(800, 80));
+		tabla.setPreferredScrollableViewportSize(new Dimension(800, 500));
 		JScrollPane scrollTabla = new JScrollPane(tabla);
 		
 		
 
 		
 		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, scrollTabla, 0, SpringLayout.HORIZONTAL_CENTER, this);
-		layout.putConstraint(SpringLayout.NORTH, scrollTabla, 100, SpringLayout.NORTH, this);
+		layout.putConstraint(SpringLayout.VERTICAL_CENTER, scrollTabla, 0, SpringLayout.VERTICAL_CENTER, this);
 
 		
 	

@@ -19,6 +19,6 @@ public class InformacionAdministrador extends JPanel {
 		
 		this.add(sesion);
 		this.add(opciones);
-		this.setPreferredSize(new Dimension(200,800));
+		this.setPreferredSize(new Dimension(300,800));
 	}
 }

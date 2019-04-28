@@ -2,11 +2,17 @@ package controladores;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.security.NoSuchAlgorithmException;
+
+import javax.swing.JOptionPane;
 
 import GUI.GuiAplicacion;
 import GUI.PanelesUsuarios;
 import GUI.UsuarioSinCuenta.Login;
 import aplicacion.Aplicacion;
+import excepciones.ExcepcionLoginBloqueado;
+import excepciones.ExcepcionLoginErrorCredenciales;
+import excepciones.ExcepcionParametrosDeEntradaIncorrectos;
 
 public class ControladorLogin implements ActionListener {
 	
@@ -21,18 +27,27 @@ public class ControladorLogin implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (aplicacion == null) aplicacion = Aplicacion.getInstance();
-		if (gui ==null) gui = GuiAplicacion.getInstance();
+		if (gui == null) gui = GuiAplicacion.getInstance();
 		
-		/*Hay que comprobar que el usuario y la contrasenia son correctos */
+		/* TODO Ojo con el login del admin */
 		if (e.getActionCommand().equals("ACCEDER")) {
-			PanelesUsuarios panelesUsuarios = gui.getPanelesUsuarios();
-			panelesUsuarios.cambiarPanel(PanelesUsuarios.REGISTRADO);
-			
-			/* gui.actualizarInformacion()
-			 * aplicacion.login(vista.getUsuaurio(),vista.getConstrasenia())
-			 */
+			try {
+				aplicacion.login(vista.getUsuario(), vista.getContrasenia());
+			} catch (NoSuchAlgorithmException e1) {
+				e1.printStackTrace();
+			} catch (ExcepcionLoginErrorCredenciales e1) {
+				JOptionPane.showMessageDialog(gui,"Nombre de usuario o contrasenia incorrectos");
+			} catch (ExcepcionLoginBloqueado e1) {
+				e1.printStackTrace();
+			} catch (ExcepcionParametrosDeEntradaIncorrectos e1) {
+				e1.printStackTrace();
+			}
+			if(aplicacion.getUsuarioLogeado() != null) {
+				gui.actualizarDatos();
+				PanelesUsuarios panelesUsuarios = gui.getPanelesUsuarios();
+				panelesUsuarios.cambiarPanel(PanelesUsuarios.REGISTRADO);
+			}
 		}
-		
 	}
 
 }

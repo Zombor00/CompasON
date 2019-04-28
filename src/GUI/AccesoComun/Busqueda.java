@@ -37,15 +37,17 @@ public class Busqueda extends JPanel {
 		DefaultTableModel modeloDatos = new DefaultTableModel(filas, titulos);
 		JTable tabla = new JTable(modeloDatos);
 		tabla.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-		tabla.setPreferredScrollableViewportSize(new Dimension(500, 80));
+		tabla.setPreferredScrollableViewportSize(new Dimension(800, 500));
 		JScrollPane scrollTabla = new JScrollPane(tabla);
 		
 		
 
-		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, buscador, 0, SpringLayout.HORIZONTAL_CENTER, this);
+		
 		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, scrollTabla, 0, SpringLayout.HORIZONTAL_CENTER, this);
-		layout.putConstraint(SpringLayout.SOUTH, buscador, -50, SpringLayout.NORTH, scrollTabla);
 		layout.putConstraint(SpringLayout.VERTICAL_CENTER, scrollTabla, 0, SpringLayout.VERTICAL_CENTER, this);
+		
+		layout.putConstraint(SpringLayout.SOUTH, buscador, -50, SpringLayout.NORTH, scrollTabla);
+		layout.putConstraint(SpringLayout.EAST, buscador, 0, SpringLayout.EAST, scrollTabla);
 
 		
 		this.add(buscador);

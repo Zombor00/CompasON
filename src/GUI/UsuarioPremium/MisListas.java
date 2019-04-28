@@ -34,7 +34,7 @@ public class MisListas extends JPanel{
 		DefaultTableModel datosListas = new DefaultTableModel(filas, titulos);
 		JTable tablaListas = new JTable(datosListas);
 		tablaListas.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-		tablaListas.setPreferredScrollableViewportSize(new Dimension(500, 80));
+		tablaListas.setPreferredScrollableViewportSize(new Dimension(800, 500));
 		JScrollPane scrollTablaListas = new JScrollPane(tablaListas);
 		
 		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, scrollTablaListas, 0, SpringLayout.HORIZONTAL_CENTER, this);

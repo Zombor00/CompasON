@@ -10,6 +10,9 @@ import java.util.Map;
 import javax.swing.*;
 
 public class InicioUsuarioSinCuenta extends JPanel {
+	
+	private Login login = new Login();
+	private Registro registro = new Registro();
 
 	public InicioUsuarioSinCuenta() {
 		super();
@@ -17,8 +20,6 @@ public class InicioUsuarioSinCuenta extends JPanel {
 		this.setLayout(layout);
 		JLabel logo = new JLabel();
 		logo.setIcon(new ImageIcon(new ImageIcon("aux/logo-compason.png").getImage().getScaledInstance(200, 75, Image.SCALE_DEFAULT)));
-		Login login = new Login();
-		Registro registro = new Registro();
 		registro.setVisible(false);
 		JButton registrarse   = new JButton("Registrarse en CompasON");
 		JButton iniciarSesion   = new JButton("Iniciar sesion en CompasON");
@@ -104,4 +105,13 @@ public class InicioUsuarioSinCuenta extends JPanel {
 		this.add(login);
 		this.add(registro);
 	}
+	
+	public Login getLogin() {
+		return this.login;
+	}
+	
+	public Registro getRegistro() {
+		return this.registro;
+	}
+	
 }

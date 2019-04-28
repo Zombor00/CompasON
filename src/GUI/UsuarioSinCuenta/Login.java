@@ -6,8 +6,6 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
-import controladores.ControladorLogin;
-
 public class Login extends JPanel {
 	
 	private JTextField usuario;
@@ -45,7 +43,6 @@ public class Login extends JPanel {
 		this.add(contraseniaLabel);
 		this.setPreferredSize(new Dimension(1000,150));
 		
-		this.setControlador(new ControladorLogin(this));
 	}
 	
 	public String getUsuario() {
@@ -53,7 +50,7 @@ public class Login extends JPanel {
 	}
 	
 	public String getContrasenia() {
-		return this.contrasenia.getPassword().toString();
+		return String.valueOf(this.contrasenia.getPassword());
 	}
 	
 	public void setControlador(ActionListener controlador) {

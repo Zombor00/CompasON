@@ -7,7 +7,14 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SpringLayout;
 
+import aplicacion.Aplicacion;
+import usuarios.UsuarioRegistrado;
+
 public class InicioComun extends JPanel{
+	
+	private JLabel bienvenido = new JLabel("Bienvenido _");
+	private JLabel reproducidas = new JLabel("Canciones reproducidas este mes: _  (Limite: _ )");
+	private JLabel reproducciones = new JLabel("Reproducciones obtenidas este mes: _  (_ mas para ser premium)");
 	
 	public InicioComun() {
 		
@@ -15,9 +22,6 @@ public class InicioComun extends JPanel{
 		SpringLayout layout = new SpringLayout();
 		this.setLayout(layout);
 		JLabel logo = new JLabel();
-		JLabel bienvenido = new JLabel("Bienvenido _");
-		JLabel reproducidas = new JLabel("Canciones reproducidas este mes: _  (Limite: _ )");
-		JLabel reproducciones = new JLabel("Reproducciones obtenidas este mes: _  (_ mas para ser premium)");
 		logo.setIcon(new ImageIcon(new ImageIcon("aux/logo-compason.png").getImage().getScaledInstance(200, 75, Image.SCALE_DEFAULT)));
 		
 		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, bienvenido, 0, SpringLayout.HORIZONTAL_CENTER, this);
@@ -35,6 +39,16 @@ public class InicioComun extends JPanel{
 		this.add(reproducidas);
 		this.add(reproducciones);
 		
+	}
+	
+	public void actualizarDatos() {
+		UsuarioRegistrado u = Aplicacion.getInstance().getUsuarioLogeado();
+		if (u == null) return;
+		this.bienvenido.setText("Bienvenido " + u.getNombre());
+		this.reproducciones.setText("Canciones reproducidas este mes: " + u.getReproducidas() +
+				                    " (Limite: "+ Aplicacion.getInstance().getLimiteReproducciones() + ")");
+		this.reproducidas.setText("Reproducciones obtenidas este mes: " + u.reproduccionesUltimoMes() +
+				                  " (" + Aplicacion.getInstance().getReproduccionesPremium() + " mas para ser premium)");
 	}
 
 }

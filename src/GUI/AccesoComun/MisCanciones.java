@@ -7,7 +7,13 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
+import aplicacion.Aplicacion;
+import media.Buscable;
+import usuarios.UsuarioRegistrado;
+
 public class MisCanciones extends JPanel{
+	
+	private DefaultTableModel datosCanciones;
 	
 	public MisCanciones() {
 		super();
@@ -29,10 +35,10 @@ public class MisCanciones extends JPanel{
 		{"Cancion 9", "00:00"},
 		{"Cancion 10", "00:00"},
 		};
-		DefaultTableModel datosCanciones = new DefaultTableModel(filas, titulos);
+		datosCanciones = new DefaultTableModel(filas, titulos);
 		JTable tablaCanciones = new JTable(datosCanciones);
 		tablaCanciones.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-		tablaCanciones.setPreferredScrollableViewportSize(new Dimension(500, 80));
+		tablaCanciones.setPreferredScrollableViewportSize(new Dimension(800, 500));
 		JScrollPane scrollTablaCanciones = new JScrollPane(tablaCanciones);
 		
 		/* Albumes */
@@ -53,7 +59,7 @@ public class MisCanciones extends JPanel{
 		DefaultTableModel datosAlbumes = new DefaultTableModel(filas2, titulos2);
 		JTable tablaAlbumes = new JTable(datosAlbumes);
 		tablaAlbumes.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-		tablaAlbumes.setPreferredScrollableViewportSize(new Dimension(500, 80));
+		tablaAlbumes.setPreferredScrollableViewportSize(new Dimension(800, 500));
 		JScrollPane scrollTablaAlbumes = new JScrollPane(tablaAlbumes);
 		
 		/* Subir cancion */
@@ -115,6 +121,21 @@ public class MisCanciones extends JPanel{
 						scrollTablaAlbumes.setVisible(false);
 					}
 				});
+	}
+	
+	public void actualizarDatos() {
+		int numFilas = datosCanciones.getRowCount();
+		for(int i=0; i< numFilas; i++) {
+			datosCanciones.removeRow(0);
+		}
+		Object[] rowData = {0,0};
+		UsuarioRegistrado u = Aplicacion.getInstance().getUsuarioLogeado();
+		if (u==null) return;
+		for (Buscable c : u.getBuscables()) {
+			rowData[0] = c.getTitulo();
+			rowData[1] = c.getDuracion();
+			datosCanciones.addRow(rowData);
+		}
 	}
 
 }

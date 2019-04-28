@@ -6,11 +6,12 @@ import GUI.AccesoComun.*;;
 
 public class PestaniasUsuarioRegistrado extends JTabbedPane {
 	
+	private InicioRegistrado inicio = new InicioRegistrado();
+	private Busqueda busqueda = new Busqueda();
+	private MisCanciones misCanciones = new MisCanciones();
+	
 	public PestaniasUsuarioRegistrado() {
 		super();
-		JPanel inicio = new InicioRegistrado();
-		JPanel busqueda = new Busqueda();
-		JPanel misCanciones = new MisCanciones();
 		
 		this.addTab("Inicio", inicio);
 		this.addTab("Busqueda", busqueda);
@@ -19,5 +20,24 @@ public class PestaniasUsuarioRegistrado extends JTabbedPane {
 		this.setSelectedIndex(0);
 		
 	}
+	
+	public InicioRegistrado getInicio() {
+		return this.inicio;
+	}
+	
+	public Busqueda getBusqueda() {
+		return this.busqueda;
+	}
+	
+	public MisCanciones getMisCanciones() {
+		return this.misCanciones;
+	}
+	
+	public void actualizarDatos() {
+		this.inicio.actualizarDatos();
+		this.misCanciones.actualizarDatos();
+	}
+	
+	
 
 }

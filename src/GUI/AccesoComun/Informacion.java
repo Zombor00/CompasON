@@ -6,18 +6,31 @@ import javax.swing.*;
 
 public class Informacion extends JPanel{
 	
+	private Sesion sesion = new Sesion();
+	private Notificaciones notificaciones = new Notificaciones();
+	
 	public Informacion() {
 		
 		super();
 		BoxLayout layout = new BoxLayout(this,BoxLayout.Y_AXIS);
 		this.setLayout(layout);
 		
-		Sesion sesion = new Sesion();
-		Notificaciones notificaciones = new Notificaciones();
-		
 		this.add(sesion);
 		this.add(notificaciones);
-		this.setPreferredSize(new Dimension(200,800));
+		this.setPreferredSize(new Dimension(300,800));
+	}
+	
+	Sesion getSesion() {
+		return this.sesion;
+	}
+	
+	Notificaciones getNotificaciones() {
+		return this.notificaciones;
+	}
+	
+	public void actualizarDatos() {
+		this.sesion.actualizarDatos();
+		this.notificaciones.actualizarDatos();
 	}
 
 }
