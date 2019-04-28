@@ -2,15 +2,20 @@ package GUI;
 
 import java.awt.*;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.swing.*;
 
 import GUI.AccesoComun.Sesion;
+import GUI.AccesoComun.Busqueda;
+import GUI.AccesoComun.Notificaciones;
 import GUI.UsuarioSinCuenta.Login;
 import aplicacion.Aplicacion;
+import controladores.ControladorBuscar;
 import controladores.ControladorLogin;
 import controladores.ControladorLogout;
 import excepciones.ExcepcionParametrosDeEntradaIncorrectos;
+import media.Buscable;
 import pads.musicPlayer.exceptions.Mp3PlayerException;
 
 
@@ -40,6 +45,10 @@ public class GuiAplicacion extends JFrame {
 		Sesion sesion3 = panelesUsuarios.getPanelUsuarioPremium().getInformacion().getSesion();
 		sesion3.setControlador(new ControladorLogout());
 		
+		Busqueda busqueda1 = panelesUsuarios.getPanelUsuarioRegstrado().getPestanias().getBusqueda();
+		busqueda1.setControlador(new ControladorBuscar(busqueda1));
+		
+		
         this.setSize(this.getToolkit().getScreenSize());
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setVisible(true);	
@@ -62,6 +71,10 @@ public class GuiAplicacion extends JFrame {
 	public void actualizarDatos() {
 		/* TODO Ojo con el login del admin */
 		this.panelesUsuarios.actualizarDatos();
+	}
+	
+	public void actualizarBusqueda(ArrayList<Buscable> buscables) {
+		this.panelesUsuarios.actualizarBusqueda(buscables);
 	}
 	
 	public static void main(String[] args) throws Mp3PlayerException, ExcepcionParametrosDeEntradaIncorrectos, ClassNotFoundException, IOException {

@@ -1,7 +1,10 @@
 package GUI.UsuarioRegistrado;
 
+import java.util.ArrayList;
+
 import javax.swing.*;
-import GUI.AccesoComun.*;;
+import GUI.AccesoComun.*;
+import media.Buscable;;
 
 
 public class PestaniasUsuarioRegistrado extends JTabbedPane {
@@ -36,6 +39,10 @@ public class PestaniasUsuarioRegistrado extends JTabbedPane {
 	public void actualizarDatos() {
 		this.inicio.actualizarDatos();
 		this.misCanciones.actualizarDatos();
+	}
+	
+	public void actualizarBusqueda(ArrayList<Buscable> buscables) {
+		busqueda.actualizarBusqueda(buscables);
 	}
 	
 	

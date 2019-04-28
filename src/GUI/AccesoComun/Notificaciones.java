@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import gestion.Notificacion;
-import media.Buscable;
-import usuarios.UsuarioRegistrado;
 import aplicacion.Aplicacion;
 
 public class Notificaciones extends JPanel {

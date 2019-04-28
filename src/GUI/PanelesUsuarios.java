@@ -1,6 +1,7 @@
 package GUI;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 import javax.swing.*;
 
@@ -9,6 +10,7 @@ import GUI.UsuarioPremium.PanelUsuarioPremium;
 import GUI.UsuarioRegistrado.PanelUsuarioRegistrado;
 import GUI.UsuarioSinCuenta.PanelUsuarioSinCuenta;
 import aplicacion.Aplicacion;
+import media.Buscable;
 import usuarios.UsuarioRegistrado;
 
 public class PanelesUsuarios extends JPanel {
@@ -71,5 +73,9 @@ public class PanelesUsuarios extends JPanel {
 		} else {
 			this.panelUsuarioPremium.actualizarDatos();
 		}
+	}
+	
+	public void actualizarBusqueda(ArrayList<Buscable> buscables) {
+		this.panelUsuarioRegistrado.actualizarBusqueda(buscables);
 	}
 }

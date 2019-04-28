@@ -1,10 +1,12 @@
 package GUI.UsuarioRegistrado;
 
 import java.awt.BorderLayout;
+import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
 import GUI.AccesoComun.Informacion;
+import media.Buscable;
 
 public class PanelUsuarioRegistrado extends JPanel {
 	
@@ -35,6 +37,10 @@ public class PanelUsuarioRegistrado extends JPanel {
 	public void actualizarDatos() {
 		this.pestaniasUsuarioRegistrado.actualizarDatos();
 		this.informacion.actualizarDatos();
+	}
+	
+	public void actualizarBusqueda(ArrayList<Buscable> buscables) {
+		pestaniasUsuarioRegistrado.actualizarBusqueda(buscables); 
 	}
 
 }
