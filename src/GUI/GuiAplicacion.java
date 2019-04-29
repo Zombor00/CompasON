@@ -47,6 +47,12 @@ public class GuiAplicacion extends JFrame {
 		
 		Busqueda busqueda1 = panelesUsuarios.getPanelUsuarioRegstrado().getPestanias().getBusqueda();
 		busqueda1.setControlador(new ControladorBuscar(busqueda1));
+		Busqueda busqueda2 = panelesUsuarios.getPanelAdministrador().getPestaniasAdministrador().getBusqueda();
+		busqueda2.setControlador(new ControladorBuscar(busqueda2));
+		Busqueda busqueda3 = panelesUsuarios.getPanelUsuarioPremium().getPestaniasUsuarioPremium().getBusqueda();
+		busqueda3.setControlador(new ControladorBuscar(busqueda3));
+		Busqueda busqueda4 = panelesUsuarios.getPanelUsuarioSinCuenta().getPestanias().getBusqueda();
+		busqueda4.setControlador(new ControladorBuscar(busqueda4));
 		
 		
         this.setSize(this.getToolkit().getScreenSize());
@@ -73,8 +79,21 @@ public class GuiAplicacion extends JFrame {
 		this.panelesUsuarios.actualizarDatos();
 	}
 	
-	public void actualizarBusqueda(ArrayList<Buscable> buscables) {
-		this.panelesUsuarios.actualizarBusqueda(buscables);
+	public void actualizarBusqueda(ArrayList<Buscable> buscables, String actual) {
+		switch(actual) {
+			case PanelesUsuarios.SIN_CUENTA:
+				this.panelesUsuarios.getPanelUsuarioSinCuenta().getPestanias().getBusqueda().actualizarBusqueda(buscables);
+				break;
+			case PanelesUsuarios.ADMINISTRADOR:
+				this.panelesUsuarios.getPanelAdministrador().getPestaniasAdministrador().getBusqueda().actualizarBusqueda(buscables);
+				break;
+			case PanelesUsuarios.REGISTRADO:
+				this.panelesUsuarios.getPanelUsuarioRegstrado().getPestanias().getBusqueda().actualizarBusqueda(buscables);
+				break;
+			case PanelesUsuarios.PREMIUM:
+				this.panelesUsuarios.getPanelUsuarioPremium().getPestaniasUsuarioPremium().getBusqueda().actualizarBusqueda(buscables);
+				break;
+		}
 	}
 	
 	public static void main(String[] args) throws Mp3PlayerException, ExcepcionParametrosDeEntradaIncorrectos, ClassNotFoundException, IOException {

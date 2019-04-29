@@ -33,7 +33,7 @@ public class ControladorBuscar implements ActionListener {
 				e1.printStackTrace();
 			}
 			
-			gui.actualizarBusqueda(buscable);
+			gui.actualizarBusqueda(buscable,gui.getPanelesUsuarios().getActual());
 		
 		}
 	}

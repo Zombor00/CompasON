@@ -38,9 +38,5 @@ public class PanelUsuarioRegistrado extends JPanel {
 		this.pestaniasUsuarioRegistrado.actualizarDatos();
 		this.informacion.actualizarDatos();
 	}
-	
-	public void actualizarBusqueda(ArrayList<Buscable> buscables) {
-		pestaniasUsuarioRegistrado.actualizarBusqueda(buscables); 
-	}
 
 }

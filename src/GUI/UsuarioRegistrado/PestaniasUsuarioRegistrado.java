@@ -40,11 +40,5 @@ public class PestaniasUsuarioRegistrado extends JTabbedPane {
 		this.inicio.actualizarDatos();
 		this.misCanciones.actualizarDatos();
 	}
-	
-	public void actualizarBusqueda(ArrayList<Buscable> buscables) {
-		busqueda.actualizarBusqueda(buscables);
-	}
-	
-	
 
 }

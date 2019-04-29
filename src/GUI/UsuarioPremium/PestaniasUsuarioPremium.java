@@ -7,11 +7,11 @@ import GUI.AccesoComun.Busqueda;
 import GUI.AccesoComun.MisCanciones;
 
 public class PestaniasUsuarioPremium extends JTabbedPane{
-	
+	Busqueda busqueda;
 	public PestaniasUsuarioPremium() {
 		super();
 		JPanel inicio = new InicioPremium();
-		JPanel busqueda = new Busqueda();
+		busqueda = new Busqueda();
 		JPanel misCanciones = new MisCanciones();
 		JPanel misListas = new MisListas();
 		
@@ -22,6 +22,10 @@ public class PestaniasUsuarioPremium extends JTabbedPane{
 		
 		this.setSelectedIndex(0);
 		
+	}
+	
+	public Busqueda getBusqueda() {
+		return this.busqueda;
 	}
 
 }

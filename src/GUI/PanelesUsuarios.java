@@ -20,6 +20,8 @@ public class PanelesUsuarios extends JPanel {
 	public final static String PREMIUM = "Premium";
 	public final static String ADMINISTRADOR = "Admin";
 	
+	private String actual = SIN_CUENTA;
+	
 	private PanelUsuarioSinCuenta panelUsuarioSinCuenta = new PanelUsuarioSinCuenta();
 	private PanelUsuarioRegistrado panelUsuarioRegistrado = new PanelUsuarioRegistrado();
 	private PanelUsuarioPremium panelUsuarioPremium = new PanelUsuarioPremium();
@@ -46,6 +48,7 @@ public class PanelesUsuarios extends JPanel {
 		}
 		CardLayout layout = (CardLayout) this.getLayout();
 		layout.show(this, name);
+		this.actual = name;
 	}
 	
 	public PanelUsuarioSinCuenta getPanelUsuarioSinCuenta() {
@@ -75,7 +78,7 @@ public class PanelesUsuarios extends JPanel {
 		}
 	}
 	
-	public void actualizarBusqueda(ArrayList<Buscable> buscables) {
-		this.panelUsuarioRegistrado.actualizarBusqueda(buscables);
+	public String getActual(){
+		return this.actual;
 	}
 }
