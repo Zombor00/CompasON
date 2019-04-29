@@ -11,18 +11,23 @@ import javax.swing.*;
 
 public class InicioUsuarioSinCuenta extends JPanel {
 	
-	private Login login = new Login();
-	private Registro registro = new Registro();
-
+	private Login login;
+	private Registro registro;
+	private SpringLayout layout;
+	private JButton registrarse;
+	private JButton iniciarSesion;
+	
 	public InicioUsuarioSinCuenta() {
 		super();
-		SpringLayout layout = new SpringLayout();
+		login = new Login();
+		layout = new SpringLayout();
+		registro = new Registro();
 		this.setLayout(layout);
 		JLabel logo = new JLabel();
 		logo.setIcon(new ImageIcon(new ImageIcon("aux/logo-compason.png").getImage().getScaledInstance(200, 75, Image.SCALE_DEFAULT)));
 		registro.setVisible(false);
-		JButton registrarse   = new JButton("Registrarse en CompasON");
-		JButton iniciarSesion   = new JButton("Iniciar sesion en CompasON");
+		registrarse   = new JButton("Registrarse en CompasON");
+		iniciarSesion   = new JButton("Iniciar sesion en CompasON");
 		iniciarSesion.setVisible(false);
 		
 		/* Colocamos los elementos */
@@ -87,13 +92,11 @@ public class InicioUsuarioSinCuenta extends JPanel {
                 iniciarSesion.setFont(font.deriveFont(attributes));
 		    }
 		});
+		
 		iniciarSesion.addActionListener(
 				new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						login.setVisible(true);
-						registro.setVisible(false);
-						registrarse.setVisible(true);
-						iniciarSesion.setVisible(false);
+						accionIniciarSesion();
 						}
 					}
 				);
@@ -106,12 +109,23 @@ public class InicioUsuarioSinCuenta extends JPanel {
 		this.add(registro);
 	}
 	
+	public void accionIniciarSesion() {
+		login.setVisible(true);
+		registro.setVisible(false);
+		registrarse.setVisible(true);
+		iniciarSesion.setVisible(false);
+	}
+	
 	public Login getLogin() {
 		return this.login;
 	}
 	
 	public Registro getRegistro() {
 		return this.registro;
+	}
+	
+	public SpringLayout getLayout() {
+		return this.layout;
 	}
 	
 }

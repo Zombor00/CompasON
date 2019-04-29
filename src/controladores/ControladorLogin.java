@@ -29,7 +29,6 @@ public class ControladorLogin implements ActionListener {
 		if (aplicacion == null) aplicacion = Aplicacion.getInstance();
 		if (gui == null) gui = GuiAplicacion.getInstance();
 		
-		/* TODO Ojo con el login del admin */
 		if (e.getActionCommand().equals("ACCEDER")) {
 			try {
 				aplicacion.login(vista.getUsuario(), vista.getContrasenia());

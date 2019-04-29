@@ -20,6 +20,5 @@ public class PanelUsuarioSinCuenta extends JPanel {
 	public PestaniasUsuarioSinCuenta getPestanias() {
 		return this.pestaniasUsuarioSinCuenta;
 	}
-	
 
 }

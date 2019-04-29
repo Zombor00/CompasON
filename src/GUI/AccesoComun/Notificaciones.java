@@ -3,6 +3,7 @@ package GUI.AccesoComun;
 import java.awt.*;
 import java.util.ArrayList;
 import javax.swing.*;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import gestion.Notificacion;
 import aplicacion.Aplicacion;
@@ -10,6 +11,7 @@ import aplicacion.Aplicacion;
 public class Notificaciones extends JPanel {
 	
 	private DefaultTableModel usuarioNotificacion;
+	private JTable tablaNotificaciones;
 	
 	public Notificaciones() {
 		super();
@@ -21,7 +23,7 @@ public class Notificaciones extends JPanel {
 		
 		};
 		usuarioNotificacion = new DefaultTableModel(filas, titulos);
-		JTable tablaNotificaciones = new JTable(usuarioNotificacion);
+		tablaNotificaciones = new JTable(usuarioNotificacion);
 		tablaNotificaciones.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 		tablaNotificaciones.setPreferredScrollableViewportSize(new Dimension(250, 150));
 		JScrollPane scrolltablaNotificaciones = new JScrollPane(tablaNotificaciones);
@@ -58,5 +60,14 @@ public class Notificaciones extends JPanel {
 			usuarioNotificacion.addRow(rowData);
 		}
 	}
-
+	
+	public JTable getTablaNotificaciones() {
+		return this.tablaNotificaciones;
+	}
+	
+	public void setControlador(ListSelectionListener controlador) {
+		tablaNotificaciones.getSelectionModel().addListSelectionListener(controlador);
+		tablaNotificaciones.getColumnModel().getSelectionModel().addListSelectionListener(controlador);	
+	}
+	
 }

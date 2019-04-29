@@ -10,10 +10,13 @@ import GUI.AccesoComun.Sesion;
 import GUI.AccesoComun.Busqueda;
 import GUI.AccesoComun.Notificaciones;
 import GUI.UsuarioSinCuenta.Login;
+import GUI.UsuarioSinCuenta.Registro;
 import aplicacion.Aplicacion;
 import controladores.ControladorBuscar;
 import controladores.ControladorLogin;
 import controladores.ControladorLogout;
+import controladores.ControladorNotificacion;
+import controladores.ControladorRegistro;
 import excepciones.ExcepcionParametrosDeEntradaIncorrectos;
 import media.Buscable;
 import pads.musicPlayer.exceptions.Mp3PlayerException;
@@ -35,6 +38,9 @@ public class GuiAplicacion extends JFrame {
 		contenedor.add(panelesUsuarios,BorderLayout.CENTER);
 		contenedor.add(reproductor,BorderLayout.SOUTH);
 		
+		Registro registro = panelesUsuarios.getPanelUsuarioSinCuenta().getPestanias().getInicio().getRegistro();
+		registro.setControlador(new ControladorRegistro(registro));
+		
 		Login login = panelesUsuarios.getPanelUsuarioSinCuenta().getPestanias().getInicio().getLogin();
 		login.setControlador(new ControladorLogin(login));
 		
@@ -54,6 +60,10 @@ public class GuiAplicacion extends JFrame {
 		Busqueda busqueda4 = panelesUsuarios.getPanelUsuarioSinCuenta().getPestanias().getBusqueda();
 		busqueda4.setControlador(new ControladorBuscar(busqueda4));
 		
+		Notificaciones notificacionesRegistrado = panelesUsuarios.getPanelUsuarioRegstrado().getInformacion().getNotificaciones();
+		notificacionesRegistrado.setControlador(new ControladorNotificacion(notificacionesRegistrado));
+		Notificaciones notificacionesPremium = panelesUsuarios.getPanelUsuarioPremium().getInformacion().getNotificaciones();
+		notificacionesPremium.setControlador(new ControladorNotificacion(notificacionesPremium));
 		
         this.setSize(this.getToolkit().getScreenSize());
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -92,6 +102,23 @@ public class GuiAplicacion extends JFrame {
 				break;
 			case PanelesUsuarios.PREMIUM:
 				this.panelesUsuarios.getPanelUsuarioPremium().getPestaniasUsuarioPremium().getBusqueda().actualizarBusqueda(buscables);
+				break;
+		}
+	}
+	
+	public void limpiarBusqueda(String actual) {
+		switch(actual) {
+			case PanelesUsuarios.SIN_CUENTA:
+				this.panelesUsuarios.getPanelUsuarioSinCuenta().getPestanias().getBusqueda().limpiarRegistros();
+				break;
+			case PanelesUsuarios.ADMINISTRADOR:
+				this.panelesUsuarios.getPanelAdministrador().getPestaniasAdministrador().getBusqueda().limpiarRegistros();
+				break;
+			case PanelesUsuarios.REGISTRADO:
+				this.panelesUsuarios.getPanelUsuarioRegstrado().getPestanias().getBusqueda().limpiarRegistros();
+				break;
+			case PanelesUsuarios.PREMIUM:
+				this.panelesUsuarios.getPanelUsuarioPremium().getPestaniasUsuarioPremium().getBusqueda().limpiarRegistros();
 				break;
 		}
 	}

@@ -2,25 +2,31 @@ package GUI.UsuarioSinCuenta;
 
 //import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
 public class Registro extends JPanel{
+	private JTextField usuario;
+	private JPasswordField contrasenia;
+	private JTextField nombre;
+	private JDateSelect fecha;
+	private JButton aceptar;
 	
 	public Registro() {
 		super();
 		SpringLayout layout = new SpringLayout();
 		this.setLayout(layout);
 		//this.setBackground(Color.GRAY);
-		JTextField usuario = new JTextField(20);
-		JPasswordField contrasenia = new JPasswordField(20);
-		JTextField nombre = new JTextField(20);
-		JDateSelect fecha = new JDateSelect();
+		usuario = new JTextField(20);
+		contrasenia = new JPasswordField(20);
+		nombre = new JTextField(20);
+		fecha = new JDateSelect();
 		JLabel usuarioLabel = new JLabel("Nombre de suario:");
 		JLabel contraseniaLabel = new JLabel("Contrasenia:");
 		JLabel nombreLabel = new JLabel("Nombre completo:");
 		JLabel fechaLabel = new JLabel("Fecha de nacimiento:");
-		JButton aceptar   = new JButton("Aceptar");
+		aceptar   = new JButton("Aceptar");
 
 		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, usuario, 0, SpringLayout.HORIZONTAL_CENTER, this);
 		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, contrasenia, 0, SpringLayout.HORIZONTAL_CENTER, this);
@@ -53,7 +59,33 @@ public class Registro extends JPanel{
 		this.add(nombreLabel);
 		this.add(fechaLabel);
 		this.add(aceptar);
-		this.setPreferredSize(new Dimension(1000,300));
-		
+		this.setPreferredSize(new Dimension(1000,300));	
 	}
+	
+	public String getUsuario() {
+		return this.usuario.getText();
+	}
+	
+	public String getContrasenia() {
+		return String.valueOf(this.contrasenia.getPassword());
+	}
+	
+	public String getNombre() {
+		return this.nombre.getText();
+	}
+	
+	public void setControlador(ActionListener controlador) {
+		aceptar.setActionCommand("REGISTRARSE");
+		aceptar.addActionListener(controlador);
+	}
+	
+	public void limpiarRegistro() {
+		usuario.setText("");
+		nombre.setText("");
+		contrasenia.setText("");
+	}
+	
+//	public getFecha() {
+//		r
+//	}
 }

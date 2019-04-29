@@ -27,7 +27,7 @@ public class Busqueda extends JPanel {
 		buscador.add(busqueda);
 		buscador.add(buscar);
 		
-		String[] titulos = {"Cancion", "Autor", "Fecha"};
+		String[] titulos = {"Cancion", "Autor", "Duración"};
 		Object[][] filas = {
 		};
 		
@@ -61,6 +61,13 @@ public class Busqueda extends JPanel {
 			rowData[1] = b.getAutor();
 			rowData[2] = b.getDuracion();
 			modeloDatos.addRow(rowData);
+		}
+	}
+	
+	public void limpiarRegistros() {
+		int numFilas = modeloDatos.getRowCount();
+		for(int i=0; i< numFilas; i++) {
+			modeloDatos.removeRow(0);
 		}
 	}
 	
