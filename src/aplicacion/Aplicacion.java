@@ -662,9 +662,15 @@ public class Aplicacion implements Serializable {
         ObjectOutputStream salidaObjetos =
             new ObjectOutputStream(
                 new FileOutputStream( "aplicacion.objectData" ) );
-
+        
         salidaObjetos.writeObject(this);
         salidaObjetos.close();
+        
+        try {
+			this.cola = new Mp3Player();
+		} catch (Mp3PlayerException e) {
+			e.printStackTrace();
+		}
     }
 
     /**
