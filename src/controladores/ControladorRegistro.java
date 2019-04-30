@@ -31,8 +31,7 @@ public class ControladorRegistro implements ActionListener{
 		
 		if (e.getActionCommand().equals("REGISTRARSE")) {
 			try {
-			//TODO:Hay que sacar la fecha del registro pero no se como
-				aplicacion.aniadirUsuario(registro.getUsuario(), registro.getContrasenia(), registro.getNombre(), LocalDate.now());
+				aplicacion.aniadirUsuario(registro.getUsuario(), registro.getContrasenia(), registro.getNombre(), registro.getFecha());
 				aplicacion.login(registro.getUsuario(), registro.getContrasenia());
 			} catch (NoSuchAlgorithmException e1) {
 				e1.printStackTrace();

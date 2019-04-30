@@ -19,7 +19,7 @@ public class Login extends JPanel {
 		//this.setBackground(Color.GRAY);
 		this.usuario = new JTextField(20);
 		this.contrasenia = new JPasswordField(20);
-		JLabel usuarioLabel = new JLabel("Nombre de suario:");
+		JLabel usuarioLabel = new JLabel("Nombre de usuario:");
 		JLabel contraseniaLabel = new JLabel("Contrasenia:");
 		this.acceder = new JButton("Acceder");
 

@@ -3,6 +3,7 @@ package GUI.UsuarioSinCuenta;
 //import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
 
 import javax.swing.*;
 
@@ -22,7 +23,7 @@ public class Registro extends JPanel{
 		contrasenia = new JPasswordField(20);
 		nombre = new JTextField(20);
 		fecha = new JDateSelect();
-		JLabel usuarioLabel = new JLabel("Nombre de suario:");
+		JLabel usuarioLabel = new JLabel("Nombre de usuario:");
 		JLabel contraseniaLabel = new JLabel("Contrasenia:");
 		JLabel nombreLabel = new JLabel("Nombre completo:");
 		JLabel fechaLabel = new JLabel("Fecha de nacimiento:");
@@ -85,7 +86,7 @@ public class Registro extends JPanel{
 		contrasenia.setText("");
 	}
 	
-//	public getFecha() {
-//		r
-//	}
+	public LocalDate getFecha() {
+		return fecha.getDate();
+	}
 }

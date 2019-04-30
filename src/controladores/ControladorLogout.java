@@ -11,16 +11,20 @@ import GUI.PanelesUsuarios;
 import aplicacion.Aplicacion;
 import pads.musicPlayer.exceptions.Mp3PlayerException;
 
-public class ControladorLogout implements ActionListener{
-	
+public class ControladorLogout implements ActionListener {
+
 	private Aplicacion aplicacion;
-	private GuiAplicacion gui;	
+	private GuiAplicacion gui;
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (aplicacion == null) aplicacion = Aplicacion.getInstance();
-		if (gui == null) gui = GuiAplicacion.getInstance();
-		
+		if (aplicacion == null)
+			aplicacion = Aplicacion.getInstance();
+		if (gui == null)
+			gui = GuiAplicacion.getInstance();
+
 		if (e.getActionCommand().equals("Cerrar Sesion")) {
+			gui.limpiarBusqueda(gui.getPanelesUsuarios().getActual());
 			try {
 				aplicacion.logout();
 			} catch (FileNotFoundException e1) {
@@ -28,19 +32,17 @@ public class ControladorLogout implements ActionListener{
 			} catch (Mp3PlayerException e1) {
 				e1.printStackTrace();
 			}
-			
-			if(aplicacion.getUsuarioLogeado() == null) {
-				try {
-					aplicacion.guardarDatos();
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}
-				gui.limpiarBusqueda(gui.getPanelesUsuarios().getActual());
-				gui.actualizarDatos();
-				PanelesUsuarios panelesUsuarios = gui.getPanelesUsuarios();
-				panelesUsuarios.getPanelUsuarioSinCuenta().getPestanias().getInicio().accionIniciarSesion();
-				panelesUsuarios.cambiarPanel(PanelesUsuarios.SIN_CUENTA);
+
+			try {
+				aplicacion.guardarDatos();
+			} catch (IOException e1) {
+				e1.printStackTrace();
 			}
+			gui.actualizarDatos();
+			PanelesUsuarios panelesUsuarios = gui.getPanelesUsuarios();
+			panelesUsuarios.getPanelUsuarioSinCuenta().getPestanias().getInicio().accionIniciarSesion();
+			panelesUsuarios.cambiarPanel(PanelesUsuarios.SIN_CUENTA);
+
 		}
 	}
 }

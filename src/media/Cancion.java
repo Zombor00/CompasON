@@ -74,10 +74,11 @@ public class Cancion extends Buscable implements Serializable{
     	if (this.getEstado() != Estado.NOBLOQUEADO) {
     		throw new ExcepcionReproducirProhibido();
     	}
+    	mp3.add(ficheroAudio);
     	if (this.getAutor() == usuarioLogeado) {
     		return 0;
     	}
-    	mp3.add(ficheroAudio);
+ 
     	if (this.getAutor() == usuarioLogeado) {
     		return 0;
     	} else {
