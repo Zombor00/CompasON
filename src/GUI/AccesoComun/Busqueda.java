@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import media.Buscable;
 
@@ -14,6 +15,7 @@ public class Busqueda extends JPanel {
 	private DefaultTableModel modeloDatos;
 	private JButton buscar;
 	private JTextField busqueda;
+	private JTable tabla;
 
 	public Busqueda() {
 		super();
@@ -32,7 +34,7 @@ public class Busqueda extends JPanel {
 		};
 		
 	    modeloDatos = new DefaultTableModel(filas, titulos);
-		JTable tabla = new JTable(modeloDatos);
+		tabla = new JTable(modeloDatos);
 		tabla.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		tabla.setPreferredScrollableViewportSize(new Dimension(800, 500));
 		JScrollPane scrollTabla = new JScrollPane(tabla);
@@ -57,7 +59,7 @@ public class Busqueda extends JPanel {
 		
 		Object[] rowData = {0,0,0};
 		for (Buscable b : buscables) {
-			rowData[0] = b.getTitulo();
+			rowData[0] = b;
 			rowData[1] = b.getAutor();
 			rowData[2] = b.getDuracion();
 			modeloDatos.addRow(rowData);
@@ -71,12 +73,18 @@ public class Busqueda extends JPanel {
 		}
 	}
 	
-	public void setControlador(ActionListener controlador) {
+	public void setControlador(ActionListener controlador, ListSelectionListener controlador2) {
 		buscar.setActionCommand("BUSCAR");
 		buscar.addActionListener(controlador);
+		tabla.getSelectionModel().addListSelectionListener(controlador2);
+		tabla.getColumnModel().getSelectionModel().addListSelectionListener(controlador2);
 	}
 	
 	public String getBusqueda() {
 		return busqueda.getText();
+	}
+	
+	public JTable getTabla() {
+		return this.tabla;
 	}
 }

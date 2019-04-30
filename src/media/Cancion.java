@@ -199,7 +199,7 @@ public class Cancion extends Buscable implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Cancion [titulo=" + this.getTitulo() + ", autor=" + this.getAutor() + ", duracion=" + this.getDuracion() + "]";
+		return this.getTitulo();
 	}
 
     @Override

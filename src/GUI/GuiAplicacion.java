@@ -17,6 +17,7 @@ import controladores.ControladorLogin;
 import controladores.ControladorLogout;
 import controladores.ControladorNotificacion;
 import controladores.ControladorRegistro;
+import controladores.ControladorReproducirCancion;
 import excepciones.ExcepcionParametrosDeEntradaIncorrectos;
 import media.Buscable;
 import pads.musicPlayer.exceptions.Mp3PlayerException;
@@ -52,13 +53,15 @@ public class GuiAplicacion extends JFrame {
 		sesion3.setControlador(new ControladorLogout());
 		
 		Busqueda busqueda1 = panelesUsuarios.getPanelUsuarioRegstrado().getPestanias().getBusqueda();
-		busqueda1.setControlador(new ControladorBuscar(busqueda1));
+		busqueda1.setControlador(new ControladorBuscar(busqueda1), new ControladorReproducirCancion(busqueda1));
 		Busqueda busqueda2 = panelesUsuarios.getPanelAdministrador().getPestaniasAdministrador().getBusqueda();
-		busqueda2.setControlador(new ControladorBuscar(busqueda2));
+		busqueda2.setControlador(new ControladorBuscar(busqueda2), new ControladorReproducirCancion(busqueda2));
 		Busqueda busqueda3 = panelesUsuarios.getPanelUsuarioPremium().getPestaniasUsuarioPremium().getBusqueda();
-		busqueda3.setControlador(new ControladorBuscar(busqueda3));
+		busqueda3.setControlador(new ControladorBuscar(busqueda3), new ControladorReproducirCancion(busqueda3));
 		Busqueda busqueda4 = panelesUsuarios.getPanelUsuarioSinCuenta().getPestanias().getBusqueda();
-		busqueda4.setControlador(new ControladorBuscar(busqueda4));
+		busqueda4.setControlador(new ControladorBuscar(busqueda4), new ControladorReproducirCancion(busqueda4));
+		
+		
 		
 		Notificaciones notificacionesRegistrado = panelesUsuarios.getPanelUsuarioRegstrado().getInformacion().getNotificaciones();
 		notificacionesRegistrado.setControlador(new ControladorNotificacion(notificacionesRegistrado));
