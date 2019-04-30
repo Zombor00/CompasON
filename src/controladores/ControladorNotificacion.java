@@ -33,7 +33,9 @@ public class ControladorNotificacion implements ListSelectionListener{
 		JTable tablaNotificaciones = notificaciones.getTablaNotificaciones();
 		
         int fila = tablaNotificaciones.getSelectedRow();
-        
+        if(fila == -1) {
+        	return;
+        }
         Notificacion n = (Notificacion)tablaNotificaciones.getValueAt(fila, 1);
         
 		try {
