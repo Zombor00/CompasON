@@ -37,7 +37,7 @@ public class ControladorLogin implements ActionListener {
 			} catch (ExcepcionLoginErrorCredenciales e1) {
 				JOptionPane.showMessageDialog(gui,"Nombre de usuario o contrasenia incorrectos");
 			} catch (ExcepcionLoginBloqueado e1) {
-				e1.printStackTrace();
+				JOptionPane.showMessageDialog(gui,"Usuario bloqueado");
 			} catch (ExcepcionParametrosDeEntradaIncorrectos e1) {
 				e1.printStackTrace();
 			}

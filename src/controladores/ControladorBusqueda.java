@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.JTable;
 
@@ -55,18 +56,18 @@ public class ControladorBusqueda implements ActionListener {
 	        if(fila == -1) {
 	        	return;
 	        }
-	        Buscable b = (Buscable)tablaNotificaciones.getValueAt(fila, 0);
+	        Buscable b = (Buscable)tablaNotificaciones.getModel().getValueAt(fila, 0);
 	     
 	        try {
 				aplicacion.reproducirReproducible(b);
 			} catch (FileNotFoundException e1) {
-				e1.printStackTrace();
+				JOptionPane.showMessageDialog(gui,"No se encuentra el archivo");
 			} catch (Mp3PlayerException e1) {
-				e1.printStackTrace();
+				JOptionPane.showMessageDialog(gui,"Reproductor no funcionando");
 			} catch (ExcepcionLimiteReproducidasAlcanzado e1) {
-				e1.printStackTrace();
+				JOptionPane.showMessageDialog(gui,"Limite de reproducciones alcanzado");
 			} catch (ExcepcionNoAptoParaMenores e1) {
-				e1.printStackTrace();
+				JOptionPane.showMessageDialog(gui,"No apto para menores");
 			} catch (ExcepcionParametrosDeEntradaIncorrectos e1) {
 				e1.printStackTrace();
 			} catch (ExcepcionReproducirProhibido e1) {

@@ -104,4 +104,15 @@ public abstract class Reproducible implements Serializable{
    */
   public abstract boolean sePuedeMeterEn(Lista l);
   
+  public String parseSeconds(Double secs) {
+	  int segundos = (int)Math.round(secs);
+	  int minutos = (segundos - (segundos%60)) / 60;
+	  segundos = segundos %60;
+	  String segundosString = String.valueOf(segundos);
+	  if(segundosString.length() == 1) {
+		  segundosString = "0" + segundosString;
+	  }
+	  return String.valueOf(minutos) + ":" + segundosString;
+}
+  
 }

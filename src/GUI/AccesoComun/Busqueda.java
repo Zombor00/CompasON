@@ -7,6 +7,8 @@ import java.util.ArrayList;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
+
 import media.Buscable;
 
 public class Busqueda extends JPanel {
@@ -35,7 +37,7 @@ public class Busqueda extends JPanel {
 		buscador.add(modo);
 		buscador.add(buscar);
 		
-		String[] titulos = {"Cancion", "Autor", "Duración"};
+		String[] titulos = {"Objeto","Cancion", "Autor", "Duración"};
 		Object[][] filas = {
 		};
 		
@@ -43,6 +45,8 @@ public class Busqueda extends JPanel {
 		tabla = new JTable(modeloDatos);
 		tabla.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		tabla.setPreferredScrollableViewportSize(new Dimension(800, 500));
+		TableColumnModel tcm = tabla.getColumnModel();
+		tcm.removeColumn(tcm.getColumn(0));
 		JScrollPane scrollTabla = new JScrollPane(tabla);
 		
 		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, scrollTabla, 0, SpringLayout.HORIZONTAL_CENTER, this);
@@ -77,13 +81,15 @@ public class Busqueda extends JPanel {
 		
 		this.actualizarDatos();
 		
-		Object[] rowData = {0,0,0};
+		Object[] rowData = {0,0,0,0};
 		for (Buscable b : buscables) {
 			rowData[0] = b;
-			rowData[1] = b.getAutor();
-			rowData[2] = b.getDuracion();
+			rowData[1] = b.getTitulo();
+			rowData[2] = b.getAutor();
+			rowData[3] = b.parseSeconds(b.getDuracion());
 			modeloDatos.addRow(rowData);
 		}
+		busqueda.setText("");
 	}
 	
 	public void actualizarDatos() {

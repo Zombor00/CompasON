@@ -4,6 +4,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.security.NoSuchAlgorithmException;
 
+import javax.swing.JOptionPane;
+
+import org.junit.platform.commons.util.StringUtils;
+
 import GUI.GuiAplicacion;
 import GUI.PanelesUsuarios;
 import GUI.UsuarioSinCuenta.InicioUsuarioSinCuenta;
@@ -28,6 +32,13 @@ public class ControladorRegistro implements ActionListener{
 		if (aplicacion == null) aplicacion = Aplicacion.getInstance();
 		if (gui == null) gui = GuiAplicacion.getInstance();
 		
+		if(((registro.getUsuario() != null) && StringUtils.isBlank(registro.getUsuario())) || 
+				(registro.getContrasenia()!=null && StringUtils.isBlank(registro.getContrasenia())) 
+				|| (registro.getNombre() != null && StringUtils.isBlank(registro.getNombre()))) {
+			JOptionPane.showMessageDialog(gui,"Necesario rellenar todos los campos");
+			return;
+		}
+		
 		if (e.getActionCommand().equals("REGISTRARSE")) {
 			try {
 				aplicacion.aniadirUsuario(registro.getUsuario(), registro.getContrasenia(), registro.getNombre(), registro.getFecha());
@@ -35,9 +46,9 @@ public class ControladorRegistro implements ActionListener{
 			} catch (NoSuchAlgorithmException e1) {
 				e1.printStackTrace();
 			} catch (ExcepcionParametrosDeEntradaIncorrectos e1) {
-				e1.printStackTrace();
+				JOptionPane.showMessageDialog(gui,"Necesario rellenar todos los campos");
 			} catch (ExcepcionNombreDeUsuarioNoDisponible e1) {
-				e1.printStackTrace();
+				JOptionPane.showMessageDialog(gui,"Nombre de usuario no disponible");
 			} catch (ExcepcionLoginErrorCredenciales e1) {
 				e1.printStackTrace();
 			} catch (ExcepcionLoginBloqueado e1) {
