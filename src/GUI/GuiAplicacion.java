@@ -16,7 +16,7 @@ import GUI.UsuarioSinCuenta.Registro;
 import aplicacion.Aplicacion;
 import controladores.ControladorBusqueda;
 import controladores.ControladorLogin;
-import controladores.ControladorLogout;
+import controladores.ControladorSesion;
 import controladores.ControladorMisCanciones;
 import controladores.ControladorMisListas;
 import controladores.ControladorNotificacion;
@@ -49,11 +49,11 @@ public class GuiAplicacion extends JFrame {
 		login.setControlador(new ControladorLogin(login));
 		
 		Sesion sesion1 = panelesUsuarios.getPanelUsuarioRegstrado().getInformacion().getSesion();
-		sesion1.setControlador(new ControladorLogout());
+		sesion1.setControlador(new ControladorSesion());
 		Sesion sesion2 = panelesUsuarios.getPanelAdministrador().getInformacionAdministrador().getSesion();
-		sesion2.setControlador(new ControladorLogout());
+		sesion2.setControlador(new ControladorSesion());
 		Sesion sesion3 = panelesUsuarios.getPanelUsuarioPremium().getInformacion().getSesion();
-		sesion3.setControlador(new ControladorLogout());
+		sesion3.setControlador(new ControladorSesion());
 		
 		Busqueda busqueda1 = panelesUsuarios.getPanelUsuarioRegstrado().getPestanias().getBusqueda();
 		busqueda1.setControlador(new ControladorBusqueda(busqueda1));
@@ -111,11 +111,15 @@ public class GuiAplicacion extends JFrame {
 				break;
 			case PanelesUsuarios.REGISTRADO:
 				this.panelesUsuarios.getPanelUsuarioRegstrado().getPestanias().getBusqueda().actualizarBusqueda(buscables);
-				this.panelesUsuarios.getPanelUsuarioRegstrado().getPestanias();
+				this.panelesUsuarios.getPanelUsuarioRegstrado().getPestanias().setSelectedIndex(1);
 				break;
 			case PanelesUsuarios.PREMIUM:
 				this.panelesUsuarios.getPanelUsuarioPremium().getPestanias().getBusqueda().actualizarBusqueda(buscables);
-				this.panelesUsuarios.getPanelUsuarioPremium().getPestanias();
+				this.panelesUsuarios.getPanelUsuarioPremium().getPestanias().setSelectedIndex(1);
+				break;
+			case PanelesUsuarios.ADMINISTRADOR:
+				this.panelesUsuarios.getPanelAdministrador().getPestaniasAdministrador().getBusqueda().actualizarBusqueda(buscables);
+				this.panelesUsuarios.getPanelAdministrador().getPestaniasAdministrador().setSelectedIndex(1);
 				break;
 		}
 	}

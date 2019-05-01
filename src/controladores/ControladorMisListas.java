@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.JTable;
 
@@ -48,22 +49,16 @@ public class ControladorMisListas implements ActionListener {
 	        try {
 				aplicacion.reproducirReproducible(lista);
 			} catch (FileNotFoundException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
+				JOptionPane.showMessageDialog(gui,"No se encuentra el archivo");
 			} catch (Mp3PlayerException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
+				JOptionPane.showMessageDialog(gui,"Reproductor no funcionando");
 			} catch (ExcepcionLimiteReproducidasAlcanzado e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
+				JOptionPane.showMessageDialog(gui,"Limite de reproducciones alcanzado");
 			} catch (ExcepcionNoAptoParaMenores e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
+				JOptionPane.showMessageDialog(gui,"No apto para menores");
 			} catch (ExcepcionParametrosDeEntradaIncorrectos e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			} catch (ExcepcionReproducirProhibido e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		} else if(e.getActionCommand().equals("CREAR_LISTA")) {

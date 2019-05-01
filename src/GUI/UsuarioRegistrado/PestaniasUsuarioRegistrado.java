@@ -36,6 +36,7 @@ public class PestaniasUsuarioRegistrado extends JTabbedPane {
 	public void actualizarDatos() {
 		this.inicio.actualizarDatos();
 		this.misCanciones.actualizarDatos();
+		this.busqueda.actualizarDatos();
 	}
 
 }

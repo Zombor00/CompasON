@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 
 import aplicacion.Aplicacion;
 import media.Album;
@@ -33,42 +34,28 @@ public class MisCanciones extends JPanel{
 		
 		/* Canciones */
 		JButton canciones = new JButton("Canciones");		
-		String[] titulos = {"Cancion", "Duracion"};
+		String[] titulos = {"Objeto","Cancion", "Duracion"};
 		Object[][] filas = {
-		{"Cancion 1", "00:00"},
-		{"Cancion 2", "00:00"},
-		{"Cancion 3", "00:00"},
-		{"Cancion 4", "00:00"},
-		{"Cancion 5", "00:00"},
-		{"Cancion 6", "00:00"},
-		{"Cancion 7", "00:00"},
-		{"Cancion 8", "00:00"},
-		{"Cancion 9", "00:00"},
-		{"Cancion 10", "00:00"},
+		{"","Cancion 1", "00:00"},
 		};
 		datosCanciones = new DefaultTableModel(filas, titulos);
 		tablaCanciones = new JTable(datosCanciones);
+		TableColumnModel tcm = tablaCanciones.getColumnModel();
+		tcm.removeColumn(tcm.getColumn(0));
 		tablaCanciones.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		tablaCanciones.setPreferredScrollableViewportSize(new Dimension(800, 500));
 		JScrollPane scrollTablaCanciones = new JScrollPane(tablaCanciones);
 		
 		/* Albumes */
 		JButton albumes = new JButton("Albumes");
-		String[] titulos2 = {"Album", "Duracion"};
+		String[] titulos2 = {"Objeto","Album", "Duracion"};
 		Object[][] filas2 = {
-		{"Album 1", "00:00"},
-		{"Album 2", "00:00"},
-		{"Album 3", "00:00"},
-		{"Album 4", "00:00"},
-		{"Album 5", "00:00"},
-		{"Album 6", "00:00"},
-		{"Album 7", "00:00"},
-		{"Album 8", "00:00"},
-		{"Album 9", "00:00"},
-		{"Album 10", "00:00"},
+		{"","Album 1", "00:00"},
 		};
 		datosAlbumes = new DefaultTableModel(filas2, titulos2);
 		tablaAlbumes = new JTable(datosAlbumes);
+		tcm = tablaAlbumes.getColumnModel();
+		tcm.removeColumn(tcm.getColumn(0));
 		tablaAlbumes.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		tablaAlbumes.setPreferredScrollableViewportSize(new Dimension(800, 500));
 		JScrollPane scrollTablaAlbumes = new JScrollPane(tablaAlbumes);
@@ -163,12 +150,12 @@ public class MisCanciones extends JPanel{
 				});
 		
 		/* Aniadimos el menu y el boton de opciones para las canciones*/        
-		menuCanciones=new JPopupMenu();
-		reproducirCancion=new JMenuItem("Reproducir");
+		menuCanciones = new JPopupMenu();
+		reproducirCancion = new JMenuItem("Reproducir");
         menuCanciones.add(reproducirCancion);
-        aniadirCancionACola=new JMenuItem("Aniaidr a la cola");
+        aniadirCancionACola = new JMenuItem("Aniaidr a la cola");
         menuCanciones.add(aniadirCancionACola);
-        aniadirCancionALista=new JMenuItem("Aniaidr a una lista");
+        aniadirCancionALista = new JMenuItem("Aniaidr a una lista");
         menuCanciones.add(aniadirCancionALista);
         aniadirCancionAAlbum = new JMenuItem("Aniadir a un album");
         menuCanciones.add(aniadirCancionAAlbum);
@@ -181,9 +168,9 @@ public class MisCanciones extends JPanel{
         menuAlbumes=new JPopupMenu();
         reproducirAlbum=new JMenuItem("Reproducir");
         menuAlbumes.add(reproducirAlbum);
-        aniadirAlbumACola=new JMenuItem("Aniaidr a la cola");
+        aniadirAlbumACola=new JMenuItem("Aniadir a la cola");
         menuAlbumes.add(aniadirAlbumACola);
-        aniadirAlbumALista = new JMenuItem("Aniaidr a una lista");
+        aniadirAlbumALista = new JMenuItem("Aniadir a una lista");
         menuAlbumes.add(aniadirAlbumALista);
         opcionesAlbumes = new JButton("Opciones"); 
         layout.putConstraint(SpringLayout.NORTH, opcionesAlbumes, 0, SpringLayout.NORTH, scrollTablaAlbumes);
@@ -236,27 +223,32 @@ public class MisCanciones extends JPanel{
 		return this.nombreCanciones;
 	}
 	
+	
 	public void actualizarDatos() {
 		int numFilas = datosCanciones.getRowCount();
 		for(int i=0; i< numFilas; i++) {
 			datosCanciones.removeRow(0);
 		}
+		
 		numFilas = datosAlbumes.getRowCount();
 		for(int i=0; i< numFilas; i++) {
 			datosAlbumes.removeRow(0);
 		}
+		
 		UsuarioRegistrado u = Aplicacion.getInstance().getUsuarioLogeado();
-		Object[] rowData = {0,0};
 		if (u==null) return;
+		Object[] rowData = {0,0,0};
 		for (Cancion c : u.getCanciones()) {
 			rowData[0] = c;
-			rowData[1] = c.getDuracion();
+			rowData[1] = c.getTitulo();
+			rowData[2] = c.parseSeconds(c.getDuracion());
 			datosCanciones.addRow(rowData);
 			nombreCanciones.add(c.getTitulo());
 		}
 		for (Album a : u.getAlbumes()) {
 			rowData[0] = a;
-			rowData[1] = a.getDuracion();
+			rowData[1] = a.getTitulo();
+			rowData[2] = a.parseSeconds(a.getDuracion());
 			datosAlbumes.addRow(rowData);
 			nombreAlbumes.add(a.getTitulo());
 		}
