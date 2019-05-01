@@ -1,7 +1,5 @@
 package controladores;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.JTable;
@@ -45,7 +43,6 @@ public class ControladorNotificacion implements ListSelectionListener{
 		}
 		
 		gui.actualizarBusqueda(buscables, gui.getPanelesUsuarios().getActual());
-		gui.getPanelesUsuarios().getPanelUsuarioRegstrado().getPestanias().setSelectedIndex(1);
 		
 	}
 }

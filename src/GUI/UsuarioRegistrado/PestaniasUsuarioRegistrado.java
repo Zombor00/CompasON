@@ -1,10 +1,7 @@
 package GUI.UsuarioRegistrado;
 
-import java.util.ArrayList;
-
 import javax.swing.*;
 import GUI.AccesoComun.*;
-import media.Buscable;;
 
 
 public class PestaniasUsuarioRegistrado extends JTabbedPane {

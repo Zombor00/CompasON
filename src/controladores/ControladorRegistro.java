@@ -3,7 +3,6 @@ package controladores;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.security.NoSuchAlgorithmException;
-import java.time.LocalDate;
 
 import GUI.GuiAplicacion;
 import GUI.PanelesUsuarios;

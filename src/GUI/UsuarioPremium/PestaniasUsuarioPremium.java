@@ -1,19 +1,23 @@
 package GUI.UsuarioPremium;
 
-import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
 import GUI.AccesoComun.Busqueda;
 import GUI.AccesoComun.MisCanciones;
 
 public class PestaniasUsuarioPremium extends JTabbedPane{
+	
+	private InicioPremium inicio;
 	Busqueda busqueda;
+	private MisCanciones misCanciones;
+	private MisListas misListas;
+	
 	public PestaniasUsuarioPremium() {
 		super();
-		JPanel inicio = new InicioPremium();
+		inicio = new InicioPremium();
 		busqueda = new Busqueda();
-		JPanel misCanciones = new MisCanciones();
-		JPanel misListas = new MisListas();
+		misCanciones = new MisCanciones();
+		misListas = new MisListas();
 		
 		this.addTab("Inicio", inicio);
 		this.addTab("Busqueda", busqueda);
@@ -26,6 +30,21 @@ public class PestaniasUsuarioPremium extends JTabbedPane{
 	
 	public Busqueda getBusqueda() {
 		return this.busqueda;
+	}
+	
+	public MisCanciones getMisCanciones() {
+		return this.misCanciones;
+	}
+	
+	public MisListas getMisListas() {
+		return this.misListas;
+	}
+	
+	public void actualizarDatos() {
+		inicio.actualizarDatos();
+		busqueda.actualizarDatos();
+		misCanciones.actualizarDatos();
+		misListas.actualizarDatos();
 	}
 
 }

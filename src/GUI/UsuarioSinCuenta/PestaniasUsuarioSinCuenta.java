@@ -27,4 +27,9 @@ public class PestaniasUsuarioSinCuenta extends JTabbedPane {
 		return this.busqueda;
 	}
 
+	public void actualizarDatos() {
+		busqueda.actualizarDatos();
+		
+	}
+
 }

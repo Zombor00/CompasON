@@ -53,7 +53,11 @@ public class ControladorLogin implements ActionListener {
 				vista.limpiarRegistro();
 				gui.actualizarDatos();
 				PanelesUsuarios panelesUsuarios = gui.getPanelesUsuarios();
-				panelesUsuarios.cambiarPanel(PanelesUsuarios.REGISTRADO);
+				if(aplicacion.getUsuarioLogeado().esPremium()) {
+					panelesUsuarios.cambiarPanel(PanelesUsuarios.PREMIUM);
+				} else {
+					panelesUsuarios.cambiarPanel(PanelesUsuarios.REGISTRADO);
+				}
 			}
 		}
 	}

@@ -1,6 +1,5 @@
 package controladores;
 
-import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
@@ -24,7 +23,7 @@ public class ControladorLogout implements ActionListener {
 			gui = GuiAplicacion.getInstance();
 
 		if (e.getActionCommand().equals("Cerrar Sesion")) {
-			gui.limpiarBusqueda(gui.getPanelesUsuarios().getActual());
+			gui.actualizarDatos();
 			try {
 				aplicacion.logout();
 			} catch (FileNotFoundException e1) {

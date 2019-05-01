@@ -1,12 +1,10 @@
 package GUI.UsuarioRegistrado;
 
 import java.awt.BorderLayout;
-import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
 import GUI.AccesoComun.Informacion;
-import media.Buscable;
 
 public class PanelUsuarioRegistrado extends JPanel {
 	

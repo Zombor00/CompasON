@@ -73,6 +73,28 @@ public class UsuarioRegistrado extends UsuarioConCuenta implements Serializable{
 		this.buscables.removeAll(borrados);
         return this.buscables;
     }
+	
+	public ArrayList<Cancion> getCanciones(){
+		ArrayList<Buscable> buscables = this.getBuscables();
+		ArrayList<Cancion> canciones = new ArrayList<>();
+		for (Buscable b : buscables) {
+			if (b instanceof Cancion) {
+				canciones.add((Cancion)b);
+			}
+		}
+		return canciones;
+    }
+	
+	public ArrayList<Album> getAlbumes(){
+		ArrayList<Buscable> buscables = this.getBuscables();
+		ArrayList<Album> albumes = new ArrayList<>();
+		for (Buscable b : buscables) {
+			if (b instanceof Album) {
+				albumes.add((Album)b);
+			}
+		}
+		return albumes;
+    }
 
     public ArrayList<Lista> getListas(){
         return this.listas;
@@ -93,6 +115,12 @@ public class UsuarioRegistrado extends UsuarioConCuenta implements Serializable{
     public LocalDate getPremiumHasta() {
 		return premiumHasta;
 	}
+    
+    public boolean esPremium() {
+    	if (premiumHasta == null) return false;
+    	if (premiumHasta.isBefore(LocalDate.now())) return false;
+    	return true;
+    }
     
     public LocalDate getBloqueadoHasta() {
 		return this.bloqueadoHasta;

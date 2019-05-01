@@ -25,14 +25,15 @@ public class PanelUsuarioPremium extends JPanel{
 	}
 	
 	public void actualizarDatos() {
-		/* TODO Implementar metodo */
+		informacion.actualizarDatos();
+		pestaniasUsuarioPremium.actualizarDatos();
 	}
 	
 	public Informacion getInformacion() {
 		return this.informacion;
 	}
 
-	public PestaniasUsuarioPremium getPestaniasUsuarioPremium() {
+	public PestaniasUsuarioPremium getPestanias() {
 		return this.pestaniasUsuarioPremium;
 	}
 

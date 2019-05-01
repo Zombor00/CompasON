@@ -136,6 +136,13 @@ public class GeneraDatos {
 		Thread.sleep(sleep);
 		aplicacion.logout();
 		
+		aplicacion.aniadirUsuario("p", "p", "Usuario Premium", LocalDate.of(1999, 1, 2));
+		aplicacion.login("p", "p");
+		aplicacion.getUsuarioLogeado().setPremiumHasta(LocalDate.now().plusDays(30));
+		aplicacion.getUsuarioLogeado().crearLista("Bad Bunny beibeeee");
+		aplicacion.subirCancion("Desde el corazon", "canciones/Desde el corazon.mp3");
+		aplicacion.logout();
+		
 		System.out.println("El administrador inicia sesion");
 		Thread.sleep(sleep);
 		aplicacion.login("admin", "admin");
@@ -147,6 +154,10 @@ public class GeneraDatos {
 		System.out.println("El administrador marca como explicita la cancion modificada");
 		Thread.sleep(sleep);
 		aplicacion.getAdministrador().tramitarValidacion(aplicacion.getAdministrador().getCancionesNuevas().get(0), EstadoValidacion.EXPLICITO);
+		
+		System.out.println("El administrador marca como explicita la cancion modificada");
+		Thread.sleep(sleep);
+		aplicacion.getAdministrador().tramitarValidacion(aplicacion.getAdministrador().getCancionesNuevas().get(1), EstadoValidacion.EXPLICITO);
 		
 		System.out.println("El administrador cierra sesion");
 		Thread.sleep(sleep);

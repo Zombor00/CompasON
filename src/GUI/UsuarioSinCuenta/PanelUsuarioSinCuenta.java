@@ -21,4 +21,8 @@ public class PanelUsuarioSinCuenta extends JPanel {
 		return this.pestaniasUsuarioSinCuenta;
 	}
 
+	public void actualizarDatos() {
+		pestaniasUsuarioSinCuenta.actualizarDatos();
+	}
+
 }

@@ -7,17 +7,20 @@ import java.util.ArrayList;
 import javax.swing.*;
 
 import GUI.AccesoComun.Sesion;
+import GUI.UsuarioPremium.MisListas;
 import GUI.AccesoComun.Busqueda;
+import GUI.AccesoComun.MisCanciones;
 import GUI.AccesoComun.Notificaciones;
 import GUI.UsuarioSinCuenta.Login;
 import GUI.UsuarioSinCuenta.Registro;
 import aplicacion.Aplicacion;
-import controladores.ControladorBuscar;
+import controladores.ControladorBusqueda;
 import controladores.ControladorLogin;
 import controladores.ControladorLogout;
+import controladores.ControladorMisCanciones;
+import controladores.ControladorMisListas;
 import controladores.ControladorNotificacion;
 import controladores.ControladorRegistro;
-import controladores.ControladorReproducirCancion;
 import excepciones.ExcepcionParametrosDeEntradaIncorrectos;
 import media.Buscable;
 import pads.musicPlayer.exceptions.Mp3PlayerException;
@@ -53,13 +56,18 @@ public class GuiAplicacion extends JFrame {
 		sesion3.setControlador(new ControladorLogout());
 		
 		Busqueda busqueda1 = panelesUsuarios.getPanelUsuarioRegstrado().getPestanias().getBusqueda();
-		busqueda1.setControlador(new ControladorBuscar(busqueda1), new ControladorReproducirCancion(busqueda1));
+		busqueda1.setControlador(new ControladorBusqueda(busqueda1));
 		Busqueda busqueda2 = panelesUsuarios.getPanelAdministrador().getPestaniasAdministrador().getBusqueda();
-		busqueda2.setControlador(new ControladorBuscar(busqueda2), new ControladorReproducirCancion(busqueda2));
-		Busqueda busqueda3 = panelesUsuarios.getPanelUsuarioPremium().getPestaniasUsuarioPremium().getBusqueda();
-		busqueda3.setControlador(new ControladorBuscar(busqueda3), new ControladorReproducirCancion(busqueda3));
+		busqueda2.setControlador(new ControladorBusqueda(busqueda2));
+		Busqueda busqueda3 = panelesUsuarios.getPanelUsuarioPremium().getPestanias().getBusqueda();
+		busqueda3.setControlador(new ControladorBusqueda(busqueda3));
 		Busqueda busqueda4 = panelesUsuarios.getPanelUsuarioSinCuenta().getPestanias().getBusqueda();
-		busqueda4.setControlador(new ControladorBuscar(busqueda4), new ControladorReproducirCancion(busqueda4));
+		busqueda4.setControlador(new ControladorBusqueda(busqueda4));
+		
+		MisCanciones misCanciones1 = panelesUsuarios.getPanelUsuarioRegstrado().getPestanias().getMisCanciones();
+		misCanciones1.setControlador(new ControladorMisCanciones(misCanciones1));
+		MisCanciones misCanciones2 = panelesUsuarios.getPanelUsuarioPremium().getPestanias().getMisCanciones();
+		misCanciones2.setControlador(new ControladorMisCanciones(misCanciones2));
 		
 		
 		
@@ -67,6 +75,9 @@ public class GuiAplicacion extends JFrame {
 		notificacionesRegistrado.setControlador(new ControladorNotificacion(notificacionesRegistrado));
 		Notificaciones notificacionesPremium = panelesUsuarios.getPanelUsuarioPremium().getInformacion().getNotificaciones();
 		notificacionesPremium.setControlador(new ControladorNotificacion(notificacionesPremium));
+		
+		MisListas misListas = panelesUsuarios.getPanelUsuarioPremium().getPestanias().getMisListas();
+		misListas.setControlador(new ControladorMisListas(misListas));
 		
         this.setSize(this.getToolkit().getScreenSize());
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -96,32 +107,15 @@ public class GuiAplicacion extends JFrame {
 		switch(actual) {
 			case PanelesUsuarios.SIN_CUENTA:
 				this.panelesUsuarios.getPanelUsuarioSinCuenta().getPestanias().getBusqueda().actualizarBusqueda(buscables);
-				break;
-			case PanelesUsuarios.ADMINISTRADOR:
-				this.panelesUsuarios.getPanelAdministrador().getPestaniasAdministrador().getBusqueda().actualizarBusqueda(buscables);
+				this.panelesUsuarios.getPanelUsuarioSinCuenta().getPestanias().setSelectedIndex(1);
 				break;
 			case PanelesUsuarios.REGISTRADO:
 				this.panelesUsuarios.getPanelUsuarioRegstrado().getPestanias().getBusqueda().actualizarBusqueda(buscables);
+				this.panelesUsuarios.getPanelUsuarioRegstrado().getPestanias();
 				break;
 			case PanelesUsuarios.PREMIUM:
-				this.panelesUsuarios.getPanelUsuarioPremium().getPestaniasUsuarioPremium().getBusqueda().actualizarBusqueda(buscables);
-				break;
-		}
-	}
-	
-	public void limpiarBusqueda(String actual) {
-		switch(actual) {
-			case PanelesUsuarios.SIN_CUENTA:
-				this.panelesUsuarios.getPanelUsuarioSinCuenta().getPestanias().getBusqueda().limpiarRegistros();
-				break;
-			case PanelesUsuarios.ADMINISTRADOR:
-				this.panelesUsuarios.getPanelAdministrador().getPestaniasAdministrador().getBusqueda().limpiarRegistros();
-				break;
-			case PanelesUsuarios.REGISTRADO:
-				this.panelesUsuarios.getPanelUsuarioRegstrado().getPestanias().getBusqueda().limpiarRegistros();
-				break;
-			case PanelesUsuarios.PREMIUM:
-				this.panelesUsuarios.getPanelUsuarioPremium().getPestaniasUsuarioPremium().getBusqueda().limpiarRegistros();
+				this.panelesUsuarios.getPanelUsuarioPremium().getPestanias().getBusqueda().actualizarBusqueda(buscables);
+				this.panelesUsuarios.getPanelUsuarioPremium().getPestanias();
 				break;
 		}
 	}

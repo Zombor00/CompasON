@@ -14,9 +14,9 @@ public class FormularioCancion extends JPanel{
 		SpringLayout layout = new SpringLayout();
 		this.setLayout(layout);
 		JTextField nombre = new JTextField(30);
-		JTextField fichero = new JTextField(22);
+		JTextField fichero = new JTextField(21);
 		JButton buscar = new JButton("Buscar");
-		buscar.setPreferredSize(new Dimension(90, 18));
+		buscar.setPreferredSize(new Dimension(105, 18));
 		JLabel nombreLabel = new JLabel("Nombre de la cancion:");
 		JLabel ficheroLabel = new JLabel("Fichero de audio:");
 		JButton aceptar   = new JButton("Aceptar");
