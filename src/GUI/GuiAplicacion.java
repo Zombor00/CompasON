@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import javax.swing.*;
 
 import GUI.AccesoComun.Sesion;
+import GUI.Administrador.Opciones;
+import GUI.Administrador.Validar;
 import GUI.UsuarioPremium.MisListas;
 import GUI.AccesoComun.Busqueda;
 import GUI.AccesoComun.MisCanciones;
@@ -17,9 +19,11 @@ import aplicacion.Aplicacion;
 import controladores.ControladorBusqueda;
 import controladores.ControladorLogin;
 import controladores.ControladorSesion;
+import controladores.ControladorValidar;
 import controladores.ControladorMisCanciones;
 import controladores.ControladorMisListas;
 import controladores.ControladorNotificacion;
+import controladores.ControladorOpciones;
 import controladores.ControladorRegistro;
 import excepciones.ExcepcionParametrosDeEntradaIncorrectos;
 import media.Buscable;
@@ -78,6 +82,12 @@ public class GuiAplicacion extends JFrame {
 		
 		MisListas misListas = panelesUsuarios.getPanelUsuarioPremium().getPestanias().getMisListas();
 		misListas.setControlador(new ControladorMisListas(misListas));
+		
+		Opciones opciones = panelesUsuarios.getPanelAdministrador().getInformacionAdministrador().getOpciones();
+		opciones.setControlador(new ControladorOpciones(opciones));
+		
+		Validar validar = panelesUsuarios.getPanelAdministrador().getPestaniasAdministrador().getValidar();
+		validar.setControlador(new ControladorValidar(validar));
 		
         this.setSize(this.getToolkit().getScreenSize());
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

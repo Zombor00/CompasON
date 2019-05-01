@@ -66,6 +66,25 @@ public class Opciones extends JPanel {
 		this.add(limite);
 		this.add(actualizar);
 	}
+	
+	
+
+	public JSpinner getPrecio() {
+		return precio;
+	}
+
+
+
+	public JSpinner getReproducciones() {
+		return reproducciones;
+	}
+
+
+
+	public JSpinner getLimite() {
+		return limite;
+	}
+
 
 	public void actualizarDatos() {
 		precio.setValue(Aplicacion.getInstance().getPrecioPremium());

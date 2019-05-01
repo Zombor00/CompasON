@@ -157,9 +157,9 @@ public class GeneraDatos {
 		Thread.sleep(sleep);
 		aplicacion.getAdministrador().tramitarValidacion(aplicacion.getAdministrador().getCancionesNuevas().get(0), EstadoValidacion.EXPLICITO);
 		
-		System.out.println("El administrador marca como explicita la cancion modificada");
+		/*System.out.println("El administrador marca como explicita la cancion modificada");
 		Thread.sleep(sleep);
-		aplicacion.getAdministrador().tramitarValidacion(aplicacion.getAdministrador().getCancionesNuevas().get(1), EstadoValidacion.EXPLICITO);
+		aplicacion.getAdministrador().tramitarValidacion(aplicacion.getAdministrador().getCancionesNuevas().get(1), EstadoValidacion.EXPLICITO);*/
 		
 		System.out.println("El administrador cierra sesion");
 		Thread.sleep(sleep);

@@ -1,12 +1,12 @@
 package GUI.Administrador;
 
 import java.awt.Dimension;
+import java.awt.event.ActionListener;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
 import aplicacion.Aplicacion;
-import gestion.Denuncia;
 import media.Cancion;
 import usuarios.Administrador;;
 
@@ -15,6 +15,9 @@ public class Validar extends JPanel {
 	
 	private DefaultTableModel modeloDatos;
 	private JTable tabla;
+	private JPopupMenu menu;
+    private JMenuItem reproducir,sinLimitacion, explicito, denegar;
+    private JButton opciones;
 
 	public Validar() {
 		super();
@@ -39,17 +42,42 @@ public class Validar extends JPanel {
 		tabla = new JTable(modeloDatos);
 		tabla.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		tabla.setPreferredScrollableViewportSize(new Dimension(800, 500));
-		JScrollPane scrollTabla = new JScrollPane(tabla);
+		JScrollPane scrollTabla = new JScrollPane(tabla);	
 		
-		
-
 		
 		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, scrollTabla, 0, SpringLayout.HORIZONTAL_CENTER, this);
 		layout.putConstraint(SpringLayout.VERTICAL_CENTER, scrollTabla, 0, SpringLayout.VERTICAL_CENTER, this);
-
+		
+		/* Aniadimos el menu y el boton de opciones */        
+        menu = new JPopupMenu();
+        reproducir = new JMenuItem("Reproducir");
+        menu.add(reproducir);
+        sinLimitacion = new JMenuItem("Sin limitacion");
+        menu.add(sinLimitacion);
+        explicito = new JMenuItem("Explicito");
+        menu.add(explicito);
+        denegar = new JMenuItem("Denegar");
+        menu.add(denegar);
+        opciones = new JButton("Opciones"); 
+        layout.putConstraint(SpringLayout.NORTH, opciones, 0, SpringLayout.NORTH, scrollTabla);
+        layout.putConstraint(SpringLayout.WEST, opciones, 0, SpringLayout.EAST, scrollTabla);
+        this.add(opciones);
 		
 	
 		this.add(scrollTabla);
+	}
+	
+	public void setControlador(ActionListener controlador) {
+		opciones.setActionCommand("OPCIONES");
+		opciones.addActionListener(controlador);
+		reproducir.setActionCommand("REPRODUCIR");
+		reproducir.addActionListener(controlador);
+		sinLimitacion.setActionCommand("SIN_LIMITACION");
+		sinLimitacion.addActionListener(controlador);
+		explicito.setActionCommand("EXPLICITO");
+		explicito.addActionListener(controlador);
+		denegar.setActionCommand("DENEGAR");
+		denegar.addActionListener(controlador);
 	}
 
 	public void actualizarDatos() {
@@ -69,6 +97,36 @@ public class Validar extends JPanel {
 			modeloDatos.addRow(rowData);
 		}		
 	}
+
+	public JPopupMenu getMenu() {
+		return menu;
+	}
+
+	public JMenuItem getReproducir() {
+		return reproducir;
+	}
+
+	public JMenuItem getSinLimitacion() {
+		return sinLimitacion;
+	}
+
+	public JMenuItem getExplicito() {
+		return explicito;
+	}
+
+	public JMenuItem getDenegar() {
+		return denegar;
+	}
+
+	public JButton getOpciones() {
+		return opciones;
+	}
+
+	public JTable getTabla() {
+		return tabla;
+	}
+	
+	
 
 	
 }
