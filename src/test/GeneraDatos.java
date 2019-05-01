@@ -141,6 +141,8 @@ public class GeneraDatos {
 		aplicacion.getUsuarioLogeado().setPremiumHasta(LocalDate.now().plusDays(30));
 		aplicacion.getUsuarioLogeado().crearLista("Bad Bunny beibeeee");
 		aplicacion.subirCancion("Desde el corazon", "canciones/Desde el corazon.mp3");
+		busqueda = aplicacion.buscarPorTitulo("Th");
+		aplicacion.denunciarPlagio((Cancion) busqueda.get(1), "Eyyyyy");
 		aplicacion.logout();
 		
 		System.out.println("El administrador inicia sesion");

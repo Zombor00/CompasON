@@ -5,9 +5,18 @@ import java.awt.Dimension;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
-public class Tramitar extends JPanel {
+import aplicacion.Aplicacion;
+import gestion.Denuncia;
+import media.Cancion;
+import usuarios.Administrador;;
 
-	public Tramitar() {
+
+public class Validar extends JPanel {
+	
+	private DefaultTableModel modeloDatos;
+	private JTable tabla;
+
+	public Validar() {
 		super();
 		SpringLayout layout = new SpringLayout();
 		this.setLayout(layout);
@@ -26,8 +35,8 @@ public class Tramitar extends JPanel {
 		{"Cancion 9", "Autor 9", "00:00"},
 		{"Cancion 10", "Autor 10", "00:00"},
 		};
-		DefaultTableModel modeloDatos = new DefaultTableModel(filas, titulos);
-		JTable tabla = new JTable(modeloDatos);
+		modeloDatos = new DefaultTableModel(filas, titulos);
+		tabla = new JTable(modeloDatos);
 		tabla.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		tabla.setPreferredScrollableViewportSize(new Dimension(800, 500));
 		JScrollPane scrollTabla = new JScrollPane(tabla);
@@ -42,4 +51,24 @@ public class Tramitar extends JPanel {
 	
 		this.add(scrollTabla);
 	}
+
+	public void actualizarDatos() {
+		int numFilas = modeloDatos.getRowCount();
+		for(int i=0; i< numFilas; i++) {
+			modeloDatos.removeRow(0);
+		}
+		Administrador a = Aplicacion.getInstance().getAdministrador();
+		Object[] rowData = {0,0,0};
+		
+		for (Cancion c : a.getCancionesNuevas()) {
+			if (!c.esValido() && c.getModificableHasta() == null) {
+				rowData[0] = c;
+				rowData[1] = c.getAutor();
+				rowData[2] = c.getDuracion();
+			}
+			modeloDatos.addRow(rowData);
+		}		
+	}
+
+	
 }

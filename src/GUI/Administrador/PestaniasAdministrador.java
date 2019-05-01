@@ -6,13 +6,18 @@ import GUI.AccesoComun.Busqueda;
 
 
 public class PestaniasAdministrador extends JTabbedPane {
-	Busqueda busqueda;
+	
+	private InicioAdministrador inicio;
+	private Busqueda busqueda;
+	private Validar validar;
+	private Denuncias denuncias;
+	
 	public PestaniasAdministrador() {
 		super();
-		JPanel inicio = new InicioAdministrador();
+		inicio = new InicioAdministrador();
 		busqueda = new Busqueda();
-		JPanel validar = new Tramitar();
-		JPanel denuncias = new Tramitar();
+		validar = new Validar();
+		denuncias = new Denuncias();
 		
 		this.addTab("Inicio", inicio);
 		this.addTab("Busqueda", busqueda);
@@ -24,6 +29,26 @@ public class PestaniasAdministrador extends JTabbedPane {
 	}
 	
 	public Busqueda getBusqueda() {
-		return this.busqueda;
+		return busqueda;
 	}
+
+	public InicioAdministrador getInicio() {
+		return inicio;
+	}
+
+	public Validar getValidar() {
+		return validar;
+	}
+
+	public Denuncias getDenuncias() {
+		return denuncias;
+	}
+	
+	public void actualizarDatos() {
+		this.inicio.actualizarDatos();
+		this.validar.actualizarDatos();
+		this.denuncias.actualizarDatos();
+	}
+	
+	
 }

@@ -31,4 +31,9 @@ public class InformacionAdministrador extends JPanel {
 	public Opciones getOpciones() {
 		return this.opciones;
 	}
+
+	public void actualizarDatos() {
+		this.opciones.actualizarDatos();		
+	}
+
 }

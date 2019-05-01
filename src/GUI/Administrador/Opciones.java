@@ -2,14 +2,23 @@ package GUI.Administrador;
 
 
 import java.awt.Font;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.SpringLayout;
 
+import aplicacion.Aplicacion;
+
 public class Opciones extends JPanel {
+	
+	private JSpinner precio;
+	private JSpinner reproducciones;
+	private JSpinner limite;
+	private JButton actualizar;
 	
 	public Opciones() {
 		super();
@@ -20,15 +29,11 @@ public class Opciones extends JPanel {
 		JLabel precioMensaje = new JLabel("Precio");
 		JLabel repMensaje = new JLabel("Reproducciones para ser premium:");
 		JLabel limiteMensaje = new JLabel("Limite de reproducciones:");
-		JSpinner precio = new JSpinner();
-		JSpinner reproducciones = new JSpinner();
-		JSpinner limite = new JSpinner();
-		JButton actualizar = new JButton("Actualizar");
+		precio = new JSpinner(new SpinnerNumberModel(Aplicacion.getInstance().getPrecioPremium(), 0, 9999, 1));
+		reproducciones = new JSpinner(new SpinnerNumberModel(Aplicacion.getInstance().getReproduccionesPremium(), 0, 9999, 1));
+		limite = new JSpinner(new SpinnerNumberModel(Aplicacion.getInstance().getLimiteReproducciones(), 0, 9999, 1));
+		actualizar = new JButton("Actualizar");
 		
-		/* Hay que sacar el valor actual de Aplicacion */
-		precio.setValue(10);
-		reproducciones.setValue(10);
-		limite.setValue(10);
 		
 		((JSpinner.DefaultEditor)precio.getEditor()).getTextField().setColumns(3);
 		((JSpinner.DefaultEditor)reproducciones.getEditor()).getTextField().setColumns(3);
@@ -61,5 +66,17 @@ public class Opciones extends JPanel {
 		this.add(limite);
 		this.add(actualizar);
 	}
+
+	public void actualizarDatos() {
+		precio.setValue(Aplicacion.getInstance().getPrecioPremium());
+		reproducciones.setValue(Aplicacion.getInstance().getReproduccionesPremium());
+		limite.setValue(Aplicacion.getInstance().getLimiteReproducciones());
+	}
+	
+	public void setControlador(ActionListener controlador) {
+		actualizar.setActionCommand("ACTUALIZAR");
+		actualizar.addActionListener(controlador);
+	}
+	
 
 }

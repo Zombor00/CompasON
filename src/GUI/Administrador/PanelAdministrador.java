@@ -28,4 +28,9 @@ public class PanelAdministrador extends JPanel {
 	public PestaniasAdministrador getPestaniasAdministrador() {
 		return this.pestaniasAdministrador;
 	}
+
+	public void actualizarDatos() {
+		this.pestaniasAdministrador.actualizarDatos();	
+		this.informacionAdministrador.actualizarDatos();
+	}
 }
