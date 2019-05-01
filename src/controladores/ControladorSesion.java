@@ -10,7 +10,7 @@ import GUI.PanelesUsuarios;
 import aplicacion.Aplicacion;
 import pads.musicPlayer.exceptions.Mp3PlayerException;
 
-public class ControladorLogout implements ActionListener {
+public class ControladorSesion implements ActionListener {
 
 	private Aplicacion aplicacion;
 	private GuiAplicacion gui;
@@ -19,6 +19,7 @@ public class ControladorLogout implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if (aplicacion == null)
 			aplicacion = Aplicacion.getInstance();
+		
 		if (gui == null)
 			gui = GuiAplicacion.getInstance();
 
@@ -37,7 +38,7 @@ public class ControladorLogout implements ActionListener {
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
-			gui.actualizarDatos();
+			
 			PanelesUsuarios panelesUsuarios = gui.getPanelesUsuarios();
 			panelesUsuarios.getPanelUsuarioSinCuenta().getPestanias().getInicio().accionIniciarSesion();
 			panelesUsuarios.cambiarPanel(PanelesUsuarios.SIN_CUENTA);
