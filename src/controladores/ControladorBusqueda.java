@@ -13,12 +13,16 @@ import javax.swing.JTable;
 import GUI.GuiAplicacion;
 import GUI.AccesoComun.Busqueda;
 import media.Buscable;
+import media.Cancion;
+import pads.musicPlayer.exceptions.Mp3InvalidFileException;
 import pads.musicPlayer.exceptions.Mp3PlayerException;
 import aplicacion.Aplicacion;
 import excepciones.ExcepcionLimiteReproducidasAlcanzado;
 import excepciones.ExcepcionNoAptoParaMenores;
 import excepciones.ExcepcionParametrosDeEntradaIncorrectos;
 import excepciones.ExcepcionReproducirProhibido;
+import excepciones.ExcepcionUsuarioSinCuenta;
+import excepciones.ExcepcionUsuarioYaSeguido;
 
 public class ControladorBusqueda implements ActionListener {
 	
@@ -55,13 +59,10 @@ public class ControladorBusqueda implements ActionListener {
 			JPopupMenu menu = vista.getMenu();
 			menu.show(opciones, 0, opciones.getHeight());
 		} else if (e.getActionCommand().equals("REPRODUCIR")) {
-			JTable tablaNotificaciones = vista.getTabla();
-			
-	        int fila = tablaNotificaciones.getSelectedRow();
-	        if(fila == -1) {
-	        	return;
-	        }
-	        Buscable b = (Buscable)tablaNotificaciones.getModel().getValueAt(fila, 0);
+			Buscable b = this.getBuscable();
+			if(b == null) {
+				return;
+			}
 	     
 	        try {
 				aplicacion.reproducirReproducible(b);
@@ -82,6 +83,76 @@ public class ControladorBusqueda implements ActionListener {
 	        //Cambiar el boton del reproductor
 	        //gui.getReproductor().get
 	        //Si hay mas de una cancion seleccionada la primera se reproduce y las demas se aniaden a la cola
+		}else if(e.getActionCommand().equals("ANIADIRACOLA")){
+			Buscable b = this.getBuscable();
+			if(b == null) {
+				return;
+			}
+			
+			try {
+				aplicacion.aniadirALaCola(b);
+			} catch (Mp3InvalidFileException e1) {
+				JOptionPane.showMessageDialog(gui,"Reproductor no funcionando");
+			} catch (ExcepcionParametrosDeEntradaIncorrectos e1) {
+				e1.printStackTrace();
+			} catch (ExcepcionLimiteReproducidasAlcanzado e1) {
+				JOptionPane.showMessageDialog(gui,"Limite de reproducciones alcanzado");
+				e1.printStackTrace();
+			} catch (ExcepcionNoAptoParaMenores e1) {
+				JOptionPane.showMessageDialog(gui,"No apto para menores");
+				e1.printStackTrace();
+			} catch (ExcepcionReproducirProhibido e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (ExcepcionUsuarioSinCuenta e1) {
+				JOptionPane.showMessageDialog(gui,"Debe registrarse para usar la cola");
+				e1.printStackTrace();
+			}
+		}else if(e.getActionCommand().equals("SEGUIRAUTOR")) {
+			Buscable b = this.getBuscable();
+			if(b == null) {
+				return;
+			}
+			
+			try {
+				aplicacion.getUsuarioLogeado().seguirUsuario(b.getAutor());
+			} catch (ExcepcionUsuarioYaSeguido e1) {
+				e1.printStackTrace();
+			}
+		}else if(e.getActionCommand().equals("DENUNCIAR")) {
+			Buscable b = this.getBuscable();
+			if(b == null) {
+				return;
+			}
+			
+			if(b instanceof Cancion) {
+				try {
+					aplicacion.denunciarPlagio((Cancion)b, "RELLENAR");
+				} catch (ExcepcionParametrosDeEntradaIncorrectos e1) {
+					e1.printStackTrace();
+				} catch (ExcepcionUsuarioSinCuenta e1) {
+					JOptionPane.showMessageDialog(gui,"Debe registrarse para denunciar");
+					e1.printStackTrace();
+				}
+				gui.actualizarDatos();
+			}else {
+				JOptionPane.showMessageDialog(gui,"Solo puede denunciar canciones");
+			}
+			
+			
+			
 		}
+	}
+	
+	private Buscable getBuscable() {
+		JTable tablaNotificaciones = vista.getTabla();
+		
+        int fila = tablaNotificaciones.getSelectedRow();
+        if(fila == -1) {
+        	return null;
+        }
+        Buscable b = (Buscable)tablaNotificaciones.getModel().getValueAt(fila, 0);
+        
+        return b;
 	}
 }

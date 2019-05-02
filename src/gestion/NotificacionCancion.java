@@ -25,7 +25,7 @@ public class NotificacionCancion extends Notificacion implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Nueva cancion de " + cancion.getAutor().getNombreUsuario() + ": " + cancion.getTitulo();
+		return "Nueva cancion";
 	}
 
 }

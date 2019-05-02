@@ -11,6 +11,7 @@ import GUI.AccesoComun.Notificaciones;
 import aplicacion.Aplicacion;
 import excepciones.ExcepcionParametrosDeEntradaIncorrectos;
 import gestion.Notificacion;
+import gestion.NotificacionDenuncia;
 import media.Buscable;
 
 public class ControladorNotificacion implements ListSelectionListener{
@@ -35,14 +36,19 @@ public class ControladorNotificacion implements ListSelectionListener{
         	return;
         }
         Notificacion n = (Notificacion)tablaNotificaciones.getValueAt(fila, 1);
+        aplicacion.getUsuarioLogeado().borrarNotificacion(n);
+        if(n instanceof NotificacionDenuncia) {
+        	gui.actualizarDatos();
+        	return;
+        }else {
+        	try {
+    			buscables = aplicacion.buscarPorTitulo(n.getCancion().getTitulo());
+    		} catch (ExcepcionParametrosDeEntradaIncorrectos e1) {
+    			e1.printStackTrace();
+    		}
+        }
         
-		try {
-			buscables = aplicacion.buscarPorTitulo(n.getCancion().getTitulo());
-		} catch (ExcepcionParametrosDeEntradaIncorrectos e1) {
-			e1.printStackTrace();
-		}
 		
-		aplicacion.getUsuarioLogeado().borrarNotificacion(n);
 		gui.actualizarDatos();
 		gui.actualizarBusqueda(buscables, gui.getPanelesUsuarios().getActual());
 		

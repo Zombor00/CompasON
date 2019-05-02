@@ -63,9 +63,9 @@ public class Busqueda extends JPanel {
         menu=new JPopupMenu();
         reproducir=new JMenuItem("Reproducir");
         menu.add(reproducir);
-        aniadirACola=new JMenuItem("Aniaidr a una cola");
+        aniadirACola=new JMenuItem("Añadir a una cola");
         menu.add(aniadirACola);
-        aniadirALista=new JMenuItem("Aniaidr a una lista");
+        aniadirALista=new JMenuItem("Añadir a una lista");
         menu.add(aniadirALista);
         seguirAutor=new JMenuItem("Seguir al autor");
         menu.add(seguirAutor);
@@ -109,6 +109,12 @@ public class Busqueda extends JPanel {
 		opciones.addActionListener(controlador);
 		reproducir.setActionCommand("REPRODUCIR");
 		reproducir.addActionListener(controlador);
+		aniadirACola.setActionCommand("ANIADIRACOLA");
+		aniadirACola.addActionListener(controlador);
+		seguirAutor.setActionCommand("SEGUIRAUTOR");
+		seguirAutor.addActionListener(controlador);
+		denunciar.setActionCommand("DENUNCIAR");
+		denunciar.addActionListener(controlador);
 	}
 	
 	public String getBusqueda() {
