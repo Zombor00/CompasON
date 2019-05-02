@@ -7,11 +7,15 @@ import java.util.ArrayList;
 import javax.swing.*;
 
 import GUI.AccesoComun.Sesion;
+import GUI.Administrador.PestaniasAdministrador;
 import GUI.UsuarioPremium.MisListas;
+import GUI.UsuarioPremium.PestaniasUsuarioPremium;
+import GUI.UsuarioRegistrado.PestaniasUsuarioRegistrado;
 import GUI.AccesoComun.Busqueda;
 import GUI.AccesoComun.MisCanciones;
 import GUI.AccesoComun.Notificaciones;
 import GUI.UsuarioSinCuenta.Login;
+import GUI.UsuarioSinCuenta.PestaniasUsuarioSinCuenta;
 import GUI.UsuarioSinCuenta.Registro;
 import aplicacion.Aplicacion;
 import controladores.ControladorBusqueda;
@@ -106,20 +110,24 @@ public class GuiAplicacion extends JFrame {
 	public void actualizarBusqueda(ArrayList<Buscable> buscables, String actual) {
 		switch(actual) {
 			case PanelesUsuarios.SIN_CUENTA:
-				this.panelesUsuarios.getPanelUsuarioSinCuenta().getPestanias().getBusqueda().actualizarBusqueda(buscables);
-				this.panelesUsuarios.getPanelUsuarioSinCuenta().getPestanias().setSelectedIndex(1);
+				PestaniasUsuarioSinCuenta pSc = this.panelesUsuarios.getPanelUsuarioSinCuenta().getPestanias();
+				pSc.getBusqueda().actualizarBusqueda(buscables);
+				pSc.setSelectedIndex(1);
 				break;
 			case PanelesUsuarios.REGISTRADO:
-				this.panelesUsuarios.getPanelUsuarioRegstrado().getPestanias().getBusqueda().actualizarBusqueda(buscables);
-				this.panelesUsuarios.getPanelUsuarioRegstrado().getPestanias().setSelectedIndex(1);
+				PestaniasUsuarioRegistrado pRe = this.panelesUsuarios.getPanelUsuarioRegstrado().getPestanias();
+				pRe.getBusqueda().actualizarBusqueda(buscables);
+				pRe.setSelectedIndex(1);
 				break;
 			case PanelesUsuarios.PREMIUM:
-				this.panelesUsuarios.getPanelUsuarioPremium().getPestanias().getBusqueda().actualizarBusqueda(buscables);
-				this.panelesUsuarios.getPanelUsuarioPremium().getPestanias().setSelectedIndex(1);
+				PestaniasUsuarioPremium pPr = this.panelesUsuarios.getPanelUsuarioPremium().getPestanias();
+				pPr.getBusqueda().actualizarBusqueda(buscables);
+				pPr.setSelectedIndex(1);
 				break;
 			case PanelesUsuarios.ADMINISTRADOR:
-				this.panelesUsuarios.getPanelAdministrador().getPestaniasAdministrador().getBusqueda().actualizarBusqueda(buscables);
-				this.panelesUsuarios.getPanelAdministrador().getPestaniasAdministrador().setSelectedIndex(1);
+				PestaniasAdministrador pAd = this.panelesUsuarios.getPanelAdministrador().getPestaniasAdministrador();
+				pAd.getBusqueda().actualizarBusqueda(buscables);
+				pAd.setSelectedIndex(1);
 				break;
 		}
 	}

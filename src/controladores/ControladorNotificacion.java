@@ -42,6 +42,8 @@ public class ControladorNotificacion implements ListSelectionListener{
 			e1.printStackTrace();
 		}
 		
+		aplicacion.getUsuarioLogeado().borrarNotificacion(n);
+		gui.actualizarDatos();
 		gui.actualizarBusqueda(buscables, gui.getPanelesUsuarios().getActual());
 		
 	}
