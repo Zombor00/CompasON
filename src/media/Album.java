@@ -64,11 +64,9 @@ public class Album extends Buscable implements Serializable{
      * @throws Mp3InvalidFileException
      */
 
-    public int reproducir(Mp3Player mp3, UsuarioRegistrado usuarioLogeado) throws ExcepcionReproducirProhibido, Mp3InvalidFileException{
+    public int reproducir(Mp3Player mp3, UsuarioRegistrado usuarioLogeado) throws Mp3InvalidFileException{
     	int reproducciones = 0;
-    	if (this.getEstado() != Estado.NOBLOQUEADO) {
-    		throw new ExcepcionReproducirProhibido();
-    	}
+    	
         for(Cancion c: canciones){
             reproducciones += c.reproducir(mp3,usuarioLogeado);
         }

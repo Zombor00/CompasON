@@ -1,6 +1,7 @@
 package GUI.Administrador;
 
 import java.awt.Dimension;
+import java.awt.event.ActionListener;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -14,6 +15,9 @@ public class Denuncias extends JPanel {
 	
 	private DefaultTableModel modeloDatos;
 	private JTable tabla;
+	private JPopupMenu menu;
+    private JMenuItem reproducir, plagio, noPlagio;
+    private JButton opciones;
 
 	public Denuncias() {
 		super();
@@ -46,9 +50,31 @@ public class Denuncias extends JPanel {
 		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, scrollTabla, 0, SpringLayout.HORIZONTAL_CENTER, this);
 		layout.putConstraint(SpringLayout.VERTICAL_CENTER, scrollTabla, 0, SpringLayout.VERTICAL_CENTER, this);
 
-		
+		/* Aniadimos el menu y el boton de opciones */        
+        menu = new JPopupMenu();
+        reproducir = new JMenuItem("Reproducir");
+        menu.add(reproducir);
+        plagio = new JMenuItem("Plagio confirmado");
+        menu.add(plagio);
+        noPlagio = new JMenuItem("No hay plagio");
+        menu.add(noPlagio);
+        opciones = new JButton("Opciones"); 
+        layout.putConstraint(SpringLayout.NORTH, opciones, 0, SpringLayout.NORTH, scrollTabla);
+        layout.putConstraint(SpringLayout.WEST, opciones, 0, SpringLayout.EAST, scrollTabla);
+        this.add(opciones);
 	
 		this.add(scrollTabla);
+	}
+	
+	public void setControlador(ActionListener controlador) {
+		opciones.setActionCommand("OPCIONES");
+		opciones.addActionListener(controlador);
+		reproducir.setActionCommand("REPRODUCIR");
+		reproducir.addActionListener(controlador);
+		plagio.setActionCommand("PLAGIO");
+		plagio.addActionListener(controlador);
+		noPlagio.setActionCommand("SIN_PLAGIO");
+		noPlagio.addActionListener(controlador);
 	}
 
 	public void actualizarDatos() {
@@ -60,13 +86,39 @@ public class Denuncias extends JPanel {
 		Object[] rowData = {0,0,0,0};
 		
 		for (Denuncia d : a.getDenuncias()) {
-			rowData[0] = d.getDenunciada();
+			rowData[0] = d;
 			rowData[1] = d.getDenunciada().getAutor();
-			rowData[2] = d.getDenunciada().getDuracion();
+			rowData[2] = d.getDenunciada().parseSeconds(d.getDenunciada().getDuracion());
 			rowData[3] = d.getComentario();
 			modeloDatos.addRow(rowData);
 		}		
 	}
+
+	public JTable getTabla() {
+		return tabla;
+	}
+
+	public JPopupMenu getMenu() {
+		return menu;
+	}
+
+	public JMenuItem getReproducir() {
+		return reproducir;
+	}
+
+	public JMenuItem getPlagio() {
+		return plagio;
+	}
+
+	public JMenuItem getNoPlagio() {
+		return noPlagio;
+	}
+
+	public JButton getOpciones() {
+		return opciones;
+	}
+	
+	
 
 	
 }

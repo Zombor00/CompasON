@@ -31,8 +31,12 @@ public class Sesion extends JPanel {
 	}
 	
 	public void actualizarDatos() {
-		if (Aplicacion.getInstance().getUsuarioLogeado() != null)
+		if (Aplicacion.getInstance().getAdministradorLogeado()) {
+			nombre.setText("Admin");
+		}
+		else if (Aplicacion.getInstance().getUsuarioLogeado() != null) {
 			nombre.setText(Aplicacion.getInstance().getUsuarioLogeado().getNombre());
+		}
 	}
 	
 	public void setControlador(ActionListener controlador) {

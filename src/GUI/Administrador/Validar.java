@@ -92,9 +92,9 @@ public class Validar extends JPanel {
 			if (!c.esValido() && c.getModificableHasta() == null) {
 				rowData[0] = c;
 				rowData[1] = c.getAutor();
-				rowData[2] = c.getDuracion();
-			}
-			modeloDatos.addRow(rowData);
+				rowData[2] = c.parseSeconds(c.getDuracion());
+				modeloDatos.addRow(rowData);
+			}			
 		}		
 	}
 

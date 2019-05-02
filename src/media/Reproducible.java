@@ -2,7 +2,6 @@ package media;
 
 import java.io.Serializable;
 import java.lang.Math;
-import excepciones.ExcepcionReproducirProhibido;
 import pads.musicPlayer.Mp3Player;
 import pads.musicPlayer.exceptions.Mp3InvalidFileException;
 import usuarios.UsuarioRegistrado;
@@ -37,7 +36,7 @@ public abstract class Reproducible implements Serializable{
 
   public abstract boolean contieneReproducible(Reproducible e);
 
-  public abstract int reproducir(Mp3Player mp3, UsuarioRegistrado usuarioLogeado) throws ExcepcionReproducirProhibido, Mp3InvalidFileException;
+  public abstract int reproducir(Mp3Player mp3, UsuarioRegistrado usuarioLogeado) throws Mp3InvalidFileException;
 
   public String getTitulo(){
       return this.titulo;

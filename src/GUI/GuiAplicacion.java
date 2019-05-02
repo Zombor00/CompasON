@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import javax.swing.*;
 
 import GUI.AccesoComun.Sesion;
+import GUI.Administrador.Denuncias;
 import GUI.Administrador.Opciones;
 import GUI.Administrador.Validar;
 import GUI.UsuarioPremium.MisListas;
@@ -17,6 +18,7 @@ import GUI.UsuarioSinCuenta.Login;
 import GUI.UsuarioSinCuenta.Registro;
 import aplicacion.Aplicacion;
 import controladores.ControladorBusqueda;
+import controladores.ControladorDenuncias;
 import controladores.ControladorLogin;
 import controladores.ControladorSesion;
 import controladores.ControladorValidar;
@@ -88,6 +90,9 @@ public class GuiAplicacion extends JFrame {
 		
 		Validar validar = panelesUsuarios.getPanelAdministrador().getPestaniasAdministrador().getValidar();
 		validar.setControlador(new ControladorValidar(validar));
+		
+		Denuncias denuncias = panelesUsuarios.getPanelAdministrador().getPestaniasAdministrador().getDenuncias();
+		denuncias.setControlador(new ControladorDenuncias(denuncias));
 		
         this.setSize(this.getToolkit().getScreenSize());
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

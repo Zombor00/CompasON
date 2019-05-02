@@ -33,6 +33,7 @@ public class InformacionAdministrador extends JPanel {
 	}
 
 	public void actualizarDatos() {
+		this.sesion.actualizarDatos();
 		this.opciones.actualizarDatos();		
 	}
 

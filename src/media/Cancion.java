@@ -70,15 +70,9 @@ public class Cancion extends Buscable implements Serializable{
      * @throws ExcepcionReproducirProhibido 
      * @throws Mp3InvalidFileException 
      */
-    public int reproducir(Mp3Player mp3, UsuarioRegistrado usuarioLogeado) throws ExcepcionReproducirProhibido, Mp3InvalidFileException {
-    	if (this.getEstado() != Estado.NOBLOQUEADO) {
-    		throw new ExcepcionReproducirProhibido();
-    	}
+    public int reproducir(Mp3Player mp3, UsuarioRegistrado usuarioLogeado) throws Mp3InvalidFileException {
     	mp3.add(ficheroAudio);
-    	if (this.getAutor() == usuarioLogeado) {
-    		return 0;
-    	}
- 
+    	
     	if (this.getAutor() == usuarioLogeado) {
     		return 0;
     	} else {

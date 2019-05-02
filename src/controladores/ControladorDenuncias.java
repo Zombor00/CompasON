@@ -10,26 +10,23 @@ import javax.swing.JPopupMenu;
 import javax.swing.JTable;
 
 import GUI.GuiAplicacion;
-import GUI.Administrador.Validar;
+import GUI.Administrador.Denuncias;
 import aplicacion.Aplicacion;
-import excepciones.ExcepcionCancionModificable;
-import excepciones.ExcepcionCancionYaValidada;
 import excepciones.ExcepcionLimiteReproducidasAlcanzado;
 import excepciones.ExcepcionNoAptoParaMenores;
 import excepciones.ExcepcionParametrosDeEntradaIncorrectos;
 import excepciones.ExcepcionReproducirProhibido;
-import media.Cancion;
-import media.EstadoValidacion;
+import gestion.Denuncia;
 import pads.musicPlayer.exceptions.Mp3PlayerException;
 
-public class ControladorValidar implements ActionListener {
+public class ControladorDenuncias implements ActionListener {
 
 	private Aplicacion aplicacion;
-	private Validar vista;
+	private Denuncias vista;
 	private GuiAplicacion gui;
 
-	public ControladorValidar(Validar validar) {
-		this.vista = validar;
+	public ControladorDenuncias(Denuncias denuncias) {
+		this.vista = denuncias;
 	}
 
 	@Override
@@ -50,9 +47,9 @@ public class ControladorValidar implements ActionListener {
 			if (fila == -1) {
 				return;
 			}
-			Cancion cancion = (Cancion) tabla.getValueAt(fila, 0);
+			Denuncia denuncia = (Denuncia) tabla.getValueAt(fila, 0);
 			try {
-				aplicacion.reproducirReproducible(cancion);
+				aplicacion.reproducirReproducible(denuncia.getDenunciada());
 			} catch (FileNotFoundException e1) {
 				JOptionPane.showMessageDialog(gui, "No se encuentra el archivo");
 			} catch (Mp3PlayerException e1) {
@@ -66,8 +63,7 @@ public class ControladorValidar implements ActionListener {
 			} catch (ExcepcionReproducirProhibido e1) {
 				e1.printStackTrace();
 			}
-		} else if (e.getActionCommand().equals("SIN_LIMITACION") || e.getActionCommand().equals("EXPLICITO")
-				|| e.getActionCommand().equals("DENEGAR")) {
+		} else if (e.getActionCommand().equals("PLAGIO") || e.getActionCommand().equals("SIN_PLAGIO")) {
 			JTable tabla = vista.getTabla();
 
 			int fila = tabla.getSelectedRow();
@@ -75,23 +71,15 @@ public class ControladorValidar implements ActionListener {
 				return;
 			}
 
-			Cancion cancion = (Cancion) tabla.getValueAt(fila, 0);
-			try {
-				if (e.getActionCommand().equals("SIN_LIMITACION")) {
-					aplicacion.getAdministrador().tramitarValidacion(cancion, EstadoValidacion.APTOMENORES);
-				}
-				if (e.getActionCommand().equals("EXPLICITO")) {
-					aplicacion.getAdministrador().tramitarValidacion(cancion, EstadoValidacion.EXPLICITO);
-				}
-				if (e.getActionCommand().equals("DENEGAR")) {
-					aplicacion.getAdministrador().tramitarValidacion(cancion, EstadoValidacion.NOVALIDADA);
-				}
-				gui.actualizarDatos();
-			} catch (ExcepcionCancionModificable e1) {
-				JOptionPane.showMessageDialog(gui, "Cancion en periodo de modificacion");
-			} catch (ExcepcionCancionYaValidada e1) {
-				JOptionPane.showMessageDialog(gui, "Cancion ya validada");
+			Denuncia denuncia = (Denuncia) tabla.getValueAt(fila, 0);
+
+			if (e.getActionCommand().equals("PLAGIO")) {
+				aplicacion.getAdministrador().tramitarDenuncia(denuncia, true);
 			}
+			if (e.getActionCommand().equals("SIN_PLAGIO")) {
+				aplicacion.getAdministrador().tramitarDenuncia(denuncia, false);
+			}
+			vista.actualizarDatos();
 
 		}
 
