@@ -7,7 +7,10 @@ import java.util.ArrayList;
 import javax.swing.*;
 
 import GUI.AccesoComun.Sesion;
+import GUI.Administrador.Denuncias;
+import GUI.Administrador.Opciones;
 import GUI.Administrador.PestaniasAdministrador;
+import GUI.Administrador.Validar;
 import GUI.UsuarioPremium.MisListas;
 import GUI.UsuarioPremium.PestaniasUsuarioPremium;
 import GUI.UsuarioRegistrado.PestaniasUsuarioRegistrado;
@@ -19,11 +22,14 @@ import GUI.UsuarioSinCuenta.PestaniasUsuarioSinCuenta;
 import GUI.UsuarioSinCuenta.Registro;
 import aplicacion.Aplicacion;
 import controladores.ControladorBusqueda;
+import controladores.ControladorDenuncias;
 import controladores.ControladorLogin;
 import controladores.ControladorSesion;
+import controladores.ControladorValidar;
 import controladores.ControladorMisCanciones;
 import controladores.ControladorMisListas;
 import controladores.ControladorNotificacion;
+import controladores.ControladorOpciones;
 import controladores.ControladorRegistro;
 import excepciones.ExcepcionParametrosDeEntradaIncorrectos;
 import media.Buscable;
@@ -31,7 +37,7 @@ import pads.musicPlayer.exceptions.Mp3PlayerException;
 
 
 public class GuiAplicacion extends JFrame {
-	
+
 	public static GuiAplicacion INSTANCE = null;
 	private PanelesUsuarios panelesUsuarios = new PanelesUsuarios();
 	private Reproductor reproductor = new Reproductor();
@@ -42,23 +48,23 @@ public class GuiAplicacion extends JFrame {
 		Container contenedor = this.getContentPane();
 		BorderLayout layout = new BorderLayout();
 		contenedor.setLayout(layout);
-		
+
 		contenedor.add(panelesUsuarios,BorderLayout.CENTER);
 		contenedor.add(reproductor,BorderLayout.SOUTH);
-		
+
 		Registro registro = panelesUsuarios.getPanelUsuarioSinCuenta().getPestanias().getInicio().getRegistro();
 		registro.setControlador(new ControladorRegistro(registro));
-		
+
 		Login login = panelesUsuarios.getPanelUsuarioSinCuenta().getPestanias().getInicio().getLogin();
 		login.setControlador(new ControladorLogin(login));
-		
+
 		Sesion sesion1 = panelesUsuarios.getPanelUsuarioRegstrado().getInformacion().getSesion();
 		sesion1.setControlador(new ControladorSesion());
 		Sesion sesion2 = panelesUsuarios.getPanelAdministrador().getInformacionAdministrador().getSesion();
 		sesion2.setControlador(new ControladorSesion());
 		Sesion sesion3 = panelesUsuarios.getPanelUsuarioPremium().getInformacion().getSesion();
 		sesion3.setControlador(new ControladorSesion());
-		
+
 		Busqueda busqueda1 = panelesUsuarios.getPanelUsuarioRegstrado().getPestanias().getBusqueda();
 		busqueda1.setControlador(new ControladorBusqueda(busqueda1));
 		Busqueda busqueda2 = panelesUsuarios.getPanelAdministrador().getPestaniasAdministrador().getBusqueda();
@@ -67,46 +73,55 @@ public class GuiAplicacion extends JFrame {
 		busqueda3.setControlador(new ControladorBusqueda(busqueda3));
 		Busqueda busqueda4 = panelesUsuarios.getPanelUsuarioSinCuenta().getPestanias().getBusqueda();
 		busqueda4.setControlador(new ControladorBusqueda(busqueda4));
-		
+
 		MisCanciones misCanciones1 = panelesUsuarios.getPanelUsuarioRegstrado().getPestanias().getMisCanciones();
 		misCanciones1.setControlador(new ControladorMisCanciones(misCanciones1));
 		MisCanciones misCanciones2 = panelesUsuarios.getPanelUsuarioPremium().getPestanias().getMisCanciones();
 		misCanciones2.setControlador(new ControladorMisCanciones(misCanciones2));
-		
-		
-		
+
+
+
 		Notificaciones notificacionesRegistrado = panelesUsuarios.getPanelUsuarioRegstrado().getInformacion().getNotificaciones();
 		notificacionesRegistrado.setControlador(new ControladorNotificacion(notificacionesRegistrado));
 		Notificaciones notificacionesPremium = panelesUsuarios.getPanelUsuarioPremium().getInformacion().getNotificaciones();
 		notificacionesPremium.setControlador(new ControladorNotificacion(notificacionesPremium));
-		
+
 		MisListas misListas = panelesUsuarios.getPanelUsuarioPremium().getPestanias().getMisListas();
 		misListas.setControlador(new ControladorMisListas(misListas));
-		
+
+		Opciones opciones = panelesUsuarios.getPanelAdministrador().getInformacionAdministrador().getOpciones();
+		opciones.setControlador(new ControladorOpciones(opciones));
+
+		Validar validar = panelesUsuarios.getPanelAdministrador().getPestaniasAdministrador().getValidar();
+		validar.setControlador(new ControladorValidar(validar));
+
+		Denuncias denuncias = panelesUsuarios.getPanelAdministrador().getPestaniasAdministrador().getDenuncias();
+		denuncias.setControlador(new ControladorDenuncias(denuncias));
+
         this.setSize(this.getToolkit().getScreenSize());
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setVisible(true);	
+		this.setVisible(true);
 
 	}
-	
+
 	public static GuiAplicacion getInstance() {
 		if (INSTANCE == null) INSTANCE = new GuiAplicacion();
 		return INSTANCE;
 	}
-	
+
 	public PanelesUsuarios getPanelesUsuarios() {
 		return this.panelesUsuarios;
 	}
-	
+
 	public Reproductor getReproductor() {
 		return this.reproductor;
 	}
-	
+
 	public void actualizarDatos() {
 		/* TODO Ojo con el login del admin */
 		this.panelesUsuarios.actualizarDatos();
 	}
-	
+
 	public void actualizarBusqueda(ArrayList<Buscable> buscables, String actual) {
 		switch(actual) {
 			case PanelesUsuarios.SIN_CUENTA:
@@ -131,7 +146,7 @@ public class GuiAplicacion extends JFrame {
 				break;
 		}
 	}
-	
+
 	public static void main(String[] args) throws Mp3PlayerException, ExcepcionParametrosDeEntradaIncorrectos, ClassNotFoundException, IOException {
 		Aplicacion a = Aplicacion.cargarDatos();
 		GuiAplicacion g = GuiAplicacion.getInstance();

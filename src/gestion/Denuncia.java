@@ -43,8 +43,7 @@ public class Denuncia implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Denuncia [denunciante=" + denunciante + ", denunciada=" + denunciada + ", comentario=" + comentario
-				+ "]";
+		return denunciada.toString();
 	}
 
 

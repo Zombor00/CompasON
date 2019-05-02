@@ -79,6 +79,7 @@ public class Busqueda extends JPanel {
 
 	public void actualizarBusqueda(ArrayList<Buscable> buscables) {
 		
+		int modoAnterior = modo.getSelectedIndex();
 		this.actualizarDatos();
 		
 		Object[] rowData = {0,0,0,0};
@@ -90,6 +91,7 @@ public class Busqueda extends JPanel {
 			modeloDatos.addRow(rowData);
 		}
 		busqueda.setText("");
+		modo.setSelectedIndex(modoAnterior);
 	}
 	
 	public void actualizarDatos() {
@@ -123,5 +125,9 @@ public class Busqueda extends JPanel {
 	
 	public JPopupMenu getMenu() {
 		return this.menu;	
+	}
+	
+	public JComboBox<String> getModo() {
+		return this.modo;
 	}
 }

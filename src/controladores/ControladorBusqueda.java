@@ -37,8 +37,13 @@ public class ControladorBusqueda implements ActionListener {
 		ArrayList<Buscable> buscable = null;
 		
 		if (e.getActionCommand().equals("BUSCAR")) {
+			String modo = (String)vista.getModo().getSelectedItem();
 			try {
-				buscable = aplicacion.buscarPorTitulo(vista.getBusqueda());
+				if(modo.equals("Por titulo")) {
+					buscable = aplicacion.buscarPorTitulo(vista.getBusqueda());
+				}else {
+					buscable = aplicacion.buscarPorAutor(vista.getBusqueda());
+				}
 			} catch (ExcepcionParametrosDeEntradaIncorrectos e1) {
 				e1.printStackTrace();
 			}
@@ -77,8 +82,6 @@ public class ControladorBusqueda implements ActionListener {
 	        //Cambiar el boton del reproductor
 	        //gui.getReproductor().get
 	        //Si hay mas de una cancion seleccionada la primera se reproduce y las demas se aniaden a la cola
-	        //Gestionar las excepciones bien (usar popups para informar al usuario)
-			
 		}
 	}
 }

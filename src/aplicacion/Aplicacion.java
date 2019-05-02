@@ -536,15 +536,12 @@ public class Aplicacion implements Serializable {
         }
 
         if ((usuarioLogeado != null && usuarioLogeado.esMenor() && reproducible.esAptoParaMenores() == false) ||
-        	(usuarioLogeado == null && reproducible.esAptoParaMenores() == false)){
+        	(usuarioLogeado == null && administradorLogeado == false && reproducible.esAptoParaMenores() == false)){
         	throw new ExcepcionNoAptoParaMenores();
         }
 
-        if (usuarioLogeado == null && administradorLogeado == false && reproducible.esAptoParaMenores() == false) {
-        	throw new ExcepcionNoAptoParaMenores();
-        }
 
-        if (reproducible.getEstado() != Estado.NOBLOQUEADO) {
+        if (reproducible.getEstado() != Estado.NOBLOQUEADO && administradorLogeado == false) {
         	throw new ExcepcionReproducirProhibido();
         }
 

@@ -141,6 +141,8 @@ public class GeneraDatos {
 		aplicacion.getUsuarioLogeado().setPremiumHasta(LocalDate.now().plusDays(30));
 		aplicacion.getUsuarioLogeado().crearLista("Bad Bunny beibeeee");
 		aplicacion.subirCancion("Desde el corazon", "canciones/Desde el corazon.mp3");
+		busqueda = aplicacion.buscarPorTitulo("Th");
+		aplicacion.denunciarPlagio((Cancion) busqueda.get(1), "Eyyyyy");
 		aplicacion.logout();
 		
 		System.out.println("El administrador inicia sesion");
@@ -155,9 +157,9 @@ public class GeneraDatos {
 		Thread.sleep(sleep);
 		aplicacion.getAdministrador().tramitarValidacion(aplicacion.getAdministrador().getCancionesNuevas().get(0), EstadoValidacion.EXPLICITO);
 		
-		System.out.println("El administrador marca como explicita la cancion modificada");
+		/*System.out.println("El administrador marca como explicita la cancion modificada");
 		Thread.sleep(sleep);
-		aplicacion.getAdministrador().tramitarValidacion(aplicacion.getAdministrador().getCancionesNuevas().get(1), EstadoValidacion.EXPLICITO);
+		aplicacion.getAdministrador().tramitarValidacion(aplicacion.getAdministrador().getCancionesNuevas().get(1), EstadoValidacion.EXPLICITO);*/
 		
 		System.out.println("El administrador cierra sesion");
 		Thread.sleep(sleep);

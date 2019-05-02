@@ -4,8 +4,15 @@ import java.awt.Image;
 
 import javax.swing.*;
 
+import aplicacion.Aplicacion;
+import usuarios.Administrador;
+import usuarios.UsuarioRegistrado;
+
 public class InicioAdministrador extends JPanel {
 
+	private JLabel validaciones = new JLabel("Canciones por validar: _");
+	private JLabel denuncias = new JLabel("Denuncias a tramitar: _");
+	
 	public InicioAdministrador() {
 
 		super();
@@ -13,8 +20,6 @@ public class InicioAdministrador extends JPanel {
 		this.setLayout(layout);
 		JLabel logo = new JLabel();
 		JLabel bienvenido = new JLabel("Bienvenido Admin!");
-		JLabel validaciones = new JLabel("Canciones por validar: _");
-		JLabel denuncias = new JLabel("Denuncias a tramitar: _");
 		logo.setIcon(new ImageIcon(new ImageIcon("aux/logo-compason.png").getImage().getScaledInstance(200, 75, Image.SCALE_DEFAULT)));
 		
 		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, bienvenido, 0, SpringLayout.HORIZONTAL_CENTER, this);
@@ -32,5 +37,13 @@ public class InicioAdministrador extends JPanel {
 		this.add(validaciones);
 		this.add(denuncias);
 		
+	}
+
+	public void actualizarDatos() {
+		Administrador a = Aplicacion.getInstance().getAdministrador();	
+		
+		this.validaciones.setText("Canciones por validar: "
+				+ a.getCancionesNuevas().stream().filter(c -> !c.esValido() && c.getModificableHasta() == null).count());
+		this.denuncias.setText("Denuncias a tramitar: " + a.getDenuncias().size());		
 	}
 }
