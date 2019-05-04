@@ -38,7 +38,7 @@ public class MisCanciones extends JPanel{
 		Object[][] filas = {
 		{"","Cancion 1", "00:00"},
 		};
-		datosCanciones = new DefaultTableModel(filas, titulos);
+		datosCanciones = new DefaultTableModelNoEditable(filas, titulos);
 		tablaCanciones = new JTable(datosCanciones);
 		TableColumnModel tcm = tablaCanciones.getColumnModel();
 		tcm.removeColumn(tcm.getColumn(0));

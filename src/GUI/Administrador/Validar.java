@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
+import GUI.AccesoComun.DefaultTableModelNoEditable;
 import aplicacion.Aplicacion;
 import media.Cancion;
 import usuarios.Administrador;;
@@ -38,7 +39,7 @@ public class Validar extends JPanel {
 		{"Cancion 9", "Autor 9", "00:00"},
 		{"Cancion 10", "Autor 10", "00:00"},
 		};
-		modeloDatos = new DefaultTableModel(filas, titulos);
+		modeloDatos = new DefaultTableModelNoEditable(filas, titulos);
 		tabla = new JTable(modeloDatos);
 		tabla.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		tabla.setPreferredScrollableViewportSize(new Dimension(800, 500));

@@ -41,7 +41,7 @@ public class Busqueda extends JPanel {
 		Object[][] filas = {
 		};
 		
-	    modeloDatos = new DefaultTableModel(filas, titulos);
+	    modeloDatos = new DefaultTableModelNoEditable(filas, titulos);
 		tabla = new JTable(modeloDatos);
 		tabla.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		tabla.setPreferredScrollableViewportSize(new Dimension(800, 500));

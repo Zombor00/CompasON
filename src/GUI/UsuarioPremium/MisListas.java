@@ -15,6 +15,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.SpringLayout;
 import javax.swing.table.DefaultTableModel;
 
+import GUI.AccesoComun.DefaultTableModelNoEditable;
 import aplicacion.Aplicacion;
 import media.Lista;
 import usuarios.UsuarioRegistrado;
@@ -49,7 +50,7 @@ public class MisListas extends JPanel{
 		{"Lista 9", "00:00"},
 		{"Lista 10", "00:00"},
 		};
-		datosListas = new DefaultTableModel(filas, titulos);
+		datosListas = new DefaultTableModelNoEditable(filas, titulos);
 		tablaListas = new JTable(datosListas);
 		tablaListas.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		tablaListas.setPreferredScrollableViewportSize(new Dimension(800, 500));
