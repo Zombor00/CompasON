@@ -80,7 +80,8 @@ public class ControladorBusqueda implements ActionListener {
 				e1.printStackTrace();
 			}
 	        
-	        //Cambiar el boton del reproductor
+	        gui.getReproductor().changeIcon();
+	        
 	        //gui.getReproductor().get
 	        //Si hay mas de una cancion seleccionada la primera se reproduce y las demas se aniaden a la cola
 		}else if(e.getActionCommand().equals("ANIADIRACOLA")){

@@ -33,6 +33,7 @@ import controladores.ControladorNotificacion;
 import controladores.ControladorOpciones;
 import controladores.ControladorPago;
 import controladores.ControladorRegistro;
+import controladores.ControladorReproductor;
 import excepciones.ExcepcionParametrosDeEntradaIncorrectos;
 import media.Buscable;
 import pads.musicPlayer.exceptions.Mp3PlayerException;
@@ -43,10 +44,12 @@ public class GuiAplicacion extends JFrame {
 	public static GuiAplicacion INSTANCE = null;
 	private PanelesUsuarios panelesUsuarios = new PanelesUsuarios();
 	private Reproductor reproductor = new Reproductor();
+	public static ImageIcon IconoCompasON = new ImageIcon("aux/icono-compason.png");
+	public static ImageIcon botonPausa = new ImageIcon("aux/icono-compason.png");
 
 	private GuiAplicacion() {
 		super("CompasON");
-		this.setIconImage(new ImageIcon("aux/icono-compason.png").getImage());
+		this.setIconImage(IconoCompasON.getImage());
 		Container contenedor = this.getContentPane();
 		BorderLayout layout = new BorderLayout();
 		contenedor.setLayout(layout);
@@ -56,6 +59,8 @@ public class GuiAplicacion extends JFrame {
 
 		Registro registro = panelesUsuarios.getPanelUsuarioSinCuenta().getPestanias().getInicio().getRegistro();
 		registro.setControlador(new ControladorRegistro(registro));
+		
+		reproductor.setControlador(new ControladorReproductor());
 
 		Login login = panelesUsuarios.getPanelUsuarioSinCuenta().getPestanias().getInicio().getLogin();
 		login.setControlador(new ControladorLogin(login));

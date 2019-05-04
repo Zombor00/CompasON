@@ -32,7 +32,7 @@ public class Mp3Player extends PlaybackListener {
 	private class MusicPlayer implements Runnable {
 		
 		private AtomicBoolean keep = new AtomicBoolean(true);
-
+		
 		@Override
 		public void run() {
 			if (player!=null && playerThread.getState().equals(State.RUNNABLE))
@@ -188,7 +188,11 @@ public class Mp3Player extends PlaybackListener {
 	        System.err.println("Error reading file");
 	    }
 	    return h.total_ms((int) tn)/1000;
-	}	
+	}
+	
+	public int getQueueSize() {
+		return this.songs.size();
+	}
 	
 
 }
