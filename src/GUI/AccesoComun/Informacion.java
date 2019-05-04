@@ -1,8 +1,10 @@
 package GUI.AccesoComun;
 
+import java.awt.Color;
 import java.awt.Dimension;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 
 public class Informacion extends JPanel{
 	
@@ -18,6 +20,7 @@ public class Informacion extends JPanel{
 		this.add(sesion);
 		this.add(notificaciones);
 		this.setPreferredSize(new Dimension(300,800));
+		this.setBorder(new LineBorder(Color.DARK_GRAY));
 	}
 	
 	public Sesion getSesion() {

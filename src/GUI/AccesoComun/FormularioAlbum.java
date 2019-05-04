@@ -21,7 +21,7 @@ public class FormularioAlbum extends JPanel {
 		JTextField nombre = new JTextField(30);
 		JTextField canciones = new JTextField(21);
 		JButton seleccionar = new JButton("Seleccionar");
-		seleccionar.setPreferredSize(new Dimension(105, 18));
+		seleccionar.setPreferredSize(new Dimension(105, seleccionar.getPreferredSize().height));
 		JLabel nombreLabel = new JLabel("Nombre del album:");
 		JLabel cancionesLabel = new JLabel("Canciones:");
 		JButton aceptar   = new JButton("Aceptar");
@@ -60,6 +60,11 @@ public class FormularioAlbum extends JPanel {
 						
 						JCheckBoxList checkBoxList = new JCheckBoxList(nombreCanciones);
 						JCheckBoxScrollableList checkBoxScrollableList = new JCheckBoxScrollableList(checkBoxList);
+						/*@SuppressWarnings("unused")
+						JCheckBoxScrollableListSelect checkBoxScrollableListSelect = 
+								new JCheckBoxScrollableListSelect("Seleccione las canciones para el nuevo album",
+										checkBoxScrollableList);*/
+						
 						checkBoxScrollableList.setPreferredSize(new Dimension(500,250));
 						JOptionPane.showMessageDialog(null, checkBoxScrollableList, "Seleccione las canciones para el nuevo album", JOptionPane.PLAIN_MESSAGE);
 						

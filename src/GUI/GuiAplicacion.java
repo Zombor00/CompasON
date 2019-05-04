@@ -1,6 +1,8 @@
 package GUI;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -156,8 +158,65 @@ public class GuiAplicacion extends JFrame {
 				break;
 		}
 	}
+	
+	public static void actualizarLookAndFeel() throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
+		UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
+		Color verde = new Color(0,130,30);
+		Color negro = Color.BLACK;
+		Color gris = Color.DARK_GRAY;
+		Color blanco = Color.WHITE;
+		Color grisClaro = new Color(250,250,250);
+		UIManager.put("control", negro); //Fonfo
+		UIManager.put("text", blanco); //Texto
+		UIManager.put("nimbusBase", gris); //Base 1
+		UIManager.put("nimbusBlueGrey", verde); //Base 2
+		UIManager.put("nimbusSelection", verde); //Botones de menus
+		UIManager.put("textBackground", blanco); //Fondo texto seleccionado
+		UIManager.put("nimbusSelectedText", negro); //Texto seleccionado
+		UIManager.put("nimbusSelectionBackground", grisClaro); //Seleccion en tablas
+		UIManager.put("nimbusFocus", verde); //Foco
+		UIManager.put("nimbusLightBackground", gris); //Fondo normal de textos
+		UIManager.put("nimbusBorder", negro); //Bordes
+		
+		//UIManager.getLookAndFeelDefaults().put("OptionPane.background", Color.red);
 
-	public static void main(String[] args) throws Mp3PlayerException, ExcepcionParametrosDeEntradaIncorrectos, ClassNotFoundException, IOException {
+	}
+	
+	public static void showMessage(String message) {
+		JFrame frame = new JFrame("Mensaje");
+		Container contenedor = frame.getContentPane();
+
+		JPanel panel = new JPanel();
+		panel.setBackground(Color.DARK_GRAY);
+		contenedor.add(panel,BorderLayout.CENTER);
+		
+		SpringLayout layout = new SpringLayout();
+		panel.setLayout(layout);
+		JLabel label = new JLabel(message);
+		JButton button = new JButton("OK");
+		panel.add(button);
+		panel.add(label);
+		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, label, 0, SpringLayout.HORIZONTAL_CENTER, panel);
+		layout.putConstraint(SpringLayout.VERTICAL_CENTER, label, -10, SpringLayout.VERTICAL_CENTER, panel);
+		layout.putConstraint(SpringLayout.EAST, button, 0, SpringLayout.EAST, panel);
+		layout.putConstraint(SpringLayout.SOUTH, button, 0, SpringLayout.SOUTH, panel);
+		
+		frame.setVisible(true);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setSize(new Dimension(400,150));
+		button.addActionListener((
+				new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						frame.dispose();
+					}
+				}
+		));
+		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+		frame.setLocation(dim.width/2-frame.getSize().width/2, dim.height/2-frame.getSize().height/2);
+	}
+
+	public static void main(String[] args) throws Mp3PlayerException, ExcepcionParametrosDeEntradaIncorrectos, ClassNotFoundException, IOException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
+		actualizarLookAndFeel();
 		Aplicacion a = Aplicacion.cargarDatos();
 		GuiAplicacion g = GuiAplicacion.getInstance();
 		System.out.println("Ejecutando main de Gui.Aplicaion. "+ a + " " + g);

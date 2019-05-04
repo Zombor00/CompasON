@@ -63,9 +63,9 @@ public class MisListas extends JPanel{
 		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, scrollTablaListas, 0, SpringLayout.HORIZONTAL_CENTER, this);
 		layout.putConstraint(SpringLayout.VERTICAL_CENTER, scrollTablaListas, 0, SpringLayout.VERTICAL_CENTER, this);
 		layout.putConstraint(SpringLayout.EAST, crearLista, 0, SpringLayout.EAST, scrollTablaListas);
-		layout.putConstraint(SpringLayout.SOUTH, crearLista, -50, SpringLayout.NORTH, scrollTablaListas);
+		layout.putConstraint(SpringLayout.SOUTH, crearLista, 0, SpringLayout.NORTH, scrollTablaListas);
 		layout.putConstraint(SpringLayout.WEST, listas, 0, SpringLayout.WEST, scrollTablaListas);
-		layout.putConstraint(SpringLayout.SOUTH, listas, -50, SpringLayout.NORTH, scrollTablaListas);
+		layout.putConstraint(SpringLayout.SOUTH, listas, 0, SpringLayout.NORTH, scrollTablaListas);
 		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, formularioLista, 0, SpringLayout.HORIZONTAL_CENTER, this);
 		layout.putConstraint(SpringLayout.VERTICAL_CENTER, formularioLista, 0, SpringLayout.VERTICAL_CENTER, this);
 		

@@ -25,7 +25,7 @@ public class FormularioLista extends JPanel{
 		JTextField nombre = new JTextField(30);
 		JTextField elementos = new JTextField(21);
 		JButton seleccionar = new JButton("Seleccionar");
-		seleccionar.setPreferredSize(new Dimension(105, 18));
+		seleccionar.setPreferredSize(new Dimension(105, seleccionar.getPreferredSize().height));
 		JLabel nombreLabel = new JLabel("Nombre de la lista");
 		JLabel elementosLabel = new JLabel("Elementos:");
 		JButton aceptar   = new JButton("Aceptar");
@@ -74,9 +74,13 @@ public class FormularioLista extends JPanel{
 								getMisListas().getNombreListas());
 						JCheckBoxList checkBoxList = new JCheckBoxList(nombreReproducibles);
 						JCheckBoxScrollableList checkBoxScrollableList = new JCheckBoxScrollableList(checkBoxList);
+
+						/*@SuppressWarnings("unused")
+						JCheckBoxScrollableListSelect checkBoxScrollableListSelect = 
+								new JCheckBoxScrollableListSelect("Seleccione las canciones para el nuevo album",
+										checkBoxScrollableList);*/
 						checkBoxScrollableList.setPreferredSize(new Dimension(500,250));
 						JOptionPane.showMessageDialog(null, checkBoxScrollableList, "Seleccione los elementos para la nueva lista", JOptionPane.PLAIN_MESSAGE);
-						
 						elementos.setText(checkBoxScrollableList.getSelectedIndices().toString());
 					}
 				}

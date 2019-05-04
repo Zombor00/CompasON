@@ -1,7 +1,6 @@
 package GUI.AccesoComun;
 
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
@@ -31,11 +30,6 @@ public class Busqueda extends JPanel {
 		buscar = new JButton("Buscar");
 		String[] modos = {"Por titulo", "Por autor"};
 		modo = new JComboBox<>(modos);
-		JPanel buscador = new JPanel();
-		buscador.setLayout(new FlowLayout());
-		buscador.add(busqueda);
-		buscador.add(modo);
-		buscador.add(buscar);
 		
 		String[] titulos = {"Objeto","Cancion", "Autor", "Duración"};
 		Object[][] filas = {
@@ -52,11 +46,19 @@ public class Busqueda extends JPanel {
 		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, scrollTabla, 0, SpringLayout.HORIZONTAL_CENTER, this);
 		layout.putConstraint(SpringLayout.VERTICAL_CENTER, scrollTabla, 0, SpringLayout.VERTICAL_CENTER, this);
 		
-		layout.putConstraint(SpringLayout.SOUTH, buscador, 0, SpringLayout.NORTH, scrollTabla);
-		layout.putConstraint(SpringLayout.EAST, buscador, 0, SpringLayout.EAST, scrollTabla);
+		layout.putConstraint(SpringLayout.SOUTH, buscar, 0, SpringLayout.NORTH, scrollTabla);
+		layout.putConstraint(SpringLayout.EAST, buscar, 0, SpringLayout.EAST, scrollTabla);
+		
+		layout.putConstraint(SpringLayout.SOUTH, modo, 0, SpringLayout.NORTH, scrollTabla);
+		layout.putConstraint(SpringLayout.EAST, modo, -5, SpringLayout.WEST, buscar);
+		
+		layout.putConstraint(SpringLayout.SOUTH, busqueda, 0, SpringLayout.NORTH, scrollTabla);
+		layout.putConstraint(SpringLayout.EAST, busqueda, -5, SpringLayout.WEST, modo);
 
 		
-		this.add(buscador);
+		this.add(buscar);
+		this.add(modo);
+		this.add(busqueda);
 		this.add(scrollTabla);
 		
 		/* Aniadimos el menu y el boton de opciones */        

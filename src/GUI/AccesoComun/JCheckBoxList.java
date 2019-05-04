@@ -1,5 +1,6 @@
 package GUI.AccesoComun;
 
+import java.awt.Color;
 import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
@@ -16,6 +17,12 @@ public class JCheckBoxList extends JPanel {
 			JCheckBox c = new JCheckBox(e);
 			this.add(c);
 			checkBoxes.add(c);
+		}
+	}
+	public void specialSetBackground(Color bg) {
+		super.setBackground(bg);
+		for(JCheckBox c : checkBoxes) {
+			c.setBackground(bg);
 		}
 	}
 	

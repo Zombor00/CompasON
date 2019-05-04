@@ -6,7 +6,6 @@ import javax.swing.*;
 
 import aplicacion.Aplicacion;
 import usuarios.Administrador;
-import usuarios.UsuarioRegistrado;
 
 public class InicioAdministrador extends JPanel {
 

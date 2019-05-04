@@ -1,5 +1,6 @@
 package GUI.AccesoComun;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.util.ArrayList;
 
@@ -13,15 +14,19 @@ public class JCheckBoxScrollableList extends JScrollPane{
 	public JCheckBoxScrollableList(JCheckBoxList checkBoxList) {
 		super(checkBoxList);
 		this.checkBoxList = checkBoxList;
+		this.setPreferredSize(new Dimension(250,250));
+		this.specialSetBackground(Color.DARK_GRAY);
 	}
 	
 	public ArrayList<Integer> getSelectedIndices(){
 		return this.checkBoxList.getSelectedIndices();
 	}
 	
-	
-	
-	
+	public void specialSetBackground(Color bg) {
+		super.setBackground(bg);
+		checkBoxList.specialSetBackground(bg);
+		this.setBorder(null);
+	}
 
 	public static void main(String[] args) {
 		
