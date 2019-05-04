@@ -13,6 +13,7 @@ import GUI.Administrador.PestaniasAdministrador;
 import GUI.Administrador.Validar;
 import GUI.UsuarioPremium.MisListas;
 import GUI.UsuarioPremium.PestaniasUsuarioPremium;
+import GUI.UsuarioRegistrado.Pago;
 import GUI.UsuarioRegistrado.PestaniasUsuarioRegistrado;
 import GUI.AccesoComun.Busqueda;
 import GUI.AccesoComun.MisCanciones;
@@ -30,6 +31,7 @@ import controladores.ControladorMisCanciones;
 import controladores.ControladorMisListas;
 import controladores.ControladorNotificacion;
 import controladores.ControladorOpciones;
+import controladores.ControladorPago;
 import controladores.ControladorRegistro;
 import excepciones.ExcepcionParametrosDeEntradaIncorrectos;
 import media.Buscable;
@@ -97,6 +99,9 @@ public class GuiAplicacion extends JFrame {
 
 		Denuncias denuncias = panelesUsuarios.getPanelAdministrador().getPestaniasAdministrador().getDenuncias();
 		denuncias.setControlador(new ControladorDenuncias(denuncias));
+		
+		Pago pago = panelesUsuarios.getPanelUsuarioRegstrado().getPestanias().getInicio().getPago();
+		pago.setControlador(new ControladorPago(pago));
 
         this.setSize(this.getToolkit().getScreenSize());
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
