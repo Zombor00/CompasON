@@ -9,17 +9,19 @@ import javax.swing.*;
 
 public class FormularioCancion extends JPanel{
 	
+	private JTextField nombre;
+	private JTextField fichero;
+	
 	public FormularioCancion() {
 		super();
 		SpringLayout layout = new SpringLayout();
 		this.setLayout(layout);
-		JTextField nombre = new JTextField(30);
-		JTextField fichero = new JTextField(21);
+		nombre = new JTextField(30);
+		fichero = new JTextField(21);
 		JButton buscar = new JButton("Buscar");
 		buscar.setPreferredSize(new Dimension(105, buscar.getPreferredSize().height));
 		JLabel nombreLabel = new JLabel("Nombre de la cancion:");
 		JLabel ficheroLabel = new JLabel("Fichero de audio:");
-		JButton aceptar   = new JButton("Aceptar");
 
 		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, nombre, 0, SpringLayout.HORIZONTAL_CENTER, this);
 		layout.putConstraint(SpringLayout.VERTICAL_CENTER, nombre, 0, SpringLayout.VERTICAL_CENTER, this);
@@ -34,9 +36,6 @@ public class FormularioCancion extends JPanel{
 		layout.putConstraint(SpringLayout.EAST, nombreLabel,-75,SpringLayout.WEST, nombre);
 		layout.putConstraint(SpringLayout.VERTICAL_CENTER, ficheroLabel,0,SpringLayout.VERTICAL_CENTER, fichero);
 		layout.putConstraint(SpringLayout.WEST, ficheroLabel,0,SpringLayout.WEST, nombreLabel);
-
-		layout.putConstraint(SpringLayout.NORTH, aceptar,5,SpringLayout.SOUTH, fichero);
-		layout.putConstraint(SpringLayout.EAST, aceptar,0,SpringLayout.EAST, nombre);
 		
 		
 
@@ -45,7 +44,6 @@ public class FormularioCancion extends JPanel{
 		this.add(fichero);
 		this.add(buscar);
 		this.add(ficheroLabel);
-		this.add(aceptar);
 		this.setPreferredSize(new Dimension(1000,300));
 		
 		
@@ -67,6 +65,19 @@ public class FormularioCancion extends JPanel{
 					}
 				}
 		);
+	}
+	
+	public String getNombre() {
+		return this.nombre.getText();
+	}
+	
+	public String getFichero() {
+		return this.fichero.getText();
+	}
+	
+	public void actualizarDatos() {
+		nombre.setText("");
+		fichero.setText("");
 	}
 
 }

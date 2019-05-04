@@ -8,6 +8,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 
+import aplicacion.Aplicacion;
 import media.Buscable;
 
 public class Busqueda extends JPanel {
@@ -77,12 +78,21 @@ public class Busqueda extends JPanel {
         layout.putConstraint(SpringLayout.NORTH, opciones, 0, SpringLayout.NORTH, scrollTabla);
         layout.putConstraint(SpringLayout.WEST, opciones, 0, SpringLayout.EAST, scrollTabla);
         this.add(opciones);
+        actualizarBusqueda((ArrayList<Buscable>) Aplicacion.getInstance().getBuscables());
+	}
+	
+	public void limpiarBusqueda() {
+		int numFilas = modeloDatos.getRowCount();
+		for(int i=0; i< numFilas; i++) {
+			modeloDatos.removeRow(0);
+		}
+		modo.setSelectedIndex(0);
 	}
 
 	public void actualizarBusqueda(ArrayList<Buscable> buscables) {
 		
 		int modoAnterior = modo.getSelectedIndex();
-		this.actualizarDatos();
+		this.limpiarBusqueda();
 		
 		Object[] rowData = {0,0,0,0};
 		for (Buscable b : buscables) {
@@ -97,11 +107,7 @@ public class Busqueda extends JPanel {
 	}
 	
 	public void actualizarDatos() {
-		int numFilas = modeloDatos.getRowCount();
-		for(int i=0; i< numFilas; i++) {
-			modeloDatos.removeRow(0);
-		}
-		modo.setSelectedIndex(0);
+		actualizarBusqueda((ArrayList<Buscable>) Aplicacion.getInstance().getBuscables());
 	}
 	
 	public void setControlador(ActionListener controlador) {

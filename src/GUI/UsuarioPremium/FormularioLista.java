@@ -69,7 +69,7 @@ public class FormularioLista extends JPanel{
 						nombreReproducibles.addAll(GuiAplicacion.getInstance().getPanelesUsuarios().getPanelUsuarioPremium().getPestanias().
 								getMisCanciones().getNombreAlbumes());
 						nombreReproducibles.addAll(GuiAplicacion.getInstance().getPanelesUsuarios().getPanelUsuarioPremium().getPestanias().
-								getMisCanciones().getNOmbreCanciones());
+								getMisCanciones().getNombreCanciones());
 						nombreReproducibles.addAll(GuiAplicacion.getInstance().getPanelesUsuarios().getPanelUsuarioPremium().getPestanias().
 								getMisListas().getNombreListas());
 						JCheckBoxList checkBoxList = new JCheckBoxList(nombreReproducibles);

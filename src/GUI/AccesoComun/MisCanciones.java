@@ -26,6 +26,10 @@ public class MisCanciones extends JPanel{
     private JMenuItem reproducirCancion,aniadirCancionACola,aniadirCancionALista,aniadirCancionAAlbum;
     private JMenuItem reproducirAlbum,aniadirAlbumACola,aniadirAlbumALista;
     private JButton opcionesCanciones,opcionesAlbumes;
+    private JButton aceptarAlbum;
+    private FormularioAlbum formularioAlbum;
+    private JButton aceptarCancion;
+    private FormularioCancion formularioCancion;
 	
 	public MisCanciones() {
 		super();
@@ -62,11 +66,13 @@ public class MisCanciones extends JPanel{
 		
 		/* Subir cancion */
 		JButton subirCancion = new JButton("Subir cancion");
-		FormularioCancion formularioCancion = new FormularioCancion();
+		formularioCancion = new FormularioCancion();
+		aceptarCancion = new JButton("Aceptar");
 		
 		/* Subir album */
 		JButton subirAlbum = new JButton("Subir album");
-		FormularioAlbum formularioAlbum = new FormularioAlbum(this.nombreCanciones);
+		formularioAlbum = new FormularioAlbum(this.nombreCanciones);
+		aceptarAlbum = new JButton("Aceptar");
 		
 		
 
@@ -79,6 +85,8 @@ public class MisCanciones extends JPanel{
 		layout.putConstraint(SpringLayout.WEST, canciones, 0, SpringLayout.WEST, scrollTablaCanciones);
 		layout.putConstraint(SpringLayout.EAST, subirCancion, 0, SpringLayout.EAST, scrollTablaCanciones);
 		layout.putConstraint(SpringLayout.EAST, subirAlbum, 0, SpringLayout.EAST, scrollTablaCanciones);
+		layout.putConstraint(SpringLayout.EAST, aceptarAlbum, 0, SpringLayout.EAST, subirAlbum);
+		layout.putConstraint(SpringLayout.EAST, aceptarCancion, 0, SpringLayout.EAST, subirAlbum);
 		
 		layout.putConstraint(SpringLayout.VERTICAL_CENTER, scrollTablaCanciones, 0, SpringLayout.VERTICAL_CENTER, this);
 		layout.putConstraint(SpringLayout.VERTICAL_CENTER, scrollTablaAlbumes, 0, SpringLayout.VERTICAL_CENTER, this);
@@ -88,7 +96,14 @@ public class MisCanciones extends JPanel{
 		layout.putConstraint(SpringLayout.SOUTH, albumes, 0, SpringLayout.NORTH, scrollTablaCanciones);
 		layout.putConstraint(SpringLayout.SOUTH, subirCancion, 0, SpringLayout.NORTH, scrollTablaCanciones);
 		layout.putConstraint(SpringLayout.SOUTH, subirAlbum, 0, SpringLayout.NORTH, scrollTablaCanciones);
+		layout.putConstraint(SpringLayout.NORTH, aceptarAlbum, 0, SpringLayout.SOUTH, formularioAlbum);
+		layout.putConstraint(SpringLayout.NORTH, aceptarCancion, 0, SpringLayout.SOUTH, formularioAlbum);
 		
+		
+		this.add(aceptarCancion);
+		aceptarCancion.setVisible(false);
+		this.add(aceptarAlbum);
+		aceptarAlbum.setVisible(false);
 		this.add(canciones);
 		this.add(scrollTablaCanciones);
 		this.add(albumes);
@@ -112,6 +127,8 @@ public class MisCanciones extends JPanel{
 						subirAlbum.setVisible(true);
 						opcionesCanciones.setVisible(false);
 						opcionesAlbumes.setVisible(true);
+						aceptarAlbum.setVisible(false);
+						aceptarCancion.setVisible(false);
 					}
 				});
 		
@@ -126,6 +143,8 @@ public class MisCanciones extends JPanel{
 						subirAlbum.setVisible(false);
 						opcionesCanciones.setVisible(true);
 						opcionesAlbumes.setVisible(false);
+						aceptarAlbum.setVisible(false);
+						aceptarCancion.setVisible(false);
 					}
 				});
 		
@@ -137,6 +156,8 @@ public class MisCanciones extends JPanel{
 						formularioCancion.setVisible(true);
 						scrollTablaAlbumes.setVisible(false);
 						opcionesCanciones.setVisible(false);
+						aceptarAlbum.setVisible(false);
+						aceptarCancion.setVisible(true);
 					}
 				});
 		
@@ -148,6 +169,8 @@ public class MisCanciones extends JPanel{
 						formularioAlbum.setVisible(true);
 						scrollTablaAlbumes.setVisible(false);
 						opcionesAlbumes.setVisible(false);
+						aceptarAlbum.setVisible(true);
+						aceptarCancion.setVisible(false);
 					}
 				});
 		
@@ -215,14 +238,34 @@ public class MisCanciones extends JPanel{
 		reproducirAlbum.addActionListener(controlador);
 		aniadirCancionAAlbum.setActionCommand("ANIADIR_CANCION_A_ALBUM");
 		aniadirCancionAAlbum.addActionListener(controlador);
+		aceptarAlbum.setActionCommand("ACEPTAR_ALBUM");
+		aceptarAlbum.addActionListener(controlador);
+		aceptarCancion.setActionCommand("ACEPTAR_CANCION");
+		aceptarCancion.addActionListener(controlador);
 	}
 	
 	public ArrayList<String> getNombreAlbumes() {
 		return this.nombreAlbumes;
 	}
 	
-	public ArrayList<String> getNOmbreCanciones() {
+	public ArrayList<String> getNombreCanciones() {
 		return this.nombreCanciones;
+	}
+	
+	public FormularioAlbum getFormularioAlbum() {
+		return this.formularioAlbum;
+	}
+	
+	public FormularioCancion getFormularioCancion() {
+		return this.formularioCancion;
+	}
+	
+	public DefaultTableModel getDatosAlbumes() {
+		return this.datosAlbumes;
+	}
+	
+	public DefaultTableModel getDatosCanciones() {
+		return this.datosCanciones;
 	}
 	
 	
@@ -236,6 +279,9 @@ public class MisCanciones extends JPanel{
 		for(int i=0; i< numFilas; i++) {
 			datosAlbumes.removeRow(0);
 		}
+		
+		nombreCanciones.clear();
+		nombreAlbumes.clear();
 		
 		UsuarioRegistrado u = Aplicacion.getInstance().getUsuarioLogeado();
 		if (u==null) return;
@@ -254,6 +300,8 @@ public class MisCanciones extends JPanel{
 			datosAlbumes.addRow(rowData);
 			nombreAlbumes.add(a.getTitulo());
 		}
+		this.formularioAlbum.actualizarDatos();
+		this.formularioCancion.actualizarDatos();
 	}
 
 }

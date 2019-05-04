@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
+import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 
 public class JCheckBoxScrollableList extends JScrollPane{
@@ -16,6 +17,9 @@ public class JCheckBoxScrollableList extends JScrollPane{
 		this.checkBoxList = checkBoxList;
 		this.setPreferredSize(new Dimension(250,250));
 		this.specialSetBackground(Color.DARK_GRAY);
+		JScrollBar s = this.getVerticalScrollBar();
+		s.setBackground(Color.red);
+		this.setVerticalScrollBar(s);
 	}
 	
 	public ArrayList<Integer> getSelectedIndices(){

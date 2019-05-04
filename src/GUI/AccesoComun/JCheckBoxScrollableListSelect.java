@@ -12,13 +12,17 @@ import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 
 public class JCheckBoxScrollableListSelect extends JFrame {
 	
-	public JCheckBoxScrollableListSelect(String tittle, JCheckBoxScrollableList checkBoxScrollableList) {
+	public JCheckBoxScrollableListSelect(String tittle, ArrayList<String> elementos,
+			JTextField textField, ArrayList<Integer> seleccionadas) {
 		
 		super(tittle);
+		JCheckBoxScrollableList checkBoxScrollableList = 
+				new JCheckBoxScrollableList(new JCheckBoxList(elementos));
 		Container contenedor = this.getContentPane();
 
 		JPanel panel = new JPanel();
@@ -36,13 +40,15 @@ public class JCheckBoxScrollableListSelect extends JFrame {
 		layout.putConstraint(SpringLayout.SOUTH, button, 0, SpringLayout.SOUTH, panel);
 		
 		this.setVisible(true);
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
 		this.setSize(new Dimension(500,375));
 		button.addActionListener((
 				new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
+						seleccionadas.clear();
 						JCheckBoxScrollableListSelect.super.dispose();
-						panel.setBackground(null);
+						seleccionadas.addAll(checkBoxScrollableList.getSelectedIndices());
+						textField.setText(seleccionadas.toString());
 					}
 				}
 		));
@@ -51,28 +57,4 @@ public class JCheckBoxScrollableListSelect extends JFrame {
 		
 	}
 	
-public static void main(String[] args) {
-		
-		ArrayList<String> l = new ArrayList<String>();
-		l.add("Hola");
-		l.add("Que");
-		l.add("Tal");
-		l.add("Hola");
-		l.add("Que");
-		l.add("Tal");
-		l.add("Hola");
-		l.add("Que");
-		l.add("Tal");
-		l.add("Hola");
-		l.add("Que");
-		l.add("Tal");
-		l.add("Hola");
-		l.add("Que");
-		l.add("Tal");
-		JCheckBoxScrollableList c = new JCheckBoxScrollableList(new JCheckBoxList(l));
-		
-		
-		@SuppressWarnings("unused")
-		JCheckBoxScrollableListSelect checkBoxScrollableListSelect = new JCheckBoxScrollableListSelect("Prueba",c);
-	}
 }

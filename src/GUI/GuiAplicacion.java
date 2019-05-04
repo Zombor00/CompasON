@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.*;
+import javax.swing.plaf.ColorUIResource;
 
 import GUI.AccesoComun.Sesion;
 import GUI.Administrador.Denuncias;
@@ -179,6 +180,7 @@ public class GuiAplicacion extends JFrame {
 		UIManager.put("nimbusBorder", negro); //Bordes
 		
 		//UIManager.getLookAndFeelDefaults().put("OptionPane.background", Color.red);
+		UIManager.getLookAndFeelDefaults().put("ScrollPane.ScrollBar.background", new ColorUIResource(Color.RED));
 
 	}
 	

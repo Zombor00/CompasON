@@ -1,9 +1,11 @@
 package GUI.Administrador;
 
 
+import java.awt.Color;
 import java.awt.Dimension;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 
 import GUI.AccesoComun.Sesion;
 
@@ -22,6 +24,7 @@ public class InformacionAdministrador extends JPanel {
 		this.add(sesion);
 		this.add(opciones);
 		this.setPreferredSize(new Dimension(300,800));
+		this.setBorder(new LineBorder(Color.DARK_GRAY));
 	}
 	
 	public Sesion getSesion() {
