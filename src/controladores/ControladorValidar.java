@@ -53,6 +53,7 @@ public class ControladorValidar implements ActionListener {
 			Cancion cancion = (Cancion) tabla.getValueAt(fila, 0);
 			try {
 				aplicacion.reproducirReproducible(cancion);
+				gui.getReproductor().changeIcon(false);
 			} catch (FileNotFoundException e1) {
 				JOptionPane.showMessageDialog(gui, "No se encuentra el archivo");
 			} catch (Mp3PlayerException e1) {

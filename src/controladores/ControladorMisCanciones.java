@@ -67,6 +67,7 @@ public class ControladorMisCanciones implements ActionListener {
 	     
 	        try {
 				aplicacion.reproducirReproducible(b);
+		        gui.getReproductor().changeIcon(false);
 			} catch (FileNotFoundException e1) {
 				JOptionPane.showMessageDialog(gui,"No se encuentra el archivo");
 			} catch (Mp3PlayerException e1) {
@@ -91,6 +92,7 @@ public class ControladorMisCanciones implements ActionListener {
 	     
 	        try {
 				aplicacion.reproducirReproducible(b);
+		        gui.getReproductor().changeIcon(false);
 			} catch (FileNotFoundException e1) {
 				JOptionPane.showMessageDialog(gui,"No se encuentra el archivo");
 			} catch (Mp3PlayerException e1) {

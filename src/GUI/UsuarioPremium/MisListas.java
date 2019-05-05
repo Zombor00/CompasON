@@ -14,6 +14,7 @@ import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.SpringLayout;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 
 import GUI.AccesoComun.DefaultTableModelNoEditable;
 import aplicacion.Aplicacion;
@@ -39,21 +40,13 @@ public class MisListas extends JPanel{
 		this.setLayout(layout);
 		
 		/* Canciones */	
-		String[] titulos = {"Lista", "Duracion"};
+		String[] titulos = {"Objeto","Lista", "Duracion"};
 		Object[][] filas = {
-		{"Lista 1", "00:00"},
-		{"Lista 2", "00:00"},
-		{"Lista 3", "00:00"},
-		{"Lista 4", "00:00"},
-		{"Lista 5", "00:00"},
-		{"Lista 6", "00:00"},
-		{"Lista 7", "00:00"},
-		{"Lista 8", "00:00"},
-		{"Lista 9", "00:00"},
-		{"Lista 10", "00:00"},
 		};
 		datosListas = new DefaultTableModelNoEditable(filas, titulos);
 		tablaListas = new JTable(datosListas);
+		TableColumnModel tcm = tablaListas.getColumnModel();
+		tcm.removeColumn(tcm.getColumn(0));
 		tablaListas.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		tablaListas.setPreferredScrollableViewportSize(new Dimension(800, 500));
 		JScrollPane scrollTablaListas = new JScrollPane(tablaListas);
@@ -160,13 +153,14 @@ public class MisListas extends JPanel{
 		}
 		nombreListas.clear();
 		UsuarioRegistrado u = Aplicacion.getInstance().getUsuarioLogeado();
-		Object[] rowData = {0,0};
+		Object[] rowData = {0,0,0};
 		if (u==null) return;
-		for (Lista c : u.getListas()) {
-			rowData[0] = c;
-			rowData[1] = c.parseSeconds(c.getDuracion());
+		for (Lista l : u.getListas()) {
+			rowData[0] = l;
+			rowData[1] = l.getTitulo();
+			rowData[2] = l.parseSeconds(l.getDuracion());
 			datosListas.addRow(rowData);
-			nombreListas.add(c.getTitulo());
+			nombreListas.add(l.getTitulo());
 		}
 		this.formularioLista.actualizarDatos();
 	}

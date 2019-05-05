@@ -51,7 +51,7 @@ public class ControladorMisListas implements ActionListener {
 	        if(fila == -1) {
 	        	return;
 	        }
-	        Lista lista = (Lista)tabla.getValueAt(fila, 0);
+	        Lista lista = (Lista)tabla.getModel().getValueAt(fila, 0);
 	        try {
 				aplicacion.reproducirReproducible(lista);
 			} catch (FileNotFoundException e1) {

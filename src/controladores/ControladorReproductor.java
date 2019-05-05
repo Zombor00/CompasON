@@ -18,8 +18,9 @@ public class ControladorReproductor implements ActionListener{
 		if (aplicacion == null) aplicacion = Aplicacion.getInstance();
 		if (e.getActionCommand().equals("PULSADO")) {
 			Reproductor r = gui.getReproductor();
+			boolean play = r.getPlay();
 			if(aplicacion.getCola().getQueueSize() != 0) {
-				if(r.getActual() == 0) {
+				if(play) {
 					try {
 						aplicacion.getCola().play();
 					} catch (Mp3PlayerException e1) {
@@ -28,7 +29,7 @@ public class ControladorReproductor implements ActionListener{
 				}else {
 					aplicacion.getCola().stop();
 				}
-				r.changeIcon();
+				r.changeIcon(!play);
 			}
 		}
 	}

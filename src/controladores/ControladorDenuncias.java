@@ -50,6 +50,7 @@ public class ControladorDenuncias implements ActionListener {
 			Denuncia denuncia = (Denuncia) tabla.getValueAt(fila, 0);
 			try {
 				aplicacion.reproducirReproducible(denuncia.getDenunciada());
+				gui.getReproductor().changeIcon(false);
 			} catch (FileNotFoundException e1) {
 				JOptionPane.showMessageDialog(gui, "No se encuentra el archivo");
 			} catch (Mp3PlayerException e1) {

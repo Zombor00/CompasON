@@ -66,6 +66,7 @@ public class ControladorBusqueda implements ActionListener {
 	     
 	        try {
 				aplicacion.reproducirReproducible(b);
+		        gui.getReproductor().changeIcon(false);
 			} catch (FileNotFoundException e1) {
 				JOptionPane.showMessageDialog(gui,"No se encuentra el archivo");
 			} catch (Mp3PlayerException e1) {
@@ -80,7 +81,6 @@ public class ControladorBusqueda implements ActionListener {
 				e1.printStackTrace();
 			}
 	        
-	        gui.getReproductor().changeIcon();
 	        
 	        //gui.getReproductor().get
 	        //Si hay mas de una cancion seleccionada la primera se reproduce y las demas se aniaden a la cola
