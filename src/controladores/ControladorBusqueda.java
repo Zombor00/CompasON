@@ -67,6 +67,7 @@ public class ControladorBusqueda implements ActionListener {
 	        try {
 				aplicacion.reproducirReproducible(b);
 		        gui.getReproductor().changeIcon(false);
+		        gui.actualizarDatos();
 			} catch (FileNotFoundException e1) {
 				GuiAplicacion.showMessage("No se encuentra el archivo");
 			} catch (Mp3PlayerException e1) {
@@ -92,13 +93,13 @@ public class ControladorBusqueda implements ActionListener {
 			
 			try {
 				aplicacion.aniadirALaCola(b);
+				gui.actualizarDatos();
 			} catch (Mp3InvalidFileException e1) {
 				GuiAplicacion.showMessage("Reproductor no funcionando");
 			} catch (ExcepcionParametrosDeEntradaIncorrectos e1) {
 				e1.printStackTrace();
 			} catch (ExcepcionLimiteReproducidasAlcanzado e1) {
 				GuiAplicacion.showMessage("Limite de reproducciones alcanzado");
-				e1.printStackTrace();
 			} catch (ExcepcionNoAptoParaMenores e1) {
 				GuiAplicacion.showMessage("No apto para menores");
 				e1.printStackTrace();
