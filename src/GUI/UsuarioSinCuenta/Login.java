@@ -20,7 +20,7 @@ public class Login extends JPanel {
 		this.usuario = new JTextField(20);
 		this.contrasenia = new JPasswordField(20);
 		JLabel usuarioLabel = new JLabel("Nombre de usuario:");
-		JLabel contraseniaLabel = new JLabel("Contrasenia:");
+		JLabel contraseniaLabel = new JLabel("Contraseña:");
 		this.acceder = new JButton("Acceder");
 
 		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, usuario, 0, SpringLayout.HORIZONTAL_CENTER, this);

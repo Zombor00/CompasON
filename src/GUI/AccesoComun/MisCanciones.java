@@ -134,8 +134,8 @@ public class MisCanciones extends JPanel{
 		formularioCancion = new FormularioCancion();
 		aceptarCancion = new JButton("Aceptar");
 		
-		/* Subir album */
-		JButton subirAlbum = new JButton("Subir album");
+		/* Crear album */
+		JButton subirAlbum = new JButton("Crear album");
 		formularioAlbum = new FormularioAlbum(this.nombreCanciones);
 		aceptarAlbum = new JButton("Aceptar");
 		
@@ -260,9 +260,9 @@ public class MisCanciones extends JPanel{
         menuAlbumes=new JPopupMenu();
         reproducirAlbum=new JMenuItem("Reproducir");
         menuAlbumes.add(reproducirAlbum);
-        aniadirAlbumACola=new JMenuItem("Aniadir a la cola");
+        aniadirAlbumACola=new JMenuItem("Añadir a la cola");
         menuAlbumes.add(aniadirAlbumACola);
-        aniadirAlbumALista = new JMenuItem("Aniadir a una lista");
+        aniadirAlbumALista = new JMenuItem("Añadir a una lista");
         menuAlbumes.add(aniadirAlbumALista);
         borrarAlbum = new JMenuItem("Borrar album");
         menuAlbumes.add(borrarAlbum);
