@@ -192,22 +192,16 @@ public class ControladorMisCanciones implements ActionListener {
 			try {
 				aplicacion.subirCancion(nombre, fichero);
 			} catch (Mp3InvalidFileException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			} catch (ExcepcionDuracionLimiteSuperada e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			} catch (ExcepcionParametrosDeEntradaIncorrectos e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			} catch (IOException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			} catch (ExcepcionUsuarioSinCuenta e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			} catch (ExcepcionMp3NoValido e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 			gui.actualizarDatos();
