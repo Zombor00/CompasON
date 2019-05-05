@@ -12,6 +12,7 @@ import javax.swing.table.TableColumnModel;
 import aplicacion.Aplicacion;
 import media.Album;
 import media.Cancion;
+import media.EstadoValidacion;
 import usuarios.UsuarioRegistrado;
 
 public class MisCanciones extends JPanel{
@@ -351,6 +352,18 @@ public class MisCanciones extends JPanel{
 		for (Cancion c : u.getCanciones()) {
 			rowData[0] = c;
 			rowData[1] = c.getTitulo();
+			rowData[2] = c.parseSeconds(c.getDuracion());
+			datosCanciones.addRow(rowData);
+			nombreCanciones.add(c.getTitulo());
+		}
+		for (Cancion c : u.getCancionesNuevas()) {
+			rowData[0] = c;
+			if (c.getEstadoValidacion() == EstadoValidacion.NOVALIDADA && c.getModificableHasta() != null) {
+				rowData[1] = c.getTitulo() + " (Sin validar. Modificable hasta: " + c.getModificableHasta() + ")" ;
+			}
+			else {
+				rowData[1] = c.getTitulo() + " (En proceso de validacion)";
+			}
 			rowData[2] = c.parseSeconds(c.getDuracion());
 			datosCanciones.addRow(rowData);
 			nombreCanciones.add(c.getTitulo());
