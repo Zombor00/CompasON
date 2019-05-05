@@ -27,8 +27,10 @@ import excepciones.ExcepcionParametrosDeEntradaIncorrectos;
 import excepciones.ExcepcionReproducirProhibido;
 import excepciones.ExcepcionUsuarioSinCuenta;
 import media.Album;
+import media.Buscable;
 import media.Cancion;
 import media.Estado;
+import media.EstadoValidacion;
 import pads.musicPlayer.exceptions.Mp3InvalidFileException;
 import pads.musicPlayer.exceptions.Mp3PlayerException;
 
@@ -61,7 +63,7 @@ public class ControladorMisCanciones implements ActionListener {
 			if(c == null)return;
 			
 			if(c.getEstado() == Estado.BLOQUEADO) {
-				JOptionPane.showMessageDialog(gui,"Cancion bloqueada");
+				GuiAplicacion.showMessage("Cancion bloqueada");
 				return;
 			}
 	     
@@ -69,13 +71,13 @@ public class ControladorMisCanciones implements ActionListener {
 				aplicacion.reproducirReproducible(c);
 		        gui.getReproductor().changeIcon(false);
 			} catch (FileNotFoundException e1) {
-				JOptionPane.showMessageDialog(gui,"No se encuentra el archivo");
+				GuiAplicacion.showMessage("No se encuentra el archivo");
 			} catch (Mp3PlayerException e1) {
-				JOptionPane.showMessageDialog(gui,"Reproductor no funcionando");
+				GuiAplicacion.showMessage("Reproductor no funcionando");
 			} catch (ExcepcionLimiteReproducidasAlcanzado e1) {
-				JOptionPane.showMessageDialog(gui,"Limite de reproducciones alcanzado");
+				GuiAplicacion.showMessage("Limite de reproducciones alcanzado");
 			} catch (ExcepcionNoAptoParaMenores e1) {
-				JOptionPane.showMessageDialog(gui,"No apto para menores");
+				GuiAplicacion.showMessage("No apto para menores");
 			} catch (ExcepcionParametrosDeEntradaIncorrectos e1) {
 				e1.printStackTrace();
 			} catch (ExcepcionReproducirProhibido e1) {
@@ -86,7 +88,7 @@ public class ControladorMisCanciones implements ActionListener {
 			if(a == null)return;
 			
 			if(a.getEstado() == Estado.BLOQUEADO) {
-				JOptionPane.showMessageDialog(gui,"Album bloqueado");
+				GuiAplicacion.showMessage("Album bloqueado");
 				return;
 			}
 			
@@ -94,13 +96,13 @@ public class ControladorMisCanciones implements ActionListener {
 				aplicacion.reproducirReproducible(a);
 		        gui.getReproductor().changeIcon(false);
 			} catch (FileNotFoundException e1) {
-				JOptionPane.showMessageDialog(gui,"No se encuentra el archivo");
+				GuiAplicacion.showMessage("No se encuentra el archivo");
 			} catch (Mp3PlayerException e1) {
-				JOptionPane.showMessageDialog(gui,"Reproductor no funcionando");
+				GuiAplicacion.showMessage("Reproductor no funcionando");
 			} catch (ExcepcionLimiteReproducidasAlcanzado e1) {
-				JOptionPane.showMessageDialog(gui,"Limite de reproducciones alcanzado");
+				GuiAplicacion.showMessage("Limite de reproducciones alcanzado");
 			} catch (ExcepcionNoAptoParaMenores e1) {
-				JOptionPane.showMessageDialog(gui,"No apto para menores");
+				GuiAplicacion.showMessage("No apto para menores");
 			} catch (ExcepcionParametrosDeEntradaIncorrectos e1) {
 				e1.printStackTrace();
 			} catch (ExcepcionReproducirProhibido e1) {
@@ -231,7 +233,7 @@ public class ControladorMisCanciones implements ActionListener {
 				
 		} else if(e.getActionCommand().equals("BORRAR_ALBUM")) {
 			Album a = this.getSelectedAlbum();
-			if(a == null)return;
+			if(a == null) return;
 			try {
 				aplicacion.borrarAlbum(a);
 				gui.actualizarDatos();
@@ -240,9 +242,57 @@ public class ControladorMisCanciones implements ActionListener {
 				e1.printStackTrace();
 			}
 		} else if(e.getActionCommand().equals("ANIADIR_CANCION_COLA")) {
-			//Implementar
+			Cancion c = this.getSelectedCancion();
+			if(c == null) {
+				return;
+			}
+			
+			try {
+				aplicacion.aniadirALaCola(c);
+			} catch (Mp3InvalidFileException e1) {
+				GuiAplicacion.showMessage("Reproductor no funcionando");
+			} catch (ExcepcionParametrosDeEntradaIncorrectos e1) {
+				e1.printStackTrace();
+			} catch (ExcepcionLimiteReproducidasAlcanzado e1) {
+				GuiAplicacion.showMessage("Limite de reproducciones alcanzado");
+				e1.printStackTrace();
+			} catch (ExcepcionNoAptoParaMenores e1) {
+				GuiAplicacion.showMessage("No apto para menores");
+				e1.printStackTrace();
+			} catch (ExcepcionReproducirProhibido e1) {
+				e1.printStackTrace();
+			} catch (ExcepcionUsuarioSinCuenta e1) {
+				GuiAplicacion.showMessage("Debe registrarse para usar la cola");
+				e1.printStackTrace();
+			}
 		} else if(e.getActionCommand().equals("ANIADIR_ALBUM_COLA")) {
-			//Implementar
+			Album a = this.getSelectedAlbum();
+			if(a == null) {
+				return;
+			}
+			
+			try {
+				aplicacion.aniadirALaCola(a);
+			} catch (Mp3InvalidFileException e1) {
+				GuiAplicacion.showMessage("Reproductor no funcionando");
+			} catch (ExcepcionParametrosDeEntradaIncorrectos e1) {
+				e1.printStackTrace();
+			} catch (ExcepcionLimiteReproducidasAlcanzado e1) {
+				GuiAplicacion.showMessage("Limite de reproducciones alcanzado");
+				e1.printStackTrace();
+			} catch (ExcepcionNoAptoParaMenores e1) {
+				GuiAplicacion.showMessage("No apto para menores");
+				e1.printStackTrace();
+			} catch (ExcepcionReproducirProhibido e1) {
+				e1.printStackTrace();
+			} catch (ExcepcionUsuarioSinCuenta e1) {
+				GuiAplicacion.showMessage("Debe registrarse para usar la cola");
+				e1.printStackTrace();
+			}
+		} else if(e.getActionCommand().equals("MODIFICAR_CANCION")) {
+			Cancion c = this.getSelectedCancion();
+			if (c == null) return;
+			GuiAplicacion.showMessage("NO ESTA IMPLEMENTADO");
 		}
 	}
 	
