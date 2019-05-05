@@ -221,6 +221,7 @@ public class MisCanciones extends JPanel{
 						formularioCancion.setVisible(true);
 						scrollTablaAlbumes.setVisible(false);
 						opcionesCanciones.setVisible(false);
+						opcionesAlbumes.setVisible(false);
 						aceptarAlbum.setVisible(false);
 						aceptarCancion.setVisible(true);
 					}
@@ -233,6 +234,7 @@ public class MisCanciones extends JPanel{
 						scrollTablaCanciones.setVisible(false);
 						formularioAlbum.setVisible(true);
 						scrollTablaAlbumes.setVisible(false);
+						opcionesCanciones.setVisible(false);
 						opcionesAlbumes.setVisible(false);
 						aceptarAlbum.setVisible(true);
 						aceptarCancion.setVisible(false);
