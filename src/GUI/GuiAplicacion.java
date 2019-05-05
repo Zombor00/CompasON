@@ -1,6 +1,8 @@
 package GUI;
 
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -37,6 +39,7 @@ import controladores.ControladorReproductor;
 import excepciones.ExcepcionParametrosDeEntradaIncorrectos;
 import media.Buscable;
 import pads.musicPlayer.exceptions.Mp3PlayerException;
+import java.awt.event.WindowEvent;
 
 
 public class GuiAplicacion extends JFrame {
@@ -107,6 +110,21 @@ public class GuiAplicacion extends JFrame {
 		
 		Pago pago = panelesUsuarios.getPanelUsuarioRegstrado().getPestanias().getInicio().getPago();
 		pago.setControlador(new ControladorPago(pago));
+		
+		this.addWindowListener(new WindowAdapter() {
+		    @Override
+		    public void windowClosing(WindowEvent windowEvent) {
+		        try {
+		        	Aplicacion a = Aplicacion.getInstance();
+		        	a.logout();
+					a.guardarDatos();
+				} catch (IOException e) {
+					e.printStackTrace();
+				} catch (Mp3PlayerException e) {
+					e.printStackTrace();
+				}
+		    }
+		});
 
         this.setSize(this.getToolkit().getScreenSize());
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
