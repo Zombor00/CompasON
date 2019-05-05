@@ -22,7 +22,7 @@ public class Notificaciones extends JPanel {
 		{"OJO: sin actualizar", "Nueva canción"}
 		
 		};
-		usuarioNotificacion = new DefaultTableModel(filas, titulos);
+		usuarioNotificacion = new DefaultTableModelNoEditable(filas, titulos);
 		tablaNotificaciones = new JTable(usuarioNotificacion);
 		tablaNotificaciones.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 		tablaNotificaciones.setPreferredScrollableViewportSize(new Dimension(250, 150));
