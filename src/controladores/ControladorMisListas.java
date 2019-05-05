@@ -3,20 +3,26 @@ package controladores;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 import GUI.GuiAplicacion;
 import GUI.UsuarioPremium.MisListas;
 import aplicacion.Aplicacion;
+import excepciones.ExcepcionInsercionInvalida;
 import excepciones.ExcepcionLimiteReproducidasAlcanzado;
 import excepciones.ExcepcionNoAptoParaMenores;
 import excepciones.ExcepcionParametrosDeEntradaIncorrectos;
+import excepciones.ExcepcionReproducibleNoValido;
 import excepciones.ExcepcionReproducirProhibido;
+import excepciones.ExcepcionUsuarioNoPremium;
 import media.Lista;
+import media.Reproducible;
 import pads.musicPlayer.exceptions.Mp3PlayerException;
 
 public class ControladorMisListas implements ActionListener {
@@ -61,8 +67,69 @@ public class ControladorMisListas implements ActionListener {
 			} catch (ExcepcionReproducirProhibido e1) {
 				e1.printStackTrace();
 			}
-		} else if(e.getActionCommand().equals("CREAR_LISTA")) {
-			System.out.println("CRE");
+		} else if(e.getActionCommand().equals("ACEPTAR")) {
+			String nombre = vista.getFormularioLista().getNombre();
+			ArrayList<Integer> reproduciblesSeleccionados = vista.getFormularioLista().getReproduciblesSeleccionados();
+			ArrayList<Integer> aux = null;
+			if(nombre.length() == 0) {
+				GuiAplicacion.showMessage("Introduce el nombre de la lista");
+				return;
+			}
+			if(reproduciblesSeleccionados.size() == 0) {
+				GuiAplicacion.showMessage("Seleccione al menos un elemeto");
+				return;
+			}
+			ArrayList<Reproducible> reproducibles = new ArrayList<>();
+			int numCanciones = GuiAplicacion.getInstance().getPanelesUsuarios().getPanelUsuarioPremium().getPestanias().
+					getMisCanciones().getNombreCanciones().size();
+			DefaultTableModel datosCanciones = GuiAplicacion.getInstance().getPanelesUsuarios().
+					getPanelUsuarioPremium().getPestanias().getMisCanciones().getDatosCanciones();
+			int numAlbumes = GuiAplicacion.getInstance().getPanelesUsuarios().getPanelUsuarioPremium().getPestanias().
+					getMisCanciones().getNombreAlbumes().size();
+			DefaultTableModel datosAlbumes = GuiAplicacion.getInstance().getPanelesUsuarios().
+					getPanelUsuarioPremium().getPestanias().getMisCanciones().getDatosAlbumes();
+			int numListas = vista.getNombreListas().size();
+			DefaultTableModel datosListas = vista.getDatosListas();
+			
+			for(Integer indice : reproduciblesSeleccionados) {
+				if (indice >= numCanciones) {
+					aux = new ArrayList<Integer>(reproduciblesSeleccionados.subList(
+							reproduciblesSeleccionados.indexOf(indice), 
+							reproduciblesSeleccionados.size()));
+					break;
+				}
+				reproducibles.add((Reproducible)datosCanciones.getValueAt(indice, 0));
+			}
+			if(aux != null) {
+				for(Integer indice : aux) {
+					if (indice >= numCanciones + numAlbumes) {
+						aux = new ArrayList<Integer>(aux.subList(aux.indexOf(indice), aux.size()));
+						break;
+					}
+					reproducibles.add((Reproducible)datosAlbumes.getValueAt(indice - numCanciones, 0));
+				}
+			}
+			
+			if(aux != null) {
+				for(Integer indice : aux) {
+					if (indice >= numCanciones + numAlbumes + numListas) {
+						break;
+					}
+					reproducibles.add((Reproducible)datosListas.getValueAt(indice - numCanciones - numAlbumes, 0));
+				}
+			}
+			try {
+				aplicacion.getUsuarioLogeado().crearLista(nombre, reproducibles);
+			} catch (ExcepcionUsuarioNoPremium e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (ExcepcionInsercionInvalida e1) {
+				GuiAplicacion.showMessage("Insercion invalida");
+			} catch (ExcepcionReproducibleNoValido e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			gui.actualizarDatos();
 		} else if(e.getActionCommand().equals("BORRAR")) {
 			
 		}

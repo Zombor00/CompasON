@@ -29,6 +29,8 @@ public class MisListas extends JPanel{
     private JMenuItem reproducir,borrar;
     private JButton opciones;
     private JButton crearLista;
+    private FormularioLista formularioLista;
+    private JButton aceptar;
 	
 	public MisListas() {
 		
@@ -57,8 +59,11 @@ public class MisListas extends JPanel{
 		JScrollPane scrollTablaListas = new JScrollPane(tablaListas);
 		crearLista = new JButton("Crear lista");
 		JButton listas = new JButton("Listas");
-		FormularioLista formularioLista = new FormularioLista();
+		formularioLista = new FormularioLista();
 		formularioLista.setVisible(false);
+		
+		aceptar = new JButton("Aceptar");
+		aceptar.setVisible(true);
 		
 		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, scrollTablaListas, 0, SpringLayout.HORIZONTAL_CENTER, this);
 		layout.putConstraint(SpringLayout.VERTICAL_CENTER, scrollTablaListas, 0, SpringLayout.VERTICAL_CENTER, this);
@@ -68,24 +73,28 @@ public class MisListas extends JPanel{
 		layout.putConstraint(SpringLayout.SOUTH, listas, 0, SpringLayout.NORTH, scrollTablaListas);
 		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, formularioLista, 0, SpringLayout.HORIZONTAL_CENTER, this);
 		layout.putConstraint(SpringLayout.VERTICAL_CENTER, formularioLista, 0, SpringLayout.VERTICAL_CENTER, this);
+		layout.putConstraint(SpringLayout.NORTH, aceptar, 0, SpringLayout.SOUTH, formularioLista);
+		layout.putConstraint(SpringLayout.EAST, aceptar, 0, SpringLayout.EAST, crearLista);
 		
-		/* COnfiguramos el boton "Listas" */
+		/* Configuramos el boton "Listas" */
 		listas.addActionListener(
 				new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						scrollTablaListas.setVisible(true);
 						opciones.setVisible(true);
 						formularioLista.setVisible(false);
+						aceptar.setVisible(false);
 					}
 				});
 		
-		/* COnfiguramos el boton "Listas" */
+		/* COonfiguramos el boton "crearLista" */
 		crearLista.addActionListener(
 				new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						scrollTablaListas.setVisible(false);
 						opciones.setVisible(false);
 						formularioLista.setVisible(true);
+						aceptar.setVisible(true);
 					}
 				});
 		
@@ -93,6 +102,7 @@ public class MisListas extends JPanel{
 		this.add(crearLista);
 		this.add(listas);
 		this.add(formularioLista);
+		this.add(aceptar);
 		
 		/* Aniadimos el menu y el boton de opciones */        
         menu=new JPopupMenu();
@@ -123,6 +133,14 @@ public class MisListas extends JPanel{
 		return this.nombreListas;
 	}
 	
+	public DefaultTableModel getDatosListas() {
+		return this.datosListas;
+	}
+	
+	public FormularioLista getFormularioLista() {
+		return this.formularioLista;
+	}
+	
 	public void setControlador(ActionListener controlador) {
 		opciones.setActionCommand("OPCIONES");
 		opciones.addActionListener(controlador);
@@ -130,8 +148,9 @@ public class MisListas extends JPanel{
 		reproducir.addActionListener(controlador);
 		borrar.setActionCommand("BORRAR");
 		borrar.addActionListener(controlador);
-		crearLista.setActionCommand("CREAR_LISTA");
-		crearLista.addActionListener(controlador);
+		aceptar.setActionCommand("ACEPTAR");
+		aceptar.addActionListener(controlador);
+		
 	}
 	
 	public void actualizarDatos() {
@@ -139,15 +158,17 @@ public class MisListas extends JPanel{
 		for(int i=0; i< numFilas; i++) {
 			datosListas.removeRow(0);
 		}
+		nombreListas.clear();
 		UsuarioRegistrado u = Aplicacion.getInstance().getUsuarioLogeado();
 		Object[] rowData = {0,0};
 		if (u==null) return;
 		for (Lista c : u.getListas()) {
 			rowData[0] = c;
-			rowData[1] = c.getDuracion();
+			rowData[1] = c.parseSeconds(c.getDuracion());
 			datosListas.addRow(rowData);
 			nombreListas.add(c.getTitulo());
 		}
+		this.formularioLista.actualizarDatos();
 	}
 
 }

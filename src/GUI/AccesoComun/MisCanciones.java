@@ -337,6 +337,7 @@ public class MisCanciones extends JPanel{
 		
 		nombreCanciones.clear();
 		nombreAlbumes.clear();
+		albumesSeleccionados.clear();
 		
 		UsuarioRegistrado u = Aplicacion.getInstance().getUsuarioLogeado();
 		if (u==null) return;
