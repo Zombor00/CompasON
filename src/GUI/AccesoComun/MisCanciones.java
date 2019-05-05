@@ -16,20 +16,85 @@ import usuarios.UsuarioRegistrado;
 
 public class MisCanciones extends JPanel{
 	
+	/**
+	 * Lista con los nombres de las canciones del usuario
+	 */
 	private ArrayList<String> nombreCanciones = new ArrayList<String>();
+	
+	/**
+	 * Lista con el nombre de los albumes del usuario
+	 */
 	private ArrayList<String> nombreAlbumes = new ArrayList<String>();
+	
+	/**
+	 * Modelo con los datos de las canciones
+	 */
 	private DefaultTableModel datosCanciones;
+	
+	/**
+	 * Tabla con el modelo de datos de las canciones
+	 */
 	private JTable tablaCanciones;
+	
+	/**
+	 * Modelo con los datos de los albumes
+	 */
 	private DefaultTableModel datosAlbumes;
+	
+	/**
+	 * Tabla con el modelo de datos de los albumes
+	 */
 	private JTable tablaAlbumes;
+	
+	/**
+	 * Menu de opciones para las canciones y los albumes
+	 */
 	private JPopupMenu menuCanciones, menuAlbumes;
+	
+	/**
+	 * Opciones para las canciones
+	 */
     private JMenuItem reproducirCancion,aniadirCancionACola,aniadirCancionALista,aniadirCancionAAlbum;
+    
+    /**
+     * Opciones para los albumes
+     */
     private JMenuItem reproducirAlbum,aniadirAlbumACola,aniadirAlbumALista;
+    
+    /**
+     * Botones que abren los menus
+     */
     private JButton opcionesCanciones,opcionesAlbumes;
-    private JButton aceptarAlbum;
+    
+    /**
+     * Formulario para crear un album
+     */
     private FormularioAlbum formularioAlbum;
-    private JButton aceptarCancion;
+    
+    /**
+     * Confirmacion previa a crear el album a partir de los datos introducidos en formularioAlbum
+     */
+    private JButton aceptarAlbum;
+    
+    /**
+     * Formulario para crear una cancion
+     */
     private FormularioCancion formularioCancion;
+    
+    /**
+     * Confirmacion previa s crear una cancion a partir de los datos introducidos en formularioCancion
+     */
+    private JButton aceptarCancion;
+    
+    /**
+     * Permite almacenar los albumes que el usuario ha seleccionado tras pulsar menuCanciones.aniadirCancionAAlbum
+     */
+    ArrayList<Integer> albumesSeleccionados = new ArrayList<>();
+    
+    /**
+     * Boton auxiliar que no se muestra por pantalla que sirve para gestionar la adicion de canciones a albumes
+     */
+    private JButton auxAniadirCancionAAlbum = new JButton();
 	
 	public MisCanciones() {
 		super();
@@ -227,23 +292,6 @@ public class MisCanciones extends JPanel{
 		return this.menuAlbumes;	
 	}
 	
-	public void setControlador(ActionListener controlador) {
-		opcionesCanciones.setActionCommand("OPCIONES_CANCIONES");
-		opcionesCanciones.addActionListener(controlador);
-		opcionesAlbumes.setActionCommand("OPCIONES_ALBUMES");
-		opcionesAlbumes.addActionListener(controlador);
-		reproducirCancion.setActionCommand("REPRODUCIR_CANCION");
-		reproducirCancion.addActionListener(controlador);
-		reproducirAlbum.setActionCommand("REPRODUCIR_ALBUM");
-		reproducirAlbum.addActionListener(controlador);
-		aniadirCancionAAlbum.setActionCommand("ANIADIR_CANCION_A_ALBUM");
-		aniadirCancionAAlbum.addActionListener(controlador);
-		aceptarAlbum.setActionCommand("ACEPTAR_ALBUM");
-		aceptarAlbum.addActionListener(controlador);
-		aceptarCancion.setActionCommand("ACEPTAR_CANCION");
-		aceptarCancion.addActionListener(controlador);
-	}
-	
 	public ArrayList<String> getNombreAlbumes() {
 		return this.nombreAlbumes;
 	}
@@ -268,6 +316,13 @@ public class MisCanciones extends JPanel{
 		return this.datosCanciones;
 	}
 	
+	public JButton getAuxAniadirCancionAAlbum() {
+		return this.auxAniadirCancionAAlbum;
+	}
+	
+	public ArrayList<Integer> getAlbumesSeleccionados(){
+		return this.albumesSeleccionados;
+	}
 	
 	public void actualizarDatos() {
 		int numFilas = datosCanciones.getRowCount();
@@ -302,6 +357,29 @@ public class MisCanciones extends JPanel{
 		}
 		this.formularioAlbum.actualizarDatos();
 		this.formularioCancion.actualizarDatos();
+	}
+	
+	public void setControlador(ActionListener controlador) {
+		opcionesCanciones.setActionCommand("OPCIONES_CANCIONES");
+		opcionesCanciones.addActionListener(controlador);
+		opcionesAlbumes.setActionCommand("OPCIONES_ALBUMES");
+		opcionesAlbumes.addActionListener(controlador);
+		reproducirCancion.setActionCommand("REPRODUCIR_CANCION");
+		reproducirCancion.addActionListener(controlador);
+		reproducirAlbum.setActionCommand("REPRODUCIR_ALBUM");
+		reproducirAlbum.addActionListener(controlador);
+		aniadirCancionAAlbum.setActionCommand("ANIADIR_CANCION_A_ALBUM");
+		aniadirCancionAAlbum.addActionListener(controlador);
+		aceptarAlbum.setActionCommand("ACEPTAR_ALBUM");
+		aceptarAlbum.addActionListener(controlador);
+		aceptarCancion.setActionCommand("ACEPTAR_CANCION");
+		aceptarCancion.addActionListener(controlador);
+		auxAniadirCancionAAlbum.setActionCommand("AUX_ANIADIR_CANCION_A_ALBUM");
+		auxAniadirCancionAAlbum.addActionListener(controlador);
+		aniadirCancionALista.setActionCommand("ANIADIR_CANCION_A_LISTA");
+		aniadirCancionALista.addActionListener(controlador);
+		aniadirAlbumALista.setActionCommand("ANIADIR_ALBUM_A_LISTA");
+		aniadirAlbumALista.addActionListener(controlador);
 	}
 
 }

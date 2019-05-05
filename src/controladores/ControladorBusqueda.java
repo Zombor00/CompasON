@@ -120,7 +120,7 @@ public class ControladorBusqueda implements ActionListener {
 			} catch (ExcepcionUsuarioYaSeguido e1) {
 				e1.printStackTrace();
 			}
-		}else if(e.getActionCommand().equals("DENUNCIAR")) {
+		} else if(e.getActionCommand().equals("DENUNCIAR")) {
 			Buscable b = this.getBuscable();
 			if(b == null) {
 				return;
@@ -139,10 +139,9 @@ public class ControladorBusqueda implements ActionListener {
 			}else {
 				JOptionPane.showMessageDialog(gui,"Solo puede denunciar canciones");
 			}
-			
-			
-			
-		}
+		} else if (e.getActionCommand().equals("ANIADIR_A_LISTA")) {
+			GuiAplicacion.showMessage("NO ESTA IMPLEMENTADO");
+		} 
 	}
 	
 	private Buscable getBuscable() {

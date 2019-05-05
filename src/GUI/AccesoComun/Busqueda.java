@@ -66,7 +66,7 @@ public class Busqueda extends JPanel {
         menu=new JPopupMenu();
         reproducir=new JMenuItem("Reproducir");
         menu.add(reproducir);
-        aniadirACola=new JMenuItem("Añadir a una cola");
+        aniadirACola=new JMenuItem("Añadir a la cola");
         menu.add(aniadirACola);
         aniadirALista=new JMenuItem("Añadir a una lista");
         menu.add(aniadirALista);
@@ -123,6 +123,8 @@ public class Busqueda extends JPanel {
 		seguirAutor.addActionListener(controlador);
 		denunciar.setActionCommand("DENUNCIAR");
 		denunciar.addActionListener(controlador);
+		aniadirALista.setActionCommand("ANIADIR_A_LISTA");
+		aniadirALista.addActionListener(controlador);
 	}
 	
 	public String getBusqueda() {

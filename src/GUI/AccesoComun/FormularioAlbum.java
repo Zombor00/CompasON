@@ -62,7 +62,7 @@ public class FormularioAlbum extends JPanel {
 								"Seleccione las canciones para el nuevo album",
 								nombreCanciones,
 								canciones,
-								cancionesSeleccionadas);
+								cancionesSeleccionadas,null);
 					}
 				}
 		);

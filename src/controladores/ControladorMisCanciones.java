@@ -1,6 +1,5 @@
 package controladores;
 
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
@@ -14,8 +13,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import GUI.GuiAplicacion;
-import GUI.AccesoComun.JCheckBoxList;
-import GUI.AccesoComun.JCheckBoxScrollableList;
+import GUI.AccesoComun.JCheckBoxScrollableListSelect;
 import GUI.AccesoComun.MisCanciones;
 import aplicacion.Aplicacion;
 import excepciones.ExcepcionCancionNoValidada;
@@ -28,6 +26,7 @@ import excepciones.ExcepcionNoAptoParaMenores;
 import excepciones.ExcepcionParametrosDeEntradaIncorrectos;
 import excepciones.ExcepcionReproducirProhibido;
 import excepciones.ExcepcionUsuarioSinCuenta;
+import media.Album;
 import media.Buscable;
 import media.Cancion;
 import pads.musicPlayer.exceptions.Mp3InvalidFileException;
@@ -106,16 +105,41 @@ public class ControladorMisCanciones implements ActionListener {
 				e1.printStackTrace();
 			}
 		} else if(e.getActionCommand().equals("ANIADIR_CANCION_A_ALBUM")) {
-			JCheckBoxList checkBoxList = new JCheckBoxList(vista.getNombreAlbumes());
-			JCheckBoxScrollableList checkBoxScrollableList = new JCheckBoxScrollableList(checkBoxList);
-			checkBoxScrollableList.setPreferredSize(new Dimension(500,250));
-			JOptionPane.showMessageDialog(null, checkBoxScrollableList, "Seleccione el album", JOptionPane.PLAIN_MESSAGE);
-			//TODO Quitar los joptionpain
-			System.out.println("Hay que aniadir la cancion seleccionada al album en la posicion: " + 
-			checkBoxScrollableList.getSelectedIndices());
+			ArrayList<Integer> albumesSeleccionados = vista.getAlbumesSeleccionados();
+			albumesSeleccionados.clear();
+			JTable tablaCanciones = vista.getTablaCanciones();
+			
+			if(tablaCanciones.getSelectedRowCount() == 0) return;
+			
+			@SuppressWarnings("unused")
+			JCheckBoxScrollableListSelect checkBoxScrollableListSelect = new JCheckBoxScrollableListSelect(
+					"Seleccione el album",
+					vista.getNombreAlbumes(),
+					null,
+					albumesSeleccionados,vista.getAuxAniadirCancionAAlbum());			
+		} else if (e.getActionCommand().equals("AUX_ANIADIR_CANCION_A_ALBUM")) {
+			ArrayList<Integer> albumesSeleccionados = vista.getAlbumesSeleccionados();
+			DefaultTableModel datosCanciones = vista.getDatosCanciones();
+			DefaultTableModel datosAlbumes = vista.getDatosAlbumes();
+			JTable tablaCanciones = vista.getTablaCanciones();
+			if(albumesSeleccionados.size() == 0) return;
+			Album a = ((Album)(datosAlbumes.getValueAt(albumesSeleccionados.get(0), 0)));
+			System.out.println("ContoladorMisCanciones.214: Aniadimos al album " + a);
+			
+			for(Integer indice : tablaCanciones.getSelectedRows()) {
+				try {
+					a.aniadirCancion((Cancion)datosCanciones.getValueAt(indice, 0));
+				} catch (ExcepcionInsercionInvalida e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (ExcepcionCancionNoValidada e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+			gui.actualizarDatos();
 		} else if (e.getActionCommand().equals("ACEPTAR_ALBUM")) {
-			/* Creamos un album accediendo a los atos que el usuario ha introducido en el formulario */
-			DefaultTableModel tablaCanciones = vista.getDatosCanciones();
+			DefaultTableModel datosCanciones = vista.getDatosCanciones();
 			ArrayList<Integer> cancionesSeleccionadas = vista.getFormularioAlbum().getCancionesSeleccionadas();
 			String nombre = vista.getFormularioAlbum().getNombre();
 			
@@ -129,7 +153,7 @@ public class ControladorMisCanciones implements ActionListener {
 			}
 			ArrayList<Cancion> canciones = new ArrayList<>();
 			for(Integer indice : cancionesSeleccionadas) {
-				canciones.add((Cancion)tablaCanciones.getValueAt(indice, 0));
+				canciones.add((Cancion)datosCanciones.getValueAt(indice, 0));
 			}
 			try {
 				aplicacion.aniadirAlbum(nombre, canciones);
@@ -183,6 +207,10 @@ public class ControladorMisCanciones implements ActionListener {
 				e1.printStackTrace();
 			}
 			gui.actualizarDatos();
+		} else if (e.getActionCommand().equals("ANIADIR_CANCION_A_LISTA")) {
+			GuiAplicacion.showMessage("NO ESTA IMPLEMENTADO");
+		} else if (e.getActionCommand().equals("ANIADIR_ALBUM_A_LISTA")) {
+			GuiAplicacion.showMessage("NO ESTA IMPLEMENTADO");
 		} 
 	}
 
