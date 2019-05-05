@@ -87,6 +87,7 @@ public class ControladorValidar implements ActionListener {
 				if (e.getActionCommand().equals("DENEGAR")) {
 					aplicacion.getAdministrador().tramitarValidacion(cancion, EstadoValidacion.NOVALIDADA);
 				}
+				aplicacion.actualizarCanciones();
 				gui.actualizarDatos();
 			} catch (ExcepcionCancionModificable e1) {
 				JOptionPane.showMessageDialog(gui, "Cancion en periodo de modificacion");

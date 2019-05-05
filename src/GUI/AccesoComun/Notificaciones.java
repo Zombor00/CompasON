@@ -64,7 +64,12 @@ public class Notificaciones extends JPanel {
 	public JTable getTablaNotificaciones() {
 		return this.tablaNotificaciones;
 	}
+		
 	
+	public DefaultTableModel getUsuarioNotificacion() {
+		return usuarioNotificacion;
+	}
+
 	public void setControlador(ListSelectionListener controlador) {
 		tablaNotificaciones.getSelectionModel().addListSelectionListener(controlador);
 		tablaNotificaciones.getColumnModel().getSelectionModel().addListSelectionListener(controlador);	

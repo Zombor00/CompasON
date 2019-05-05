@@ -37,8 +37,8 @@ public class ControladorNotificacion implements ListSelectionListener{
         }
         Notificacion n = (Notificacion)tablaNotificaciones.getValueAt(fila, 1);
         aplicacion.getUsuarioLogeado().borrarNotificacion(n);
+        notificaciones.getUsuarioNotificacion().removeRow(fila);
         if(n instanceof NotificacionDenuncia) {
-        	gui.actualizarDatos();
         	return;
         }else {
         	try {
@@ -48,8 +48,6 @@ public class ControladorNotificacion implements ListSelectionListener{
     		}
         }
         
-		
-		gui.actualizarDatos();
 		gui.actualizarBusqueda(buscables, gui.getPanelesUsuarios().getActual());
 		
 	}
