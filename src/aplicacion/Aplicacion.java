@@ -374,7 +374,9 @@ public class Aplicacion implements Serializable {
     	if (album == null) {
     		throw new ExcepcionParametrosDeEntradaIncorrectos();
     	}
-        this.buscables.remove(album);
+        if (album.getAutor() == usuarioLogeado) {
+        	album.setEstado(Estado.BORRADO);
+    	}
     }
 
     /**

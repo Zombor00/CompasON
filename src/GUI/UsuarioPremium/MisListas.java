@@ -27,7 +27,7 @@ public class MisListas extends JPanel{
 	private DefaultTableModel datosListas;
 	private JTable tablaListas;
 	private JPopupMenu menu;
-    private JMenuItem reproducir,borrar;
+    private JMenuItem reproducir,borrar,aniadirCola;
     private JButton opciones;
     private JButton crearLista;
     private FormularioLista formularioLista;
@@ -98,10 +98,12 @@ public class MisListas extends JPanel{
 		this.add(aceptar);
 		
 		/* Aniadimos el menu y el boton de opciones */        
-        menu=new JPopupMenu();
-        reproducir=new JMenuItem("Reproducir");
+        menu = new JPopupMenu();
+        reproducir = new JMenuItem("Reproducir");
         menu.add(reproducir);
-        borrar=new JMenuItem("Borrar");
+        aniadirCola = new JMenuItem("Añadir a la cola");
+        menu.add(aniadirCola);
+        borrar = new JMenuItem("Borrar");
         menu.add(borrar);
         opciones = new JButton("Opciones"); 
         layout.putConstraint(SpringLayout.NORTH, opciones, 0, SpringLayout.NORTH, scrollTablaListas);
@@ -141,6 +143,8 @@ public class MisListas extends JPanel{
 		reproducir.addActionListener(controlador);
 		borrar.setActionCommand("BORRAR");
 		borrar.addActionListener(controlador);
+		aniadirCola.setActionCommand("ANIADIR_COLA");
+		aniadirCola.addActionListener(controlador);
 		aceptar.setActionCommand("ACEPTAR");
 		aceptar.addActionListener(controlador);
 		

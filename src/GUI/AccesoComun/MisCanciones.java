@@ -54,12 +54,12 @@ public class MisCanciones extends JPanel{
 	/**
 	 * Opciones para las canciones
 	 */
-    private JMenuItem reproducirCancion,aniadirCancionACola,aniadirCancionALista,aniadirCancionAAlbum;
+    private JMenuItem reproducirCancion,aniadirCancionACola,aniadirCancionALista,aniadirCancionAAlbum,borrarCancion;
     
     /**
      * Opciones para los albumes
      */
-    private JMenuItem reproducirAlbum,aniadirAlbumACola,aniadirAlbumALista;
+    private JMenuItem reproducirAlbum,aniadirAlbumACola,aniadirAlbumALista,borrarAlbum;
     
     /**
      * Botones que abren los menus
@@ -243,12 +243,14 @@ public class MisCanciones extends JPanel{
 		menuCanciones = new JPopupMenu();
 		reproducirCancion = new JMenuItem("Reproducir");
         menuCanciones.add(reproducirCancion);
-        aniadirCancionACola = new JMenuItem("Aniaidr a la cola");
+        aniadirCancionACola = new JMenuItem("Añadir a la cola");
         menuCanciones.add(aniadirCancionACola);
-        aniadirCancionALista = new JMenuItem("Aniaidr a una lista");
+        aniadirCancionALista = new JMenuItem("Añadir a una lista");
         menuCanciones.add(aniadirCancionALista);
-        aniadirCancionAAlbum = new JMenuItem("Aniadir a un album");
+        aniadirCancionAAlbum = new JMenuItem("Añadir a un album");
         menuCanciones.add(aniadirCancionAAlbum);
+        borrarCancion = new JMenuItem("Borrar cancion");
+        menuCanciones.add(borrarCancion);
         opcionesCanciones = new JButton("Opciones"); 
         layout.putConstraint(SpringLayout.NORTH, opcionesCanciones, 0, SpringLayout.NORTH, scrollTablaCanciones);
         layout.putConstraint(SpringLayout.WEST, opcionesCanciones, 0, SpringLayout.EAST, scrollTablaCanciones);
@@ -262,6 +264,8 @@ public class MisCanciones extends JPanel{
         menuAlbumes.add(aniadirAlbumACola);
         aniadirAlbumALista = new JMenuItem("Aniadir a una lista");
         menuAlbumes.add(aniadirAlbumALista);
+        borrarAlbum = new JMenuItem("Borrar album");
+        menuAlbumes.add(borrarAlbum);
         opcionesAlbumes = new JButton("Opciones"); 
         layout.putConstraint(SpringLayout.NORTH, opcionesAlbumes, 0, SpringLayout.NORTH, scrollTablaAlbumes);
         layout.putConstraint(SpringLayout.WEST, opcionesAlbumes, 0, SpringLayout.EAST, scrollTablaAlbumes);
@@ -381,6 +385,14 @@ public class MisCanciones extends JPanel{
 		aniadirCancionALista.addActionListener(controlador);
 		aniadirAlbumALista.setActionCommand("ANIADIR_ALBUM_A_LISTA");
 		aniadirAlbumALista.addActionListener(controlador);
+		borrarCancion.setActionCommand("BORRAR_CANCION");
+		borrarCancion.addActionListener(controlador);
+		borrarAlbum.setActionCommand("BORRAR_ALBUM");
+		borrarAlbum.addActionListener(controlador);
+		aniadirCancionACola.setActionCommand("ANIADIR_CANCION_COLA");
+		aniadirCancionACola.addActionListener(controlador);
+		aniadirAlbumACola.setActionCommand("ANIADIR_ALBUM_COLA");
+		aniadirAlbumACola.addActionListener(controlador);
 	}
 
 }

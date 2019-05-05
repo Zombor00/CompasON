@@ -27,8 +27,8 @@ import excepciones.ExcepcionParametrosDeEntradaIncorrectos;
 import excepciones.ExcepcionReproducirProhibido;
 import excepciones.ExcepcionUsuarioSinCuenta;
 import media.Album;
-import media.Buscable;
 import media.Cancion;
+import media.Estado;
 import pads.musicPlayer.exceptions.Mp3InvalidFileException;
 import pads.musicPlayer.exceptions.Mp3PlayerException;
 
@@ -57,16 +57,16 @@ public class ControladorMisCanciones implements ActionListener {
 			JPopupMenu menu = vista.getMenuAlbumes();
 			menu.show(opciones, 0, opciones.getHeight());
 		} else if (e.getActionCommand().equals("REPRODUCIR_CANCION")) {
-			JTable tablaNotificaciones = vista.getTablaCanciones();
+			Cancion c = this.getSelectedCancion();
+			if(c == null)return;
 			
-	        int fila = tablaNotificaciones.getSelectedRow();
-	        if(fila == -1) {
-	        	return;
-	        }
-	        Buscable b = (Buscable)tablaNotificaciones.getModel().getValueAt(fila, 0);
+			if(c.getEstado() == Estado.BLOQUEADO) {
+				JOptionPane.showMessageDialog(gui,"Cancion bloqueada");
+				return;
+			}
 	     
 	        try {
-				aplicacion.reproducirReproducible(b);
+				aplicacion.reproducirReproducible(c);
 		        gui.getReproductor().changeIcon(false);
 			} catch (FileNotFoundException e1) {
 				JOptionPane.showMessageDialog(gui,"No se encuentra el archivo");
@@ -82,16 +82,16 @@ public class ControladorMisCanciones implements ActionListener {
 				e1.printStackTrace();
 			}
 		} else if (e.getActionCommand().equals("REPRODUCIR_ALBUM")) {
-			JTable tablaNotificaciones = vista.getTablaAlbumes();
+			Album a = this.getSelectedAlbum();
+			if(a == null)return;
 			
-	        int fila = tablaNotificaciones.getSelectedRow();
-	        if(fila == -1) {
-	        	return;
-	        }
-	        Buscable b = (Buscable)tablaNotificaciones.getModel().getValueAt(fila, 0);
-	     
+			if(a.getEstado() == Estado.BLOQUEADO) {
+				JOptionPane.showMessageDialog(gui,"Album bloqueado");
+				return;
+			}
+			
 	        try {
-				aplicacion.reproducirReproducible(b);
+				aplicacion.reproducirReproducible(a);
 		        gui.getReproductor().changeIcon(false);
 			} catch (FileNotFoundException e1) {
 				JOptionPane.showMessageDialog(gui,"No se encuentra el archivo");
@@ -209,11 +209,59 @@ public class ControladorMisCanciones implements ActionListener {
 				e1.printStackTrace();
 			}
 			gui.actualizarDatos();
+			
 		} else if (e.getActionCommand().equals("ANIADIR_CANCION_A_LISTA")) {
 			GuiAplicacion.showMessage("NO ESTA IMPLEMENTADO");
+			
 		} else if (e.getActionCommand().equals("ANIADIR_ALBUM_A_LISTA")) {
 			GuiAplicacion.showMessage("NO ESTA IMPLEMENTADO");
-		} 
+			
+		} else if(e.getActionCommand().equals("BORRAR_CANCION")) {
+			Cancion c = this.getSelectedCancion();
+			if(c == null) {
+				return;
+			}
+			
+			try {
+				aplicacion.borrarCancion(c);
+				gui.actualizarDatos();
+			} catch (ExcepcionParametrosDeEntradaIncorrectos e1) {
+				e1.printStackTrace();
+			}
+				
+		} else if(e.getActionCommand().equals("BORRAR_ALBUM")) {
+			Album a = this.getSelectedAlbum();
+			if(a == null)return;
+			try {
+				aplicacion.borrarAlbum(a);
+				gui.actualizarDatos();
+				System.out.println("Hola");
+			} catch (ExcepcionParametrosDeEntradaIncorrectos e1) {
+				e1.printStackTrace();
+			}
+		} else if(e.getActionCommand().equals("ANIADIR_CANCION_COLA")) {
+			//Implementar
+		} else if(e.getActionCommand().equals("ANIADIR_ALBUM_COLA")) {
+			//Implementar
+		}
+	}
+	
+	public Album getSelectedAlbum() {
+		JTable tablaAlbum = vista.getTablaAlbumes();
+        int fila = tablaAlbum.getSelectedRow();
+        if(fila == -1) {
+        	return null;
+        }
+        return (Album)tablaAlbum.getModel().getValueAt(fila, 0);
+	}
+	
+	public Cancion getSelectedCancion() {
+		JTable tablaCanciones = vista.getTablaCanciones();
+        int fila = tablaCanciones.getSelectedRow();
+        if(fila == -1) {
+        	return null;
+        }
+        return (Cancion)tablaCanciones.getModel().getValueAt(fila, 0);
 	}
 
 }

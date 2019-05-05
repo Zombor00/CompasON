@@ -21,6 +21,8 @@ import excepciones.ExcepcionParametrosDeEntradaIncorrectos;
 import excepciones.ExcepcionReproducibleNoValido;
 import excepciones.ExcepcionReproducirProhibido;
 import excepciones.ExcepcionUsuarioNoPremium;
+import media.Buscable;
+import media.Estado;
 import media.Lista;
 import media.Reproducible;
 import pads.musicPlayer.exceptions.Mp3PlayerException;
@@ -52,6 +54,12 @@ public class ControladorMisListas implements ActionListener {
 	        	return;
 	        }
 	        Lista lista = (Lista)tabla.getModel().getValueAt(fila, 0);
+	        	
+        	if(lista.getEstado() == Estado.BLOQUEADO) {
+				JOptionPane.showMessageDialog(gui,"Cancion bloqueada");
+				return;
+			}
+	        
 	        try {
 				aplicacion.reproducirReproducible(lista);
 			} catch (FileNotFoundException e1) {
@@ -131,6 +139,15 @@ public class ControladorMisListas implements ActionListener {
 			}
 			gui.actualizarDatos();
 		} else if(e.getActionCommand().equals("BORRAR")) {
+			//borrar lista?
+			JTable tablaListas = vista.getTabla();
+	        int fila = tablaListas.getSelectedRow();
+	        if(fila == -1) {
+	        	return;
+	        }
+	        Buscable b = (Buscable)tablaListas.getModel().getValueAt(fila, 0);
+	        
+		}else if(e.getActionCommand().equals("ANIADIR_COLA")) {
 			
 		}
 		

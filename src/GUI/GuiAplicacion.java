@@ -157,6 +157,23 @@ public class GuiAplicacion extends JFrame {
 		}
 	}
 	
+	public void seleccionarInicio(String actual) {
+		switch(actual) {
+			case PanelesUsuarios.SIN_CUENTA:
+				this.panelesUsuarios.getPanelUsuarioSinCuenta().getPestanias().setSelectedIndex(0);
+				break;
+			case PanelesUsuarios.REGISTRADO:
+				this.panelesUsuarios.getPanelUsuarioRegstrado().getPestanias().setSelectedIndex(0);;
+				break;
+			case PanelesUsuarios.PREMIUM:
+				this.panelesUsuarios.getPanelUsuarioPremium().getPestanias().setSelectedIndex(0);
+				break;
+			case PanelesUsuarios.ADMINISTRADOR:
+				this.panelesUsuarios.getPanelAdministrador().getPestaniasAdministrador().setSelectedIndex(0);
+				break;
+		}
+	}
+	
 	public static void actualizarLookAndFeel() throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
 		UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
 		Color verde = new Color(0,130,30);

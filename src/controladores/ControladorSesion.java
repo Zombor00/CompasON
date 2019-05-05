@@ -41,6 +41,7 @@ public class ControladorSesion implements ActionListener {
 			
 			gui.getReproductor().changeIcon(true);
 			PanelesUsuarios panelesUsuarios = gui.getPanelesUsuarios();
+			gui.seleccionarInicio(panelesUsuarios.getActual());
 			panelesUsuarios.getPanelUsuarioSinCuenta().getPestanias().getInicio().accionIniciarSesion();
 			panelesUsuarios.cambiarPanel(PanelesUsuarios.SIN_CUENTA);
 
