@@ -68,13 +68,13 @@ public class ControladorBusqueda implements ActionListener {
 				aplicacion.reproducirReproducible(b);
 		        gui.getReproductor().changeIcon(false);
 			} catch (FileNotFoundException e1) {
-				JOptionPane.showMessageDialog(gui,"No se encuentra el archivo");
+				GuiAplicacion.showMessage("No se encuentra el archivo");
 			} catch (Mp3PlayerException e1) {
-				JOptionPane.showMessageDialog(gui,"Reproductor no funcionando");
+				GuiAplicacion.showMessage("Reproductor no funcionando");
 			} catch (ExcepcionLimiteReproducidasAlcanzado e1) {
-				JOptionPane.showMessageDialog(gui,"Limite de reproducciones alcanzado");
+				GuiAplicacion.showMessage("Limite de reproducciones alcanzado");
 			} catch (ExcepcionNoAptoParaMenores e1) {
-				JOptionPane.showMessageDialog(gui,"No apto para menores");
+				GuiAplicacion.showMessage("No apto para menores");
 			} catch (ExcepcionParametrosDeEntradaIncorrectos e1) {
 				e1.printStackTrace();
 			} catch (ExcepcionReproducirProhibido e1) {
@@ -93,20 +93,19 @@ public class ControladorBusqueda implements ActionListener {
 			try {
 				aplicacion.aniadirALaCola(b);
 			} catch (Mp3InvalidFileException e1) {
-				JOptionPane.showMessageDialog(gui,"Reproductor no funcionando");
+				GuiAplicacion.showMessage("Reproductor no funcionando");
 			} catch (ExcepcionParametrosDeEntradaIncorrectos e1) {
 				e1.printStackTrace();
 			} catch (ExcepcionLimiteReproducidasAlcanzado e1) {
-				JOptionPane.showMessageDialog(gui,"Limite de reproducciones alcanzado");
+				GuiAplicacion.showMessage("Limite de reproducciones alcanzado");
 				e1.printStackTrace();
 			} catch (ExcepcionNoAptoParaMenores e1) {
-				JOptionPane.showMessageDialog(gui,"No apto para menores");
+				GuiAplicacion.showMessage("No apto para menores");
 				e1.printStackTrace();
 			} catch (ExcepcionReproducirProhibido e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			} catch (ExcepcionUsuarioSinCuenta e1) {
-				JOptionPane.showMessageDialog(gui,"Debe registrarse para usar la cola");
+				GuiAplicacion.showMessage("Debe registrarse para usar la cola");
 				e1.printStackTrace();
 			}
 		}else if(e.getActionCommand().equals("SEGUIRAUTOR")) {
@@ -132,12 +131,12 @@ public class ControladorBusqueda implements ActionListener {
 				} catch (ExcepcionParametrosDeEntradaIncorrectos e1) {
 					e1.printStackTrace();
 				} catch (ExcepcionUsuarioSinCuenta e1) {
-					JOptionPane.showMessageDialog(gui,"Debe registrarse para denunciar");
+					GuiAplicacion.showMessage("Debe registrarse para denunciar");
 					e1.printStackTrace();
 				}
 				gui.actualizarDatos();
 			}else {
-				JOptionPane.showMessageDialog(gui,"Solo puede denunciar canciones");
+				GuiAplicacion.showMessage("Solo puede denunciar canciones");
 			}
 		} else if (e.getActionCommand().equals("ANIADIR_A_LISTA")) {
 			GuiAplicacion.showMessage("NO ESTA IMPLEMENTADO");

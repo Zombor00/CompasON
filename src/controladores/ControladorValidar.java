@@ -55,13 +55,13 @@ public class ControladorValidar implements ActionListener {
 				aplicacion.reproducirReproducible(cancion);
 				gui.getReproductor().changeIcon(false);
 			} catch (FileNotFoundException e1) {
-				JOptionPane.showMessageDialog(gui, "No se encuentra el archivo");
+				GuiAplicacion.showMessage("No se encuentra el archivo");
 			} catch (Mp3PlayerException e1) {
-				JOptionPane.showMessageDialog(gui, "Reproductor no funcionando");
+				GuiAplicacion.showMessage("Reproductor no funcionando");
 			} catch (ExcepcionLimiteReproducidasAlcanzado e1) {
-				JOptionPane.showMessageDialog(gui, "Limite de reproducciones alcanzado");
+				GuiAplicacion.showMessage("Limite de reproducciones alcanzado");
 			} catch (ExcepcionNoAptoParaMenores e1) {
-				JOptionPane.showMessageDialog(gui, "No apto para menores");
+				GuiAplicacion.showMessage("No apto para menores");
 			} catch (ExcepcionParametrosDeEntradaIncorrectos e1) {
 				e1.printStackTrace();
 			} catch (ExcepcionReproducirProhibido e1) {
@@ -90,9 +90,9 @@ public class ControladorValidar implements ActionListener {
 				aplicacion.actualizarCanciones();
 				gui.actualizarDatos();
 			} catch (ExcepcionCancionModificable e1) {
-				JOptionPane.showMessageDialog(gui, "Cancion en periodo de modificacion");
+				GuiAplicacion.showMessage("Cancion en periodo de modificacion");
 			} catch (ExcepcionCancionYaValidada e1) {
-				JOptionPane.showMessageDialog(gui, "Cancion ya validada");
+				GuiAplicacion.showMessage("Cancion ya validada");
 			}
 
 		}

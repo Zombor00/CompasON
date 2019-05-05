@@ -56,20 +56,20 @@ public class ControladorMisListas implements ActionListener {
 	        Lista lista = (Lista)tabla.getModel().getValueAt(fila, 0);
 	        	
         	if(lista.getEstado() == Estado.BLOQUEADO) {
-				JOptionPane.showMessageDialog(gui,"Cancion bloqueada");
+				GuiAplicacion.showMessage("Cancion bloqueada");
 				return;
 			}
 	        
 	        try {
 				aplicacion.reproducirReproducible(lista);
 			} catch (FileNotFoundException e1) {
-				JOptionPane.showMessageDialog(gui,"No se encuentra el archivo");
+				GuiAplicacion.showMessage("No se encuentra el archivo");
 			} catch (Mp3PlayerException e1) {
-				JOptionPane.showMessageDialog(gui,"Reproductor no funcionando");
+				GuiAplicacion.showMessage("Reproductor no funcionando");
 			} catch (ExcepcionLimiteReproducidasAlcanzado e1) {
-				JOptionPane.showMessageDialog(gui,"Limite de reproducciones alcanzado");
+				GuiAplicacion.showMessage("Limite de reproducciones alcanzado");
 			} catch (ExcepcionNoAptoParaMenores e1) {
-				JOptionPane.showMessageDialog(gui,"No apto para menores");
+				GuiAplicacion.showMessage("No apto para menores");
 			} catch (ExcepcionParametrosDeEntradaIncorrectos e1) {
 				e1.printStackTrace();
 			} catch (ExcepcionReproducirProhibido e1) {
@@ -129,12 +129,10 @@ public class ControladorMisListas implements ActionListener {
 			try {
 				aplicacion.getUsuarioLogeado().crearLista(nombre, reproducibles);
 			} catch (ExcepcionUsuarioNoPremium e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			} catch (ExcepcionInsercionInvalida e1) {
 				GuiAplicacion.showMessage("Insercion invalida");
 			} catch (ExcepcionReproducibleNoValido e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 			gui.actualizarDatos();
