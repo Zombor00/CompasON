@@ -54,7 +54,7 @@ public class MisCanciones extends JPanel{
 	/**
 	 * Opciones para las canciones
 	 */
-    private JMenuItem reproducirCancion,aniadirCancionACola,aniadirCancionALista,aniadirCancionAAlbum,borrarCancion;
+    private JMenuItem reproducirCancion,aniadirCancionACola,aniadirCancionALista,aniadirCancionAAlbum,borrarCancion,modificarCancion;
     
     /**
      * Opciones para los albumes
@@ -249,6 +249,8 @@ public class MisCanciones extends JPanel{
         menuCanciones.add(aniadirCancionALista);
         aniadirCancionAAlbum = new JMenuItem("Añadir a un album");
         menuCanciones.add(aniadirCancionAAlbum);
+        modificarCancion = new JMenuItem("Modificar cancion");
+        menuCanciones.add(modificarCancion);
         borrarCancion = new JMenuItem("Borrar cancion");
         menuCanciones.add(borrarCancion);
         opcionesCanciones = new JButton("Opciones"); 
@@ -393,6 +395,8 @@ public class MisCanciones extends JPanel{
 		aniadirCancionACola.addActionListener(controlador);
 		aniadirAlbumACola.setActionCommand("ANIADIR_ALBUM_COLA");
 		aniadirAlbumACola.addActionListener(controlador);
+		modificarCancion.setActionCommand("MODIFICAR_CANCION");
+		modificarCancion.addActionListener(controlador);
 	}
 
 }
