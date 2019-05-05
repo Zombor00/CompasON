@@ -139,13 +139,15 @@ public class ControladorMisListas implements ActionListener {
 			}
 			gui.actualizarDatos();
 		} else if(e.getActionCommand().equals("BORRAR")) {
-			//borrar lista?
 			JTable tablaListas = vista.getTabla();
 	        int fila = tablaListas.getSelectedRow();
 	        if(fila == -1) {
 	        	return;
 	        }
-	        Buscable b = (Buscable)tablaListas.getModel().getValueAt(fila, 0);
+	        Lista l = (Lista)tablaListas.getModel().getValueAt(fila, 0);
+	        
+	        aplicacion.getUsuarioLogeado().borrarLista(l);
+	        gui.actualizarDatos();
 	        
 		}else if(e.getActionCommand().equals("ANIADIR_COLA")) {
 			
