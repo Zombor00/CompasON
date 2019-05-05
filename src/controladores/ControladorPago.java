@@ -35,11 +35,11 @@ public class ControladorPago implements ActionListener {
 			try {
 				aplicacion.pagarPremium(vista.getNumero(), "Pago de servicio premium CompasON");
 			} catch (InvalidCardNumberException e1) {
-				JOptionPane.showMessageDialog(gui,"Numero de tarjeta no valido");
+				GuiAplicacion.showMessage("Numero de tarjeta no valido");
 			} catch (FailedInternetConnectionException e1) {
-				JOptionPane.showMessageDialog(gui,"Fallo en la conexion");
+				GuiAplicacion.showMessage("Fallo en la conexion");
 			} catch (OrderRejectedException e1) {
-				JOptionPane.showMessageDialog(gui,"Operacion rechazada");
+				GuiAplicacion.showMessage("Operacion rechazada");
 			} catch (ExcepcionParametrosDeEntradaIncorrectos e1) {
 				e1.printStackTrace();
 			}

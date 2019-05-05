@@ -35,7 +35,7 @@ public class ControladorRegistro implements ActionListener{
 		if(((registro.getUsuario() != null) && StringUtils.isBlank(registro.getUsuario())) || 
 				(registro.getContrasenia()!=null && StringUtils.isBlank(registro.getContrasenia())) 
 				|| (registro.getNombre() != null && StringUtils.isBlank(registro.getNombre()))) {
-			JOptionPane.showMessageDialog(gui,"Necesario rellenar todos los campos");
+			GuiAplicacion.showMessage("Necesario rellenar todos los campos");
 			return;
 		}
 		
@@ -46,9 +46,9 @@ public class ControladorRegistro implements ActionListener{
 			} catch (NoSuchAlgorithmException e1) {
 				e1.printStackTrace();
 			} catch (ExcepcionParametrosDeEntradaIncorrectos e1) {
-				JOptionPane.showMessageDialog(gui,"Necesario rellenar todos los campos");
+				GuiAplicacion.showMessage("Necesario rellenar todos los campos");
 			} catch (ExcepcionNombreDeUsuarioNoDisponible e1) {
-				JOptionPane.showMessageDialog(gui,"Nombre de usuario no disponible");
+				GuiAplicacion.showMessage("Nombre de usuario no disponible");
 			} catch (ExcepcionLoginErrorCredenciales e1) {
 				e1.printStackTrace();
 			} catch (ExcepcionLoginBloqueado e1) {
