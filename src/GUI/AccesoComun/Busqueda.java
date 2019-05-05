@@ -3,6 +3,7 @@ package GUI.AccesoComun;
 import java.awt.Dimension;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -10,6 +11,7 @@ import javax.swing.table.TableColumnModel;
 
 import aplicacion.Aplicacion;
 import media.Buscable;
+import media.Estado;
 
 public class Busqueda extends JPanel {
 	
@@ -107,7 +109,8 @@ public class Busqueda extends JPanel {
 	}
 	
 	public void actualizarDatos() {
-		actualizarBusqueda((ArrayList<Buscable>) Aplicacion.getInstance().getBuscables());
+		actualizarBusqueda((ArrayList<Buscable>) Aplicacion.getInstance().getBuscables().stream()
+				.filter(b -> b.getEstado() == Estado.NOBLOQUEADO).collect(Collectors.toList()));
 	}
 	
 	public void setControlador(ActionListener controlador) {

@@ -111,6 +111,7 @@ public class GuiAplicacion extends JFrame {
         this.setSize(this.getToolkit().getScreenSize());
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setVisible(true);
+		this.actualizarDatos();		
 
 	}
 
@@ -128,7 +129,6 @@ public class GuiAplicacion extends JFrame {
 	}
 
 	public void actualizarDatos() {
-		/* TODO Ojo con el login del admin */
 		this.panelesUsuarios.actualizarDatos();
 	}
 
