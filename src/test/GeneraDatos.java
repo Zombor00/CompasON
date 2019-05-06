@@ -26,6 +26,7 @@ import excepciones.ExcepcionNombreDeUsuarioNoDisponible;
 import excepciones.ExcepcionParametrosDeEntradaIncorrectos;
 import excepciones.ExcepcionReproducibleNoValido;
 import excepciones.ExcepcionReproducirProhibido;
+import excepciones.ExcepcionSeguirseASiMismo;
 import excepciones.ExcepcionUsuarioNoPremium;
 import excepciones.ExcepcionUsuarioNoSeguido;
 import excepciones.ExcepcionUsuarioSinCuenta;
@@ -38,7 +39,7 @@ import media.EstadoValidacion;
 import pads.musicPlayer.exceptions.Mp3PlayerException;
 
 public class GeneraDatos {
-	public static void main(String[] args) throws Mp3PlayerException, InterruptedException, ExcepcionLimiteReproducidasAlcanzado, ExcepcionNoAptoParaMenores, ExcepcionLoginErrorCredenciales, ExcepcionLoginBloqueado, ExcepcionDuracionLimiteSuperada, ExcepcionCancionModificable, ExcepcionCancionYaValidada, ExcepcionParametrosDeEntradaIncorrectos, ExcepcionNombreDeUsuarioNoDisponible, IOException, ExcepcionReproducirProhibido, ExcepcionUsuarioYaSeguido, ExcepcionUsuarioNoSeguido, ExcepcionErrorCreandoAlbum, InvalidCardNumberException, FailedInternetConnectionException, OrderRejectedException, ExcepcionUsuarioNoPremium, NoSuchAlgorithmException, ExcepcionCancionYaNoModificable, ExcepcionMp3NoValido, ExcepcionUsuarioSinCuenta, ClassNotFoundException, ExcepcionInsercionInvalida, ExcepcionCancionNoValidada, ExcepcionReproducibleNoValido {
+	public static void main(String[] args) throws Mp3PlayerException, InterruptedException, ExcepcionLimiteReproducidasAlcanzado, ExcepcionNoAptoParaMenores, ExcepcionLoginErrorCredenciales, ExcepcionLoginBloqueado, ExcepcionDuracionLimiteSuperada, ExcepcionCancionModificable, ExcepcionCancionYaValidada, ExcepcionParametrosDeEntradaIncorrectos, ExcepcionNombreDeUsuarioNoDisponible, IOException, ExcepcionReproducirProhibido, ExcepcionUsuarioYaSeguido, ExcepcionUsuarioNoSeguido, ExcepcionErrorCreandoAlbum, InvalidCardNumberException, FailedInternetConnectionException, OrderRejectedException, ExcepcionUsuarioNoPremium, NoSuchAlgorithmException, ExcepcionCancionYaNoModificable, ExcepcionMp3NoValido, ExcepcionUsuarioSinCuenta, ClassNotFoundException, ExcepcionInsercionInvalida, ExcepcionCancionNoValidada, ExcepcionReproducibleNoValido, ExcepcionSeguirseASiMismo {
 		List<Buscable> busqueda = new ArrayList<Buscable>();
 		int sleep = 0;
 		System.out.println("GENERANDO DATOS");

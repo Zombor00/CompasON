@@ -21,6 +21,7 @@ import excepciones.ExcepcionLimiteReproducidasAlcanzado;
 import excepciones.ExcepcionNoAptoParaMenores;
 import excepciones.ExcepcionParametrosDeEntradaIncorrectos;
 import excepciones.ExcepcionReproducirProhibido;
+import excepciones.ExcepcionSeguirseASiMismo;
 import excepciones.ExcepcionUsuarioSinCuenta;
 import excepciones.ExcepcionUsuarioYaSeguido;
 
@@ -119,6 +120,9 @@ public class ControladorBusqueda implements ActionListener {
 				aplicacion.getUsuarioLogeado().seguirUsuario(b.getAutor());
 				gui.actualizarDatos();
 			} catch (ExcepcionUsuarioYaSeguido e1) {
+				e1.printStackTrace();
+			} catch (ExcepcionSeguirseASiMismo e1) {
+				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		} else if(e.getActionCommand().equals("DENUNCIAR")) {

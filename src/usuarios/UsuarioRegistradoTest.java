@@ -19,7 +19,7 @@ public class UsuarioRegistradoTest {
 		UsuarioRegistrado u2 = new UsuarioRegistrado("b","b","b",LocalDate.now());
 		try {
 			u1.seguirUsuario(u2);
-		} catch (ExcepcionUsuarioYaSeguido e) {
+		} catch (ExcepcionUsuarioYaSeguido | ExcepcionSeguirseASiMismo e) {
 			fail("Lanzada excepcion no esperada ExcepcionUsuarioYaSeguido");
 		}
 		assertTrue(u1.getSeguidos().contains(u2));
@@ -31,7 +31,7 @@ public class UsuarioRegistradoTest {
 		UsuarioRegistrado u2 = new UsuarioRegistrado("b","b","b",LocalDate.now());
 		try {
 			u1.seguirUsuario(u2);
-		} catch (ExcepcionUsuarioYaSeguido e) {
+		} catch (ExcepcionUsuarioYaSeguido | ExcepcionSeguirseASiMismo e) {
 			fail("Lanzada excepcion no esperada ExcepcionUsuarioYaSeguido");
 		}
 		assertThrows(ExcepcionUsuarioYaSeguido.class, () -> {
@@ -44,7 +44,7 @@ public class UsuarioRegistradoTest {
 		UsuarioRegistrado u2 = new UsuarioRegistrado("b","b","b",LocalDate.now());
 		try {
 			u1.seguirUsuario(u2);
-		} catch (ExcepcionUsuarioYaSeguido e) {
+		} catch (ExcepcionUsuarioYaSeguido | ExcepcionSeguirseASiMismo e) {
 			fail("Lanzada excepcion no esperada ExcepcionUsuarioYaSeguido");
 		}
 		try {

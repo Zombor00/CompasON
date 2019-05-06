@@ -218,8 +218,12 @@ public class UsuarioRegistrado extends UsuarioConCuenta implements Serializable{
     *
     * @param u usuario a seguir
     * @throws ExcepcionUsuarioYaSeguido
+     * @throws ExcepcionSeguirseASiMismo 
     */
-    public void seguirUsuario(UsuarioRegistrado u) throws ExcepcionUsuarioYaSeguido{
+    public void seguirUsuario(UsuarioRegistrado u) throws ExcepcionUsuarioYaSeguido, ExcepcionSeguirseASiMismo{
+    	if (u.equals(this)) {
+    		throw new ExcepcionSeguirseASiMismo();
+    	}
         if (this.seguidos.contains(u) && u.getSeguidores().contains(this)){
             throw new ExcepcionUsuarioYaSeguido();
         }
