@@ -5,14 +5,21 @@ import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import javax.swing.JTable;
+
 import GUI.GuiAplicacion;
 import GUI.PanelesUsuarios;
+import GUI.AccesoComun.Sesion;
 import aplicacion.Aplicacion;
+import excepciones.ExcepcionUsuarioNoSeguido;
+import media.Cancion;
 import pads.musicPlayer.exceptions.Mp3PlayerException;
+import usuarios.UsuarioRegistrado;
 
 public class ControladorSesion implements ActionListener {
 
 	private Aplicacion aplicacion;
+	private Sesion vista;
 	private GuiAplicacion gui;
 
 	@Override
@@ -44,6 +51,26 @@ public class ControladorSesion implements ActionListener {
 			gui.seleccionarInicio(panelesUsuarios.getActual());
 			panelesUsuarios.getPanelUsuarioSinCuenta().getPestanias().getInicio().accionIniciarSesion();
 			panelesUsuarios.cambiarPanel(PanelesUsuarios.SIN_CUENTA);
+			
+		} else if (e.getActionCommand().equals("Dejar_Seguir")) {
+			JTable tabla = vista.getTablaSeguidos();
+			int fila = tabla.getSelectedRow();
+			if (fila == -1) {
+				return;
+			}
+
+			UsuarioRegistrado u = (UsuarioRegistrado) tabla.getValueAt(fila, 0);
+			if (u == null) {
+				System.out.println("EE" + fila);
+				return;
+			}
+			try {
+				aplicacion.getUsuarioLogeado().dejarSeguirUsuario(u);
+				gui.actualizarDatos();
+			} catch (ExcepcionUsuarioNoSeguido e1) {
+				e1.printStackTrace();
+			}
+			
 		}
 	}
 }

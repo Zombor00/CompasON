@@ -62,7 +62,8 @@ public abstract class UsuarioConCuenta implements Serializable{
     
     public String toString() {
     	return this.nombreUsuario;
-    }
+    }    
+    
 
 
 }

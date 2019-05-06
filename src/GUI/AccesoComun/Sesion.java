@@ -79,5 +79,19 @@ public class Sesion extends JPanel {
 	public void setControlador(ActionListener controlador) {
 		cerrar.setActionCommand("Cerrar_Sesion");
 		cerrar.addActionListener(controlador);
+		dejarSeguir.setActionCommand("Dejar_Seguir");
+		dejarSeguir.addActionListener(controlador);
 	}
+
+	public JTable getTablaSeguidos() {
+		return tablaSeguidos;
+	}
+
+	public DefaultTableModel getDatosSeguidos() {
+		return datosSeguidos;
+	}
+
+	
+	
+	
 }
