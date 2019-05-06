@@ -3,10 +3,9 @@ package controladores;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JOptionPane;
-
 import GUI.GuiAplicacion;
 import GUI.PanelesUsuarios;
+import GUI.UsuarioRegistrado.InicioRegistrado;
 import GUI.UsuarioRegistrado.Pago;
 import aplicacion.Aplicacion;
 import es.uam.eps.padsof.telecard.FailedInternetConnectionException;
@@ -43,16 +42,18 @@ public class ControladorPago implements ActionListener {
 			} catch (ExcepcionParametrosDeEntradaIncorrectos e1) {
 				e1.printStackTrace();
 			}
-		}
-		
-		if (aplicacion.getUsuarioLogeado() != null) {
-			gui.actualizarDatos();
-			PanelesUsuarios panelesUsuarios = gui.getPanelesUsuarios();
-			if(aplicacion.getUsuarioLogeado().esPremium()) {
-				panelesUsuarios.cambiarPanel(PanelesUsuarios.PREMIUM);
+			
+			if (aplicacion.getUsuarioLogeado() != null) {
+				gui.actualizarDatos();
+				PanelesUsuarios panelesUsuarios = gui.getPanelesUsuarios();
+				if(aplicacion.getUsuarioLogeado().esPremium()) {
+					panelesUsuarios.cambiarPanel(PanelesUsuarios.PREMIUM);
+				}
 			}
+		}else if(e.getActionCommand().equals("NO_PAGAR")) {
+			InicioRegistrado iR = gui.getPanelesUsuarios().getPanelUsuarioRegstrado().getPestanias().getInicio();
+			iR.noPagar();
 		}
-
 	}
 
 }

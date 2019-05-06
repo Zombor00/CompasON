@@ -126,14 +126,15 @@ public class ControladorBusqueda implements ActionListener {
 				e1.printStackTrace();
 			}
 		} else if(e.getActionCommand().equals("DENUNCIAR")) {
+			vista.comentarioDenunciaVisible(true);
+		}else if(e.getActionCommand().equals("ENVIAR_DENUNCIA")) {
 			Buscable b = this.getBuscable();
 			if(b == null) {
 				return;
 			}
-			
 			if(b instanceof Cancion) {
 				try {
-					aplicacion.denunciarPlagio((Cancion)b, "RELLENAR");
+					aplicacion.denunciarPlagio((Cancion)b, vista.getComentarioDenuncia());
 				} catch (ExcepcionParametrosDeEntradaIncorrectos e1) {
 					e1.printStackTrace();
 				} catch (ExcepcionUsuarioSinCuenta e1) {
@@ -144,6 +145,7 @@ public class ControladorBusqueda implements ActionListener {
 			}else {
 				GuiAplicacion.showMessage("Solo puede denunciar canciones");
 			}
+			vista.comentarioDenunciaVisible(false);
 		} else if (e.getActionCommand().equals("ANIADIR_A_LISTA")) {
 			GuiAplicacion.showMessage("NO ESTA IMPLEMENTADO");
 		} 

@@ -339,7 +339,7 @@ public class UsuarioRegistrado extends UsuarioConCuenta implements Serializable{
 	}
 	
 	public String toString() {
-    	return nombre+" ("+super.toString()+")";
+    	return nombre;
     }
 
 	public boolean equals(UsuarioRegistrado u) {

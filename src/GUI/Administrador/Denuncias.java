@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 
 import GUI.AccesoComun.DefaultTableModelNoEditable;
 import aplicacion.Aplicacion;
@@ -35,9 +36,11 @@ public class Denuncias extends JPanel {
 		tabla.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		tabla.setPreferredScrollableViewportSize(new Dimension(800, 500));
 		JScrollPane scrollTabla = new JScrollPane(tabla);
-		
-		
-
+		TableColumnModel modeloColumnas = tabla.getColumnModel();
+		modeloColumnas.getColumn(0).setPreferredWidth(250);
+		modeloColumnas.getColumn(1).setPreferredWidth(220);
+		modeloColumnas.getColumn(2).setPreferredWidth(80);
+		modeloColumnas.getColumn(3).setPreferredWidth(250);
 		
 		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, scrollTabla, 0, SpringLayout.HORIZONTAL_CENTER, this);
 		layout.putConstraint(SpringLayout.VERTICAL_CENTER, scrollTabla, 0, SpringLayout.VERTICAL_CENTER, this);

@@ -23,6 +23,10 @@ public class Busqueda extends JPanel {
     private JPopupMenu menu;
     private JMenuItem reproducir,aniadirACola,aniadirALista,seguirAutor,denunciar;
     private JButton opciones;
+    private JLabel comentario;
+    private JTextField comentarioDenuncia;
+    private JButton enviarDenuncia;
+    private JButton cancelarDenuncia;
 
 	public Busqueda() {
 		super();
@@ -33,6 +37,9 @@ public class Busqueda extends JPanel {
 		buscar = new JButton("Buscar");
 		String[] modos = {"Por titulo", "Por autor"};
 		modo = new JComboBox<>(modos);
+		comentario = new JLabel("Comentario denuncia (Si la denuncia es falsa se te bloqueará unos dias):");
+		enviarDenuncia = new JButton("Enviar denuncia");
+		cancelarDenuncia = new JButton("Cancelar");
 		
 		String[] titulos = {"Objeto","Cancion", "Autor", "Duración"};
 		Object[][] filas = {
@@ -41,10 +48,11 @@ public class Busqueda extends JPanel {
 	    modeloDatos = new DefaultTableModelNoEditable(filas, titulos);
 		tabla = new JTable(modeloDatos);
 		tabla.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-		tabla.setPreferredScrollableViewportSize(new Dimension(800, 500));
+		tabla.setPreferredScrollableViewportSize(new Dimension(800, 450));
 		TableColumnModel tcm = tabla.getColumnModel();
 		tcm.removeColumn(tcm.getColumn(0));
 		JScrollPane scrollTabla = new JScrollPane(tabla);
+		comentarioDenuncia = new JTextField(20);
 		
 		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, scrollTabla, 0, SpringLayout.HORIZONTAL_CENTER, this);
 		layout.putConstraint(SpringLayout.VERTICAL_CENTER, scrollTabla, 0, SpringLayout.VERTICAL_CENTER, this);
@@ -57,12 +65,31 @@ public class Busqueda extends JPanel {
 		
 		layout.putConstraint(SpringLayout.SOUTH, busqueda, 0, SpringLayout.NORTH, scrollTabla);
 		layout.putConstraint(SpringLayout.EAST, busqueda, -5, SpringLayout.WEST, modo);
+		
+		layout.putConstraint(SpringLayout.NORTH, comentario, 5, SpringLayout.SOUTH, scrollTabla);
+		layout.putConstraint(SpringLayout.WEST, comentario, 0, SpringLayout.WEST, scrollTabla);
 
+		layout.putConstraint(SpringLayout.WEST, comentarioDenuncia, 5, SpringLayout.EAST, comentario);
+		layout.putConstraint(SpringLayout.VERTICAL_CENTER, comentarioDenuncia, 0, SpringLayout.VERTICAL_CENTER, comentario);
+		
+		layout.putConstraint(SpringLayout.WEST, enviarDenuncia, 5, SpringLayout.EAST, comentarioDenuncia);
+		layout.putConstraint(SpringLayout.VERTICAL_CENTER, enviarDenuncia, 0, SpringLayout.VERTICAL_CENTER, comentarioDenuncia);
+		
+		layout.putConstraint(SpringLayout.WEST, cancelarDenuncia, 0, SpringLayout.WEST, enviarDenuncia);
+		layout.putConstraint(SpringLayout.NORTH, cancelarDenuncia, 2, SpringLayout.SOUTH, comentarioDenuncia);
+		
+		cancelarDenuncia.addActionListener(e -> {
+			comentarioDenunciaVisible(false);
+		});
 		
 		this.add(buscar);
 		this.add(modo);
 		this.add(busqueda);
 		this.add(scrollTabla);
+		this.add(comentario);
+		this.add(comentarioDenuncia);
+		this.add(enviarDenuncia);
+		this.add(cancelarDenuncia);
 		
 		/* Aniadimos el menu y el boton de opciones */        
         menu=new JPopupMenu();
@@ -81,6 +108,8 @@ public class Busqueda extends JPanel {
         layout.putConstraint(SpringLayout.WEST, opciones, 0, SpringLayout.EAST, scrollTabla);
         this.add(opciones);
         actualizarBusqueda((ArrayList<Buscable>) Aplicacion.getInstance().getBuscables());
+        
+        this.comentarioDenunciaVisible(false);
 	}
 	
 	public void limpiarBusqueda() {
@@ -128,6 +157,8 @@ public class Busqueda extends JPanel {
 		denunciar.addActionListener(controlador);
 		aniadirALista.setActionCommand("ANIADIR_A_LISTA");
 		aniadirALista.addActionListener(controlador);
+		enviarDenuncia.setActionCommand("ENVIAR_DENUNCIA");
+		enviarDenuncia.addActionListener(controlador);
 	}
 	
 	public String getBusqueda() {
@@ -149,4 +180,16 @@ public class Busqueda extends JPanel {
 	public JComboBox<String> getModo() {
 		return this.modo;
 	}
+	
+	public String getComentarioDenuncia() {
+		return comentarioDenuncia.getText();
+	}
+	
+	public void comentarioDenunciaVisible(boolean vis) {        
+        comentario.setVisible(vis);
+        comentarioDenuncia.setVisible(vis);
+        enviarDenuncia.setVisible(vis);
+        cancelarDenuncia.setVisible(vis);
+	}
+	
 }

@@ -7,11 +7,12 @@ import aplicacion.Aplicacion;
 
 public class InicioRegistrado extends InicioComun {
 	
-	Pago pago;
+	private Pago pago;
+	private JButton hacersePremium;
 
 	public InicioRegistrado() {
 		super();
-		JButton hacersePremium = new JButton("Hacerse premium");
+		hacersePremium = new JButton("Hacerse premium");
 		pago = new Pago();
 		
 		pago.setVisible(false);
@@ -38,6 +39,12 @@ public class InicioRegistrado extends InicioComun {
 	public void actualizarDatos() {
 		super.actualizarDatos();
 		pago.getInformacionPago().setText("Precio del servicio Premium: "+ Aplicacion.getInstance().getPrecioPremium()+ "€");
+	}
+	
+	public void noPagar() {
+		pago.setVisible(false);
+		hacersePremium.setVisible(true);
+		pago.pagoLimpiar();
 	}
 	
 	
