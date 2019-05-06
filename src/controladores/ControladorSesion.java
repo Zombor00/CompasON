@@ -23,7 +23,7 @@ public class ControladorSesion implements ActionListener {
 		if (gui == null)
 			gui = GuiAplicacion.getInstance();
 
-		if (e.getActionCommand().equals("Cerrar Sesion")) {
+		if (e.getActionCommand().equals("Cerrar_Sesion")) {
 			gui.actualizarDatos();
 			try {
 				aplicacion.logout();
@@ -44,7 +44,6 @@ public class ControladorSesion implements ActionListener {
 			gui.seleccionarInicio(panelesUsuarios.getActual());
 			panelesUsuarios.getPanelUsuarioSinCuenta().getPestanias().getInicio().accionIniciarSesion();
 			panelesUsuarios.cambiarPanel(PanelesUsuarios.SIN_CUENTA);
-
 		}
 	}
 }

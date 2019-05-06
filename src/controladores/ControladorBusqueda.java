@@ -117,6 +117,7 @@ public class ControladorBusqueda implements ActionListener {
 			
 			try {
 				aplicacion.getUsuarioLogeado().seguirUsuario(b.getAutor());
+				gui.actualizarDatos();
 			} catch (ExcepcionUsuarioYaSeguido e1) {
 				e1.printStackTrace();
 			}
