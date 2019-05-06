@@ -6,20 +6,24 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
-import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 import GUI.GuiAplicacion;
 import GUI.AccesoComun.Busqueda;
+import GUI.AccesoComun.JCheckBoxScrollableListSelect;
 import media.Buscable;
 import media.Cancion;
+import media.Lista;
 import pads.musicPlayer.exceptions.Mp3InvalidFileException;
 import pads.musicPlayer.exceptions.Mp3PlayerException;
 import aplicacion.Aplicacion;
+import excepciones.ExcepcionInsercionInvalida;
 import excepciones.ExcepcionLimiteReproducidasAlcanzado;
 import excepciones.ExcepcionNoAptoParaMenores;
 import excepciones.ExcepcionParametrosDeEntradaIncorrectos;
+import excepciones.ExcepcionReproducibleNoValido;
 import excepciones.ExcepcionReproducirProhibido;
 import excepciones.ExcepcionSeguirseASiMismo;
 import excepciones.ExcepcionUsuarioSinCuenta;
@@ -37,11 +41,15 @@ public class ControladorBusqueda implements ActionListener {
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		
 		if (aplicacion == null) aplicacion = Aplicacion.getInstance();
 		if (gui == null) gui = GuiAplicacion.getInstance();
 		ArrayList<Buscable> buscable = null;
 		
+		
 		if (e.getActionCommand().equals("BUSCAR")) {
+			
+			
 			String modo = (String)vista.getModo().getSelectedItem();
 			try {
 				if(modo.equals("Por titulo")) {
@@ -52,19 +60,24 @@ public class ControladorBusqueda implements ActionListener {
 			} catch (ExcepcionParametrosDeEntradaIncorrectos e1) {
 				e1.printStackTrace();
 			}
-			
 			gui.actualizarBusqueda(buscable,gui.getPanelesUsuarios().getActual());
+			
 		
 		} else if (e.getActionCommand().equals("OPCIONES")) {
+			
+			
 			JButton opciones = vista.getOpciones();
 			JPopupMenu menu = vista.getMenu();
 			menu.show(opciones, 0, opciones.getHeight());
+			
+			
 		} else if (e.getActionCommand().equals("REPRODUCIR")) {
+			
+			
 			Buscable b = this.getBuscable();
 			if(b == null) {
 				return;
 			}
-	     
 	        try {
 				aplicacion.reproducirReproducible(b);
 		        gui.getReproductor().changeIcon(false);
@@ -78,56 +91,64 @@ public class ControladorBusqueda implements ActionListener {
 			} catch (ExcepcionNoAptoParaMenores e1) {
 				GuiAplicacion.showMessage("No apto para menores");
 			} catch (ExcepcionParametrosDeEntradaIncorrectos e1) {
-				e1.printStackTrace();
+				GuiAplicacion.showMessage("Parametros de entrada incorrectos");
 			} catch (ExcepcionReproducirProhibido e1) {
-				e1.printStackTrace();
+				GuiAplicacion.showMessage("Reproducir prohibido");
 			}
-	        
-	        
 	        //gui.getReproductor().get
 	        //Si hay mas de una cancion seleccionada la primera se reproduce y las demas se aniaden a la cola
+	        
+	        
 		}else if(e.getActionCommand().equals("ANIADIRACOLA")){
+			
+			
 			Buscable b = this.getBuscable();
 			if(b == null) {
 				return;
 			}
-			
 			try {
 				aplicacion.aniadirALaCola(b);
 				gui.actualizarDatos();
 			} catch (Mp3InvalidFileException e1) {
 				GuiAplicacion.showMessage("Reproductor no funcionando");
 			} catch (ExcepcionParametrosDeEntradaIncorrectos e1) {
-				e1.printStackTrace();
+				GuiAplicacion.showMessage("Parametros de entrada incorrectos");
 			} catch (ExcepcionLimiteReproducidasAlcanzado e1) {
 				GuiAplicacion.showMessage("Limite de reproducciones alcanzado");
 			} catch (ExcepcionNoAptoParaMenores e1) {
 				GuiAplicacion.showMessage("No apto para menores");
-				e1.printStackTrace();
 			} catch (ExcepcionReproducirProhibido e1) {
-				e1.printStackTrace();
 			} catch (ExcepcionUsuarioSinCuenta e1) {
 				GuiAplicacion.showMessage("Debe registrarse para usar la cola");
-				e1.printStackTrace();
 			}
+			
+			
 		}else if(e.getActionCommand().equals("SEGUIRAUTOR")) {
+			
+			
 			Buscable b = this.getBuscable();
 			if(b == null) {
 				return;
 			}
-			
 			try {
 				aplicacion.getUsuarioLogeado().seguirUsuario(b.getAutor());
 				gui.actualizarDatos();
 			} catch (ExcepcionUsuarioYaSeguido e1) {
-				e1.printStackTrace();
+				GuiAplicacion.showMessage("Usuario ya seguido");
 			} catch (ExcepcionSeguirseASiMismo e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
+				GuiAplicacion.showMessage("No puedes seguirte a ti mismo");
 			}
+			
+			
 		} else if(e.getActionCommand().equals("DENUNCIAR")) {
+			
+			
 			vista.comentarioDenunciaVisible(true);
+			
+			
 		}else if(e.getActionCommand().equals("ENVIAR_DENUNCIA")) {
+			
+			
 			Buscable b = this.getBuscable();
 			if(b == null) {
 				return;
@@ -136,19 +157,60 @@ public class ControladorBusqueda implements ActionListener {
 				try {
 					aplicacion.denunciarPlagio((Cancion)b, vista.getComentarioDenuncia());
 				} catch (ExcepcionParametrosDeEntradaIncorrectos e1) {
-					e1.printStackTrace();
+					GuiAplicacion.showMessage("Parametros de entrada incorrectos");
 				} catch (ExcepcionUsuarioSinCuenta e1) {
 					GuiAplicacion.showMessage("Debe registrarse para denunciar");
-					e1.printStackTrace();
 				}
 				gui.actualizarDatos();
 			}else {
 				GuiAplicacion.showMessage("Solo puede denunciar canciones");
 			}
 			vista.comentarioDenunciaVisible(false);
+			
+			
 		} else if (e.getActionCommand().equals("ANIADIR_A_LISTA")) {
-			GuiAplicacion.showMessage("NO ESTA IMPLEMENTADO");
-		} 
+			
+			
+			if(aplicacion.getUsuarioLogeado() == null) {
+				GuiAplicacion.showMessage("Inicia sesion para acceder a tus listas");
+				return;
+			}
+			if(aplicacion.getUsuarioLogeado().esPremium() == false) {
+				GuiAplicacion.showMessage("Hazte premium para acceder a tus listas");
+				return;
+			}
+			ArrayList<Integer> listasSeleccionadas = vista.getListasSeleccionadas();
+			listasSeleccionadas.clear();
+			JTable tabla = vista.getTabla();
+			if(tabla.getSelectedRowCount() == 0) return;
+			new JCheckBoxScrollableListSelect(
+					"Seleccione una lista ",
+					GuiAplicacion.getInstance().getPanelesUsuarios().getPanelUsuarioPremium().getPestanias().getMisListas().getNombreListas(),
+					null,
+					listasSeleccionadas,vista.getAuxAniadirAlista());
+			
+			
+		} else if (e.getActionCommand().equals("AUX_ANIADIR_A_LISTA")) {
+
+			JTable tabla = vista.getTabla();
+			DefaultTableModel datos = vista.getDatos();
+			if(tabla.getSelectedRowCount() == 0) return;
+			Lista lista = (Lista)GuiAplicacion.getInstance().getPanelesUsuarios().getPanelUsuarioPremium()
+					.getPestanias().getMisListas().getDatosListas()
+					.getValueAt(vista.getListasSeleccionadas().get(0), 0);
+			for(int fila : tabla.getSelectedRows()) {
+				try {
+					lista.aniadirReproducible((Buscable)datos.getValueAt(fila, 0));
+				} catch (ExcepcionInsercionInvalida e1) {
+					GuiAplicacion.showMessage("Insercion invalida");
+				} catch (ExcepcionReproducibleNoValido e1) {
+					GuiAplicacion.showMessage("Reproducible no valido");
+				}
+			}
+			gui.actualizarDatos();
+			
+
+		}
 	}
 	
 	private Buscable getBuscable() {

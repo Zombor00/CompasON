@@ -8,10 +8,21 @@ import javax.swing.JFrame;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 
+/**
+ * Panel que muestra una lista con scroll de componentes de tipo JCheckBox
+ * @author antonio
+ */
 public class JCheckBoxScrollableList extends JScrollPane{
 	
+	/**
+	 * Lista de checkboxes asociada
+	 */
 	private JCheckBoxList checkBoxList;
 
+	/**
+	 * Construtor de la clase
+	 * @param checkBoxList lista de checkboxes asociada
+	 */
 	public JCheckBoxScrollableList(JCheckBoxList checkBoxList) {
 		super(checkBoxList);
 		this.checkBoxList = checkBoxList;
@@ -22,16 +33,27 @@ public class JCheckBoxScrollableList extends JScrollPane{
 		this.setVerticalScrollBar(s);
 	}
 	
+	/**
+	 * Devuelve los indices de los checkboxes seleccionadas
+	 * @return Lista con los indices de los checkboxes seleccionados
+	 */
 	public ArrayList<Integer> getSelectedIndices(){
 		return this.checkBoxList.getSelectedIndices();
 	}
 	
+	/**
+	 * Permite cambiar el fondo del panel sin sobreescribir el clasico setBackground
+	 * @param bg Color del fonfo
+	 */
 	public void specialSetBackground(Color bg) {
 		super.setBackground(bg);
 		checkBoxList.specialSetBackground(bg);
 		this.setBorder(null);
 	}
 
+	/**
+	 * Metodo para probar la clase
+	 */
 	public static void main(String[] args) {
 		
 		ArrayList<String> l = new ArrayList<String>();

@@ -39,7 +39,6 @@ import controladores.ControladorReproductor;
 import excepciones.ExcepcionParametrosDeEntradaIncorrectos;
 import media.Buscable;
 import pads.musicPlayer.exceptions.Mp3PlayerException;
-import java.awt.event.WindowEvent;
 
 
 public class GuiAplicacion extends JFrame {
@@ -51,7 +50,7 @@ public class GuiAplicacion extends JFrame {
 	public static ImageIcon botonPausa = new ImageIcon("aux/icono-compason.png");
 
 	private GuiAplicacion() {
-		super("CompasON");
+		super("COMPASON");
 		this.setIconImage(IconoCompasON.getImage());
 		Container contenedor = this.getContentPane();
 		BorderLayout layout = new BorderLayout();

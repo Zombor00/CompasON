@@ -4,8 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.security.NoSuchAlgorithmException;
 
-import javax.swing.JOptionPane;
-
 import org.junit.platform.commons.util.StringUtils;
 
 import GUI.GuiAplicacion;

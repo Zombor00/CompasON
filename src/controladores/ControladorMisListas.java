@@ -6,12 +6,12 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
-import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import GUI.GuiAplicacion;
+import GUI.AccesoComun.JCheckBoxScrollableListSelect;
 import GUI.UsuarioPremium.MisListas;
 import aplicacion.Aplicacion;
 import excepciones.ExcepcionInsercionInvalida;
@@ -21,7 +21,6 @@ import excepciones.ExcepcionParametrosDeEntradaIncorrectos;
 import excepciones.ExcepcionReproducibleNoValido;
 import excepciones.ExcepcionReproducirProhibido;
 import excepciones.ExcepcionUsuarioNoPremium;
-import media.Buscable;
 import media.Estado;
 import media.Lista;
 import media.Reproducible;
@@ -42,24 +41,28 @@ public class ControladorMisListas implements ActionListener {
 		if (aplicacion == null) aplicacion = Aplicacion.getInstance();
 		if (gui == null) gui = GuiAplicacion.getInstance();
 		
+		
 		if (e.getActionCommand().equals("OPCIONES")) {
+			
+			
 			JButton opciones = vista.getOpciones();
 			JPopupMenu menu = vista.getMenu();
 			menu.show(opciones, 0, opciones.getHeight());
-		} else if (e.getActionCommand().equals("REPRODUCIR")) {
-			JTable tabla = vista.getTabla();
 			
+			
+		} else if (e.getActionCommand().equals("REPRODUCIR")) {
+			
+			
+			JTable tabla = vista.getTabla();
 	        int fila = tabla.getSelectedRow();
 	        if(fila == -1) {
 	        	return;
 	        }
 	        Lista lista = (Lista)tabla.getModel().getValueAt(fila, 0);
-	        	
         	if(lista.getEstado() == Estado.BLOQUEADO) {
 				GuiAplicacion.showMessage("Cancion bloqueada");
 				return;
 			}
-	        
 	        try {
 				aplicacion.reproducirReproducible(lista);
 			} catch (FileNotFoundException e1) {
@@ -75,7 +78,11 @@ public class ControladorMisListas implements ActionListener {
 			} catch (ExcepcionReproducirProhibido e1) {
 				e1.printStackTrace();
 			}
+	        
+	        
 		} else if(e.getActionCommand().equals("ACEPTAR")) {
+			
+			
 			String nombre = vista.getFormularioLista().getNombre();
 			ArrayList<Integer> reproduciblesSeleccionados = vista.getFormularioLista().getReproduciblesSeleccionados();
 			ArrayList<Integer> aux = null;
@@ -98,7 +105,6 @@ public class ControladorMisListas implements ActionListener {
 					getPanelUsuarioPremium().getPestanias().getMisCanciones().getDatosAlbumes();
 			int numListas = vista.getNombreListas().size();
 			DefaultTableModel datosListas = vista.getDatosListas();
-			
 			for(Integer indice : reproduciblesSeleccionados) {
 				if (indice >= numCanciones) {
 					aux = new ArrayList<Integer>(reproduciblesSeleccionados.subList(
@@ -117,7 +123,6 @@ public class ControladorMisListas implements ActionListener {
 					reproducibles.add((Reproducible)datosAlbumes.getValueAt(indice - numCanciones, 0));
 				}
 			}
-			
 			if(aux != null) {
 				for(Integer indice : aux) {
 					if (indice >= numCanciones + numAlbumes + numListas) {
@@ -136,18 +141,61 @@ public class ControladorMisListas implements ActionListener {
 				e1.printStackTrace();
 			}
 			gui.actualizarDatos();
+			
+			
 		} else if(e.getActionCommand().equals("BORRAR")) {
+			
+			
 			JTable tablaListas = vista.getTabla();
 	        int fila = tablaListas.getSelectedRow();
 	        if(fila == -1) {
 	        	return;
 	        }
 	        Lista l = (Lista)tablaListas.getModel().getValueAt(fila, 0);
-	        
 	        aplicacion.getUsuarioLogeado().borrarLista(l);
 	        gui.actualizarDatos();
 	        
-		}else if(e.getActionCommand().equals("ANIADIR_COLA")) {
+	        
+		} else if(e.getActionCommand().equals("ANIADIR_COLA")) {
+			
+			
+			GuiAplicacion.showMessage("Que no se nos olvide esto!");
+			
+			
+		} else if(e.getActionCommand().equals("ANIADIR_A_LISTA")) {
+			
+			
+			ArrayList<Integer> listasSeleccionadas = vista.getListasSeleccionadas();
+			listasSeleccionadas.clear();
+			JTable tablaCanciones = vista.getTabla();
+			if(tablaCanciones.getSelectedRowCount() == 0) return;
+			@SuppressWarnings("unused")
+			JCheckBoxScrollableListSelect checkBoxScrollableListSelect = new JCheckBoxScrollableListSelect(
+					"Seleccione el album",
+					vista.getNombreListas(),
+					null,
+					listasSeleccionadas,vista.getAuxAniadirALista());
+			
+			
+		} else if(e.getActionCommand().equals("AUX_ANIADIR_A_LISTA")) {
+			
+			
+			ArrayList<Integer> listasSeleccionadas = vista.getListasSeleccionadas();
+			DefaultTableModel datos = vista.getDatosListas();
+			JTable tabla = vista.getTabla();
+			if(listasSeleccionadas.size() == 0) return;
+			Lista lista = ((Lista)(datos.getValueAt(listasSeleccionadas.get(0), 0)));
+			for(Integer indice : tabla.getSelectedRows()) {
+				try {
+					lista.aniadirReproducible((Reproducible)datos.getValueAt(indice, 0));
+				} catch (ExcepcionInsercionInvalida e1) {
+					GuiAplicacion.showMessage("Insercion invalida");
+				} catch (ExcepcionReproducibleNoValido e1) {
+					GuiAplicacion.showMessage("Reproducible no valido");
+				}
+			}
+			gui.actualizarDatos();
+			
 			
 		}
 		

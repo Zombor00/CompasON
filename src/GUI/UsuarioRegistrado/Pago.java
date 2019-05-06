@@ -24,8 +24,8 @@ public class Pago extends JPanel {
 		this.numero = new JTextField(20);
 		JLabel numeroLabel = new JLabel("Numero de tarjeta (sin espacios):");
 		this.pagar = new JButton("Pagar Premium");
-		this.noPagar = new JButton("No hacerse Premium");
-		
+		this.noPagar = new JButton("Cancelar");
+		layout.putConstraint(SpringLayout.VERTICAL_CENTER, numeroLabel, 0, SpringLayout.VERTICAL_CENTER, this);
 		layout.putConstraint(SpringLayout.WEST, informacionPago, 0, SpringLayout.WEST, numeroLabel);
 		layout.putConstraint(SpringLayout.NORTH, informacionPago, 5, SpringLayout.SOUTH, numeroLabel);
 		layout.putConstraint(SpringLayout.WEST, numero, 50, SpringLayout.EAST, numeroLabel);
@@ -34,15 +34,13 @@ public class Pago extends JPanel {
 		layout.putConstraint(SpringLayout.VERTICAL_CENTER, pagar, 0, SpringLayout.VERTICAL_CENTER, numero);
 		layout.putConstraint(SpringLayout.WEST, pagar, 50, SpringLayout.EAST, numero);
 		layout.putConstraint(SpringLayout.NORTH, noPagar, 5, SpringLayout.SOUTH, pagar);
-		layout.putConstraint(SpringLayout.WEST, noPagar, 0, SpringLayout.WEST, pagar);
+		layout.putConstraint(SpringLayout.EAST, noPagar, 0, SpringLayout.EAST, pagar);
 		this.add(numero);
 		this.add(pagar);
 		this.add(noPagar);
 		this.add(numeroLabel);
 		this.add(informacionPago);
 		this.setPreferredSize(new Dimension(800,150));
-		
-		
 		
 	}
 	

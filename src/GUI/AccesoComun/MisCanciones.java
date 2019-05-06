@@ -83,19 +83,34 @@ public class MisCanciones extends JPanel{
     private FormularioCancion formularioCancion;
     
     /**
-     * Confirmacion previa s crear una cancion a partir de los datos introducidos en formularioCancion
+     * Confirmacion previa a crear una cancion a partir de los datos introducidos en formularioCancion
      */
     private JButton aceptarCancion;
     
     /**
      * Permite almacenar los albumes que el usuario ha seleccionado tras pulsar menuCanciones.aniadirCancionAAlbum
      */
-    ArrayList<Integer> albumesSeleccionados = new ArrayList<>();
+    private ArrayList<Integer> albumesSeleccionados = new ArrayList<>();
     
     /**
      * Boton auxiliar que no se muestra por pantalla que sirve para gestionar la adicion de canciones a albumes
      */
     private JButton auxAniadirCancionAAlbum = new JButton();
+    
+    /**
+     * Permite almacenar las listas que el usuario ha seleccionado tras pulsar aniadirCancionALista/aniadirAlbumALista
+     */
+    private ArrayList<Integer> listasSeleccionadas = new ArrayList<>();
+    
+    /**
+     * Boton auxiliar que no se muestra por pantalla que sirve para gestionar la adicion de canciones a listas
+     */
+    private JButton auxAniadirCancionALista = new JButton();
+    
+    /**
+     * Boton auxiliar que no se muestra por pantalla que sirve para gestionar la adicion de albumes a listas
+     */
+    private JButton auxAniadirAlbumALista = new JButton();
 	
 	public MisCanciones() {
 		super();
@@ -333,6 +348,18 @@ public class MisCanciones extends JPanel{
 		return this.albumesSeleccionados;
 	}
 	
+	public ArrayList<Integer> getListasSeleccionadas() {
+		return this.listasSeleccionadas;
+	}
+	
+	public JButton getAuxAniadirCancionALista() {
+		return this.auxAniadirCancionALista;
+	}
+	
+	public JButton getAuxAniadirAlbumALista() {
+		return this.auxAniadirAlbumALista;
+	}
+	
 	public void actualizarDatos() {
 		int numFilas = datosCanciones.getRowCount();
 		for(int i=0; i< numFilas; i++) {
@@ -412,6 +439,10 @@ public class MisCanciones extends JPanel{
 		aniadirAlbumACola.addActionListener(controlador);
 		modificarCancion.setActionCommand("MODIFICAR_CANCION");
 		modificarCancion.addActionListener(controlador);
+		auxAniadirCancionALista.setActionCommand("AUX_ANIADIR_CANCION_A_LISTA");
+		auxAniadirCancionALista.addActionListener(controlador);
+		auxAniadirAlbumALista.setActionCommand("AUX_ANIADIR_ALBUM_A_LISTA");
+		auxAniadirAlbumALista.addActionListener(controlador);
 	}
 
 }

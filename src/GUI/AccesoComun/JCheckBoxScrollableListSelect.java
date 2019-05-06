@@ -13,16 +13,28 @@ import javax.swing.SpringLayout;
 
 import GUI.GuiAplicacion;
 
+/**
+ * Dialogo que muestra una lista con scroll de componentes de tipo JCheckBox
+ * @author antonio
+ */
 public class JCheckBoxScrollableListSelect extends JDialog implements ActionListener {
 
+	/**
+	 * Constructor de la clase
+	 * @param title Titulo del dialogo
+	 * @param elementos Lista de nombres que definen los checkboxes
+	 * @param textField Campo de texto en el que se imprime "seleccionadas"
+	 * @param seleccionadas Lista donde se añaden los indices de los checkboxes seleccionadas
+	 * @param boton Boton al que se hace click cuando el usuario termina la seleccion.
+	 * Esto permite asociar un comportamiento externo al panel.
+	 */
 	public JCheckBoxScrollableListSelect(String title, ArrayList<String> elementos,
-			JTextField textField, ArrayList<Integer> seleccionadas, JButton boton) {
+			JTextField textField, ArrayList<Integer> seleccionadas, JButton externo) {
 		
-		/* Invoco al constructor de la clase superior */
 		super(GuiAplicacion.getInstance());
+		
+		/* Actualizamos el titulo del dialogo */
 		setTitle(title);
-        
-		//Botón
 		JButton button = new JButton("Close");
 	    button.addActionListener(this);
 	    add(button);
@@ -52,57 +64,24 @@ public class JCheckBoxScrollableListSelect extends JDialog implements ActionList
 	    setBounds(500,375,500,375);
 		setLocationRelativeTo(null);
 		
+		/* Al presionar button actualizamos seleccionadas, textField y 
+		 * hacemos click en el boton externo que se pasa como parametro */
 		button.addActionListener((
 				new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						seleccionadas.clear();
 						seleccionadas.addAll(checkBoxScrollableList.getSelectedIndices());
 						if(textField != null) textField.setText(seleccionadas.toString());
-						if(boton != null) boton.doClick();
+						if(externo != null) externo.doClick();
 					}
 				}
 		));
         
-		  
-		/*this.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
-		JCheckBoxScrollableList checkBoxScrollableList = 
-				new JCheckBoxScrollableList(new JCheckBoxList(elementos));
-		Container contenedor = this.getContentPane();
-
-		JPanel panel = new JPanel();
-		panel.setBackground(Color.DARK_GRAY);
-		contenedor.add(panel,BorderLayout.CENTER);
-		
-		SpringLayout layout = new SpringLayout();
-		panel.setLayout(layout);
-		JButton button = new JButton("OK");
-		panel.add(button);
-		panel.add(checkBoxScrollableList);
-		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, checkBoxScrollableList, 0, SpringLayout.HORIZONTAL_CENTER, panel);
-		layout.putConstraint(SpringLayout.VERTICAL_CENTER, checkBoxScrollableList, -10, SpringLayout.VERTICAL_CENTER, panel);
-		layout.putConstraint(SpringLayout.EAST, button, 0, SpringLayout.EAST, panel);
-		layout.putConstraint(SpringLayout.SOUTH, button, 0, SpringLayout.SOUTH, panel);
-		
-		this.setVisible(true);
-		this.pack();
-		
-		this.setSize(new Dimension(500,375));
-		button.addActionListener((
-				new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-					System.out.println("HOLA");
-						seleccionadas.clear();
-						seleccionadas.addAll(checkBoxScrollableList.getSelectedIndices());
-						if(textField != null) textField.setText(seleccionadas.toString());
-						button.setVisible(false);
-					}
-				}
-		));
-		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-		this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
-		*/
 	}
 	
+	/**
+	 * Al presionar button, el dialogo se cierra
+	 */
 	public void actionPerformed(ActionEvent e) {
 		dispose();
 	}

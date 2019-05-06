@@ -23,16 +23,64 @@ import usuarios.UsuarioRegistrado;
 
 public class MisListas extends JPanel{
 	
+	/**
+	 * Lista con los nombres de las listas del usuario
+	 */
 	private ArrayList<String> nombreListas = new ArrayList<String>();
-	private DefaultTableModel datosListas;
-	private JTable tablaListas;
-	private JPopupMenu menu;
-    private JMenuItem reproducir,borrar,aniadirCola;
-    private JButton opciones;
-    private JButton crearLista;
-    private FormularioLista formularioLista;
-    private JButton aceptar;
 	
+	/**
+	 * Modelo con los datos de las listas
+	 */
+	private DefaultTableModel datosListas;
+	
+	/**
+	 * Tabla con el modelo de datos
+	 */
+	private JTable tablaListas;
+	
+	/**
+	 * Menu de opciones
+	 */
+	private JPopupMenu menu;
+	
+	/**
+	 * Opciones
+	 */
+    private JMenuItem reproducir,borrar,aniadirCola,aniadirALista;
+    
+    /**
+     * Muestra las opciones
+     */
+    private JButton opciones;
+    
+    /**
+     * Para abrir el formulario
+     */
+    private JButton crearLista;
+    
+    /**
+     * Para crear una nueva lista
+     */
+    private FormularioLista formularioLista;
+    
+    /**
+     * Confirmacion previa a la creacion de una nueva lista
+     */
+    private JButton aceptar;
+    
+    /**
+     * Permite almacenar las listas que el usuario ha seleccionado tras pulsar aniadirALista
+     */
+    private ArrayList<Integer> listasSeleccionadas = new ArrayList<>();
+    
+    /**
+     * Boton auxiliar que no se muestra por pantalla que sirve para gestionar la adicion de listas a listas
+     */
+    private JButton auxAniadirALista = new JButton();
+	
+    /**
+     * Constructor de la clase
+     */
 	public MisListas() {
 		
 		super();
@@ -103,6 +151,8 @@ public class MisListas extends JPanel{
         menu.add(reproducir);
         aniadirCola = new JMenuItem("Añadir a la cola");
         menu.add(aniadirCola);
+        aniadirALista = new JMenuItem("Añadir a lista");
+        menu.add(aniadirALista);
         borrar = new JMenuItem("Borrar");
         menu.add(borrar);
         opciones = new JButton("Opciones"); 
@@ -136,6 +186,14 @@ public class MisListas extends JPanel{
 		return this.formularioLista;
 	}
 	
+	public ArrayList<Integer> getListasSeleccionadas() {
+		return this.listasSeleccionadas;
+	}
+	
+	public JButton getAuxAniadirALista() {
+		return this.auxAniadirALista;
+	}
+	
 	public void setControlador(ActionListener controlador) {
 		opciones.setActionCommand("OPCIONES");
 		opciones.addActionListener(controlador);
@@ -147,9 +205,15 @@ public class MisListas extends JPanel{
 		aniadirCola.addActionListener(controlador);
 		aceptar.setActionCommand("ACEPTAR");
 		aceptar.addActionListener(controlador);
-		
+		aniadirALista.setActionCommand("ANIADIR_A_LISTA");
+		aniadirALista.addActionListener(controlador);
+		auxAniadirALista.setActionCommand("AUX_ANIADIR_A_LISTA");
+		auxAniadirALista.addActionListener(controlador);
 	}
 	
+	/**
+	 * Actualiza los datos del panel
+	 */
 	public void actualizarDatos() {
 		int numFilas = datosListas.getRowCount();
 		for(int i=0; i< numFilas; i++) {

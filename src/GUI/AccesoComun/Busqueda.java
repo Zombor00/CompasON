@@ -15,19 +15,79 @@ import media.Estado;
 
 public class Busqueda extends JPanel {
 	
+	/**
+	 * Modelo con los datos de la busqueda
+	 */
 	private DefaultTableModel modeloDatos;
-	private JButton buscar;
-	private JTextField busqueda;
-	private JComboBox<String> modo;
+	
+	/**
+	 * Tabla con los datos del modelo
+	 */
 	private JTable tabla;
+	
+	/**
+	 * Para iniciar la busqueda
+	 */
+	private JButton buscar;
+	
+	/**
+	 * Para indicar el parametro de busqueda
+	 */
+	private JTextField busqueda;
+	
+	/**
+	 * Para indicar el modo de busqueda
+	 */
+	private JComboBox<String> modo;
+	
+	/**
+	 * Menu de opciones
+	 */
     private JPopupMenu menu;
+    
+    /**
+     * Opciones
+     */
     private JMenuItem reproducir,aniadirACola,aniadirALista,seguirAutor,denunciar;
+    
+    /**
+     * Muestra las opciones
+     */
     private JButton opciones;
+    
+    /**
+     * Informacion
+     */
     private JLabel comentario;
+    
+    /**
+     * Comentario de la denuncia
+     */
     private JTextField comentarioDenuncia;
+    
+    /**
+     * Para enviar la denuncia
+     */
     private JButton enviarDenuncia;
+    
+    /**
+     * Para cancelar la denuncia
+     */
     private JButton cancelarDenuncia;
+    
+    /**
+     * Permite almacenar las listas que el usuario ha seleccionado tras pulsar aniadirALista
+     */
+    private ArrayList<Integer> listasSeleccionadas = new ArrayList<Integer>();
+    
+    /**
+     * Boton auxiliar que no se muestra por pantalla que sirve para gestionar la adicion de buscables a listas
+     */
+    private JButton auxAniadirAlista = new JButton();
 
+    /**
+     * Constructor de la clase
+     */
 	public Busqueda() {
 		super();
 		SpringLayout layout = new SpringLayout();
@@ -110,55 +170,8 @@ public class Busqueda extends JPanel {
         actualizarBusqueda((ArrayList<Buscable>) Aplicacion.getInstance().getBuscables());
         
         this.comentarioDenunciaVisible(false);
-	}
-	
-	public void limpiarBusqueda() {
-		int numFilas = modeloDatos.getRowCount();
-		for(int i=0; i< numFilas; i++) {
-			modeloDatos.removeRow(0);
-		}
-		modo.setSelectedIndex(0);
-	}
-
-	public void actualizarBusqueda(ArrayList<Buscable> buscables) {
-		
-		int modoAnterior = modo.getSelectedIndex();
-		this.limpiarBusqueda();
-		
-		Object[] rowData = {0,0,0,0};
-		for (Buscable b : buscables) {
-			rowData[0] = b;
-			rowData[1] = b.getTitulo();
-			rowData[2] = b.getAutor();
-			rowData[3] = b.parseSeconds(b.getDuracion());
-			modeloDatos.addRow(rowData);
-		}
-		busqueda.setText("");
-		modo.setSelectedIndex(modoAnterior);
-	}
-	
-	public void actualizarDatos() {
-		actualizarBusqueda((ArrayList<Buscable>) Aplicacion.getInstance().getBuscables().stream()
-				.filter(b -> b.getEstado() == Estado.NOBLOQUEADO).collect(Collectors.toList()));
-	}
-	
-	public void setControlador(ActionListener controlador) {
-		buscar.setActionCommand("BUSCAR");
-		buscar.addActionListener(controlador);
-		opciones.setActionCommand("OPCIONES");
-		opciones.addActionListener(controlador);
-		reproducir.setActionCommand("REPRODUCIR");
-		reproducir.addActionListener(controlador);
-		aniadirACola.setActionCommand("ANIADIRACOLA");
-		aniadirACola.addActionListener(controlador);
-		seguirAutor.setActionCommand("SEGUIRAUTOR");
-		seguirAutor.addActionListener(controlador);
-		denunciar.setActionCommand("DENUNCIAR");
-		denunciar.addActionListener(controlador);
-		aniadirALista.setActionCommand("ANIADIR_A_LISTA");
-		aniadirALista.addActionListener(controlador);
-		enviarDenuncia.setActionCommand("ENVIAR_DENUNCIA");
-		enviarDenuncia.addActionListener(controlador);
+        auxAniadirAlista.setVisible(false);
+        this.add(auxAniadirAlista);
 	}
 	
 	public String getBusqueda() {
@@ -185,11 +198,89 @@ public class Busqueda extends JPanel {
 		return comentarioDenuncia.getText();
 	}
 	
+	public ArrayList<Integer> getListasSeleccionadas() {
+		return this.listasSeleccionadas;
+	}
+	
+	public JButton getAuxAniadirAlista() {
+		return this.auxAniadirAlista;
+	}
+	
+	public DefaultTableModel getDatos() {
+		return this.modeloDatos;
+	}
+	
+	/**
+	 * Permite actualizar la visibilidad de la denuncia
+	 * @param vis Nuevo valor de la visibilidad
+	 */
 	public void comentarioDenunciaVisible(boolean vis) {        
         comentario.setVisible(vis);
         comentarioDenuncia.setVisible(vis);
         enviarDenuncia.setVisible(vis);
         cancelarDenuncia.setVisible(vis);
+	}
+	
+	/**
+	 * Borra los datos de la busqueda
+	 */
+	public void limpiarBusqueda() {
+		int numFilas = modeloDatos.getRowCount();
+		for(int i=0; i< numFilas; i++) {
+			modeloDatos.removeRow(0);
+		}
+		modo.setSelectedIndex(0);
+	}
+
+	/**
+	 * Actualia los datos de la busqueda
+	 * @param buscables Buscables que se muestraran en la busqueda
+	 */
+	public void actualizarBusqueda(ArrayList<Buscable> buscables) {
+		
+		int modoAnterior = modo.getSelectedIndex();
+		this.limpiarBusqueda();
+		
+		Object[] rowData = {0,0,0,0};
+		for (Buscable b : buscables) {
+			rowData[0] = b;
+			rowData[1] = b.getTitulo();
+			rowData[2] = b.getAutor();
+			rowData[3] = b.parseSeconds(b.getDuracion());
+			modeloDatos.addRow(rowData);
+		}
+		busqueda.setText("");
+		modo.setSelectedIndex(modoAnterior);
+	}
+	
+	/**
+	 * Actualiza los datos del panel
+	 */
+	public void actualizarDatos() {
+		listasSeleccionadas.clear();
+		actualizarBusqueda((ArrayList<Buscable>) Aplicacion.getInstance().getBuscables().stream()
+				.filter(b -> b.getEstado() == Estado.NOBLOQUEADO).collect(Collectors.toList()));
+	}
+	
+	public void setControlador(ActionListener controlador) {
+		buscar.setActionCommand("BUSCAR");
+		buscar.addActionListener(controlador);
+		opciones.setActionCommand("OPCIONES");
+		opciones.addActionListener(controlador);
+		reproducir.setActionCommand("REPRODUCIR");
+		reproducir.addActionListener(controlador);
+		aniadirACola.setActionCommand("ANIADIRACOLA");
+		aniadirACola.addActionListener(controlador);
+		seguirAutor.setActionCommand("SEGUIRAUTOR");
+		seguirAutor.addActionListener(controlador);
+		denunciar.setActionCommand("DENUNCIAR");
+		denunciar.addActionListener(controlador);
+		aniadirALista.setActionCommand("ANIADIR_A_LISTA");
+		aniadirALista.addActionListener(controlador);
+		enviarDenuncia.setActionCommand("ENVIAR_DENUNCIA");
+		enviarDenuncia.addActionListener(controlador);
+		auxAniadirAlista.setActionCommand("AUX_ANIADIR_A_LISTA");
+		auxAniadirAlista.addActionListener(controlador);
 	}
 	
 }

@@ -24,7 +24,7 @@ public class InicioUsuarioSinCuenta extends JPanel {
 		registro = new Registro();
 		this.setLayout(layout);
 		JLabel logo = new JLabel();
-		logo.setIcon(new ImageIcon(new ImageIcon("aux/logo-compason.png").getImage().getScaledInstance(200, 75, Image.SCALE_DEFAULT)));
+		logo.setIcon(new ImageIcon(new ImageIcon("aux/logo-compason.png").getImage().getScaledInstance(600, 350, Image.SCALE_DEFAULT)));
 		registro.setVisible(false);
 		registrarse   = new JButton("Registrarse en CompasON");
 		iniciarSesion   = new JButton("Iniciar sesion en CompasON");
@@ -38,7 +38,7 @@ public class InicioUsuarioSinCuenta extends JPanel {
 		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, logo, 0, SpringLayout.HORIZONTAL_CENTER, this);
 		
 		layout.putConstraint(SpringLayout.VERTICAL_CENTER, login, 0, SpringLayout.VERTICAL_CENTER, this);
-		layout.putConstraint(SpringLayout.SOUTH, logo, -100, SpringLayout.NORTH, login);
+		layout.putConstraint(SpringLayout.SOUTH, logo, -20, SpringLayout.NORTH, login);
 		layout.putConstraint(SpringLayout.VERTICAL_CENTER, registro, 0, SpringLayout.VERTICAL_CENTER, this);
 		layout.putConstraint(SpringLayout.VERTICAL_CENTER, registrarse, 200, SpringLayout.VERTICAL_CENTER, login);
 		layout.putConstraint(SpringLayout.VERTICAL_CENTER, iniciarSesion, 200, SpringLayout.VERTICAL_CENTER, registro);

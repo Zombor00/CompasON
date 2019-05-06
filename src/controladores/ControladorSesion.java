@@ -12,7 +12,6 @@ import GUI.PanelesUsuarios;
 import GUI.AccesoComun.Sesion;
 import aplicacion.Aplicacion;
 import excepciones.ExcepcionUsuarioNoSeguido;
-import media.Cancion;
 import pads.musicPlayer.exceptions.Mp3PlayerException;
 import usuarios.UsuarioRegistrado;
 
