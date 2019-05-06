@@ -21,6 +21,10 @@ public class ControladorSesion implements ActionListener {
 	private Aplicacion aplicacion;
 	private Sesion vista;
 	private GuiAplicacion gui;
+	
+	public ControladorSesion(Sesion sesion) {
+		this.vista = sesion;
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {

@@ -69,11 +69,11 @@ public class GuiAplicacion extends JFrame {
 		login.setControlador(new ControladorLogin(login));
 
 		Sesion sesion1 = panelesUsuarios.getPanelUsuarioRegstrado().getInformacion().getSesion();
-		sesion1.setControlador(new ControladorSesion());
+		sesion1.setControlador(new ControladorSesion(sesion1));
 		Sesion sesion2 = panelesUsuarios.getPanelAdministrador().getInformacionAdministrador().getSesion();
-		sesion2.setControlador(new ControladorSesion());
+		sesion2.setControlador(new ControladorSesion(sesion2));
 		Sesion sesion3 = panelesUsuarios.getPanelUsuarioPremium().getInformacion().getSesion();
-		sesion3.setControlador(new ControladorSesion());
+		sesion3.setControlador(new ControladorSesion(sesion3));
 
 		Busqueda busqueda1 = panelesUsuarios.getPanelUsuarioRegstrado().getPestanias().getBusqueda();
 		busqueda1.setControlador(new ControladorBusqueda(busqueda1));
