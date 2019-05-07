@@ -355,7 +355,7 @@ public class Aplicacion implements Serializable {
     		throw new ExcepcionUsuarioSinCuenta();
     	}
     	for (Cancion cancion : canciones) {
-    		if (cancion.getAutor() != usuarioLogeado || cancion.getEstadoValidacion() == EstadoValidacion.NOVALIDADA) {
+    		if (cancion.getAutor() != usuarioLogeado || cancion.getEstado() != Estado.NOBLOQUEADO) {
     			throw new ExcepcionErrorCreandoAlbum();
     		}
     	}

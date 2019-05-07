@@ -246,11 +246,13 @@ public class Busqueda extends JPanel {
 		
 		Object[] rowData = {0,0,0,0};
 		for (Buscable b : buscables) {
-			rowData[0] = b;
-			rowData[1] = b.getTituloExplicito();
-			rowData[2] = b.getAutor();
-			rowData[3] = b.parseSeconds(b.getDuracion());
-			modeloDatos.addRow(rowData);
+			if (b.esValido()) {
+				rowData[0] = b;
+				rowData[1] = b.getTituloExplicito();
+				rowData[2] = b.getAutor();
+				rowData[3] = b.parseSeconds(b.getDuracion());
+				modeloDatos.addRow(rowData);
+			}
 		}
 		busqueda.setText("");
 		modo.setSelectedIndex(modoAnterior);

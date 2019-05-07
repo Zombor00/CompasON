@@ -14,6 +14,7 @@ import GUI.GuiAplicacion;
 import aplicacion.Aplicacion;
 import media.Album;
 import media.Cancion;
+import media.Estado;
 import media.EstadoValidacion;
 import usuarios.UsuarioRegistrado;
 
@@ -464,7 +465,12 @@ public class MisCanciones extends JPanel{
 		Object[] rowData = {0,0,0};
 		for (Cancion c : u.getCanciones()) {
 			rowData[0] = c;
-			rowData[1] = c.getTituloExplicito();
+			if (c.getEstado() == Estado.BLOQUEADO) {
+				rowData[1] = c.getTituloExplicito() + " (Bloqueado)";
+			}
+			else{
+				rowData[1] = c.getTituloExplicito();
+			}
 			rowData[2] = c.parseSeconds(c.getDuracion());
 			datosCanciones.addRow(rowData);
 			nombreCanciones.add(c.getTitulo());
@@ -483,10 +489,15 @@ public class MisCanciones extends JPanel{
 		}
 		for (Album a : u.getAlbumes()) {
 			rowData[0] = a;
-			rowData[1] = a.getTituloExplicito();
+			if (a.esValido()) {
+				rowData[1] = a.getTituloExplicito();
+			} else {
+				rowData[1] = a.getTituloExplicito() + " (En proceso de validacion)";
+			}
 			rowData[2] = a.parseSeconds(a.getDuracion());
 			datosAlbumes.addRow(rowData);
 			nombreAlbumes.add(a.getTitulo());
+			
 		}
 		this.formularioAlbum.actualizarDatos();
 		this.formularioCancion.actualizarDatos();

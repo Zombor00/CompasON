@@ -77,11 +77,7 @@ public class Lista extends Reproducible implements Serializable{
      * @throws ExcepcionReproducibleNoValido
      */
     public void aniadirReproducible(Reproducible r) throws ExcepcionInsercionInvalida,ExcepcionReproducibleNoValido{
-
-    	if(r.esValido()==false) {
-    		throw new ExcepcionReproducibleNoValido();
-    	}
-
+    	
         if(!r.sePuedeMeterEn(this)) { /* this.esViableAniadir(r) */
         	throw new ExcepcionInsercionInvalida(); /* InsercionInvalida */
         }

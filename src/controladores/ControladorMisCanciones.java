@@ -162,7 +162,7 @@ public class ControladorMisCanciones implements ActionListener {
 				} catch (ExcepcionInsercionInvalida e1) {
 					GuiAplicacion.showMessage("Insercion invalida");
 				} catch (ExcepcionCancionNoValidada e1) {
-					GuiAplicacion.showMessage("Cancion no validada");
+					GuiAplicacion.showMessage("No se puede añador una cancion bloqueada");
 				}
 			}
 			gui.actualizarDatos();
@@ -190,7 +190,7 @@ public class ControladorMisCanciones implements ActionListener {
 			try {
 				aplicacion.aniadirAlbum(nombre, canciones,anio);
 			} catch (ExcepcionErrorCreandoAlbum e1) {
-				GuiAplicacion.showMessage("Error creando album");
+				GuiAplicacion.showMessage("Error creando album: canciones bloqueadas");
 			} catch (ExcepcionParametrosDeEntradaIncorrectos e1) {
 				GuiAplicacion.showMessage("Parmetros de entrada incorrectos");
 			} catch (ExcepcionUsuarioSinCuenta e1) {
@@ -198,7 +198,7 @@ public class ControladorMisCanciones implements ActionListener {
 			} catch (ExcepcionInsercionInvalida e1) {
 				GuiAplicacion.showMessage("Insercion invalida");
 			} catch (ExcepcionCancionNoValidada e1) {
-				GuiAplicacion.showMessage("Cancion no validada");
+				GuiAplicacion.showMessage("No se puede añadir una cancion bloqueada");
 			}
 			gui.actualizarDatos();
 			
