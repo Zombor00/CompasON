@@ -542,7 +542,6 @@ public class Aplicacion implements Serializable {
         	throw new ExcepcionNoAptoParaMenores();
         }
 
-
         if (reproducible.getEstado() != Estado.NOBLOQUEADO && administradorLogeado == false) {
         	throw new ExcepcionReproducirProhibido();
         }

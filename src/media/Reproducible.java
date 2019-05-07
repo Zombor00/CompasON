@@ -41,6 +41,14 @@ public abstract class Reproducible implements Serializable{
   public String getTitulo(){
       return this.titulo;
   }
+  
+  public String getTituloExplicito() {
+	  String aux = "";
+	  if(this.esValido() && !this.esAptoParaMenores()) {
+		  aux = "E-";
+	  }
+	  return aux + this.getTitulo();
+  }
 
   public double getDuracion(){
       return this.duracion;

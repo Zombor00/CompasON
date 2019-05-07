@@ -378,9 +378,10 @@ public class MisCanciones extends JPanel{
 		UsuarioRegistrado u = Aplicacion.getInstance().getUsuarioLogeado();
 		if (u==null) return;
 		Object[] rowData = {0,0,0};
+		String aux = "";
 		for (Cancion c : u.getCanciones()) {
 			rowData[0] = c;
-			rowData[1] = c.getTitulo();
+			rowData[1] = c.getTituloExplicito();
 			rowData[2] = c.parseSeconds(c.getDuracion());
 			datosCanciones.addRow(rowData);
 			nombreCanciones.add(c.getTitulo());
@@ -399,7 +400,7 @@ public class MisCanciones extends JPanel{
 		}
 		for (Album a : u.getAlbumes()) {
 			rowData[0] = a;
-			rowData[1] = a.getTitulo();
+			rowData[1] = a.getTituloExplicito();
 			rowData[2] = a.parseSeconds(a.getDuracion());
 			datosAlbumes.addRow(rowData);
 			nombreAlbumes.add(a.getTitulo());

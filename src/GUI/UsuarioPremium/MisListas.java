@@ -225,7 +225,7 @@ public class MisListas extends JPanel{
 		if (u==null) return;
 		for (Lista l : u.getListas()) {
 			rowData[0] = l;
-			rowData[1] = l.getTitulo();
+			rowData[1] = l.getTituloExplicito();
 			rowData[2] = l.parseSeconds(l.getDuracion());
 			datosListas.addRow(rowData);
 			nombreListas.add(l.getTitulo());

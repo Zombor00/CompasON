@@ -68,7 +68,9 @@ public class Album extends Buscable implements Serializable{
     	int reproducciones = 0;
     	
         for(Cancion c: canciones){
-            reproducciones += c.reproducir(mp3,usuarioLogeado);
+        	if(c.getEstado() != Estado.BORRADO) {
+                reproducciones += c.reproducir(mp3,usuarioLogeado);
+        	}
         }
         return reproducciones;
     }
@@ -86,6 +88,7 @@ public class Album extends Buscable implements Serializable{
         if (c.getEstadoValidacion() == EstadoValidacion.NOVALIDADA) {
         	throw new ExcepcionCancionNoValidada();
         }
+        
         canciones.add(c);
         this.setDuracion(this.getDuracion() + c.getDuracion());
     }
@@ -106,7 +109,7 @@ public class Album extends Buscable implements Serializable{
         this.setDuracion(this.getDuracion() - c.getDuracion());
         canciones.remove(index);
 
-        if(this.canciones.size() == 0){
+        if(this.canciones.stream().filter(cancion -> cancion.getEstado() == Estado.NOBLOQUEADO).count() == 0){
             this.setEstado(Estado.BORRADO);
         }
     }

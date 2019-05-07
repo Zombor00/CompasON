@@ -63,7 +63,9 @@ public class Lista extends Reproducible implements Serializable{
     public int reproducir(Mp3Player mp3, UsuarioRegistrado usuarioLogeado) throws Mp3InvalidFileException{
     	int reproducciones = 0;
         for(Reproducible r: reproducibles){
-            reproducciones += r.reproducir(mp3,usuarioLogeado);
+        	if(r.getEstado() != Estado.BORRADO) {
+                reproducciones += r.reproducir(mp3,usuarioLogeado);
+        	}
         }
         return reproducciones;
     }
