@@ -217,6 +217,9 @@ public class Busqueda extends JPanel {
 	public void comentarioDenunciaVisible(boolean vis) {        
         comentario.setVisible(vis);
         comentarioDenuncia.setVisible(vis);
+        if (!vis) {
+        	comentarioDenuncia.setText("");
+        }
         enviarDenuncia.setVisible(vis);
         cancelarDenuncia.setVisible(vis);
 	}
@@ -260,6 +263,31 @@ public class Busqueda extends JPanel {
 		listasSeleccionadas.clear();
 		actualizarBusqueda((ArrayList<Buscable>) Aplicacion.getInstance().getBuscables().stream()
 				.filter(b -> b.getEstado() == Estado.NOBLOQUEADO).collect(Collectors.toList()));
+		
+		if (Aplicacion.getInstance().getAdministradorLogeado()) {
+			aniadirACola.setVisible(true);
+			aniadirALista.setVisible(false);
+			seguirAutor.setVisible(false);
+			denunciar.setVisible(false);
+		}
+		else if (Aplicacion.getInstance().getUsuarioLogeado() == null) {
+			aniadirACola.setVisible(false);
+			aniadirALista.setVisible(false);
+			seguirAutor.setVisible(false);
+			denunciar.setVisible(false);
+		}
+		else if (Aplicacion.getInstance().getUsuarioLogeado().esPremium()) {
+			aniadirACola.setVisible(true);
+			aniadirALista.setVisible(true);
+			seguirAutor.setVisible(true);
+			denunciar.setVisible(true);
+		} 
+		else {
+			aniadirACola.setVisible(true);
+			aniadirALista.setVisible(false);
+			seguirAutor.setVisible(true);
+			denunciar.setVisible(true);
+		}
 	}
 	
 	public void setControlador(ActionListener controlador) {

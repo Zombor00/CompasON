@@ -46,6 +46,7 @@ public class PestaniasAdministrador extends JTabbedPane {
 	
 	public void actualizarDatos() {
 		this.inicio.actualizarDatos();
+		this.busqueda.actualizarDatos();
 		this.validar.actualizarDatos();
 		this.denuncias.actualizarDatos();
 	}
