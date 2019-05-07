@@ -21,9 +21,10 @@ import excepciones.ExcepcionParametrosDeEntradaIncorrectos;
 import excepciones.ExcepcionReproducibleNoValido;
 import excepciones.ExcepcionReproducirProhibido;
 import excepciones.ExcepcionUsuarioNoPremium;
-import media.Estado;
+import excepciones.ExcepcionUsuarioSinCuenta;
 import media.Lista;
 import media.Reproducible;
+import pads.musicPlayer.exceptions.Mp3InvalidFileException;
 import pads.musicPlayer.exceptions.Mp3PlayerException;
 
 public class ControladorMisListas implements ActionListener {
@@ -52,19 +53,19 @@ public class ControladorMisListas implements ActionListener {
 			
 		} else if (e.getActionCommand().equals("REPRODUCIR")) {
 			
+			ArrayList<Lista> listas= this.getSelectedListas();
+			if(listas == null)return;
 			
-			JTable tabla = vista.getTabla();
-	        int fila = tabla.getSelectedRow();
-	        if(fila == -1) {
-	        	return;
-	        }
-	        Lista lista = (Lista)tabla.getModel().getValueAt(fila, 0);
-        	if(lista.getEstado() == Estado.BLOQUEADO) {
-				GuiAplicacion.showMessage("Cancion bloqueada");
-				return;
-			}
 	        try {
-				aplicacion.reproducirReproducible(lista);
+	        	aplicacion.reproducirReproducible(listas.get(0));
+				listas.remove(0);
+	        	for (Lista l : listas) {
+	        		try {
+						aplicacion.aniadirALaCola(l);
+					} catch (ExcepcionUsuarioSinCuenta e1) {
+						
+					}
+	        	}
 			} catch (FileNotFoundException e1) {
 				GuiAplicacion.showMessage("No se encuentra el archivo");
 			} catch (Mp3PlayerException e1) {
@@ -154,8 +155,30 @@ public class ControladorMisListas implements ActionListener {
 	        
 		} else if(e.getActionCommand().equals("ANIADIR_COLA")) {
 			
-			
-			GuiAplicacion.showMessage("Que no se nos olvide esto!");
+			ArrayList<Lista> listas = this.getSelectedListas();
+			if(listas == null) {
+				return;
+			}
+			try {
+				for (Lista l : listas) {
+					aplicacion.aniadirALaCola(l);
+				}
+			} catch (Mp3InvalidFileException e1) {
+				GuiAplicacion.showMessage("Reproductor no funcionando");
+			} catch (ExcepcionParametrosDeEntradaIncorrectos e1) {
+				GuiAplicacion.showMessage("Parametros de entrada incorrectos");
+			} catch (ExcepcionLimiteReproducidasAlcanzado e1) {
+				GuiAplicacion.showMessage("Limite de reproducciones alcanzado");
+				e1.printStackTrace();
+			} catch (ExcepcionNoAptoParaMenores e1) {
+				GuiAplicacion.showMessage("No apto para menores");
+				e1.printStackTrace();
+			} catch (ExcepcionReproducirProhibido e1) {
+				GuiAplicacion.showMessage("Reproducir prohibido");
+			} catch (ExcepcionUsuarioSinCuenta e1) {
+				GuiAplicacion.showMessage("Debe registrarse para usar la cola");
+				e1.printStackTrace();
+			}
 			
 			
 		} else if(e.getActionCommand().equals("ANIADIR_A_LISTA")) {
@@ -195,6 +218,21 @@ public class ControladorMisListas implements ActionListener {
 			
 		}
 		
+	}
+	
+	private ArrayList<Lista> getSelectedListas(){
+		JTable tablaListas = vista.getTabla();
+		
+		int filas[] = tablaListas.getSelectedRows();
+        if(filas.length == 0) {
+        	return null;
+        }
+        ArrayList<Lista> listas = new ArrayList<>();
+        for (int f : filas) {
+        	listas.add((Lista)tablaListas.getModel().getValueAt(f, 0));
+        }        
+        
+        return listas;
 	}
 
 }

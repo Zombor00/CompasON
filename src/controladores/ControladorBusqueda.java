@@ -74,13 +74,21 @@ public class ControladorBusqueda implements ActionListener {
 		} else if (e.getActionCommand().equals("REPRODUCIR")) {
 			
 			
-			Buscable b = this.getBuscable();
-			if(b == null) {
+			ArrayList<Buscable> buscables = this.getBuscables();
+			if(buscables == null) {
 				return;
 			}
 	        try {
-				aplicacion.reproducirReproducible(b);
+				aplicacion.reproducirReproducible(buscables.get(0));
+				buscables.remove(0);
 		        gui.getReproductor().changeIcon(false);
+		        for (Buscable b : buscables) {
+		        	try {
+						aplicacion.aniadirALaCola(b);
+					} catch (ExcepcionUsuarioSinCuenta e1) {
+		
+					}
+		        }
 		        gui.actualizarDatos();
 			} catch (FileNotFoundException e1) {
 				GuiAplicacion.showMessage("No se encuentra el archivo");
@@ -95,19 +103,19 @@ public class ControladorBusqueda implements ActionListener {
 			} catch (ExcepcionReproducirProhibido e1) {
 				GuiAplicacion.showMessage("Reproducir prohibido");
 			}
-	        //gui.getReproductor().get
-	        //Si hay mas de una cancion seleccionada la primera se reproduce y las demas se aniaden a la cola
 	        
 	        
 		}else if(e.getActionCommand().equals("ANIADIRACOLA")){
 			
 			
-			Buscable b = this.getBuscable();
-			if(b == null) {
+			ArrayList<Buscable> buscables = this.getBuscables();
+			if(buscables == null) {
 				return;
 			}
 			try {
-				aplicacion.aniadirALaCola(b);
+				for (Buscable b : buscables) {
+					aplicacion.aniadirALaCola(b);
+				}
 				gui.actualizarDatos();
 			} catch (Mp3InvalidFileException e1) {
 				GuiAplicacion.showMessage("Reproductor no funcionando");
@@ -214,14 +222,30 @@ public class ControladorBusqueda implements ActionListener {
 	}
 	
 	private Buscable getBuscable() {
-		JTable tablaNotificaciones = vista.getTabla();
+		JTable tablaBusqueda = vista.getTabla();
 		
-        int fila = tablaNotificaciones.getSelectedRow();
+        int fila = tablaBusqueda.getSelectedRow();
         if(fila == -1) {
         	return null;
         }
-        Buscable b = (Buscable)tablaNotificaciones.getModel().getValueAt(fila, 0);
+        Buscable b = (Buscable)tablaBusqueda.getModel().getValueAt(fila, 0);
         
         return b;
+	}
+	
+	private ArrayList<Buscable> getBuscables(){
+		JTable tablaBusqueda = vista.getTabla();
+		
+		int filas[] = tablaBusqueda.getSelectedRows();
+        if(filas.length == 0) {
+        	return null;
+        }
+        ArrayList<Buscable> buscables = new ArrayList<>();
+        for (int f : filas) {
+        	buscables.add((Buscable)tablaBusqueda.getModel().getValueAt(f, 0));
+        }
+        
+        
+        return buscables;
 	}
 }
