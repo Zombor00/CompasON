@@ -747,16 +747,24 @@ public class Aplicacion implements Serializable {
 	 * Borra de la aplicacion de forma efectiva todas las canciones marcadas como borradas
 	 */
 	public void borrarEfectivamente() {
-        List<Buscable> borrar = new ArrayList<>();
+        List<Buscable> borrados = new ArrayList<>();
+        UsuarioRegistrado autor;
 
         for (Buscable buscable : buscables) {
             if (buscable.getEstado() == Estado.BORRADO) {
-                borrar.add(buscable);
+            	borrados.add(buscable);
             }
         }
-        for (Buscable buscable : borrar) {
-            buscable.getAutor().getBuscables().remove(buscable);
+        for (Buscable borrado : borrados) {
+            autor = borrado.getAutor();
+            for(Album album : autor.getAlbumes()) {
+            	try {
+					album.quitarCancion(borrado);
+				} catch (ExcepcionCancionNoContenida e) {
+					
+				}
+            }
         }
-        buscables.removeAll(borrar);
+        buscables.removeAll(borrados);
 	}
 }

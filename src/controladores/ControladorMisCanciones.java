@@ -332,6 +332,7 @@ public class ControladorMisCanciones implements ActionListener {
 			
 			try {
 				aplicacion.borrarCancion(c);
+				aplicacion.borrarEfectivamente();
 				gui.actualizarDatos();
 			} catch (ExcepcionParametrosDeEntradaIncorrectos e1) {
 				e1.printStackTrace();
@@ -343,6 +344,7 @@ public class ControladorMisCanciones implements ActionListener {
 			if(a == null) return;
 			try {
 				aplicacion.borrarAlbum(a);
+				aplicacion.borrarEfectivamente();
 				gui.actualizarDatos();
 			} catch (ExcepcionParametrosDeEntradaIncorrectos e1) {
 				GuiAplicacion.showMessage("Parametros de entrada incorrectos");
