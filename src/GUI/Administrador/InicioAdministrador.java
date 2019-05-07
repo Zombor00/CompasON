@@ -7,11 +7,30 @@ import javax.swing.*;
 import aplicacion.Aplicacion;
 import usuarios.Administrador;
 
+/**
+ * Esta clase tiene toda la informacion relevante a la pestania
+ * de inico del administrador
+ * @author Alejandro Bravo(alejandro.bravodela@estudiante.uam.es)
+ * 		   Antonio Garcia (antonio.garcian@estudiante.uam.es)
+ * 		   Alvaro Zaera (alvaro.zaeradela@estudiante.uam.es)
+ *         Grupo CompasON
+ *
+ */
 public class InicioAdministrador extends JPanel {
 
+	/**
+	 * Texto con las canciones que quedan por validar
+	 */
 	private JLabel validaciones = new JLabel("Canciones por validar: _");
+	/**
+	 * Texto con las denuncias que quedan por validar
+	 */
 	private JLabel denuncias = new JLabel("Denuncias a tramitar: _");
 	
+	/**
+	 * Constructor de la pestania de inico del administrador
+	 *
+	 */
 	public InicioAdministrador() {
 
 		super();
@@ -38,6 +57,10 @@ public class InicioAdministrador extends JPanel {
 		
 	}
 
+	/**
+	 * Metodo que actualiza la informacion de la pestania de inicio
+	 * 
+	 */
 	public void actualizarDatos() {
 		Administrador a = Aplicacion.getInstance().getAdministrador();	
 		

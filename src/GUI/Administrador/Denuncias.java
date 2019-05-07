@@ -12,15 +12,42 @@ import aplicacion.Aplicacion;
 import gestion.Denuncia;
 import usuarios.Administrador;
 
-
+/**
+ * Esta clase tiene toda la informacion relevante a la pestania
+ * de validar del administrador
+ * @author Alejandro Bravo(alejandro.bravodela@estudiante.uam.es)
+ * 		   Antonio Garcia (antonio.garcian@estudiante.uam.es)
+ * 		   Alvaro Zaera (alvaro.zaeradela@estudiante.uam.es)
+ *         Grupo CompasON
+ *
+ */
 public class Denuncias extends JPanel {
 	
+	/**
+	 * Modelo con los datos de las denuncias a tramitar
+	 */
 	private DefaultTableModel modeloDatos;
+	/**
+	 * Tabla con el modelo de datos de las denuncias a tramitar
+	 */
 	private JTable tabla;
+	/**
+	 * Menu de opciones
+	 */
 	private JPopupMenu menu;
+	/**
+	 * Opciones a realizar con las denuncias
+	 */
     private JMenuItem reproducir, plagio, noPlagio;
+	/**
+	 * Boton que despliega las opciones del menu
+	 */
     private JButton opciones;
 
+    /**
+	 * Constructor de la pestania denuncias
+	 *
+	 */
 	public Denuncias() {
 		super();
 		SpringLayout layout = new SpringLayout();
@@ -61,6 +88,11 @@ public class Denuncias extends JPanel {
 		this.add(scrollTabla);
 	}
 	
+	/**
+	 * Metodo que establece el controlador de las acciones de los botones
+	 * 
+	 * @param controlador de los botones de la pestania
+	 */
 	public void setControlador(ActionListener controlador) {
 		opciones.setActionCommand("OPCIONES");
 		opciones.addActionListener(controlador);
@@ -72,6 +104,10 @@ public class Denuncias extends JPanel {
 		noPlagio.addActionListener(controlador);
 	}
 
+	/**
+	 * Metodo que actualiza la informacion de la pestania denuncias
+	 * 
+	 */
 	public void actualizarDatos() {
 		int numFilas = modeloDatos.getRowCount();
 		for(int i=0; i< numFilas; i++) {

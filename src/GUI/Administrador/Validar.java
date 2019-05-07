@@ -11,15 +11,42 @@ import aplicacion.Aplicacion;
 import media.Cancion;
 import usuarios.Administrador;;
 
-
+/**
+ * Esta clase tiene toda la informacion relevante a la pestania
+ * de validar del administrador
+ * @author Alejandro Bravo(alejandro.bravodela@estudiante.uam.es)
+ * 		   Antonio Garcia (antonio.garcian@estudiante.uam.es)
+ * 		   Alvaro Zaera (alvaro.zaeradela@estudiante.uam.es)
+ *         Grupo CompasON
+ *
+ */
 public class Validar extends JPanel {
 	
+	/**
+	 * Modelo con los datos de las canciones a validar
+	 */
 	private DefaultTableModel modeloDatos;
+	/**
+	 * Tabla con el modelo de datos de las canciones a validar
+	 */
 	private JTable tabla;
+	/**
+	 * Menu de opciones
+	 */
 	private JPopupMenu menu;
+	/**
+	 * Opciones a realizar con las canciones
+	 */
     private JMenuItem reproducir,sinLimitacion, explicito, denegar;
+	/**
+	 * Boton que despliega las opciones del menu
+	 */
     private JButton opciones;
 
+	/**
+	 * Constructor de la pestania validar
+	 *
+	 */
 	public Validar() {
 		super();
 		SpringLayout layout = new SpringLayout();
@@ -68,6 +95,11 @@ public class Validar extends JPanel {
 		this.add(scrollTabla);
 	}
 	
+	/**
+	 * Metodo que establece el controlador de las acciones de los botones
+	 * 
+	 * @param controlador de los botones de la pestania
+	 */
 	public void setControlador(ActionListener controlador) {
 		opciones.setActionCommand("OPCIONES");
 		opciones.addActionListener(controlador);
@@ -80,7 +112,11 @@ public class Validar extends JPanel {
 		denegar.setActionCommand("DENEGAR");
 		denegar.addActionListener(controlador);
 	}
-
+	
+	/**
+	 * Metodo que actualiza la informacion de la pestania validar
+	 * 
+	 */
 	public void actualizarDatos() {
 		int numFilas = modeloDatos.getRowCount();
 		for(int i=0; i< numFilas; i++) {

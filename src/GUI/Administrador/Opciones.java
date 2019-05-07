@@ -13,13 +13,39 @@ import javax.swing.SpringLayout;
 
 import aplicacion.Aplicacion;
 
+/**
+ * Esta clase tiene toda la informacion relevante a la parte del ajuste de
+ * opciones de la aplicacion en la parte de informacion del administrador
+ * 
+ * @author Alejandro Bravo(alejandro.bravodela@estudiante.uam.es)
+ * 		   Antonio Garcia (antonio.garcian@estudiante.uam.es)
+ * 		   Alvaro Zaera (alvaro.zaeradela@estudiante.uam.es)
+ *         Grupo CompasON
+ *
+ */
 public class Opciones extends JPanel {
 	
+	/**
+	 * Spinner para ajustar el precio del servicio Premium
+	 */
 	private JSpinner precio;
+	/**
+	 * Spinner para ajustar las reproducciones para conseguir el servicio Premium gratis
+	 */
 	private JSpinner reproducciones;
+	/**
+	 * Spinner para ajustar el limite de reproducciones de un usuario no premium
+	 */
 	private JSpinner limite;
+	/**
+	 * Boton para actualizar los valores de la aplicacion de los spinner
+	 */
 	private JButton actualizar;
 	
+	/**
+	 * Constructor de la parte de opciones de la informacion del administrador
+	 *
+	 */
 	public Opciones() {
 		super();
 		SpringLayout layout = new SpringLayout();
@@ -85,13 +111,21 @@ public class Opciones extends JPanel {
 		return limite;
 	}
 
-
+	/**
+	 * Metodo que actualiza el valor que aparecen en las opciones
+	 * 
+	 */
 	public void actualizarDatos() {
 		precio.setValue(Aplicacion.getInstance().getPrecioPremium());
 		reproducciones.setValue(Aplicacion.getInstance().getReproduccionesPremium());
 		limite.setValue(Aplicacion.getInstance().getLimiteReproducciones());
 	}
 	
+	/**
+	 * Metodo que establece el controlador de las acciones de los botones
+	 * 
+	 * @param controlador de los botones de la pestania
+	 */
 	public void setControlador(ActionListener controlador) {
 		actualizar.setActionCommand("ACTUALIZAR");
 		actualizar.addActionListener(controlador);
