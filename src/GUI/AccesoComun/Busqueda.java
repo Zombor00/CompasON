@@ -101,7 +101,7 @@ public class Busqueda extends JPanel {
 		enviarDenuncia = new JButton("Enviar denuncia");
 		cancelarDenuncia = new JButton("Cancelar");
 		
-		String[] titulos = {"Objeto","Cancion", "Autor", "Duración"};
+		String[] titulos = {"Objeto","Cancion/Álbum", "Autor", "Duración"};
 		Object[][] filas = {
 		};
 		

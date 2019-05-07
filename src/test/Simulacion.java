@@ -141,7 +141,7 @@ class Simulacion {
 		ArrayList<Cancion> cancionesAlbum = new ArrayList<>();
 		cancionesAlbum.add((Cancion) aplicacion.getUsuarioLogeado().getBuscables().get(2));
 		cancionesAlbum.add((Cancion) aplicacion.getUsuarioLogeado().getBuscables().get(3));
-		aplicacion.aniadirAlbum("depruebazz", cancionesAlbum);
+		aplicacion.aniadirAlbum("depruebazz", cancionesAlbum,LocalDate.now().getYear());
 		
 		System.out.println("El usuario1 decide borrar su cancion numero1");
 		Thread.sleep(sleep);

@@ -347,7 +347,7 @@ public class Aplicacion implements Serializable {
      * @throws ExcepcionCancionNoValidada
      * @throws ExcepcionInsercionInvalida
      */
-    public void aniadirAlbum(String titulo, ArrayList <Cancion> canciones) throws ExcepcionErrorCreandoAlbum, ExcepcionParametrosDeEntradaIncorrectos, ExcepcionUsuarioSinCuenta, ExcepcionInsercionInvalida, ExcepcionCancionNoValidada {
+    public void aniadirAlbum(String titulo, ArrayList <Cancion> canciones, Integer anio) throws ExcepcionErrorCreandoAlbum, ExcepcionParametrosDeEntradaIncorrectos, ExcepcionUsuarioSinCuenta, ExcepcionInsercionInvalida, ExcepcionCancionNoValidada {
     	if (titulo == null || canciones==null) {
     		throw new ExcepcionParametrosDeEntradaIncorrectos();
     	}
@@ -359,7 +359,7 @@ public class Aplicacion implements Serializable {
     			throw new ExcepcionErrorCreandoAlbum();
     		}
     	}
-    	Album album = new Album(titulo,usuarioLogeado,canciones);
+    	Album album = new Album(titulo,usuarioLogeado,canciones,anio);
         this.buscables.add(album);
         this.usuarioLogeado.aniadirBuscable(album);
     }

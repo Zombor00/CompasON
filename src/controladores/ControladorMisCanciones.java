@@ -174,6 +174,7 @@ public class ControladorMisCanciones implements ActionListener {
 			DefaultTableModel datosCanciones = vista.getDatosCanciones();
 			ArrayList<Integer> cancionesSeleccionadas = vista.getFormularioAlbum().getCancionesSeleccionadas();
 			String nombre = vista.getFormularioAlbum().getNombre();
+			Integer anio = vista.getFormularioAlbum().getAnio();
 			if(nombre.length()==0) {
 				GuiAplicacion.showMessage("Introduce un nombre");
 				return;
@@ -187,7 +188,7 @@ public class ControladorMisCanciones implements ActionListener {
 				canciones.add((Cancion)datosCanciones.getValueAt(indice, 0));
 			}
 			try {
-				aplicacion.aniadirAlbum(nombre, canciones);
+				aplicacion.aniadirAlbum(nombre, canciones,anio);
 			} catch (ExcepcionErrorCreandoAlbum e1) {
 				GuiAplicacion.showMessage("Error creando album");
 			} catch (ExcepcionParametrosDeEntradaIncorrectos e1) {
