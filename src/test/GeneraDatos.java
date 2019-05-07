@@ -44,7 +44,7 @@ public class GeneraDatos {
 		int sleep = 0;
 		System.out.println("GENERANDO DATOS");
 		Thread.sleep(sleep);
-		Aplicacion aplicacion = Aplicacion.getInstance(10,10,10);
+		Aplicacion aplicacion = Aplicacion.getInstance(100,10,10);
 		
 		System.out.println("Aniadimos dos usuarios: usuario1 y usuario2");
 		Thread.sleep(sleep);

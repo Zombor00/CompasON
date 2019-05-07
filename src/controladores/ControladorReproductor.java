@@ -29,8 +29,7 @@ public class ControladorReproductor implements ActionListener{
 				}else {
 					boolean firstRep = gui.getReproductor().getFirstRep();
 					if(firstRep) {
-
-						firstRep = false;
+						gui.getReproductor().setFirstRep(false);
 					}else {
 						int reproducidas = aplicacion.getCola().getSongsPlayed();
 						aplicacion.getUsuarioLogeado().setReproducidas(aplicacion.getUsuarioLogeado().getReproducidas() + reproducidas);
