@@ -32,7 +32,6 @@ import excepciones.ExcepcionUsuarioSinCuenta;
 import media.Album;
 import media.Buscable;
 import media.Cancion;
-import media.Estado;
 import media.Lista;
 import pads.musicPlayer.exceptions.Mp3InvalidFileException;
 import pads.musicPlayer.exceptions.Mp3PlayerException;
@@ -72,14 +71,19 @@ public class ControladorMisCanciones implements ActionListener {
 		} else if (e.getActionCommand().equals("REPRODUCIR_CANCION")) {
 			
 			
-			Cancion c = this.getSelectedCancion();
-			if(c == null)return;
-			if(c.getEstado() == Estado.BLOQUEADO) {
-				GuiAplicacion.showMessage("Cancion bloqueada");
-				return;
-			}
+			ArrayList<Cancion> canciones = this.getSelectedCanciones();
+			if(canciones == null)return;
+			
 	        try {
-				aplicacion.reproducirReproducible(c);
+				aplicacion.reproducirReproducible(canciones.get(0));
+				canciones.remove(0);
+				for (Cancion c : canciones) {
+					try {
+						aplicacion.aniadirALaCola(c);
+					} catch (ExcepcionUsuarioSinCuenta e1) {
+						
+					}
+				}
 		        gui.getReproductor().changeIcon(false);
 			} catch (FileNotFoundException e1) {
 				GuiAplicacion.showMessage("No se encuentra el archivo");
@@ -99,14 +103,19 @@ public class ControladorMisCanciones implements ActionListener {
 		} else if (e.getActionCommand().equals("REPRODUCIR_ALBUM")) {
 			
 			
-			Album a = this.getSelectedAlbum();
-			if(a == null)return;
-			if(a.getEstado() == Estado.BLOQUEADO) {
-				GuiAplicacion.showMessage("Album bloqueado");
-				return;
-			}
+			ArrayList<Album> albumes = this.getSelectedAlbumes();
+			if(albumes == null)return;
+			
 	        try {
-				aplicacion.reproducirReproducible(a);
+	        	aplicacion.reproducirReproducible(albumes.get(0));
+				albumes.remove(0);
+				for (Album a : albumes) {
+					try {
+						aplicacion.aniadirALaCola(a);
+					} catch (ExcepcionUsuarioSinCuenta e1) {
+						
+					}
+				}
 		        gui.getReproductor().changeIcon(false);
 			} catch (FileNotFoundException e1) {
 				GuiAplicacion.showMessage("No se encuentra el archivo");
@@ -341,12 +350,14 @@ public class ControladorMisCanciones implements ActionListener {
 		} else if(e.getActionCommand().equals("ANIADIR_CANCION_COLA")) {
 			
 			
-			Cancion c = this.getSelectedCancion();
-			if(c == null) {
+			ArrayList<Cancion> canciones = this.getSelectedCanciones();
+			if(canciones == null) {
 				return;
 			}
 			try {
-				aplicacion.aniadirALaCola(c);
+				for (Cancion c : canciones) {
+					aplicacion.aniadirALaCola(c);
+				}
 			} catch (Mp3InvalidFileException e1) {
 				GuiAplicacion.showMessage("Reproductor no funcionando");
 			} catch (ExcepcionParametrosDeEntradaIncorrectos e1) {
@@ -368,12 +379,14 @@ public class ControladorMisCanciones implements ActionListener {
 		} else if(e.getActionCommand().equals("ANIADIR_ALBUM_COLA")) {
 			
 			
-			Album a = this.getSelectedAlbum();
-			if(a == null) {
+			ArrayList<Album> albumes = this.getSelectedAlbumes();
+			if(albumes == null) {
 				return;
 			}
 			try {
-				aplicacion.aniadirALaCola(a);
+				for(Album a : albumes) {
+					aplicacion.aniadirALaCola(a);
+				}
 			} catch (Mp3InvalidFileException e1) {
 				GuiAplicacion.showMessage("Reproductor no funcionando");
 			} catch (ExcepcionParametrosDeEntradaIncorrectos e1) {
@@ -438,6 +451,36 @@ public class ControladorMisCanciones implements ActionListener {
         	return null;
         }
         return (Cancion)tablaCanciones.getModel().getValueAt(fila, 0);
+	}
+	
+	private ArrayList<Cancion> getSelectedCanciones(){
+		JTable tablaCanciones = vista.getTablaCanciones();
+		
+		int filas[] = tablaCanciones.getSelectedRows();
+        if(filas.length == 0) {
+        	return null;
+        }
+        ArrayList<Cancion> canciones = new ArrayList<>();
+        for (int f : filas) {
+        	canciones.add((Cancion)tablaCanciones.getModel().getValueAt(f, 0));
+        }        
+        
+        return canciones;
+	}
+	
+	private ArrayList<Album> getSelectedAlbumes(){
+		JTable tablaAlbumes = vista.getTablaAlbumes();
+		
+		int filas[] = tablaAlbumes.getSelectedRows();
+        if(filas.length == 0) {
+        	return null;
+        }
+        ArrayList<Album> albumes = new ArrayList<>();
+        for (int f : filas) {
+        	albumes.add((Album)tablaAlbumes.getModel().getValueAt(f, 0));
+        }        
+        
+        return albumes;
 	}
 
 }
