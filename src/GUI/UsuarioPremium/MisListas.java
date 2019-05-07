@@ -21,6 +21,14 @@ import aplicacion.Aplicacion;
 import media.Lista;
 import usuarios.UsuarioRegistrado;
 
+/**
+ * Esta clase tiene las listas del usuario premium
+ * @author Alejandro Bravo(alejandro.bravodela@estudiante.uam.es)
+ * 		   Antonio Garcia (antonio.garcian@estudiante.uam.es)
+ * 		   Alvaro Zaera (alvaro.zaeradela@estudiante.uam.es)
+ *         Grupo CompasON
+ *
+ */
 public class MisListas extends JPanel{
 	
 	/**
@@ -106,6 +114,7 @@ public class MisListas extends JPanel{
 		aceptar = new JButton("Aceptar");
 		aceptar.setVisible(true);
 		
+		/*Colocamos los elementos*/
 		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, scrollTablaListas, 0, SpringLayout.HORIZONTAL_CENTER, this);
 		layout.putConstraint(SpringLayout.VERTICAL_CENTER, scrollTablaListas, 0, SpringLayout.VERTICAL_CENTER, this);
 		layout.putConstraint(SpringLayout.EAST, crearLista, 0, SpringLayout.EAST, scrollTablaListas);
@@ -212,7 +221,7 @@ public class MisListas extends JPanel{
 	}
 	
 	/**
-	 * Actualiza los datos del panel
+	 * Actualiza los datos de las listas del usuario
 	 */
 	public void actualizarDatos() {
 		int numFilas = datosListas.getRowCount();

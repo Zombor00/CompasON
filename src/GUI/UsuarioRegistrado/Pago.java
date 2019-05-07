@@ -11,10 +11,34 @@ import javax.swing.SpringLayout;
 
 import aplicacion.Aplicacion;
 
+/**
+ * Esta clase tiene toda la informacion relevante a las pestanias
+ * del administrador
+ * @author Alejandro Bravo(alejandro.bravodela@estudiante.uam.es)
+ * 		   Antonio Garcia (antonio.garcian@estudiante.uam.es)
+ * 		   Alvaro Zaera (alvaro.zaeradela@estudiante.uam.es)
+ *         Grupo CompasON
+ *
+ */
 public class Pago extends JPanel {
+	/**
+	 * TextField para meter el numero de cuenta
+	 */
 	private JTextField numero;
+	
+	/**
+	 * Boton para realizar el pago
+	 */
 	private JButton pagar;
+	
+	/**
+	 * Boton para no realizar el pago
+	 */
 	private JButton noPagar;
+	
+	/**
+	 * Muestra el precio del servicio premium
+	 */
 	private JLabel informacionPago = new JLabel("Precio del servicio Premium: "+ Aplicacion.getInstance().getPrecioPremium()+ "€");
 	
 	public Pago() {
@@ -25,6 +49,8 @@ public class Pago extends JPanel {
 		JLabel numeroLabel = new JLabel("Numero de tarjeta (sin espacios):");
 		this.pagar = new JButton("Pagar Premium");
 		this.noPagar = new JButton("Cancelar");
+		
+		/*Colocamos los elementos*/
 		layout.putConstraint(SpringLayout.VERTICAL_CENTER, numeroLabel, 0, SpringLayout.VERTICAL_CENTER, this);
 		layout.putConstraint(SpringLayout.WEST, informacionPago, 0, SpringLayout.WEST, numeroLabel);
 		layout.putConstraint(SpringLayout.NORTH, informacionPago, 5, SpringLayout.SOUTH, numeroLabel);
@@ -35,6 +61,7 @@ public class Pago extends JPanel {
 		layout.putConstraint(SpringLayout.WEST, pagar, 50, SpringLayout.EAST, numero);
 		layout.putConstraint(SpringLayout.NORTH, noPagar, 5, SpringLayout.SOUTH, pagar);
 		layout.putConstraint(SpringLayout.EAST, noPagar, 0, SpringLayout.EAST, pagar);
+		
 		this.add(numero);
 		this.add(pagar);
 		this.add(noPagar);
@@ -59,6 +86,9 @@ public class Pago extends JPanel {
 		return informacionPago;
 	}
 	
+	/**
+     * Limpia el texto de pago
+     */
 	public void pagoLimpiar() {
 		numero.setText("");
 	}
