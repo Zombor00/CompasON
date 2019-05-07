@@ -32,14 +32,11 @@ public class AlbumTest {
 	    
 	    try {
 	    	album1.aniadirCancion(cancion1);
-	    	fail("Esperada excepcion ExcepcionCancionNoValidada");
 	    }catch(ExcepcionCancionNoValidada e) {
-	    	lanzadaExcepcion = true;
+	    	fail("Lanzada excepcion no esperada");
 	    } catch (ExcepcionInsercionInvalida e) {
 	    	fail("Lanzada excepcion no esperada");
 		}
-	    assertTrue(lanzadaExcepcion);
-	    lanzadaExcepcion = false;
 	    
 	    try {
 			cancion1.validar(EstadoValidacion.EXPLICITO);
@@ -50,10 +47,12 @@ public class AlbumTest {
 	    try {
 			album1.aniadirCancion(cancion1);
 		} catch (ExcepcionInsercionInvalida e) {
-			fail("Lanzada excepcion no esperada");
+			lanzadaExcepcion = true;
 		} catch (ExcepcionCancionNoValidada e) {
 			fail("Lanzada excepcion no esperada");
 		}
+	    assertTrue(lanzadaExcepcion);
+	    lanzadaExcepcion = false;
 	    
 	    try {
 			album1.aniadirCancion(cancion1);
@@ -323,9 +322,8 @@ public class AlbumTest {
 		} catch (ExcepcionInsercionInvalida e) {
 			fail("Lanzada excepcion no esperada");
 		} catch (ExcepcionCancionNoValidada e) {
-			lanzadaExcepcion = true;
+			fail("Lanzada excepcion no esperada");
 		}
-	    assertTrue(lanzadaExcepcion);
 	}
 
 
