@@ -114,10 +114,6 @@ public class MisCanciones extends JPanel{
      */
     private JButton auxAniadirAlbumALista = new JButton();
     
-    /**
-     * ComboBox para elegir el anio en el que se hizo el álbum
-     */
-    private JComboBox<Integer> comboAnios;
     
     /**
      * Formulario para modifcar una cancion

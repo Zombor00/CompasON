@@ -25,7 +25,7 @@ public class NotificacionDenuncia extends Notificacion implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Cancion denunciada";
+		return "Denunciado";
 	}
 
 }

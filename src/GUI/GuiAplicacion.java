@@ -37,7 +37,6 @@ import controladores.ControladorPago;
 import controladores.ControladorRegistro;
 import controladores.ControladorReproductor;
 import excepciones.ExcepcionParametrosDeEntradaIncorrectos;
-import gestion.Notificacion;
 import media.Buscable;
 import media.Cancion;
 import pads.musicPlayer.exceptions.Mp3PlayerException;
@@ -236,9 +235,9 @@ public class GuiAplicacion extends JFrame {
 		case PanelesUsuarios.REGISTRADO:
 			PestaniasUsuarioRegistrado pRe = this.panelesUsuarios.getPanelUsuarioRegstrado().getPestanias();
 			JTable tabla = pRe.getMisCanciones().getTablaCanciones();
-			for (int i=0; i < tabla.getSize().height; i++) {
-				Cancion c = (Cancion)tabla.getValueAt(i, 0);
-				if (c.equals(cancion)) tabla.addColumnSelectionInterval(i, i);
+			for (int i=0; i < tabla.getRowCount(); i++) {
+				Cancion c = (Cancion)tabla.getModel().getValueAt(i, 0);
+				if (c.equals(cancion)) tabla.addRowSelectionInterval(i, i);
 			}
 			pRe.setSelectedIndex(2);
 			break;
@@ -246,8 +245,8 @@ public class GuiAplicacion extends JFrame {
 			PestaniasUsuarioPremium pPr = this.panelesUsuarios.getPanelUsuarioPremium().getPestanias();
 			tabla = pPr.getMisCanciones().getTablaCanciones();
 			for (int i=0; i < tabla.getSize().height; i++) {
-				Cancion c = (Cancion)tabla.getValueAt(i, 0);
-				if (c.equals(cancion)) tabla.addColumnSelectionInterval(i, i);
+				Cancion c = (Cancion)tabla.getModel().getValueAt(i, 0);
+				if (c.equals(cancion)) tabla.addRowSelectionInterval(i, i);
 			}
 			pPr.setSelectedIndex(2);
 			break;
