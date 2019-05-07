@@ -51,8 +51,12 @@ public class ControladorSesion implements ActionListener {
 			
 			gui.getReproductor().changeIcon(true);
 			PanelesUsuarios panelesUsuarios = gui.getPanelesUsuarios();
-			if(panelesUsuarios.getActual() == PanelesUsuarios.REGISTRADO) {
+			if (panelesUsuarios.getActual() == PanelesUsuarios.REGISTRADO) {
 				panelesUsuarios.getPanelUsuarioRegstrado().getPestanias().getInicio().noPagar();
+				panelesUsuarios.getPanelUsuarioRegstrado().getPestanias().getBusqueda().comentarioDenunciaVisible(false);
+			}
+			else if (panelesUsuarios.getActual() == PanelesUsuarios.PREMIUM) {
+				panelesUsuarios.getPanelUsuarioPremium().getPestanias().getBusqueda().comentarioDenunciaVisible(false);
 			}
 			gui.seleccionarInicio(panelesUsuarios.getActual());
 			panelesUsuarios.getPanelUsuarioSinCuenta().getPestanias().getInicio().accionIniciarSesion();

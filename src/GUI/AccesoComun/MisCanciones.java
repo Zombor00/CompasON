@@ -428,6 +428,16 @@ public class MisCanciones extends JPanel{
 	}
 	
 	public void actualizarDatos() {
+		UsuarioRegistrado u = Aplicacion.getInstance().getUsuarioLogeado();
+		if (u != null && u.getPremiumHasta() == null) {
+			this.aniadirCancionALista.setVisible(false);
+			this.aniadirAlbumALista.setVisible(false);
+		}
+		else {
+			this.aniadirCancionALista.setVisible(true);
+			this.aniadirAlbumALista.setVisible(true);
+		}
+		
 		int numFilas = datosCanciones.getRowCount();
 		for(int i=0; i< numFilas; i++) {
 			datosCanciones.removeRow(0);
@@ -442,10 +452,8 @@ public class MisCanciones extends JPanel{
 		nombreAlbumes.clear();
 		albumesSeleccionados.clear();
 		
-		UsuarioRegistrado u = Aplicacion.getInstance().getUsuarioLogeado();
 		if (u==null) return;
 		Object[] rowData = {0,0,0};
-		String aux = "";
 		for (Cancion c : u.getCanciones()) {
 			rowData[0] = c;
 			rowData[1] = c.getTituloExplicito();
@@ -475,6 +483,7 @@ public class MisCanciones extends JPanel{
 		this.formularioAlbum.actualizarDatos();
 		this.formularioCancion.actualizarDatos();
 		this.formularioModificarCancion.actualizarDatos();
+		
 	}
 	
 	public void setControlador(ActionListener controlador) {

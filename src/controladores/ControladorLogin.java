@@ -39,7 +39,7 @@ public class ControladorLogin implements ActionListener {
 			} catch (ExcepcionParametrosDeEntradaIncorrectos e1) {
 				e1.printStackTrace();
 			}
-			//Poner nombre al admin y que le salgan las que tiene que validar la guea
+			
 			if(aplicacion.getAdministradorLogeado()) {
 				vista.limpiarRegistro();
 				gui.actualizarDatos();

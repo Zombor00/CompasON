@@ -66,7 +66,6 @@ public class PanelesUsuarios extends JPanel {
 	}
 	
 	public void actualizarDatos() {
-		/* TODO Ojo con el login del admin */
 		UsuarioRegistrado u = Aplicacion.getInstance().getUsuarioLogeado();
 		if (Aplicacion.getInstance().getAdministradorLogeado()) {
 			this.panelAdministrador.actualizarDatos();
