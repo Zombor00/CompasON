@@ -111,18 +111,18 @@ public class Album extends Buscable implements Serializable{
 
     /**
      * Sirve para quitar una cancion del album
-     * @param c Cancion a quitar del album
+     * @param borrado Cancion a quitar del album
      * @throws ExcepcionCancionNoContenida
      */
-    public void quitarCancion(Cancion c) throws ExcepcionCancionNoContenida {
+    public void quitarCancion(Buscable borrado) throws ExcepcionCancionNoContenida {
         int index;
 
-        index = canciones.indexOf(c);
+        index = canciones.indexOf(borrado);
         if(index == -1) {
         	throw new ExcepcionCancionNoContenida();
         }
         
-        this.setDuracion(this.getDuracion() - c.getDuracion());
+        this.setDuracion(this.getDuracion() - borrado.getDuracion());
         canciones.remove(index);
 
         if(this.canciones.stream().filter(cancion -> cancion.getEstado() == Estado.NOBLOQUEADO).count() == 0){
