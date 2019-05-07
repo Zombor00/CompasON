@@ -137,10 +137,15 @@ public class MisCanciones extends JPanel{
 		};
 		datosCanciones = new DefaultTableModelNoEditable(filas, titulos);
 		tablaCanciones = new JTable(datosCanciones);
-		TableColumnModel tcm = tablaCanciones.getColumnModel();
-		tcm.removeColumn(tcm.getColumn(0));
 		tablaCanciones.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		tablaCanciones.setPreferredScrollableViewportSize(new Dimension(800, 500));
+
+		TableColumnModel tcm = tablaCanciones.getColumnModel();
+		tcm.removeColumn(tcm.getColumn(0));
+		tcm.getColumn(0).setPreferredWidth(400);
+		tcm.getColumn(1).setPreferredWidth(100);
+		
+		
 		JScrollPane scrollTablaCanciones = new JScrollPane(tablaCanciones);
 		
 		/* Albumes */
@@ -151,11 +156,15 @@ public class MisCanciones extends JPanel{
 		};
 		datosAlbumes = new DefaultTableModel(filas2, titulos2);
 		tablaAlbumes = new JTable(datosAlbumes);
-		tcm = tablaAlbumes.getColumnModel();
-		tcm.removeColumn(tcm.getColumn(0));
 		tablaAlbumes.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		tablaAlbumes.setPreferredScrollableViewportSize(new Dimension(800, 500));
 		JScrollPane scrollTablaAlbumes = new JScrollPane(tablaAlbumes);
+		
+
+		tcm = tablaAlbumes.getColumnModel();
+		tcm.removeColumn(tcm.getColumn(0));
+		tcm.getColumn(0).setPreferredWidth(400);
+		tcm.getColumn(1).setPreferredWidth(100);
 		
 		/* Subir cancion */
 		JButton subirCancion = new JButton("Subir cancion");
