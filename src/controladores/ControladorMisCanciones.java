@@ -13,9 +13,9 @@ import javax.swing.table.DefaultTableModel;
 
 import GUI.GuiAplicacion;
 import GUI.AccesoComun.JCheckBoxScrollableListSelect;
-import GUI.AccesoComun.ListaCanciones;
 import GUI.AccesoComun.MisCanciones;
 import aplicacion.Aplicacion;
+import excepciones.ExcepcionCancionNoContenida;
 import excepciones.ExcepcionCancionNoValidada;
 import excepciones.ExcepcionCancionYaNoModificable;
 import excepciones.ExcepcionCancionYaValidada;
@@ -32,6 +32,7 @@ import excepciones.ExcepcionUsuarioSinCuenta;
 import media.Album;
 import media.Buscable;
 import media.Cancion;
+import media.Estado;
 import media.Lista;
 import pads.musicPlayer.exceptions.Mp3InvalidFileException;
 import pads.musicPlayer.exceptions.Mp3PlayerException;
@@ -68,10 +69,51 @@ public class ControladorMisCanciones implements ActionListener {
 			menu.show(opciones, 0, opciones.getHeight());
 			
 			
+		} else if (e.getActionCommand().equals("OPCIONES_DEL_ALBUM")) {
+			
+			
+			JButton opciones = vista.getOpcionesDelAlbum();
+			JPopupMenu menu = vista.getMenuDelAlbum();
+			menu.show(opciones, 0, opciones.getHeight());
+			
+			
 		} else if (e.getActionCommand().equals("REPRODUCIR_CANCION")) {
 			
 			
 			ArrayList<Cancion> canciones = this.getSelectedCanciones();
+			if(canciones == null)return;
+			
+	        try {
+				aplicacion.reproducirReproducible(canciones.get(0));
+				canciones.remove(0);
+				gui.getReproductor().setFirstRep(true);
+				for (Cancion c : canciones) {
+					try {
+						aplicacion.aniadirALaCola(c);
+					} catch (ExcepcionUsuarioSinCuenta e1) {
+						
+					}
+				}
+		        gui.getReproductor().changeIcon(false);
+			} catch (FileNotFoundException e1) {
+				GuiAplicacion.showMessage("No se encuentra el archivo");
+			} catch (Mp3PlayerException e1) {
+				GuiAplicacion.showMessage("Reproductor no funcionando");
+			} catch (ExcepcionLimiteReproducidasAlcanzado e1) {
+				GuiAplicacion.showMessage("Limite de reproducciones alcanzado");
+			} catch (ExcepcionNoAptoParaMenores e1) {
+				GuiAplicacion.showMessage("No apto para menores");
+			} catch (ExcepcionParametrosDeEntradaIncorrectos e1) {
+				GuiAplicacion.showMessage("Parametros de entrada incorrectos");
+			} catch (ExcepcionReproducirProhibido e1) {
+				GuiAplicacion.showMessage("Canción no reproducible");
+			}
+	        
+	        
+		} else if (e.getActionCommand().equals("REPRODUCIR_CANCION_DEL_ALBUM")) {
+			
+			
+			ArrayList<Cancion> canciones = this.getSelectedCancionesDelAlbum();
 			if(canciones == null)return;
 			
 	        try {
@@ -434,31 +476,66 @@ public class ControladorMisCanciones implements ActionListener {
 			if(a == null) {
 				return;
 			}
-			new ListaCanciones(a);
+			while(vista.getDatosCancionesDelAlbum().getRowCount() > 0) {
+				vista.getDatosCancionesDelAlbum().removeRow(0);
+			}
+			Object[] rowData = {0,0,0};
+			for (Cancion c : a.getCanciones()) {
+				rowData[0] = c;
+				if (c.getEstado() == Estado.BLOQUEADO) {
+					rowData[1] = c.getTituloExplicito() + " (Bloqueado)";
+				}
+				else{
+					rowData[1] = c.getTituloExplicito();
+				}
+				rowData[2] = c.parseSeconds(c.getDuracion());
+				vista.getDatosCancionesDelAlbum().addRow(rowData);
+			}
+			
+		} else if(e.getActionCommand().equals("BORRAR_CANCION_DEL_ALBUM")) {
+			
+			
+			Album a = this.getSelectedAlbum();
+			if(a == null) {
+				return;
+			}
+			Cancion c = this.getSelectedCancionesDelAlbum().get(0);
+			try {
+				a.quitarCancion(c);
+			} catch (ExcepcionCancionNoContenida e1) {
+				e1.printStackTrace();
+			}
+			vista.getVisualizarAlbum().doClick();
+			gui.actualizarDatos();
 			
 		}
 	}
 	
 	public Album getSelectedAlbum() {
-		JTable tablaAlbum = vista.getTablaAlbumes();
-        int fila = tablaAlbum.getSelectedRow();
-        if(fila == -1) {
-        	return null;
-        }
-        return (Album)tablaAlbum.getModel().getValueAt(fila, 0);
+		return vista.getSelectedAlbum();
 	}
 	
 	public Cancion getSelectedCancion() {
-		JTable tablaCanciones = vista.getTablaCanciones();
-        int fila = tablaCanciones.getSelectedRow();
-        if(fila == -1) {
-        	return null;
-        }
-        return (Cancion)tablaCanciones.getModel().getValueAt(fila, 0);
+		return vista.getSelectedCancion();
 	}
 	
 	private ArrayList<Cancion> getSelectedCanciones(){
 		JTable tablaCanciones = vista.getTablaCanciones();
+		
+		int filas[] = tablaCanciones.getSelectedRows();
+        if(filas.length == 0) {
+        	return null;
+        }
+        ArrayList<Cancion> canciones = new ArrayList<>();
+        for (int f : filas) {
+        	canciones.add((Cancion)tablaCanciones.getModel().getValueAt(f, 0));
+        }        
+        
+        return canciones;
+	}
+	
+	private ArrayList<Cancion> getSelectedCancionesDelAlbum(){
+		JTable tablaCanciones = vista.getTablaCancionesDelAlbum();
 		
 		int filas[] = tablaCanciones.getSelectedRows();
         if(filas.length == 0) {
