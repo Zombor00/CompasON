@@ -39,6 +39,7 @@ public class ControladorNotificacion implements ListSelectionListener{
         aplicacion.getUsuarioLogeado().borrarNotificacion(n);
         notificaciones.getUsuarioNotificacion().removeRow(fila);
         if(n instanceof NotificacionDenuncia) {
+        	gui.mostrarDenunciada(n.getCancion() ,gui.getPanelesUsuarios().getActual());
         	return;
         }else {
         	try {

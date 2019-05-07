@@ -77,7 +77,7 @@ public class ControladorMisListas implements ActionListener {
 			} catch (ExcepcionParametrosDeEntradaIncorrectos e1) {
 				e1.printStackTrace();
 			} catch (ExcepcionReproducirProhibido e1) {
-				e1.printStackTrace();
+				GuiAplicacion.showMessage("Lista no reproducible");
 			}
 	        
 	        

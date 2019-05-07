@@ -473,7 +473,7 @@ public class MisCanciones extends JPanel{
 		for (Cancion c : u.getCancionesNuevas()) {
 			rowData[0] = c;
 			if (c.getEstadoValidacion() == EstadoValidacion.NOVALIDADA && c.getModificableHasta() != null) {
-				rowData[1] = c.getTitulo() + " (Sin validar. Modificable hasta: " + c.getModificableHasta() + ")" ;
+				rowData[1] = c.getTitulo() + " (No validada. Modificable hasta: " + c.getModificableHasta() + ")" ;
 			}
 			else {
 				rowData[1] = c.getTitulo() + " (En proceso de validacion)";
