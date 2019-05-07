@@ -69,7 +69,7 @@ public class FormularioLista extends JPanel{
 						
 						@SuppressWarnings("unused")
 						JCheckBoxScrollableListSelect checkBoxScrollableListSelect = new JCheckBoxScrollableListSelect(
-								"Seleccione las canciones para el nuevo album",
+								"Seleccione los elementos de la nueva lista",
 								nombreReproducibles,
 								reproducibles,
 								reproduciblesSeleccionados,

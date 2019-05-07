@@ -19,7 +19,7 @@ public class InicioAdministrador extends JPanel {
 		this.setLayout(layout);
 		JLabel logo = new JLabel();
 		JLabel bienvenido = new JLabel("Bienvenido Admin!");
-		logo.setIcon(new ImageIcon(new ImageIcon("aux/logo-compason.png").getImage().getScaledInstance(200, 75, Image.SCALE_DEFAULT)));
+		logo.setIcon(new ImageIcon(new ImageIcon("aux/logo-compason.png").getImage().getScaledInstance(600, 350, Image.SCALE_DEFAULT)));
 		
 		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, bienvenido, 0, SpringLayout.HORIZONTAL_CENTER, this);
 		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, logo, 0, SpringLayout.HORIZONTAL_CENTER, this);

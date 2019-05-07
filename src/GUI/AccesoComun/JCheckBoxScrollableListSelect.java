@@ -35,7 +35,7 @@ public class JCheckBoxScrollableListSelect extends JDialog implements ActionList
 		
 		/* Actualizamos el titulo del dialogo */
 		setTitle(title);
-		JButton button = new JButton("Close");
+		JButton button = new JButton("OK");
 	    button.addActionListener(this);
 	    add(button);
 		
