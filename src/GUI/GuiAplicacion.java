@@ -117,9 +117,9 @@ public class GuiAplicacion extends JFrame {
 					Aplicacion a = Aplicacion.getInstance();
 					int reproducidas = a.getCola().getSongsPlayed();
 					if(a.getUsuarioLogeado() != null) {
-						a.getUsuarioLogeado().setReproducidas(a.getUsuarioLogeado().getReproducidas() + reproducidas);
-						a.getCola().resetSongsPlayed();						
+						a.getUsuarioLogeado().setReproducidas(a.getUsuarioLogeado().getReproducidas() + reproducidas);					
 					}
+					a.getCola().resetSongsPlayed();	
 					a.logout();
 					a.guardarDatos();
 				} catch (IOException e) {
