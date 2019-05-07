@@ -115,6 +115,11 @@ public class MisCanciones extends JPanel{
     private JButton auxAniadirAlbumALista = new JButton();
     
     /**
+     * ComboBox para elegir el anio en el que se hizo el álbum
+     */
+    private JComboBox<Integer> comboAnios;
+    
+    /**
      * Formulario para modifcar una cancion
      */
     FormularioModificarCancion formularioModificarCancion = new FormularioModificarCancion();
@@ -145,9 +150,7 @@ public class MisCanciones extends JPanel{
 		tcm.getColumn(0).setPreferredWidth(400);
 		tcm.getColumn(1).setPreferredWidth(100);
 		
-		
 		JScrollPane scrollTablaCanciones = new JScrollPane(tablaCanciones);
-		
 		/* Albumes */
 		JButton albumes = new JButton("Albumes");
 		String[] titulos2 = {"Objeto","Album", "Duracion"};

@@ -35,6 +35,17 @@ public class Album extends Buscable implements Serializable{
         this.anio = LocalDate.now().getYear();
         this.canciones = new ArrayList<>();
     }
+    
+    /**
+     * Constructor de la clase album que inicializa el array de canciones,
+     * pone titulo al album y año de creación.
+     * @param titulo string que identifica el titulo del album
+     * @param autor usuario que ha hecho el album
+     */
+    public Album(String titulo, UsuarioRegistrado autor,Integer anio) {
+        this(titulo, autor);
+        this.anio = anio;
+    }
 
     /**
     * Constructor de la clase album que pone titulo al album y al que se le pasa
@@ -55,6 +66,11 @@ public class Album extends Buscable implements Serializable{
             }
         }
         this.setDuracion(duracion);
+    }
+    
+    public Album(String titulo, UsuarioRegistrado autor, ArrayList <Cancion> canciones, Integer anio) throws ExcepcionInsercionInvalida, ExcepcionCancionNoValidada{
+        this(titulo, autor,canciones);
+        this.anio = anio;
     }
 
     /**

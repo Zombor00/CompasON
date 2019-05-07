@@ -29,5 +29,9 @@ public class JDateSelect extends JPanel{
 	public LocalDate getDate() {		
 		return LocalDate.of( (Integer) comboAnios.getSelectedItem(), comboMeses.getSelectedIndex() + 1, (Integer) comboDias.getSelectedItem());
 	}
+	
+	public JComboBox<Integer> getAnios(){
+		return comboAnios;
+	}
 
 }

@@ -435,7 +435,7 @@ public class AplicacionTest {
 		}
 		
 		try {
-			aplicacion.aniadirAlbum("Hola", null);
+			aplicacion.aniadirAlbum("Hola", null,LocalDate.now().getYear());
 			fail("Excepcion esperada no lanzada");
 		} catch (ExcepcionErrorCreandoAlbum | ExcepcionUsuarioSinCuenta
 				| ExcepcionInsercionInvalida | ExcepcionCancionNoValidada e) {
@@ -461,7 +461,7 @@ public class AplicacionTest {
 		canciones.add(cancion1);
 		
 		try {
-			aplicacion.aniadirAlbum("Increible", canciones);
+			aplicacion.aniadirAlbum("Increible", canciones,LocalDate.now().getYear());
 		} catch (ExcepcionErrorCreandoAlbum | ExcepcionParametrosDeEntradaIncorrectos | ExcepcionUsuarioSinCuenta
 				| ExcepcionInsercionInvalida | ExcepcionCancionNoValidada e2) {
 			fail("Lanzada excepcion no esperada");
@@ -474,7 +474,7 @@ public class AplicacionTest {
 		}
 		
 		try {
-			aplicacion.aniadirAlbum("Nada", canciones);
+			aplicacion.aniadirAlbum("Nada", canciones,LocalDate.now().getYear());
 			fail("Excepcion esperada no lanzada");
 		} catch (ExcepcionErrorCreandoAlbum | ExcepcionParametrosDeEntradaIncorrectos
 				| ExcepcionInsercionInvalida | ExcepcionCancionNoValidada e) {
@@ -545,14 +545,14 @@ public class AplicacionTest {
 		
 		for (int i = 0; i < numDebeEncontrar; i++) {
 			try {
-				aplicacion.aniadirAlbum(nombresQueDebeEncontrar.get(i), listaCancionesAuxiliar);
+				aplicacion.aniadirAlbum(nombresQueDebeEncontrar.get(i), listaCancionesAuxiliar,LocalDate.now().getYear());
 			} catch (ExcepcionInsercionInvalida | ExcepcionCancionNoValidada e) {
 				fail("Lanzada excepcion no esperada");
 			}
 		}
 		for (int i = 0; i < numDebeObviar; i++) {
 			try {
-				aplicacion.aniadirAlbum(nombresQueDebeObviar.get(i), listaCancionesAuxiliar);
+				aplicacion.aniadirAlbum(nombresQueDebeObviar.get(i), listaCancionesAuxiliar,LocalDate.now().getYear());
 			} catch (ExcepcionInsercionInvalida | ExcepcionCancionNoValidada e) {
 				fail("Lanzada excepcion no esperada");
 			}

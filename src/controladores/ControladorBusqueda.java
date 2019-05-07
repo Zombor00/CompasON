@@ -221,6 +221,7 @@ public class ControladorBusqueda implements ActionListener {
 		}
 	}
 	
+	/*Devuelve el buscable seleccionado*/
 	private Buscable getBuscable() {
 		JTable tablaBusqueda = vista.getTabla();
 		
@@ -233,6 +234,7 @@ public class ControladorBusqueda implements ActionListener {
         return b;
 	}
 	
+	/*Devuelve los buscables seleccionados*/
 	private ArrayList<Buscable> getBuscables(){
 		JTable tablaBusqueda = vista.getTabla();
 		
