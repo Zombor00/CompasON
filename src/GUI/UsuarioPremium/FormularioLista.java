@@ -14,10 +14,29 @@ import javax.swing.SpringLayout;
 import GUI.GuiAplicacion;
 import GUI.AccesoComun.JCheckBoxScrollableListSelect;
 
+/**
+ * Esta clase se usa para rellenar la informacion necesaria para crear una lista
+ * @author Alejandro Bravo(alejandro.bravodela@estudiante.uam.es)
+ * 		   Antonio Garcia (antonio.garcian@estudiante.uam.es)
+ * 		   Alvaro Zaera (alvaro.zaeradela@estudiante.uam.es)
+ *         Grupo CompasON
+ *
+ */
 public class FormularioLista extends JPanel{
 	
+	/**
+	 * Campo para poner el nombre a la ljsta
+	 */
 	private JTextField nombre;
+	
+	/**
+	 * Reproducibles seleccionadas para aniadir a la lista
+	 */
 	private ArrayList<Integer> reproduciblesSeleccionados = new ArrayList<Integer>();
+	
+	/**
+	 * Muestra los elementos seleccionados para aniadir a la lista
+	 */
 	private JTextField reproducibles;
 
 	public FormularioLista() {
@@ -31,6 +50,8 @@ public class FormularioLista extends JPanel{
 		JLabel nombreLabel = new JLabel("Nombre de la lista");
 		JLabel reproduciblesLabel = new JLabel("Elementos:");
 
+		
+		/*Colocamos los elementos*/
 		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, nombre, 0, SpringLayout.HORIZONTAL_CENTER, this);
 		layout.putConstraint(SpringLayout.VERTICAL_CENTER, nombre, 0, SpringLayout.VERTICAL_CENTER, this);
 		
@@ -88,6 +109,9 @@ public class FormularioLista extends JPanel{
 		return this.nombre.getText();
 	}
 	
+	/**
+	 * Actualizamos los datos limpiando los distintos campos
+	 */
 	public void actualizarDatos() {
 		nombre.setText("");
 		reproduciblesSeleccionados.clear();

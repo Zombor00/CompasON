@@ -53,7 +53,6 @@ public class PanelAdministrador extends JPanel {
 
 	/**
      * Metodo que actualiza la informacion del panel del administrador
-     * 
      */
 	public void actualizarDatos() {
 		this.pestaniasAdministrador.actualizarDatos();	

@@ -200,7 +200,7 @@ public class MisCanciones extends JPanel{
 		Object[][] filas2 = {
 		{"","Album 1", "00:00"},
 		};
-		datosAlbumes = new DefaultTableModel(filas2, titulos2);
+		datosAlbumes = new DefaultTableModelNoEditable(filas2, titulos2);
 		tablaAlbumes = new JTable(datosAlbumes);
 		tablaAlbumes.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		tablaAlbumes.setPreferredScrollableViewportSize(new Dimension(800, 500));

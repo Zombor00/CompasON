@@ -6,9 +6,25 @@ import javax.swing.JPanel;
 
 import GUI.AccesoComun.Informacion;
 
+/**
+ * Esta clase tiene toda la informacion relevante a la pantalla
+ * que se le muestra al usuario premium
+ * @author Alejandro Bravo(alejandro.bravodela@estudiante.uam.es)
+ * 		   Antonio Garcia (antonio.garcian@estudiante.uam.es)
+ * 		   Alvaro Zaera (alvaro.zaeradela@estudiante.uam.es)
+ *         Grupo CompasON
+ *
+ */
 public class PanelUsuarioPremium extends JPanel{
 	
+	/**
+	 * Pestanias del usuario premium
+	 */
 	public PestaniasUsuarioPremium pestaniasUsuarioPremium;
+	
+	/**
+	 * Informacion del usuario premium
+	 */
 	public Informacion informacion;
 	
 	public PanelUsuarioPremium() {
@@ -24,6 +40,9 @@ public class PanelUsuarioPremium extends JPanel{
 		
 	}
 	
+	/**
+	 * Actualiza la informacion y las pestanias del usuario premium
+	 */
 	public void actualizarDatos() {
 		informacion.actualizarDatos();
 		pestaniasUsuarioPremium.actualizarDatos();
