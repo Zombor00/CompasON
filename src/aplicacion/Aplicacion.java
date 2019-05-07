@@ -303,7 +303,7 @@ public class Aplicacion implements Serializable {
 
         Files.copy(Paths.get(fichero), Paths.get("canciones/"+ titulo + Cancion.getNextId() + ".mp3"), StandardCopyOption.REPLACE_EXISTING);
 
-    	Cancion cancion = new Cancion(titulo,"canciones/"+ titulo + ".mp3",this.usuarioLogeado);
+    	Cancion cancion = new Cancion(titulo,"canciones/"+ titulo + Cancion.getNextId() + ".mp3",this.usuarioLogeado);
         this.administrador.aniadirCancion(cancion);
         this.usuarioLogeado.aniadirCancion(cancion);
     }
