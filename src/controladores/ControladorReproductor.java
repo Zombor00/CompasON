@@ -27,7 +27,17 @@ public class ControladorReproductor implements ActionListener{
 						e1.printStackTrace();
 					}
 				}else {
+					boolean firstRep = gui.getReproductor().getFirstRep();
+					if(firstRep) {
+
+						firstRep = false;
+					}else {
+						int reproducidas = aplicacion.getCola().getSongsPlayed();
+						aplicacion.getUsuarioLogeado().setReproducidas(aplicacion.getUsuarioLogeado().getReproducidas() + reproducidas);
+						gui.actualizarDatos();
+					}
 					aplicacion.getCola().stop();
+					
 				}
 				r.changeIcon(!play);
 			}

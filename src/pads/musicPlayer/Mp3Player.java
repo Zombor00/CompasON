@@ -194,5 +194,9 @@ public class Mp3Player extends PlaybackListener {
 		return this.songs.size();
 	}
 	
+	public int getSongsPlayed() {
+		return current +1;
+	}
+	
 
 }

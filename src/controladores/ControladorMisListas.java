@@ -59,6 +59,7 @@ public class ControladorMisListas implements ActionListener {
 	        try {
 	        	aplicacion.reproducirReproducible(listas.get(0));
 				listas.remove(0);
+				gui.getReproductor().setFirstRep(true);
 	        	for (Lista l : listas) {
 	        		try {
 						aplicacion.aniadirALaCola(l);
