@@ -102,7 +102,7 @@ public class ControladorBusqueda implements ActionListener {
 			} catch (ExcepcionParametrosDeEntradaIncorrectos e1) {
 				GuiAplicacion.showMessage("Parametros de entrada incorrectos");
 			} catch (ExcepcionReproducirProhibido e1) {
-				GuiAplicacion.showMessage("Reproducir prohibido");
+				GuiAplicacion.showMessage("Elemento no reproducible");
 			}
 	        
 	        
@@ -137,6 +137,7 @@ public class ControladorBusqueda implements ActionListener {
 			
 			Buscable b = this.getBuscable();
 			if(b == null) {
+				GuiAplicacion.showMessage("Selecciona un elemento para seguir a su autor");
 				return;
 			}
 			try {
@@ -160,6 +161,7 @@ public class ControladorBusqueda implements ActionListener {
 			
 			Buscable b = this.getBuscable();
 			if(b == null) {
+				GuiAplicacion.showMessage("Selecciona la canción que quieras denunciar");
 				return;
 			}
 			if(b instanceof Cancion) {
@@ -172,7 +174,7 @@ public class ControladorBusqueda implements ActionListener {
 				}
 				gui.actualizarDatos();
 			}else {
-				GuiAplicacion.showMessage("Solo puede denunciar canciones");
+				GuiAplicacion.showMessage("Solo se pueden denunciar canciones");
 			}
 			vista.comentarioDenunciaVisible(false);
 			

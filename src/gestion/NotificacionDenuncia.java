@@ -25,7 +25,7 @@ public class NotificacionDenuncia extends Notificacion implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Tu cancion titulada " + cancion.getTitulo() + " ha sido denunciada por plagio.";
+		return "Denunciado";
 	}
 
 }

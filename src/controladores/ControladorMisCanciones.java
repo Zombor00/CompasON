@@ -97,7 +97,7 @@ public class ControladorMisCanciones implements ActionListener {
 			} catch (ExcepcionParametrosDeEntradaIncorrectos e1) {
 				GuiAplicacion.showMessage("Parametros de entrada incorrectos");
 			} catch (ExcepcionReproducirProhibido e1) {
-				GuiAplicacion.showMessage("Reproducir prohibido");
+				GuiAplicacion.showMessage("Canción no reproducible");
 			}
 	        
 	        
@@ -130,7 +130,7 @@ public class ControladorMisCanciones implements ActionListener {
 			} catch (ExcepcionParametrosDeEntradaIncorrectos e1) {
 				e1.printStackTrace();
 			} catch (ExcepcionReproducirProhibido e1) {
-				e1.printStackTrace();
+				GuiAplicacion.showMessage("Canción no reproducible");
 			}
 	        
 	        
@@ -164,7 +164,7 @@ public class ControladorMisCanciones implements ActionListener {
 				} catch (ExcepcionInsercionInvalida e1) {
 					GuiAplicacion.showMessage("Insercion invalida");
 				} catch (ExcepcionCancionNoValidada e1) {
-					GuiAplicacion.showMessage("Cancion no validad");
+					GuiAplicacion.showMessage("No se puede añador una cancion bloqueada");
 				}
 			}
 			gui.actualizarDatos();
@@ -192,7 +192,7 @@ public class ControladorMisCanciones implements ActionListener {
 			try {
 				aplicacion.aniadirAlbum(nombre, canciones,anio);
 			} catch (ExcepcionErrorCreandoAlbum e1) {
-				GuiAplicacion.showMessage("Error creando album");
+				GuiAplicacion.showMessage("Error creando album: canciones bloqueadas");
 			} catch (ExcepcionParametrosDeEntradaIncorrectos e1) {
 				GuiAplicacion.showMessage("Parmetros de entrada incorrectos");
 			} catch (ExcepcionUsuarioSinCuenta e1) {
@@ -200,7 +200,7 @@ public class ControladorMisCanciones implements ActionListener {
 			} catch (ExcepcionInsercionInvalida e1) {
 				GuiAplicacion.showMessage("Insercion invalida");
 			} catch (ExcepcionCancionNoValidada e1) {
-				GuiAplicacion.showMessage("Cancion no validada");
+				GuiAplicacion.showMessage("No se puede añadir una cancion bloqueada");
 			}
 			gui.actualizarDatos();
 			
@@ -344,7 +344,6 @@ public class ControladorMisCanciones implements ActionListener {
 			try {
 				aplicacion.borrarAlbum(a);
 				gui.actualizarDatos();
-				System.out.println("Hola");
 			} catch (ExcepcionParametrosDeEntradaIncorrectos e1) {
 				GuiAplicacion.showMessage("Parametros de entrada incorrectos");
 			}

@@ -303,7 +303,7 @@ public class Aplicacion implements Serializable {
 
         Files.copy(Paths.get(fichero), Paths.get("canciones/"+ titulo + Cancion.getNextId() + ".mp3"), StandardCopyOption.REPLACE_EXISTING);
 
-    	Cancion cancion = new Cancion(titulo,"canciones/"+ titulo + ".mp3",this.usuarioLogeado);
+    	Cancion cancion = new Cancion(titulo,"canciones/"+ titulo + Cancion.getNextId() + ".mp3",this.usuarioLogeado);
         this.administrador.aniadirCancion(cancion);
         this.usuarioLogeado.aniadirCancion(cancion);
     }
@@ -355,7 +355,7 @@ public class Aplicacion implements Serializable {
     		throw new ExcepcionUsuarioSinCuenta();
     	}
     	for (Cancion cancion : canciones) {
-    		if (cancion.getAutor() != usuarioLogeado || cancion.getEstadoValidacion() == EstadoValidacion.NOVALIDADA) {
+    		if (cancion.getAutor() != usuarioLogeado || cancion.getEstado() != Estado.NOBLOQUEADO) {
     			throw new ExcepcionErrorCreandoAlbum();
     		}
     	}

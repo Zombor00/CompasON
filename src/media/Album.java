@@ -101,7 +101,7 @@ public class Album extends Buscable implements Serializable{
         if(canciones.contains(c)) {
         	throw new ExcepcionInsercionInvalida();
         }
-        if (c.getEstadoValidacion() == EstadoValidacion.NOVALIDADA) {
+        if (c.getEstado() != Estado.NOBLOQUEADO) {
         	throw new ExcepcionCancionNoValidada();
         }
         

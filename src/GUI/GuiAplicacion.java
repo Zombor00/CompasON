@@ -38,8 +38,8 @@ import controladores.ControladorRegistro;
 import controladores.ControladorReproductor;
 import excepciones.ExcepcionParametrosDeEntradaIncorrectos;
 import media.Buscable;
+import media.Cancion;
 import pads.musicPlayer.exceptions.Mp3PlayerException;
-
 
 public class GuiAplicacion extends JFrame {
 
@@ -56,12 +56,12 @@ public class GuiAplicacion extends JFrame {
 		BorderLayout layout = new BorderLayout();
 		contenedor.setLayout(layout);
 
-		contenedor.add(panelesUsuarios,BorderLayout.CENTER);
-		contenedor.add(reproductor,BorderLayout.SOUTH);
+		contenedor.add(panelesUsuarios, BorderLayout.CENTER);
+		contenedor.add(reproductor, BorderLayout.SOUTH);
 
 		Registro registro = panelesUsuarios.getPanelUsuarioSinCuenta().getPestanias().getInicio().getRegistro();
 		registro.setControlador(new ControladorRegistro(registro));
-		
+
 		reproductor.setControlador(new ControladorReproductor());
 
 		Login login = panelesUsuarios.getPanelUsuarioSinCuenta().getPestanias().getInicio().getLogin();
@@ -88,11 +88,11 @@ public class GuiAplicacion extends JFrame {
 		MisCanciones misCanciones2 = panelesUsuarios.getPanelUsuarioPremium().getPestanias().getMisCanciones();
 		misCanciones2.setControlador(new ControladorMisCanciones(misCanciones2));
 
-
-
-		Notificaciones notificacionesRegistrado = panelesUsuarios.getPanelUsuarioRegstrado().getInformacion().getNotificaciones();
+		Notificaciones notificacionesRegistrado = panelesUsuarios.getPanelUsuarioRegstrado().getInformacion()
+				.getNotificaciones();
 		notificacionesRegistrado.setControlador(new ControladorNotificacion(notificacionesRegistrado));
-		Notificaciones notificacionesPremium = panelesUsuarios.getPanelUsuarioPremium().getInformacion().getNotificaciones();
+		Notificaciones notificacionesPremium = panelesUsuarios.getPanelUsuarioPremium().getInformacion()
+				.getNotificaciones();
 		notificacionesPremium.setControlador(new ControladorNotificacion(notificacionesPremium));
 
 		MisListas misListas = panelesUsuarios.getPanelUsuarioPremium().getPestanias().getMisListas();
@@ -106,34 +106,35 @@ public class GuiAplicacion extends JFrame {
 
 		Denuncias denuncias = panelesUsuarios.getPanelAdministrador().getPestaniasAdministrador().getDenuncias();
 		denuncias.setControlador(new ControladorDenuncias(denuncias));
-		
+
 		Pago pago = panelesUsuarios.getPanelUsuarioRegstrado().getPestanias().getInicio().getPago();
 		pago.setControlador(new ControladorPago(pago));
-		
+
 		this.addWindowListener(new WindowAdapter() {
-		    @Override
-		    public void windowClosing(WindowEvent windowEvent) {
-		        try {
-		        	Aplicacion a = Aplicacion.getInstance();
-		        	a.logout();
+			@Override
+			public void windowClosing(WindowEvent windowEvent) {
+				try {
+					Aplicacion a = Aplicacion.getInstance();
+					a.logout();
 					a.guardarDatos();
 				} catch (IOException e) {
 					e.printStackTrace();
 				} catch (Mp3PlayerException e) {
 					e.printStackTrace();
 				}
-		    }
+			}
 		});
 
-        this.setSize(this.getToolkit().getScreenSize());
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setSize(this.getToolkit().getScreenSize());
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setVisible(true);
-		this.actualizarDatos();		
+		this.actualizarDatos();
 
 	}
 
 	public static GuiAplicacion getInstance() {
-		if (INSTANCE == null) INSTANCE = new GuiAplicacion();
+		if (INSTANCE == null)
+			INSTANCE = new GuiAplicacion();
 		return INSTANCE;
 	}
 
@@ -150,78 +151,106 @@ public class GuiAplicacion extends JFrame {
 	}
 
 	public void actualizarBusqueda(ArrayList<Buscable> buscables, String actual) {
-		switch(actual) {
-			case PanelesUsuarios.SIN_CUENTA:
-				PestaniasUsuarioSinCuenta pSc = this.panelesUsuarios.getPanelUsuarioSinCuenta().getPestanias();
-				pSc.getBusqueda().actualizarBusqueda(buscables);
-				pSc.setSelectedIndex(1);
-				break;
-			case PanelesUsuarios.REGISTRADO:
-				PestaniasUsuarioRegistrado pRe = this.panelesUsuarios.getPanelUsuarioRegstrado().getPestanias();
-				pRe.getBusqueda().actualizarBusqueda(buscables);
-				pRe.setSelectedIndex(1);
-				break;
-			case PanelesUsuarios.PREMIUM:
-				PestaniasUsuarioPremium pPr = this.panelesUsuarios.getPanelUsuarioPremium().getPestanias();
-				pPr.getBusqueda().actualizarBusqueda(buscables);
-				pPr.setSelectedIndex(1);
-				break;
-			case PanelesUsuarios.ADMINISTRADOR:
-				PestaniasAdministrador pAd = this.panelesUsuarios.getPanelAdministrador().getPestaniasAdministrador();
-				pAd.getBusqueda().actualizarBusqueda(buscables);
-				pAd.setSelectedIndex(1);
-				break;
+		switch (actual) {
+		case PanelesUsuarios.SIN_CUENTA:
+			PestaniasUsuarioSinCuenta pSc = this.panelesUsuarios.getPanelUsuarioSinCuenta().getPestanias();
+			pSc.getBusqueda().actualizarBusqueda(buscables);
+			pSc.setSelectedIndex(1);
+			break;
+		case PanelesUsuarios.REGISTRADO:
+			PestaniasUsuarioRegistrado pRe = this.panelesUsuarios.getPanelUsuarioRegstrado().getPestanias();
+			pRe.getBusqueda().actualizarBusqueda(buscables);
+			pRe.setSelectedIndex(1);
+			break;
+		case PanelesUsuarios.PREMIUM:
+			PestaniasUsuarioPremium pPr = this.panelesUsuarios.getPanelUsuarioPremium().getPestanias();
+			pPr.getBusqueda().actualizarBusqueda(buscables);
+			pPr.setSelectedIndex(1);
+			break;
+		case PanelesUsuarios.ADMINISTRADOR:
+			PestaniasAdministrador pAd = this.panelesUsuarios.getPanelAdministrador().getPestaniasAdministrador();
+			pAd.getBusqueda().actualizarBusqueda(buscables);
+			pAd.setSelectedIndex(1);
+			break;
 		}
 	}
-	
+
 	public void seleccionarInicio(String actual) {
-		switch(actual) {
-			case PanelesUsuarios.SIN_CUENTA:
-				this.panelesUsuarios.getPanelUsuarioSinCuenta().getPestanias().setSelectedIndex(0);
-				break;
-			case PanelesUsuarios.REGISTRADO:
-				this.panelesUsuarios.getPanelUsuarioRegstrado().getPestanias().setSelectedIndex(0);;
-				break;
-			case PanelesUsuarios.PREMIUM:
-				this.panelesUsuarios.getPanelUsuarioPremium().getPestanias().setSelectedIndex(0);
-				break;
-			case PanelesUsuarios.ADMINISTRADOR:
-				this.panelesUsuarios.getPanelAdministrador().getPestaniasAdministrador().setSelectedIndex(0);
-				break;
+		switch (actual) {
+		case PanelesUsuarios.SIN_CUENTA:
+			this.panelesUsuarios.getPanelUsuarioSinCuenta().getPestanias().setSelectedIndex(0);
+			break;
+		case PanelesUsuarios.REGISTRADO:
+			this.panelesUsuarios.getPanelUsuarioRegstrado().getPestanias().setSelectedIndex(0);
+			;
+			break;
+		case PanelesUsuarios.PREMIUM:
+			this.panelesUsuarios.getPanelUsuarioPremium().getPestanias().setSelectedIndex(0);
+			break;
+		case PanelesUsuarios.ADMINISTRADOR:
+			this.panelesUsuarios.getPanelAdministrador().getPestaniasAdministrador().setSelectedIndex(0);
+			break;
 		}
 	}
-	
-	public static void actualizarLookAndFeel() throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
+
+	public static void actualizarLookAndFeel() throws ClassNotFoundException, InstantiationException,
+			IllegalAccessException, UnsupportedLookAndFeelException {
 		UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
-		Color verde = new Color(0,130,30);
+		Color verde = new Color(0, 130, 30);
 		Color negro = Color.BLACK;
 		Color gris = Color.DARK_GRAY;
 		Color blanco = Color.WHITE;
-		Color grisClaro = new Color(250,250,250);
-		UIManager.put("control", negro); //Fonfo
-		UIManager.put("text", blanco); //Texto
-		UIManager.put("nimbusBase", gris); //Base 1
-		UIManager.put("nimbusBlueGrey", verde); //Base 2
-		UIManager.put("nimbusSelection", verde); //Botones de menus
-		UIManager.put("textBackground", blanco); //Fondo texto seleccionado
-		UIManager.put("nimbusSelectedText", negro); //Texto seleccionado
-		UIManager.put("nimbusSelectionBackground", grisClaro); //Seleccion en tablas
-		UIManager.put("nimbusFocus", verde); //Foco
-		UIManager.put("nimbusLightBackground", gris); //Fondo normal de textos
-		UIManager.put("nimbusBorder", negro); //Bordes
-		
-		//UIManager.getLookAndFeelDefaults().put("OptionPane.background", Color.red);
+		Color grisClaro = new Color(250, 250, 250);
+		UIManager.put("control", negro); // Fonfo
+		UIManager.put("text", blanco); // Texto
+		UIManager.put("nimbusBase", gris); // Base 1
+		UIManager.put("nimbusBlueGrey", verde); // Base 2
+		UIManager.put("nimbusSelection", verde); // Botones de menus
+		UIManager.put("textBackground", blanco); // Fondo texto seleccionado
+		UIManager.put("nimbusSelectedText", negro); // Texto seleccionado
+		UIManager.put("nimbusSelectionBackground", grisClaro); // Seleccion en tablas
+		UIManager.put("nimbusFocus", verde); // Foco
+		UIManager.put("nimbusLightBackground", gris); // Fondo normal de textos
+		UIManager.put("nimbusBorder", negro); // Bordes
+
+		// UIManager.getLookAndFeelDefaults().put("OptionPane.background", Color.red);
 
 	}
-	
+
 	public static void showMessage(String message) {
 		new PopupMessage(message);
 	}
 
-	public static void main(String[] args) throws Mp3PlayerException, ExcepcionParametrosDeEntradaIncorrectos, ClassNotFoundException, IOException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
+	public static void main(String[] args)
+			throws Mp3PlayerException, ExcepcionParametrosDeEntradaIncorrectos, ClassNotFoundException, IOException,
+			InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
 		actualizarLookAndFeel();
 		Aplicacion a = Aplicacion.cargarDatos();
 		GuiAplicacion g = GuiAplicacion.getInstance();
-		System.out.println("Ejecutando main de Gui.Aplicaion. "+ a + " " + g);
+		System.out.println("Ejecutando main de Gui.Aplicaion. " + a + " " + g);
+	}
+
+	public void mostrarDenunciada(Cancion cancion, String actual) {
+		switch (actual) {
+		case PanelesUsuarios.REGISTRADO:
+			PestaniasUsuarioRegistrado pRe = this.panelesUsuarios.getPanelUsuarioRegstrado().getPestanias();
+			JTable tabla = pRe.getMisCanciones().getTablaCanciones();
+			for (int i=0; i < tabla.getRowCount(); i++) {
+				Cancion c = (Cancion)tabla.getModel().getValueAt(i, 0);
+				if (c.equals(cancion)) tabla.addRowSelectionInterval(i, i);
+			}
+			pRe.setSelectedIndex(2);
+			break;
+		case PanelesUsuarios.PREMIUM:
+			PestaniasUsuarioPremium pPr = this.panelesUsuarios.getPanelUsuarioPremium().getPestanias();
+			tabla = pPr.getMisCanciones().getTablaCanciones();
+			for (int i=0; i < tabla.getSize().height; i++) {
+				Cancion c = (Cancion)tabla.getModel().getValueAt(i, 0);
+				if (c.equals(cancion)) tabla.addRowSelectionInterval(i, i);
+			}
+			pPr.setSelectedIndex(2);
+			break;
+		}
+
 	}
 }
