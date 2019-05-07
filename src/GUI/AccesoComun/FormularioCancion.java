@@ -71,8 +71,16 @@ public class FormularioCancion extends JPanel{
 		return this.nombre.getText();
 	}
 	
+	public void setNombre(String nombre) {
+		this.nombre.setText(nombre);
+	}
+	
 	public String getFichero() {
 		return this.fichero.getText();
+	}
+	
+	public void setFichero(String fichero) {
+		this.fichero.setText(fichero);
 	}
 	
 	public void actualizarDatos() {

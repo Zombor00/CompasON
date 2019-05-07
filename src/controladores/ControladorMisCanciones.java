@@ -13,9 +13,12 @@ import javax.swing.table.DefaultTableModel;
 
 import GUI.GuiAplicacion;
 import GUI.AccesoComun.JCheckBoxScrollableListSelect;
+import GUI.AccesoComun.ListaCanciones;
 import GUI.AccesoComun.MisCanciones;
 import aplicacion.Aplicacion;
 import excepciones.ExcepcionCancionNoValidada;
+import excepciones.ExcepcionCancionYaNoModificable;
+import excepciones.ExcepcionCancionYaValidada;
 import excepciones.ExcepcionDuracionLimiteSuperada;
 import excepciones.ExcepcionErrorCreandoAlbum;
 import excepciones.ExcepcionInsercionInvalida;
@@ -129,7 +132,7 @@ public class ControladorMisCanciones implements ActionListener {
 			if(tablaCanciones.getSelectedRowCount() == 0) return;
 			@SuppressWarnings("unused")
 			JCheckBoxScrollableListSelect checkBoxScrollableListSelect = new JCheckBoxScrollableListSelect(
-					"Seleccione el album",
+					"Seleccione un album",
 					vista.getNombreAlbumes(),
 					null,
 					albumesSeleccionados,vista.getAuxAniadirCancionAAlbum());
@@ -386,13 +389,35 @@ public class ControladorMisCanciones implements ActionListener {
 			}
 			
 			
-		} else if(e.getActionCommand().equals("MODIFICAR_CANCION")) {
+		} else if(e.getActionCommand().equals("ACEPTAR_MODIFICAR")) {
 			
 			
 			Cancion c = this.getSelectedCancion();
-			if (c == null) return;
-			GuiAplicacion.showMessage("NO ESTA IMPLEMENTADO");
+			try {
+				c.modificar(vista.getFormularioModificarCancion().getNombre(), vista.getFormularioModificarCancion().getFichero());
+			} catch (FileNotFoundException e1) {
+				GuiAplicacion.showMessage("File not found");
+			} catch (ExcepcionCancionYaValidada e1) {
+				GuiAplicacion.showMessage("Cancion ya validad");
+			} catch (ExcepcionDuracionLimiteSuperada e1) {
+				GuiAplicacion.showMessage("Duracion limite superada");
+			} catch (ExcepcionCancionYaNoModificable e1) {
+				GuiAplicacion.showMessage("Cancion ya no modificable");
+			} catch (ExcepcionMp3NoValido e1) {
+				GuiAplicacion.showMessage("Mp3 no valido");
+			}
+			gui.actualizarDatos();
 			
+			
+			
+		} else if(e.getActionCommand().equals("VISUALIZAR_ALBUM")) {
+			
+			
+			Album a = this.getSelectedAlbum();
+			if(a == null) {
+				return;
+			}
+			new ListaCanciones(a);
 			
 		}
 	}

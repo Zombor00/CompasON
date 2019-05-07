@@ -90,10 +90,6 @@ public class ControladorMisListas implements ActionListener {
 				GuiAplicacion.showMessage("Introduce el nombre de la lista");
 				return;
 			}
-			if(reproduciblesSeleccionados.size() == 0) {
-				GuiAplicacion.showMessage("Seleccione al menos un elemeto");
-				return;
-			}
 			ArrayList<Reproducible> reproducibles = new ArrayList<>();
 			int numCanciones = GuiAplicacion.getInstance().getPanelesUsuarios().getPanelUsuarioPremium().getPestanias().
 					getMisCanciones().getNombreCanciones().size();
@@ -171,7 +167,7 @@ public class ControladorMisListas implements ActionListener {
 			if(tablaCanciones.getSelectedRowCount() == 0) return;
 			@SuppressWarnings("unused")
 			JCheckBoxScrollableListSelect checkBoxScrollableListSelect = new JCheckBoxScrollableListSelect(
-					"Seleccione el album",
+					"Seleccione una lista",
 					vista.getNombreListas(),
 					null,
 					listasSeleccionadas,vista.getAuxAniadirALista());

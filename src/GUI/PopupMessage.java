@@ -18,7 +18,7 @@ public class PopupMessage extends JDialog implements ActionListener {
 
 		JLabel label = new JLabel(message);
 		add(label);
-		JButton button = new JButton("close");
+		JButton button = new JButton("OK");
 		button.addActionListener(this);
 		add(button);
 		pack();
