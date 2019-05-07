@@ -33,6 +33,7 @@ public class ControladorReproductor implements ActionListener{
 					}else {
 						int reproducidas = aplicacion.getCola().getSongsPlayed();
 						aplicacion.getUsuarioLogeado().setReproducidas(aplicacion.getUsuarioLogeado().getReproducidas() + reproducidas);
+						aplicacion.getCola().resetSongsPlayed();
 						gui.actualizarDatos();
 					}
 					aplicacion.getCola().stop();

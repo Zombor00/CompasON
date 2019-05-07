@@ -36,6 +36,9 @@ public class ControladorSesion implements ActionListener {
 		if (e.getActionCommand().equals("Cerrar_Sesion")) {
 			gui.actualizarDatos();
 			try {
+				int reproducidas = aplicacion.getCola().getSongsPlayed();
+				aplicacion.getUsuarioLogeado().setReproducidas(aplicacion.getUsuarioLogeado().getReproducidas() + reproducidas);
+				aplicacion.getCola().resetSongsPlayed();
 				aplicacion.logout();
 			} catch (FileNotFoundException e1) {
 				e1.printStackTrace();

@@ -28,7 +28,8 @@ public class Mp3Player extends PlaybackListener {
 	private List<String> songs = new ArrayList<>();
 	private int current = 0;
 	private MusicPlayer innerPlayer  = new MusicPlayer();
-
+	private int songsPlayed = 0;
+	
 	private class MusicPlayer implements Runnable {
 		
 		private AtomicBoolean keep = new AtomicBoolean(true);
@@ -51,7 +52,9 @@ public class Mp3Player extends PlaybackListener {
 						e.printStackTrace();
 					} 
 					current++;
+					songsPlayed++;
 				}
+				songsPlayed += -1;
 				current = 0;
 			}				
 		}	
@@ -195,7 +198,11 @@ public class Mp3Player extends PlaybackListener {
 	}
 	
 	public int getSongsPlayed() {
-		return current +1;
+		return songsPlayed +1;
+	}
+	
+	public void resetSongsPlayed() {
+		songsPlayed = 0;
 	}
 	
 
