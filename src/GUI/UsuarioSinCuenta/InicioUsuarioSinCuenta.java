@@ -9,14 +9,39 @@ import java.util.Map;
 
 import javax.swing.*;
 
+/**
+ * Esta clase tiene toda la informacion relevante a la pestania
+ * de inico del usuario sin cuenta
+ * @author Alejandro Bravo(alejandro.bravodela@estudiante.uam.es)
+ * 		   Antonio Garcia (antonio.garcian@estudiante.uam.es)
+ * 		   Alvaro Zaera (alvaro.zaeradela@estudiante.uam.es)
+ *         Grupo CompasON
+ *
+ */
 public class InicioUsuarioSinCuenta extends JPanel {
 	
+	/**
+	 * Zona que contiene la parte grafica del login 
+	 */
 	private Login login;
+	/**
+	 * Zona que contiene la parte grafica del registro de un nuevo usuario
+	 */
 	private Registro registro;
 	private SpringLayout layout;
+	/**
+	 * Boton para cambiar y ver la informacion para registrarse
+	 */
 	private JButton registrarse;
+	/**
+	 * Boton para cambiar a ver el inicio de sesion
+	 */
 	private JButton iniciarSesion;
 	
+	/**
+	 * Constructor que crea la pestania de inicio de un usuario sin cuenta
+	 *
+	 */
 	public InicioUsuarioSinCuenta() {
 		super();
 		login = new Login();
@@ -62,6 +87,8 @@ public class InicioUsuarioSinCuenta extends JPanel {
                 registrarse.setFont(font.deriveFont(attributes));
 		    }
 		});
+		
+		/* Se muestra el registro y se oculta el login */ 		 
 		registrarse.addActionListener(
 				new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
@@ -109,6 +136,10 @@ public class InicioUsuarioSinCuenta extends JPanel {
 		this.add(registro);
 	}
 	
+	/**
+	 * Metodo que muestra el login y oculta el registro
+	 *
+	 */
 	public void accionIniciarSesion() {
 		login.setVisible(true);
 		registro.setVisible(false);

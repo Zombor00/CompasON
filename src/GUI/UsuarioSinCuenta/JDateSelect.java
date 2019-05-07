@@ -5,12 +5,33 @@ import java.time.LocalDate;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 
+/**
+ * Esta clase tiene una estructura para elegir una fecha
+ * @author Alejandro Bravo(alejandro.bravodela@estudiante.uam.es)
+ * 		   Antonio Garcia (antonio.garcian@estudiante.uam.es)
+ * 		   Alvaro Zaera (alvaro.zaeradela@estudiante.uam.es)
+ *         Grupo CompasON
+ *
+ */
 public class JDateSelect extends JPanel{
 	
+	/**
+	 * ComboBox con los dias a elegir 
+	 */
 	private JComboBox<Integer> comboDias;
+	/**
+	 * ComboBox con los meses a elegir 
+	 */
 	private JComboBox<String> comboMeses;
+	/**
+	 * ComboBox con los anios a elegir 
+	 */
 	private JComboBox<Integer> comboAnios;
 	
+	/**
+	 * Constructor de los elementos para elegir la fecha
+	 *
+	 */
 	public JDateSelect() {
 		Integer[] dias = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31};
 		comboDias = new JComboBox<>(dias);		

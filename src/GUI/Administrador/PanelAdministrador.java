@@ -27,7 +27,7 @@ public class PanelAdministrador extends JPanel {
 	private InformacionAdministrador informacionAdministrador;
 	
 	/**
-     * Constructor de la clase que cre el panel del administrador
+     * Constructor de la clase que crea el panel del administrador
      * con la parte de las pestanias y de la informacion
      * 
      */
