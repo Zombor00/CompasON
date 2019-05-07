@@ -11,6 +11,7 @@ public class Reproductor extends JPanel{
 	public static ImageIcon imagePlay = new ImageIcon("aux/play-button.png");
 	private JButton botonPlay;
 	private boolean play;
+	private boolean firstRep;
 	public Reproductor() {
 		
 		super();
@@ -23,6 +24,7 @@ public class Reproductor extends JPanel{
 		botonPlay.setPressedIcon(new ImageIcon(new ImageIcon("aux/play-button2.png").getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT)));
 		botonPlay.setLocation(0, 0);
 		play = true;
+		firstRep = true;
 		
 		this.add(botonPlay);
 
@@ -51,5 +53,13 @@ public class Reproductor extends JPanel{
 	
 	public boolean getPlay() {
 		return this.play;
+	}
+	
+	public boolean getFirstRep() {
+		return this.firstRep;
+	}
+	
+	public void setFirstRep(boolean b) {
+		firstRep = b;
 	}
 }

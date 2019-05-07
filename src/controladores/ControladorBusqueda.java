@@ -82,6 +82,7 @@ public class ControladorBusqueda implements ActionListener {
 				aplicacion.reproducirReproducible(buscables.get(0));
 				buscables.remove(0);
 		        gui.getReproductor().changeIcon(false);
+		        gui.getReproductor().setFirstRep(true);
 		        for (Buscable b : buscables) {
 		        	try {
 						aplicacion.aniadirALaCola(b);

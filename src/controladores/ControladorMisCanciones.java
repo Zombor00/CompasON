@@ -77,6 +77,7 @@ public class ControladorMisCanciones implements ActionListener {
 	        try {
 				aplicacion.reproducirReproducible(canciones.get(0));
 				canciones.remove(0);
+				gui.getReproductor().setFirstRep(true);
 				for (Cancion c : canciones) {
 					try {
 						aplicacion.aniadirALaCola(c);
@@ -109,6 +110,7 @@ public class ControladorMisCanciones implements ActionListener {
 	        try {
 	        	aplicacion.reproducirReproducible(albumes.get(0));
 				albumes.remove(0);
+				gui.getReproductor().setFirstRep(true);
 				for (Album a : albumes) {
 					try {
 						aplicacion.aniadirALaCola(a);
