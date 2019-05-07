@@ -199,5 +199,10 @@ public class Album extends Buscable implements Serializable{
     	}
     	return true;
     }
+    
+    @Override
+    public String getTituloExplicito() {
+    	return super.getTituloExplicito() + " (" + this.anio + ")";
+    }
 
 }
