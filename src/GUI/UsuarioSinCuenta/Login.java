@@ -1,17 +1,39 @@
 package GUI.UsuarioSinCuenta;
 
-//import java.awt.Color;
+
 import java.awt.Dimension;
 import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
+/**
+ * Esta clase tiene toda la informacion relevante al panel para
+ * hacer login
+ * @author Alejandro Bravo(alejandro.bravodela@estudiante.uam.es)
+ * 		   Antonio Garcia (antonio.garcian@estudiante.uam.es)
+ * 		   Alvaro Zaera (alvaro.zaeradela@estudiante.uam.es)
+ *         Grupo CompasON
+ *
+ */
 public class Login extends JPanel {
 	
+	/**
+	 * Campo donde escribir el nombre de usuario
+	 */
 	private JTextField usuario;
+	/**
+	 * Campo donde escribir la contrasenia
+	 */
 	private JPasswordField contrasenia;
+	/**
+	 * Boton para hacer login
+	 */
 	private JButton acceder;
-
+	
+	/**
+	 * Constructor que crea el formulario para hacer login
+	 *
+	 */
 	public Login() {
 		super();
 		SpringLayout layout = new SpringLayout();
@@ -53,11 +75,19 @@ public class Login extends JPanel {
 		return String.valueOf(this.contrasenia.getPassword());
 	}
 	
+	/**
+	 * Metodo que establece el controlador de las acciones de los botones
+	 * 
+	 * @param controlador de los botones de la pestania
+	 */
 	public void setControlador(ActionListener controlador) {
 		acceder.setActionCommand("ACCEDER");
 		acceder.addActionListener(controlador);
 	}
 	
+	/**
+	 * Metodo que limpia las zonas de escritura
+	 */
 	public void limpiarRegistro() {
 		usuario.setText("");
 		contrasenia.setText("");

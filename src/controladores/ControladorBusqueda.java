@@ -29,12 +29,34 @@ import excepciones.ExcepcionSeguirseASiMismo;
 import excepciones.ExcepcionUsuarioSinCuenta;
 import excepciones.ExcepcionUsuarioYaSeguido;
 
+/**
+ * Esta clase tiene toda la informacion relevante al controlador
+ * de busqueda: todas las acciones que puede haber en esa pestania
+ * @author Alejandro Bravo(alejandro.bravodela@estudiante.uam.es)
+ * 		   Antonio Garcia (antonio.garcian@estudiante.uam.es)
+ * 		   Alvaro Zaera (alvaro.zaeradela@estudiante.uam.es)
+ *         Grupo CompasON
+ *
+ */
 public class ControladorBusqueda implements ActionListener {
 	
+	/**
+	 * Aplicacion con la informacion
+	 */
 	private Aplicacion aplicacion;
+	/**
+	 * Busqueda donde suceden los eventos
+	 */
 	private Busqueda vista;
+	/**
+	 * Interfaz grafica de la aplicacion
+	 */
 	private GuiAplicacion gui;
 	
+	/**
+	 * Constructor del controlador con la busqueda
+	 * 
+	 */
 	public ControladorBusqueda(Busqueda busqueda) {
 		this.vista = busqueda;
 	}
@@ -46,9 +68,8 @@ public class ControladorBusqueda implements ActionListener {
 		if (gui == null) gui = GuiAplicacion.getInstance();
 		ArrayList<Buscable> buscable = null;
 		
-		
-		if (e.getActionCommand().equals("BUSCAR")) {
-			
+		/* Si se pulsa a buscar se busca por autor o titulo segun lo indicado */
+		if (e.getActionCommand().equals("BUSCAR")) {			
 			
 			String modo = (String)vista.getModo().getSelectedItem();
 			try {
@@ -62,15 +83,16 @@ public class ControladorBusqueda implements ActionListener {
 			}
 			gui.actualizarBusqueda(buscable,gui.getPanelesUsuarios().getActual());
 			
-		
+		/* Si se pulsa opciones se despliega u oculta el menu */
 		} else if (e.getActionCommand().equals("OPCIONES")) {
-			
-			
+						
 			JButton opciones = vista.getOpciones();
 			JPopupMenu menu = vista.getMenu();
 			menu.show(opciones, 0, opciones.getHeight());
 			
-			
+		/* Si se pulsa reproducir, la primera seleccionada se reproduce y las demas se
+		 * aniaden a la cola, se actualiza tambien la informacion del reproductor
+		 */
 		} else if (e.getActionCommand().equals("REPRODUCIR")) {
 			
 			
@@ -105,7 +127,7 @@ public class ControladorBusqueda implements ActionListener {
 				GuiAplicacion.showMessage("Elemento no reproducible");
 			}
 	        
-	        
+	    /* Si se pulsa aniadir a la cola se aniaden todas las seleccionadas */
 		}else if(e.getActionCommand().equals("ANIADIRACOLA")){
 			
 			
@@ -131,7 +153,7 @@ public class ControladorBusqueda implements ActionListener {
 				GuiAplicacion.showMessage("Debe registrarse para usar la cola");
 			}
 			
-			
+		/* Si se pulsa seguir al autor se sigue al autor del elemento seleccionado */
 		}else if(e.getActionCommand().equals("SEGUIRAUTOR")) {
 			
 			
@@ -149,13 +171,13 @@ public class ControladorBusqueda implements ActionListener {
 				GuiAplicacion.showMessage("No puedes seguirte a ti mismo");
 			}
 			
-			
+		/* Si se pulsa denunciar se muestra un panel para rellenar un comentario con la denuncia */
 		} else if(e.getActionCommand().equals("DENUNCIAR")) {
 			
 			
 			vista.comentarioDenunciaVisible(true);
 			
-			
+		/* Si se da a enviar denuncia se denuncia la cancion seleccionada con el comentario escrito */
 		}else if(e.getActionCommand().equals("ENVIAR_DENUNCIA")) {
 			
 			
@@ -178,7 +200,7 @@ public class ControladorBusqueda implements ActionListener {
 			}
 			vista.comentarioDenunciaVisible(false);
 			
-			
+		/* Si se pulsa aniadir a lista aparece la opcion de elegir a que listas aniadir el elemento seleccionado */
 		} else if (e.getActionCommand().equals("ANIADIR_A_LISTA")) {
 			
 			
@@ -200,7 +222,7 @@ public class ControladorBusqueda implements ActionListener {
 					null,
 					listasSeleccionadas,vista.getAuxAniadirAlista());
 			
-			
+		/* Al confirmar se aniade a las listas seleccionadas el elemento seleccionado previamente */
 		} else if (e.getActionCommand().equals("AUX_ANIADIR_A_LISTA")) {
 
 			JTable tabla = vista.getTabla();
@@ -224,7 +246,10 @@ public class ControladorBusqueda implements ActionListener {
 		}
 	}
 	
-	/*Devuelve el buscable seleccionado*/
+	/**
+	 * Metodo que devuelve el buscable seleccionado en la tabla
+	 * @return buscable seleccionado
+	 */
 	private Buscable getBuscable() {
 		JTable tablaBusqueda = vista.getTabla();
 		
@@ -237,7 +262,10 @@ public class ControladorBusqueda implements ActionListener {
         return b;
 	}
 	
-	/*Devuelve los buscables seleccionados*/
+	/**
+	 * Metodo que devuelve los buscables seleccionado en la tabla
+	 * @return lista de buscables seleccionado
+	 */
 	private ArrayList<Buscable> getBuscables(){
 		JTable tablaBusqueda = vista.getTabla();
 		

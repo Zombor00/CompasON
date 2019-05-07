@@ -142,6 +142,11 @@ public class MisCanciones extends JPanel{
     private JButton aceptarModificar = new JButton("Modificar");
     
     /**
+     * Boton que muestra el apartado de canciones
+     */    
+    private JButton canciones;
+    
+    /**
      * Nombre del album mostrado
      */
     JLabel albumMostrado;
@@ -152,7 +157,7 @@ public class MisCanciones extends JPanel{
 		this.setLayout(layout);
 		
 		/* Canciones */
-		JButton canciones = new JButton("Canciones");		
+		canciones = new JButton("Canciones");		
 		String[] titulos = {"Objeto","Cancion", "Duracion"};
 		Object[][] filas = {
 		{"","Cancion 1", "00:00"},
@@ -313,6 +318,10 @@ public class MisCanciones extends JPanel{
 						aceptarModificar.setVisible(false);
 						formularioModificarCancion.setVisible(false);
 						scrollTablaCancionesDelAlbum.setVisible(false);
+						volver.setVisible(false);
+						albumMostrado.setVisible(false);
+						canciones.setVisible(true);
+						albumes.setVisible(true);
 					}
 				});
 		
@@ -568,6 +577,10 @@ public class MisCanciones extends JPanel{
 		return this.visualizarAlbum;
 	}
 	
+	public JButton getCanciones() {
+		return canciones;
+	}
+
 	public Cancion getSelectedCancion() {
 		JTable tablaCanciones = this.getTablaCanciones();
         int fila = tablaCanciones.getSelectedRow();

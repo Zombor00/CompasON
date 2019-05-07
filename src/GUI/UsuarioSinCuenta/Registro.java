@@ -1,19 +1,47 @@
 package GUI.UsuarioSinCuenta;
 
-//import java.awt.Color;
+
 import java.awt.Dimension;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
 
 import javax.swing.*;
 
+/**
+ * Esta clase tiene toda la informacion relevante al panel para
+ * registrarse en la aplicacion
+ * @author Alejandro Bravo(alejandro.bravodela@estudiante.uam.es)
+ * 		   Antonio Garcia (antonio.garcian@estudiante.uam.es)
+ * 		   Alvaro Zaera (alvaro.zaeradela@estudiante.uam.es)
+ *         Grupo CompasON
+ *
+ */
 public class Registro extends JPanel{
+	/**
+	 * Campo donde escribir el nombre de usuario
+	 */
 	private JTextField usuario;
+	/**
+	 * Campo donde escribir la contrasenia
+	 */
 	private JPasswordField contrasenia;
+	/**
+	 * Campo donde escribir el nombre de artista
+	 */
 	private JTextField nombre;
+	/**
+	 * Zona donde se escoge la fecha de nacimiento
+	 */
 	private JDateSelect fecha;
+	/**
+	 * Boton para registrarse
+	 */
 	private JButton aceptar;
 	
+	/**
+	 * Constructor que crea el formulario para registrarse
+	 *
+	 */
 	public Registro() {
 		super();
 		SpringLayout layout = new SpringLayout();
@@ -75,11 +103,19 @@ public class Registro extends JPanel{
 		return this.nombre.getText();
 	}
 	
+	/**
+	 * Metodo que establece el controlador de las acciones de los botones
+	 * 
+	 * @param controlador de los botones de la pestania
+	 */
 	public void setControlador(ActionListener controlador) {
 		aceptar.setActionCommand("REGISTRARSE");
 		aceptar.addActionListener(controlador);
 	}
 	
+	/**
+	 * Metodo que limpia las zonas de escritura
+	 */
 	public void limpiarRegistro() {
 		usuario.setText("");
 		nombre.setText("");

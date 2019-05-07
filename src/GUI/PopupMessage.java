@@ -10,8 +10,23 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SpringLayout;
 
+/**
+ * Esta clase tiene toda la informacion relevante para la creacion del 
+ * popup especifico de la aplicacion
+ * @author Alejandro Bravo(alejandro.bravodela@estudiante.uam.es)
+ * 		   Antonio Garcia (antonio.garcian@estudiante.uam.es)
+ * 		   Alvaro Zaera (alvaro.zaeradela@estudiante.uam.es)
+ *         Grupo CompasON
+ *
+ */
 public class PopupMessage extends JDialog implements ActionListener {
 
+	/**
+	 * Constructor que crea un popup de la aplicacion con el mensaje 
+	 * indicado
+	 * 
+	 *  @param message mensaje que se muestra en el Popup 
+	 */
 	public PopupMessage(String message) {
 		
 		super(GuiAplicacion.getInstance(),"Mensaje");

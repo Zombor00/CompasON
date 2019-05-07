@@ -37,12 +37,34 @@ import media.Lista;
 import pads.musicPlayer.exceptions.Mp3InvalidFileException;
 import pads.musicPlayer.exceptions.Mp3PlayerException;
 
+/**
+ * Esta clase tiene toda la informacion relevante al controlador
+ * de mis canciones: todas las acciones que puede haber en esa pestania
+ * @author Alejandro Bravo(alejandro.bravodela@estudiante.uam.es)
+ * 		   Antonio Garcia (antonio.garcian@estudiante.uam.es)
+ * 		   Alvaro Zaera (alvaro.zaeradela@estudiante.uam.es)
+ *         Grupo CompasON
+ *
+ */
 public class ControladorMisCanciones implements ActionListener {
 	
+	/**
+	 * Aplicacion con la informacion
+	 */
 	private Aplicacion aplicacion;
-	private MisCanciones  vista;
+	/**
+	 * Pestania de mis canciones donde suceden los eventos
+	 */
+	private MisCanciones vista;
+	/**
+	 * Interfaz grafica de la aplicacion
+	 */
 	private GuiAplicacion gui;
 	
+	/**
+	 * Constructor del controlador con mis canciones
+	 * 
+	 */
 	public ControladorMisCanciones(MisCanciones  vista) {
 		this.vista = vista;
 	}
@@ -53,6 +75,7 @@ public class ControladorMisCanciones implements ActionListener {
 		if (aplicacion == null) aplicacion = Aplicacion.getInstance();
 		if (gui == null) gui = GuiAplicacion.getInstance();
 		
+		/* Si se pulsa el opciones de canciones se muestra u oculta su menu */
 		if (e.getActionCommand().equals("OPCIONES_CANCIONES")) {
 			
 			
@@ -60,7 +83,7 @@ public class ControladorMisCanciones implements ActionListener {
 			JPopupMenu menu = vista.getMenuCanciones();
 			menu.show(opciones, 0, opciones.getHeight());
 			
-			
+		/* Si se pulsa el opciones de albumes se muestra u oculta su menu */
 		} else if (e.getActionCommand().equals("OPCIONES_ALBUMES")) {
 			
 			
@@ -68,7 +91,7 @@ public class ControladorMisCanciones implements ActionListener {
 			JPopupMenu menu = vista.getMenuAlbumes();
 			menu.show(opciones, 0, opciones.getHeight());
 			
-			
+		/* Si se pulsa opciones mientras se visualiza un album se visualiza su menu */
 		} else if (e.getActionCommand().equals("OPCIONES_DEL_ALBUM")) {
 			
 			
@@ -76,7 +99,7 @@ public class ControladorMisCanciones implements ActionListener {
 			JPopupMenu menu = vista.getMenuDelAlbum();
 			menu.show(opciones, 0, opciones.getHeight());
 			
-			
+		/* Si se pulsa reproducir se reproduce la primera cancion seleccionada y las demas se aniaden a la cola */
 		} else if (e.getActionCommand().equals("REPRODUCIR_CANCION")) {
 			
 			
@@ -109,7 +132,7 @@ public class ControladorMisCanciones implements ActionListener {
 				GuiAplicacion.showMessage("Canción no reproducible");
 			}
 	        
-	        
+	      /* Si se pulsa reproducir se reproduce la primera cancion seleccionada del album y las demas se aniaden a la cola */
 		} else if (e.getActionCommand().equals("REPRODUCIR_CANCION_DEL_ALBUM")) {
 			
 			
@@ -142,7 +165,7 @@ public class ControladorMisCanciones implements ActionListener {
 				GuiAplicacion.showMessage("Canción no reproducible");
 			}
 	        
-	        
+	    /* Si se pulsa reproducir se reproduce el primer album seleccionado y los demas se aniaden a la cola */
 		} else if (e.getActionCommand().equals("REPRODUCIR_ALBUM")) {
 			
 			
@@ -175,7 +198,7 @@ public class ControladorMisCanciones implements ActionListener {
 				GuiAplicacion.showMessage("Canción no reproducible");
 			}
 	        
-	        
+	    /* Si se pulsa aniadir cancion al album muestra los albumes a los que se puede aniadir la cancion seleccionada */
 		} else if(e.getActionCommand().equals("ANIADIR_CANCION_A_ALBUM")) {
 			
 			
@@ -190,7 +213,7 @@ public class ControladorMisCanciones implements ActionListener {
 					null,
 					albumesSeleccionados,vista.getAuxAniadirCancionAAlbum());
 			
-			
+		/* Si se acepta se aniade la cancion a los albumes seleccionados */	
 		} else if (e.getActionCommand().equals("AUX_ANIADIR_CANCION_A_ALBUM")) {
 				
 				
@@ -206,12 +229,12 @@ public class ControladorMisCanciones implements ActionListener {
 				} catch (ExcepcionInsercionInvalida e1) {
 					GuiAplicacion.showMessage("Insercion invalida");
 				} catch (ExcepcionCancionNoValidada e1) {
-					GuiAplicacion.showMessage("No se puede añador una cancion bloqueada");
+					GuiAplicacion.showMessage("No se puede añadir una cancion bloqueada");
 				}
 			}
 			gui.actualizarDatos();
 			
-			
+		/* Si se pulsa pulsa aceptar se crea el album con las caracteristicas indicadas */
 		} else if (e.getActionCommand().equals("ACEPTAR_ALBUM")) {
 			
 			
@@ -246,7 +269,7 @@ public class ControladorMisCanciones implements ActionListener {
 			}
 			gui.actualizarDatos();
 			
-			
+		/* Si se pulsa pulsa aceptar se sube la cancion (a espera de ser validada) con las caracteristicas indicadas */
 		} else if(e.getActionCommand().equals("ACEPTAR_CANCION")) {
 			
 			
@@ -277,7 +300,7 @@ public class ControladorMisCanciones implements ActionListener {
 			}
 			gui.actualizarDatos();
 			
-			
+		/* Si se pulsa aniadir cancion a lista se muestran las listas a las que se puede aniadir la cancion seleccionada */
 		} else if (e.getActionCommand().equals("ANIADIR_CANCION_A_LISTA")) {
 			
 			
@@ -299,7 +322,7 @@ public class ControladorMisCanciones implements ActionListener {
 					null,
 					listasSeleccionadas,vista.getAuxAniadirCancionALista());
 			
-			
+		/* Si se acepta se aniade la cancion a las listas seleccionadas */	
 		} else if (e.getActionCommand().equals("AUX_ANIADIR_CANCION_A_LISTA")) {
 			
 			
@@ -320,7 +343,7 @@ public class ControladorMisCanciones implements ActionListener {
 			}
 			gui.actualizarDatos();
 			
-			
+		/* Si se pulsa aniadir album a lista se muestran las listas a las que se puede aniadir el album seleccionado */
 		} else if (e.getActionCommand().equals("ANIADIR_ALBUM_A_LISTA")) {
 			
 			
@@ -342,7 +365,7 @@ public class ControladorMisCanciones implements ActionListener {
 					null,
 					listasSeleccionadas,vista.getAuxAniadirAlbumALista());
 			
-			
+		/* Si se acepta se aniade el album seleccionado a las listas seleccionadas */	
 		}  else if (e.getActionCommand().equals("AUX_ANIADIR_ALBUM_A_LISTA")) {
 			
 			
@@ -363,7 +386,7 @@ public class ControladorMisCanciones implements ActionListener {
 			}
 			gui.actualizarDatos();
 			
-			
+		/* Si se pulsa borrar se borra la cancion seleccionada completamente de la aplicacion */
 		} else if(e.getActionCommand().equals("BORRAR_CANCION")) {
 			
 			
@@ -380,7 +403,7 @@ public class ControladorMisCanciones implements ActionListener {
 				e1.printStackTrace();
 			}
 			
-				
+		/* Si se pulsa borrar se borra el album seleccionado completamente de la aplicacion */	
 		} else if(e.getActionCommand().equals("BORRAR_ALBUM")) {
 			Album a = this.getSelectedAlbum();
 			if(a == null) return;
@@ -392,7 +415,7 @@ public class ControladorMisCanciones implements ActionListener {
 				GuiAplicacion.showMessage("Parametros de entrada incorrectos");
 			}
 			
-			
+		/* Si se pulsa aniadir a cola, se aniaden a la cola todas las canciones seleccionadas */
 		} else if(e.getActionCommand().equals("ANIADIR_CANCION_COLA")) {
 			
 			
@@ -421,7 +444,7 @@ public class ControladorMisCanciones implements ActionListener {
 				e1.printStackTrace();
 			}
 			
-			
+		/* Si se pulsa aniadir a cola, se aniaden a la cola todos los albumes seleccionadas */
 		} else if(e.getActionCommand().equals("ANIADIR_ALBUM_COLA")) {
 			
 			
@@ -447,7 +470,7 @@ public class ControladorMisCanciones implements ActionListener {
 				GuiAplicacion.showMessage("Debe registrarse para usar la cola");
 			}
 			
-			
+	    /* Si se pulsa el aceptar de modificar se modifica la cancion con la informacion indicada */
 		} else if(e.getActionCommand().equals("ACEPTAR_MODIFICAR")) {
 			
 			
@@ -457,7 +480,7 @@ public class ControladorMisCanciones implements ActionListener {
 			} catch (FileNotFoundException e1) {
 				GuiAplicacion.showMessage("File not found");
 			} catch (ExcepcionCancionYaValidada e1) {
-				GuiAplicacion.showMessage("Cancion ya validad");
+				GuiAplicacion.showMessage("Cancion ya validada");
 			} catch (ExcepcionDuracionLimiteSuperada e1) {
 				GuiAplicacion.showMessage("Duracion limite superada");
 			} catch (ExcepcionCancionYaNoModificable e1) {
@@ -468,7 +491,7 @@ public class ControladorMisCanciones implements ActionListener {
 			gui.actualizarDatos();
 			
 			
-			
+		/* Si se pulsa visualizar album, se muestran las canciones que se encuentran dentro del album */
 		} else if(e.getActionCommand().equals("VISUALIZAR_ALBUM")) {
 			
 			
@@ -492,6 +515,7 @@ public class ControladorMisCanciones implements ActionListener {
 				vista.getDatosCancionesDelAlbum().addRow(rowData);
 			}
 			
+		/* Si se pulsa, se quita la cancion seleccionada del album en el que se encuentra */
 		} else if(e.getActionCommand().equals("BORRAR_CANCION_DEL_ALBUM")) {
 			
 			
@@ -511,14 +535,26 @@ public class ControladorMisCanciones implements ActionListener {
 		}
 	}
 	
+	/**
+	 * Metodo que devuelve el album seleccionado
+	 * @return el album seleccionado
+	 */
 	public Album getSelectedAlbum() {
 		return vista.getSelectedAlbum();
 	}
 	
+	/**
+	 * Metodo que devuelve la cancion seleccionada
+	 * @return cancion seleccionada
+	 */
 	public Cancion getSelectedCancion() {
 		return vista.getSelectedCancion();
 	}
 	
+	/**
+	 * Metodo que devuelve las canciones seleccionadas
+	 * @return lista de canciones seleccionadas
+	 */
 	private ArrayList<Cancion> getSelectedCanciones(){
 		JTable tablaCanciones = vista.getTablaCanciones();
 		
@@ -534,6 +570,10 @@ public class ControladorMisCanciones implements ActionListener {
         return canciones;
 	}
 	
+	/**
+	 * Metodo que devuelve las canciones del album seleccionadas
+	 * @return lista de canciones seleccionados
+	 */
 	private ArrayList<Cancion> getSelectedCancionesDelAlbum(){
 		JTable tablaCanciones = vista.getTablaCancionesDelAlbum();
 		
@@ -549,6 +589,10 @@ public class ControladorMisCanciones implements ActionListener {
         return canciones;
 	}
 	
+	/**
+	 * Metodo que devuelve los albumes seleccionados
+	 * @return lista de albumes seleccionados
+	 */
 	private ArrayList<Album> getSelectedAlbumes(){
 		JTable tablaAlbumes = vista.getTablaAlbumes();
 		

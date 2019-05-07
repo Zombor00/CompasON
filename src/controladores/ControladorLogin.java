@@ -14,12 +14,34 @@ import excepciones.ExcepcionLoginBloqueado;
 import excepciones.ExcepcionLoginErrorCredenciales;
 import excepciones.ExcepcionParametrosDeEntradaIncorrectos;
 
+/**
+ * Esta clase tiene toda la informacion relevante al controlador
+ * del login: todas las acciones que puede haber en ese panel
+ * @author Alejandro Bravo(alejandro.bravodela@estudiante.uam.es)
+ * 		   Antonio Garcia (antonio.garcian@estudiante.uam.es)
+ * 		   Alvaro Zaera (alvaro.zaeradela@estudiante.uam.es)
+ *         Grupo CompasON
+ *
+ */
 public class ControladorLogin implements ActionListener {
 
+	/**
+	 * Aplicacion con la informacion
+	 */
 	private Aplicacion aplicacion;
+	/**
+	 * Panel de login donde suceden los eventos
+	 */
 	private Login vista;
+	/**
+	 * Interfaz grafica de la aplicacion
+	 */
 	private GuiAplicacion gui;
-
+	
+	/**
+	 * Constructor del controlador con el login
+	 * 
+	 */
 	public ControladorLogin(Login vista) {
 		this.vista = vista;
 	}
@@ -30,7 +52,10 @@ public class ControladorLogin implements ActionListener {
 			aplicacion = Aplicacion.getInstance();
 		if (gui == null)
 			gui = GuiAplicacion.getInstance();
-
+		
+		/* Si se pulsa acceder se hace login y si se hace correctamente se muestra el panel correspondiente
+		 * al tipo de usuario que acaba de iniciar sesion en la aplicacion
+		 */
 		if (e.getActionCommand().equals("ACCEDER")) {
 			try {
 				aplicacion.login(vista.getUsuario(), vista.getContrasenia());
