@@ -117,7 +117,7 @@ public class Busqueda extends JPanel {
 	    modeloDatos = new DefaultTableModelNoEditable(filas, titulos);
 		tabla = new JTable(modeloDatos);
 		tabla.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-		tabla.setPreferredScrollableViewportSize(new Dimension(800, 450));
+		tabla.setPreferredScrollableViewportSize(new Dimension(800, 500));
 		TableColumnModel tcm = tabla.getColumnModel();
 		tcm.removeColumn(tcm.getColumn(0));
 		JScrollPane scrollTabla = new JScrollPane(tabla);

@@ -312,6 +312,7 @@ public class MisCanciones extends JPanel{
 						aceptarModificar.setVisible(false);
 						formularioModificarCancion.setVisible(false);
 						scrollTablaCancionesDelAlbum.setVisible(false);
+						opcionesDelAlbum.setVisible(false);
 					}
 				});
 		
@@ -335,6 +336,7 @@ public class MisCanciones extends JPanel{
 						albumMostrado.setVisible(false);
 						canciones.setVisible(true);
 						albumes.setVisible(true);
+						opcionesDelAlbum.setVisible(false);
 					}
 				});
 		
@@ -352,6 +354,7 @@ public class MisCanciones extends JPanel{
 						aceptarModificar.setVisible(false);
 						formularioModificarCancion.setVisible(false);
 						scrollTablaCancionesDelAlbum.setVisible(false);
+						opcionesDelAlbum.setVisible(false);
 					}
 				});
 		
@@ -369,6 +372,7 @@ public class MisCanciones extends JPanel{
 						aceptarModificar.setVisible(false);
 						formularioModificarCancion.setVisible(false);
 						scrollTablaCancionesDelAlbum.setVisible(false);
+						opcionesDelAlbum.setVisible(false);
 					}
 				});
 		
@@ -417,6 +421,7 @@ public class MisCanciones extends JPanel{
         opcionesDelAlbum = new JButton("Opciones"); 
         layout.putConstraint(SpringLayout.NORTH, opcionesDelAlbum, 0, SpringLayout.NORTH, scrollTablaAlbumes);
         layout.putConstraint(SpringLayout.WEST, opcionesDelAlbum, 0, SpringLayout.EAST, scrollTablaAlbumes);
+        opcionesDelAlbum.setVisible(false);
         this.add(opcionesDelAlbum);
         
         /* Configuramos la opcion modificarCancion */
@@ -441,6 +446,7 @@ public class MisCanciones extends JPanel{
 						formularioModificarCancion.setVisible(true);
 						aceptarModificar.setVisible(true);
 						scrollTablaCancionesDelAlbum.setVisible(false);
+						opcionesDelAlbum.setVisible(false);
 					}
 				}));
         
@@ -466,6 +472,7 @@ public class MisCanciones extends JPanel{
 						subirAlbum.setVisible(false);
 						volver.setVisible(true);
 						albumMostrado.setVisible(true);
+						opcionesDelAlbum.setVisible(true);
 					}
 				}));
         
@@ -490,6 +497,7 @@ public class MisCanciones extends JPanel{
 						subirAlbum.setVisible(true);
 						volver.setVisible(false);
 						albumMostrado.setVisible(false);
+						opcionesDelAlbum.setVisible(false);
 					}
 				}));
 	}
