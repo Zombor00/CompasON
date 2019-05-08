@@ -175,9 +175,8 @@ public class UsuarioRegistrado extends UsuarioConCuenta implements Serializable{
     public void crearLista(String titulo, ArrayList <Reproducible> elementos) throws ExcepcionUsuarioNoPremium, ExcepcionInsercionInvalida, ExcepcionReproducibleNoValido{
         if(premiumHasta!=null && premiumHasta.isAfter(LocalDate.now())){
             Lista lista = new Lista(titulo,elementos);
-            if (lista.esValido() == true) {
-            	this.listas.add(lista);
-            }
+            this.listas.add(lista);
+            
         }
         else {
         	throw new ExcepcionUsuarioNoPremium();	
