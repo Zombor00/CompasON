@@ -10,7 +10,10 @@ import javax.swing.JScrollPane;
 
 /**
  * Panel que muestra una lista con scroll de componentes de tipo JCheckBox
- * @author antonio
+ * @author Alejandro Bravo(alejandro.bravodela@estudiante.uam.es)
+ * 		   Antonio Garcia (antonio.garcian@estudiante.uam.es)
+ * 		   Alvaro Zaera (alvaro.zaeradela@estudiante.uam.es)
+ *         Grupo CompasON
  */
 public class JCheckBoxScrollableList extends JScrollPane{
 	

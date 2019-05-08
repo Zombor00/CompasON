@@ -2,7 +2,6 @@ package media;
 
 import java.io.*;
 import java.util.*;
-import excepciones.ExcepcionReproducirProhibido;
 import excepciones.ExcepcionInsercionInvalida;
 import excepciones.ExcepcionCancionNoContenida;
 import excepciones.ExcepcionCancionNoValidada;
@@ -68,6 +67,16 @@ public class Album extends Buscable implements Serializable{
         this.setDuracion(duracion);
     }
     
+    /**
+    * Constructor de la clase album que pone titulo al album y al que se le pasa
+     las canciones que tendrá el album inicialmente y el anio.
+     * @param titulo string que identifica el titulo del album
+     * @param autor usuario que ha hecho el album
+     * @param canciones array de canciones a meter en el album
+     * @param anio del album
+     * @throws ExcepcionInsercionInvalida
+     * @throws ExcepcionCancionNoValidada
+     */
     public Album(String titulo, UsuarioRegistrado autor, ArrayList <Cancion> canciones, Integer anio) throws ExcepcionInsercionInvalida, ExcepcionCancionNoValidada{
         this(titulo, autor,canciones);
         this.anio = anio;

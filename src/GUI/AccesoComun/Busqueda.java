@@ -13,6 +13,15 @@ import aplicacion.Aplicacion;
 import media.Buscable;
 import media.Estado;
 
+/**
+ * Esta clase tiene toda la informacion relevante a la pestania de
+ * Busqueda comun a todos los usuarios
+ * @author Alejandro Bravo(alejandro.bravodela@estudiante.uam.es)
+ * 		   Antonio Garcia (antonio.garcian@estudiante.uam.es)
+ * 		   Alvaro Zaera (alvaro.zaeradela@estudiante.uam.es)
+ *         Grupo CompasON
+ *
+ */
 public class Busqueda extends JPanel {
 	
 	/**
@@ -292,6 +301,11 @@ public class Busqueda extends JPanel {
 		}
 	}
 	
+	/**
+	 * Metodo que establece el controlador de las acciones de los botones
+	 * 
+	 * @param controlador de los botones de la pestania
+	 */
 	public void setControlador(ActionListener controlador) {
 		buscar.setActionCommand("BUSCAR");
 		buscar.addActionListener(controlador);

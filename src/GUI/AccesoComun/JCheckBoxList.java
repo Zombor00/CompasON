@@ -9,7 +9,10 @@ import javax.swing.JPanel;
 
 /**
  * Panel que muestra una lista de componentes de tipo JCheckBox
- * @author antonio
+ * @author Alejandro Bravo(alejandro.bravodela@estudiante.uam.es)
+ * 		   Antonio Garcia (antonio.garcian@estudiante.uam.es)
+ * 		   Alvaro Zaera (alvaro.zaeradela@estudiante.uam.es)
+ *         Grupo CompasON
  */
 public class JCheckBoxList extends JPanel {
 	

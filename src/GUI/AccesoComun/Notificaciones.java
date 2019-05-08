@@ -8,11 +8,30 @@ import javax.swing.table.DefaultTableModel;
 import gestion.Notificacion;
 import aplicacion.Aplicacion;
 
+/**
+ * Esta clase tiene toda la informacion relevante al panel
+ * donde aparecen las notificaciones del usuario
+ * @author Alejandro Bravo(alejandro.bravodela@estudiante.uam.es)
+ * 		   Antonio Garcia (antonio.garcian@estudiante.uam.es)
+ * 		   Alvaro Zaera (alvaro.zaeradela@estudiante.uam.es)
+ *         Grupo CompasON
+ *
+ */
 public class Notificaciones extends JPanel {
 	
+	/**
+	 * Modelo con los datos de las notificaciones a mostrar
+	 */
 	private DefaultTableModel usuarioNotificacion;
+	/**
+	 * Tabla con el modelo de datos de las notificaciones
+	 */
 	private JTable tablaNotificaciones;
 	
+	/**
+	 * Constructor del panel notificaciones
+	 *
+	 */
 	public Notificaciones() {
 		super();
 		SpringLayout layout = new SpringLayout();
@@ -40,6 +59,10 @@ public class Notificaciones extends JPanel {
 		
 	}
 	
+	/**
+	 * Metodo que actualiza la informacion del panel
+	 * 
+	 */
 	public void actualizarDatos() {
 		Aplicacion a = Aplicacion.getInstance();
 		if (a.getUsuarioLogeado() == null) {
@@ -70,6 +93,12 @@ public class Notificaciones extends JPanel {
 		return usuarioNotificacion;
 	}
 
+	/**
+	 * Metodo que establece el controlador de las acciones al pulsar
+	 * las notificaciobes
+	 * 
+	 * @param controlador de los botones del panel
+	 */
 	public void setControlador(ListSelectionListener controlador) {
 		tablaNotificaciones.getSelectionModel().addListSelectionListener(controlador);
 		tablaNotificaciones.getColumnModel().getSelectionModel().addListSelectionListener(controlador);	

@@ -18,6 +18,15 @@ import media.Estado;
 import media.EstadoValidacion;
 import usuarios.UsuarioRegistrado;
 
+/**
+ * Esta clase tiene toda la informacion relevante a la 
+ * pestania de mis canciones
+ * @author Alejandro Bravo(alejandro.bravodela@estudiante.uam.es)
+ * 		   Antonio Garcia (antonio.garcian@estudiante.uam.es)
+ * 		   Alvaro Zaera (alvaro.zaeradela@estudiante.uam.es)
+ *         Grupo CompasON
+ *
+ */
 public class MisCanciones extends JPanel{
 	
 	/**
@@ -151,6 +160,10 @@ public class MisCanciones extends JPanel{
      */
     JLabel albumMostrado;
 	
+    /**
+	  * Constructor del panel de mis canciones 
+	  *
+	  */
 	public MisCanciones() {
 		super();
 		SpringLayout layout = new SpringLayout();
@@ -599,6 +612,10 @@ public class MisCanciones extends JPanel{
         return (Album)tablaAlbum.getModel().getValueAt(fila, 0);
 	}
 	
+	/**
+	 * Metodo que actualiza los datos de la pestania
+	 * 
+	 */
 	public void actualizarDatos() {
 		UsuarioRegistrado u = Aplicacion.getInstance().getUsuarioLogeado();
 		if (u != null && u.getPremiumHasta() == null) {
@@ -668,6 +685,11 @@ public class MisCanciones extends JPanel{
 		
 	}
 	
+	/**
+	 * Metodo que establece el controlador de las acciones de los botones
+	 * 
+	 * @param controlador de los botones de la pestania
+	 */
 	public void setControlador(ActionListener controlador) {
 		opcionesCanciones.setActionCommand("OPCIONES_CANCIONES");
 		opcionesCanciones.addActionListener(controlador);

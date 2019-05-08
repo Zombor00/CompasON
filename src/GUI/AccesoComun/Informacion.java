@@ -6,11 +6,30 @@ import java.awt.Dimension;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 
+/**
+ * Esta clase tiene toda la informacion relevante al panel de
+ * informacion comun a todos los usuarios menos al administrador
+ * @author Alejandro Bravo(alejandro.bravodela@estudiante.uam.es)
+ * 		   Antonio Garcia (antonio.garcian@estudiante.uam.es)
+ * 		   Alvaro Zaera (alvaro.zaeradela@estudiante.uam.es)
+ *         Grupo CompasON
+ *
+ */
 public class Informacion extends JPanel{
 	
+	/**
+	 * Panel donde aparece a quien sigue el usuario y que permite cerrar sesion
+	 */
 	private Sesion sesion = new Sesion();
+	/**
+	 * Panel donde aparecen las notificaciones del usuario
+	 */
 	private Notificaciones notificaciones = new Notificaciones();
 	
+	/**
+	  * Constructor del panel de informacion 
+	  *
+	  */
 	public Informacion() {
 		
 		super();
@@ -31,6 +50,10 @@ public class Informacion extends JPanel{
 		return this.notificaciones;
 	}
 	
+	/**
+	 * Metodo que actualiza los datos de los paneles que contiene
+	 * 
+	 */
 	public void actualizarDatos() {
 		this.sesion.actualizarDatos();
 		this.notificaciones.actualizarDatos();

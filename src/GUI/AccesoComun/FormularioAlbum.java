@@ -12,13 +12,38 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 
+/**
+ * Esta clase tiene toda la informacion relevante al panel del 
+ * formulario para la creacion de un album
+ * @author Alejandro Bravo(alejandro.bravodela@estudiante.uam.es)
+ * 		   Antonio Garcia (antonio.garcian@estudiante.uam.es)
+ * 		   Alvaro Zaera (alvaro.zaeradela@estudiante.uam.es)
+ *         Grupo CompasON
+ *
+ */
 public class FormularioAlbum extends JPanel {
 	
+	/**
+	 * Lista de enteros de las posiciones de las canciones seleccionadas
+	 */
 	private ArrayList<Integer> cancionesSeleccionadas = new ArrayList<Integer>();
+	/**
+	 * Campo para escribir el nombre del album
+	 */
 	private JTextField nombre;
+	/**
+	 * Campo donde aparecen los numeros de las canciones seleccionadas
+	 */
 	private JTextField canciones;
+	/**
+	 * ComboBox para escoger el anio del album
+	 */
 	private JComboBox<Integer> comboAnios;
 	
+	 /**
+	  * Constructor del panel del formulario
+	  *
+	  */
 	public FormularioAlbum(ArrayList<String> nombreCanciones) {
 		super();
 		SpringLayout layout = new SpringLayout();
@@ -92,6 +117,10 @@ public class FormularioAlbum extends JPanel {
 		return this.nombre.getText();
 	}
 	
+	/**
+	 * Metodo que resetea los campos del panel
+	 * 
+	 */
 	public void actualizarDatos() {
 		canciones.setText("");
 		nombre.setText("");

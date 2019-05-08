@@ -10,15 +10,46 @@ import javax.swing.table.DefaultTableModel;
 import aplicacion.Aplicacion;
 import usuarios.UsuarioRegistrado;
 
+/**
+ * Esta clase tiene toda la informacion relevante al panel
+ * donde aparece la informacion de la sesion del usuario
+ * @author Alejandro Bravo(alejandro.bravodela@estudiante.uam.es)
+ * 		   Antonio Garcia (antonio.garcian@estudiante.uam.es)
+ * 		   Alvaro Zaera (alvaro.zaeradela@estudiante.uam.es)
+ *         Grupo CompasON
+ *
+ */
 public class Sesion extends JPanel {
 
+	/**
+	 * Nombre del usuario
+	 */
 	private JLabel nombre;
+	/**
+	 * Boton para cerrar sesion
+	 */
 	private JButton cerrar;
+	/**
+	 * Boton para dejar de seguir a un usuario
+	 */
 	private JButton dejarSeguir;
+	/**
+	 * Tabla donde se muestran los usuarios seguidos
+	 */
 	private JTable tablaSeguidos;
+	/**
+	 * Modelo con los datos de los usuarios seguidos
+	 */
 	private DefaultTableModel datosSeguidos;
+	/**
+	 * Scroll de la tabla de seguidos
+	 */
 	private JScrollPane scrolltablaSeguidos;
 
+	/**
+	 * Constructor del panel de sesion
+	 *
+	 */
 	public Sesion() {
 		super();
 		nombre = new JLabel("Nombre");
@@ -52,6 +83,10 @@ public class Sesion extends JPanel {
 		this.add(dejarSeguir);
 	}
 
+	/**
+	 * Metodo que actualiza la informacion del panel
+	 * 
+	 */
 	public void actualizarDatos() {
 		if (Aplicacion.getInstance().getAdministradorLogeado()) {
 			nombre.setText("Admin");
@@ -76,6 +111,11 @@ public class Sesion extends JPanel {
 		}
 	}
 
+	/**
+	 * Metodo que establece el controlador de las acciones de los botones
+	 * 
+	 * @param controlador de los botones del oanel
+	 */
 	public void setControlador(ActionListener controlador) {
 		cerrar.setActionCommand("Cerrar_Sesion");
 		cerrar.addActionListener(controlador);

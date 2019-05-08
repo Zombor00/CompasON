@@ -4,7 +4,6 @@ import java.io.*;
 import java.time.*;
 
 import excepciones.ExcepcionDuracionLimiteSuperada;
-import excepciones.ExcepcionReproducirProhibido;
 import excepciones.ExcepcionCancionYaValidada;
 import excepciones.ExcepcionCancionModificable;
 import excepciones.ExcepcionCancionYaNoModificable;
@@ -181,6 +180,10 @@ public class Cancion extends Buscable implements Serializable{
     public LocalDate getFechaSubida() {
     	return this.fechaSubida;
     }
+    
+    public static void setMaxId(int maxId) {
+		Cancion.maxId = maxId;
+	}
 
     @Override
     public void desbloquear(Cancion c) {
@@ -243,13 +246,14 @@ public class Cancion extends Buscable implements Serializable{
     	return true;
     }
 
+    /**
+     * Devuelve el Id de la proxima cancion
+     * @return proximo id
+     */
 	public static int getNextId() {
 		return maxId+1;
 	}
 
-	public static void setMaxId(int maxId) {
-		Cancion.maxId = maxId;
-	}
 	
 	
     

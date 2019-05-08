@@ -10,12 +10,34 @@ import javax.swing.SpringLayout;
 import aplicacion.Aplicacion;
 import usuarios.UsuarioRegistrado;
 
+/**
+ * Esta clase tiene toda la informacion relevante al panel de
+ * inicio comun a los usuarios registrados en la aplicacion
+ * @author Alejandro Bravo(alejandro.bravodela@estudiante.uam.es)
+ * 		   Antonio Garcia (antonio.garcian@estudiante.uam.es)
+ * 		   Alvaro Zaera (alvaro.zaeradela@estudiante.uam.es)
+ *         Grupo CompasON
+ *
+ */
 public class InicioComun extends JPanel{
 	
+	/**
+	 * Texto de bienvenida al usuario
+	 */
 	private JLabel bienvenido = new JLabel("Bienvenido _");
+	/**
+	 * Texto que indica el numero de canciones reproducidas
+	 */
 	private JLabel reproducidas = new JLabel("Canciones reproducidas este mes: _  (Limite: _ )");
+	/**
+	 * Texto que indica el numero de reproducciones que han hecho de sus canciones
+	 */
 	private JLabel reproducciones = new JLabel("Reproducciones obtenidas este mes: _  (_ mas para ser premium)");
 	
+	/**
+	  * Constructor de la parte de la pestania de Inicio comun 
+	  *
+	  */
 	public InicioComun() {
 		
 		super();
@@ -41,6 +63,10 @@ public class InicioComun extends JPanel{
 		
 	}
 	
+	/**
+	 * Metodo que actualiza el contenido de los JLabel
+	 * 
+	 */
 	public void actualizarDatos() {
 		UsuarioRegistrado u = Aplicacion.getInstance().getUsuarioLogeado();
 		if (u == null) return;

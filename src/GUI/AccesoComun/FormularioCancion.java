@@ -7,11 +7,30 @@ import java.io.File;
 
 import javax.swing.*;
 
+/**
+ * Esta clase tiene toda la informacion relevante al panel del 
+ * formulario para subir una cancion
+ * @author Alejandro Bravo(alejandro.bravodela@estudiante.uam.es)
+ * 		   Antonio Garcia (antonio.garcian@estudiante.uam.es)
+ * 		   Alvaro Zaera (alvaro.zaeradela@estudiante.uam.es)
+ *         Grupo CompasON
+ *
+ */
 public class FormularioCancion extends JPanel{
 	
+	/**
+	 * Campo para escribir el nombre del album
+	 */
 	private JTextField nombre;
+	/**
+	 * Campo donde se escribe la ubicacion del fichero
+	 */
 	private JTextField fichero;
 	
+	/**
+	  * Constructor del panel del formulario
+	  *
+	  */
 	public FormularioCancion() {
 		super();
 		SpringLayout layout = new SpringLayout();
@@ -83,6 +102,10 @@ public class FormularioCancion extends JPanel{
 		this.fichero.setText(fichero);
 	}
 	
+	/**
+	 * Metodo que resetea los campos del panel
+	 * 
+	 */
 	public void actualizarDatos() {
 		nombre.setText("");
 		fichero.setText("");

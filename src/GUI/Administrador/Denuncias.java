@@ -60,7 +60,7 @@ public class Denuncias extends JPanel {
 		};
 		modeloDatos = new DefaultTableModelNoEditable(filas, titulos);
 		tabla = new JTable(modeloDatos);
-		tabla.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+		tabla.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 		tabla.setPreferredScrollableViewportSize(new Dimension(800, 500));
 		JScrollPane scrollTabla = new JScrollPane(tabla);
 		TableColumnModel modeloColumnas = tabla.getColumnModel();
