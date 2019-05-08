@@ -246,6 +246,12 @@ public class Cancion extends Buscable implements Serializable{
 	public static int getNextId() {
 		return maxId+1;
 	}
+
+	public static void setMaxId(int maxId) {
+		Cancion.maxId = maxId;
+	}
+	
+	
     
     
 

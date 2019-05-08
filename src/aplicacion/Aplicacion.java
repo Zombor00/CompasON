@@ -72,6 +72,11 @@ public class Aplicacion implements Serializable {
      * Cola de reproduccion de la aplicacion
      */
     private Mp3Player cola;
+    
+    /**
+     * Id de la ultima cancion introducida
+     */
+    private int lastId;
 
 
 
@@ -303,6 +308,7 @@ public class Aplicacion implements Serializable {
 
         Files.copy(Paths.get(fichero), Paths.get("canciones/"+ titulo + Cancion.getNextId() + ".mp3"), StandardCopyOption.REPLACE_EXISTING);
 
+        this.lastId = Cancion.getNextId();
     	Cancion cancion = new Cancion(titulo,"canciones/"+ titulo + Cancion.getNextId() + ".mp3",this.usuarioLogeado);
         this.administrador.aniadirCancion(cancion);
         this.usuarioLogeado.aniadirCancion(cancion);
@@ -688,6 +694,7 @@ public class Aplicacion implements Serializable {
         entradaObjetos.close();
 
         INSTANCE.cola = new Mp3Player();
+        Cancion.setMaxId(INSTANCE.lastId);
         return INSTANCE;
     }
 
