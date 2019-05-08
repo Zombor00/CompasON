@@ -63,9 +63,9 @@ public class ControladorMisCanciones implements ActionListener {
 	
 	/**
 	 * Constructor del controlador con mis canciones
-	 * 
+	 * @param vista panel donde actua el controlador
 	 */
-	public ControladorMisCanciones(MisCanciones  vista) {
+	public ControladorMisCanciones(MisCanciones vista) {
 		this.vista = vista;
 	}
 	

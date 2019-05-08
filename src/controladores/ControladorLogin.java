@@ -39,8 +39,8 @@ public class ControladorLogin implements ActionListener {
 	private GuiAplicacion gui;
 	
 	/**
-	 * Constructor del controlador con el login
-	 * 
+	 * Constructor del controlador con login
+	 * @param vista panel donde actua el controlador
 	 */
 	public ControladorLogin(Login vista) {
 		this.vista = vista;

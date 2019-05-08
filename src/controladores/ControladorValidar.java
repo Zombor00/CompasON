@@ -21,12 +21,34 @@ import media.Cancion;
 import media.EstadoValidacion;
 import pads.musicPlayer.exceptions.Mp3PlayerException;
 
+/**
+ * Esta clase tiene toda la informacion relevante al controlador
+ * de validar: todas las acciones que puede haber en esa pestania
+ * @author Alejandro Bravo(alejandro.bravodela@estudiante.uam.es)
+ * 		   Antonio Garcia (antonio.garcian@estudiante.uam.es)
+ * 		   Alvaro Zaera (alvaro.zaeradela@estudiante.uam.es)
+ *         Grupo CompasON
+ *
+ */
 public class ControladorValidar implements ActionListener {
 
+	/**
+	 * Aplicacion con la informacion
+	 */
 	private Aplicacion aplicacion;
+	/**
+	 * Pestania validar donde suceden los eventos
+	 */
 	private Validar vista;
+	/**
+	 * Interfaz grafica de la aplicacion
+	 */
 	private GuiAplicacion gui;
 
+	/**
+	 * Constructor del controlador con validar
+	 * @param validar panel donde actua el controlador
+	 */
 	public ControladorValidar(Validar validar) {
 		this.vista = validar;
 	}
@@ -37,11 +59,13 @@ public class ControladorValidar implements ActionListener {
 			aplicacion = Aplicacion.getInstance();
 		if (gui == null)
 			gui = GuiAplicacion.getInstance();
-
+		
+		/* Si se pulsa opciones se muestra el menu */
 		if (e.getActionCommand().equals("OPCIONES")) {
 			JButton opciones = vista.getOpciones();
 			JPopupMenu menu = vista.getMenu();
 			menu.show(opciones, 0, opciones.getHeight());
+		/* Si se pulsa reproducir se reproduce la cancion seleccionada */
 		} else if (e.getActionCommand().equals("REPRODUCIR")) {
 			JTable tabla = vista.getTabla();
 
@@ -66,6 +90,7 @@ public class ControladorValidar implements ActionListener {
 			} catch (ExcepcionReproducirProhibido e1) {
 				e1.printStackTrace();
 			}
+		/* Si se pulsa cualquiera de estas opciones se tramita la validacion con la caracteristica correspondiente */
 		} else if (e.getActionCommand().equals("SIN_LIMITACION") || e.getActionCommand().equals("EXPLICITO")
 				|| e.getActionCommand().equals("DENEGAR")) {
 			JTable tabla = vista.getTabla();

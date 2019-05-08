@@ -54,8 +54,8 @@ public class ControladorBusqueda implements ActionListener {
 	private GuiAplicacion gui;
 	
 	/**
-	 * Constructor del controlador con la busqueda
-	 * 
+	 * Constructor del controlador con busqueda
+	 * @param busqueda panel donde actua el controlador
 	 */
 	public ControladorBusqueda(Busqueda busqueda) {
 		this.vista = busqueda;

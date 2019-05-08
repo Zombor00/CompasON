@@ -16,11 +16,33 @@ import excepciones.ExcepcionLoginErrorCredenciales;
 import excepciones.ExcepcionNombreDeUsuarioNoDisponible;
 import excepciones.ExcepcionParametrosDeEntradaIncorrectos;
 
+/**
+ * Esta clase tiene toda la informacion relevante al controlador
+ * de registro: todas las acciones que puede haber en ese panel
+ * @author Alejandro Bravo(alejandro.bravodela@estudiante.uam.es)
+ * 		   Antonio Garcia (antonio.garcian@estudiante.uam.es)
+ * 		   Alvaro Zaera (alvaro.zaeradela@estudiante.uam.es)
+ *         Grupo CompasON
+ *
+ */
 public class ControladorRegistro implements ActionListener{
+	/**
+	 * Aplicacion con la informacion
+	 */
 	private Aplicacion aplicacion;
+	/**
+	 * Panel de registro donde suceden los eventos
+	 */
 	private Registro registro;
+	/**
+	 * Interfaz grafica de la aplicacion
+	 */
 	private GuiAplicacion gui;
 	
+	/**
+	 * Constructor del controlador con registro
+	 * @param registro panel donde actua el controlador
+	 */
 	public ControladorRegistro(Registro registro) {
 		this.registro = registro;
 	}
@@ -36,7 +58,7 @@ public class ControladorRegistro implements ActionListener{
 			GuiAplicacion.showMessage("Necesario rellenar todos los campos");
 			return;
 		}
-		
+		/* Se registra el usuario en la aplicacion con la informacion indicada */
 		if (e.getActionCommand().equals("REGISTRARSE")) {
 			try {
 				aplicacion.aniadirUsuario(registro.getUsuario(), registro.getContrasenia(), registro.getNombre(), registro.getFecha());

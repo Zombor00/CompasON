@@ -27,12 +27,34 @@ import media.Reproducible;
 import pads.musicPlayer.exceptions.Mp3InvalidFileException;
 import pads.musicPlayer.exceptions.Mp3PlayerException;
 
+/**
+ * Esta clase tiene toda la informacion relevante al controlador
+ * de mis listas: todas las acciones que puede haber en esa pestania
+ * @author Alejandro Bravo(alejandro.bravodela@estudiante.uam.es)
+ * 		   Antonio Garcia (antonio.garcian@estudiante.uam.es)
+ * 		   Alvaro Zaera (alvaro.zaeradela@estudiante.uam.es)
+ *         Grupo CompasON
+ *
+ */
 public class ControladorMisListas implements ActionListener {
 	
+	/**
+	 * Aplicacion con la informacion
+	 */
 	private Aplicacion aplicacion;
+	/**
+	 * Pestania de mis canciones donde suceden los eventos
+	 */
 	private MisListas vista;
+	/**
+	 * Interfaz grafica de la aplicacion
+	 */
 	private GuiAplicacion gui;
 	
+	/**
+	 * Constructor del controlador con mis listas
+	 * @param misListas panel donde actua el controlador
+	 */
 	public ControladorMisListas(MisListas misListas) {
 		this.vista = misListas;
 	}
@@ -42,15 +64,14 @@ public class ControladorMisListas implements ActionListener {
 		if (aplicacion == null) aplicacion = Aplicacion.getInstance();
 		if (gui == null) gui = GuiAplicacion.getInstance();
 		
-		
-		if (e.getActionCommand().equals("OPCIONES")) {
-			
+		/* Si se pulsa el opciones de canciones se muestra u oculta su menu */
+		if (e.getActionCommand().equals("OPCIONES")) {			
 			
 			JButton opciones = vista.getOpciones();
 			JPopupMenu menu = vista.getMenu();
 			menu.show(opciones, 0, opciones.getHeight());
 			
-			
+		/* Si se pulsa reproducir se reproduce la primera lista seleccionada y las demas se aniaden a la cola */	
 		} else if (e.getActionCommand().equals("REPRODUCIR")) {
 			
 			ArrayList<Lista> listas= this.getSelectedListas();
@@ -81,7 +102,7 @@ public class ControladorMisListas implements ActionListener {
 				GuiAplicacion.showMessage("Lista no reproducible");
 			}
 	        
-	        
+	    /* Si se pulsa aceptar se crea la lista con la informacion indicada */
 		} else if(e.getActionCommand().equals("ACEPTAR")) {
 			
 			
@@ -140,7 +161,7 @@ public class ControladorMisListas implements ActionListener {
 			}
 			gui.actualizarDatos();
 			
-			
+		/* Si se pulsa borrar se borra la lista de la aplicacion */	
 		} else if(e.getActionCommand().equals("BORRAR")) {
 			
 			
@@ -153,7 +174,7 @@ public class ControladorMisListas implements ActionListener {
 	        aplicacion.getUsuarioLogeado().borrarLista(l);
 	        gui.actualizarDatos();
 	        
-	        
+	    /* Si se pulsa aniadir a la cola se aniaden todas las listas seleccionadas */
 		} else if(e.getActionCommand().equals("ANIADIR_COLA")) {
 			
 			ArrayList<Lista> listas = this.getSelectedListas();
@@ -181,7 +202,7 @@ public class ControladorMisListas implements ActionListener {
 				e1.printStackTrace();
 			}
 			
-			
+		/* Si se pulsa aniadir a lista aparecen las listas en las que se puede aniadir la seleccionada */
 		} else if(e.getActionCommand().equals("ANIADIR_A_LISTA")) {
 			
 			
@@ -196,7 +217,7 @@ public class ControladorMisListas implements ActionListener {
 					null,
 					listasSeleccionadas,vista.getAuxAniadirALista());
 			
-			
+		/* Si se confirma, se aniade la lista seleccionada inicialmente a todas las seleccionadas despues */
 		} else if(e.getActionCommand().equals("AUX_ANIADIR_A_LISTA")) {
 			
 			
@@ -221,6 +242,10 @@ public class ControladorMisListas implements ActionListener {
 		
 	}
 	
+	/**
+	 * Metodo que devuelve las listas seleccionados
+	 * @return lista de listas seleccionados
+	 */
 	private ArrayList<Lista> getSelectedListas(){
 		JTable tablaListas = vista.getTabla();
 		

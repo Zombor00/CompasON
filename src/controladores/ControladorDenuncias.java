@@ -43,8 +43,8 @@ public class ControladorDenuncias implements ActionListener {
 	private GuiAplicacion gui;
 	
 	/**
-	 * Constructor del controlador con el panel de denuncias
-	 * 
+	 * Constructor del controlador con denuncias
+	 * @param denuncias panel donde actua el controlador
 	 */
 	public ControladorDenuncias(Denuncias denuncias) {
 		this.vista = denuncias;

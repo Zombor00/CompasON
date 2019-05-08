@@ -8,14 +8,31 @@ import GUI.Reproductor;
 import aplicacion.Aplicacion;
 import pads.musicPlayer.exceptions.Mp3PlayerException;
 
+/**
+ * Esta clase tiene toda la informacion relevante al controlador
+ * del reproductor: todas las acciones que puede haber en ese panel
+ * @author Alejandro Bravo(alejandro.bravodela@estudiante.uam.es)
+ * 		   Antonio Garcia (antonio.garcian@estudiante.uam.es)
+ * 		   Alvaro Zaera (alvaro.zaeradela@estudiante.uam.es)
+ *         Grupo CompasON
+ *
+ */
 public class ControladorReproductor implements ActionListener{
 
+	/**
+	 * Aplicacion con la informacion
+	 */
 	private Aplicacion aplicacion;
+	/**
+	 * Interfaz grafica de la aplicacion
+	 */
 	private GuiAplicacion gui;
 	
 	public void actionPerformed(ActionEvent e) {
 		if (gui == null) gui = GuiAplicacion.getInstance();
 		if (aplicacion == null) aplicacion = Aplicacion.getInstance();
+		
+		/* Se comienza a reproducir la cola o se pausa y se suman las reproducciones correctamente */
 		if (e.getActionCommand().equals("PULSADO")) {
 			Reproductor r = gui.getReproductor();
 			boolean play = r.getPlay();
