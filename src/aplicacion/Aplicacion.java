@@ -653,6 +653,22 @@ public class Aplicacion implements Serializable {
             }
         }
         administrador.getCancionesNuevas().removeAll(noValidadas);
+        for (Cancion cancion : noValidadas) {
+        	cancion.getAutor().getAlbumes().stream().filter(a -> a.contieneReproducible(cancion)).forEach(a -> {
+				try {
+					a.quitarCancion(cancion);
+				} catch (ExcepcionCancionNoContenida e) {
+		
+				}
+			});
+        	cancion.getAutor().getListas().stream().filter(l -> l.contieneReproducible(cancion)).forEach(l -> {
+				try {
+					l.quitarReproducible(cancion);
+				} catch (ExcepcionCancionNoContenida e) {
+		
+				}
+			});
+        }
     }
 
     /**
