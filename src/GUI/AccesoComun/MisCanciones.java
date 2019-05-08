@@ -425,7 +425,7 @@ public class MisCanciones extends JPanel{
 					public void actionPerformed(ActionEvent e) {
 						Cancion c = MisCanciones.this.getSelectedCancion();
 						if (c == null) return;
-						if(c.getModificableHasta().isBefore(LocalDate.now())) {
+						if(c.getModificableHasta() != null && c.getModificableHasta().isBefore(LocalDate.now())) {
 							GuiAplicacion.showMessage("La cancion ya no se puede modificar");
 							return;
 						}
