@@ -3,7 +3,9 @@ package GUI;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
 import javax.swing.*;
@@ -29,6 +31,9 @@ import controladores.ControladorDenuncias;
 import controladores.ControladorLogin;
 import controladores.ControladorSesion;
 import controladores.ControladorValidar;
+import es.uam.eps.padsof.telecard.FailedInternetConnectionException;
+import es.uam.eps.padsof.telecard.InvalidCardNumberException;
+import es.uam.eps.padsof.telecard.OrderRejectedException;
 import controladores.ControladorMisCanciones;
 import controladores.ControladorMisListas;
 import controladores.ControladorNotificacion;
@@ -36,10 +41,31 @@ import controladores.ControladorOpciones;
 import controladores.ControladorPago;
 import controladores.ControladorRegistro;
 import controladores.ControladorReproductor;
+import excepciones.ExcepcionCancionModificable;
+import excepciones.ExcepcionCancionNoValidada;
+import excepciones.ExcepcionCancionYaNoModificable;
+import excepciones.ExcepcionCancionYaValidada;
+import excepciones.ExcepcionDuracionLimiteSuperada;
+import excepciones.ExcepcionErrorCreandoAlbum;
+import excepciones.ExcepcionInsercionInvalida;
+import excepciones.ExcepcionLimiteReproducidasAlcanzado;
+import excepciones.ExcepcionLoginBloqueado;
+import excepciones.ExcepcionLoginErrorCredenciales;
+import excepciones.ExcepcionMp3NoValido;
+import excepciones.ExcepcionNoAptoParaMenores;
+import excepciones.ExcepcionNombreDeUsuarioNoDisponible;
 import excepciones.ExcepcionParametrosDeEntradaIncorrectos;
+import excepciones.ExcepcionReproducibleNoValido;
+import excepciones.ExcepcionReproducirProhibido;
+import excepciones.ExcepcionSeguirseASiMismo;
+import excepciones.ExcepcionUsuarioNoPremium;
+import excepciones.ExcepcionUsuarioNoSeguido;
+import excepciones.ExcepcionUsuarioSinCuenta;
+import excepciones.ExcepcionUsuarioYaSeguido;
 import media.Buscable;
 import media.Cancion;
 import pads.musicPlayer.exceptions.Mp3PlayerException;
+import test.GeneraDatos;
 
 /**
  * Esta clase tiene toda la informacion relevante a la ventana de la
@@ -311,10 +337,16 @@ public class GuiAplicacion extends JFrame {
      * 
      */
 	public static void main(String[] args)
-			throws Mp3PlayerException, ExcepcionParametrosDeEntradaIncorrectos, ClassNotFoundException, IOException,
-			InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
+			throws Mp3PlayerException, ExcepcionParametrosDeEntradaIncorrectos, ClassNotFoundException,
+			InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException, InvalidCardNumberException, FailedInternetConnectionException, NoSuchAlgorithmException, InterruptedException, ExcepcionLimiteReproducidasAlcanzado, ExcepcionNoAptoParaMenores, ExcepcionLoginErrorCredenciales, ExcepcionLoginBloqueado, ExcepcionDuracionLimiteSuperada, ExcepcionCancionModificable, ExcepcionCancionYaValidada, ExcepcionNombreDeUsuarioNoDisponible, IOException, ExcepcionReproducirProhibido, ExcepcionUsuarioYaSeguido, ExcepcionUsuarioNoSeguido, ExcepcionErrorCreandoAlbum, OrderRejectedException, ExcepcionUsuarioNoPremium, ExcepcionCancionYaNoModificable, ExcepcionMp3NoValido, ExcepcionUsuarioSinCuenta, ExcepcionInsercionInvalida, ExcepcionCancionNoValidada, ExcepcionReproducibleNoValido, ExcepcionSeguirseASiMismo {
 		actualizarLookAndFeel();
-		Aplicacion a = Aplicacion.cargarDatos();
+		Aplicacion a = null;
+		// Si no hay datos se genera con funcionalidades basicas introducidas
+		try {
+			a = Aplicacion.cargarDatos();
+		} catch (FileNotFoundException e) {
+			GeneraDatos.main(null);
+		}
 		GuiAplicacion g = GuiAplicacion.getInstance();
 		System.out.println("Ejecutando main de Gui.Aplicaion. " + a + " " + g);
 	}
