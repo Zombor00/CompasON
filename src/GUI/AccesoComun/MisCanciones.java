@@ -143,7 +143,7 @@ public class MisCanciones extends JPanel{
     /**
      * Formulario para modifcar una cancion
      */
-    FormularioModificarCancion formularioModificarCancion = new FormularioModificarCancion();
+    FormularioCancion formularioModificarCancion = new FormularioCancion();
     
     /**
      * Confirmacion previa a modificar una cancion a partir de los datos introducidos en formularioModificarCancion
@@ -578,7 +578,7 @@ public class MisCanciones extends JPanel{
 		return this.auxAniadirAlbumALista;
 	}
 	
-	public FormularioModificarCancion getFormularioModificarCancion() {
+	public FormularioCancion getFormularioModificarCancion() {
 		return this.formularioModificarCancion;
 	}
 	
