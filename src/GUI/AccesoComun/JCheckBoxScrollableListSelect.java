@@ -28,7 +28,7 @@ public class JCheckBoxScrollableListSelect extends JDialog implements ActionList
 	 * @param elementos Lista de nombres que definen los checkboxes
 	 * @param textField Campo de texto en el que se imprime "seleccionadas"
 	 * @param seleccionadas Lista donde se añaden los indices de los checkboxes seleccionadas
-	 * @param boton Boton al que se hace click cuando el usuario termina la seleccion.
+	 * @param externo boton Boton al que se hace click cuando el usuario termina la seleccion.
 	 * Esto permite asociar un comportamiento externo al panel.
 	 */
 	public JCheckBoxScrollableListSelect(String title, ArrayList<String> elementos,

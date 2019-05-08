@@ -1,5 +1,15 @@
+GUI
+GUI.AccesoComun
+GUI.Administrador
+GUI.UsuarioPremium
+GUI.UsuarioRegistrado
+GUI.UsuarioSinCuenta
 aplicacion
+controladores
 excepciones
 gestion
 media
+pads.musicPlayer
+pads.musicPlayer.exceptions
+test
 usuarios
