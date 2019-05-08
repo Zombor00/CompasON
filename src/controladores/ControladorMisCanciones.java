@@ -11,6 +11,8 @@ import javax.swing.JPopupMenu;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import org.junit.platform.commons.util.StringUtils;
+
 import GUI.GuiAplicacion;
 import GUI.AccesoComun.JCheckBoxScrollableListSelect;
 import GUI.AccesoComun.MisCanciones;
@@ -475,20 +477,25 @@ public class ControladorMisCanciones implements ActionListener {
 			
 			
 			Cancion c = this.getSelectedCancion();
-			try {
-				c.modificar(vista.getFormularioModificarCancion().getNombre(), vista.getFormularioModificarCancion().getFichero());
-			} catch (FileNotFoundException e1) {
-				GuiAplicacion.showMessage("File not found");
-			} catch (ExcepcionCancionYaValidada e1) {
-				GuiAplicacion.showMessage("Cancion ya validada");
-			} catch (ExcepcionDuracionLimiteSuperada e1) {
-				GuiAplicacion.showMessage("Duracion limite superada");
-			} catch (ExcepcionCancionYaNoModificable e1) {
-				GuiAplicacion.showMessage("Cancion ya no modificable");
-			} catch (ExcepcionMp3NoValido e1) {
-				GuiAplicacion.showMessage("Mp3 no valido");
+			if(!StringUtils.isBlank(vista.getFormularioModificarCancion().getNombre())){
+				try {
+					c.modificar(vista.getFormularioModificarCancion().getNombre(), vista.getFormularioModificarCancion().getFichero());
+				} catch (FileNotFoundException e1) {
+					GuiAplicacion.showMessage("File not found");
+				} catch (ExcepcionCancionYaValidada e1) {
+					GuiAplicacion.showMessage("Cancion ya validada");
+				} catch (ExcepcionDuracionLimiteSuperada e1) {
+					GuiAplicacion.showMessage("Duracion limite superada");
+				} catch (ExcepcionCancionYaNoModificable e1) {
+					GuiAplicacion.showMessage("Cancion ya no modificable");
+				} catch (ExcepcionMp3NoValido e1) {
+					GuiAplicacion.showMessage("Mp3 no valido");
+				}
+				gui.actualizarDatos();
+			}else {
+				GuiAplicacion.showMessage("Debe poner un nombre a la cancion");
 			}
-			gui.actualizarDatos();
+			
 			
 			
 		/* Si se pulsa visualizar album, se muestran las canciones que se encuentran dentro del album */
