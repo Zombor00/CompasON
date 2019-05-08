@@ -198,6 +198,7 @@ public class ControladorMisListas implements ActionListener {
 						break;
 					}
 					reproducibles.add((Reproducible)datosAlbumes.getValueAt(indice - numCanciones, 0));
+					if (indice == aux.get(aux.size()-1)) aux = null;
 				}
 			}
 			if(aux != null) {
