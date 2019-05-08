@@ -2,6 +2,8 @@ package media;
 
 import java.io.*;
 import java.util.*;
+
+import aplicacion.Aplicacion;
 import excepciones.ExcepcionInsercionInvalida;
 import excepciones.ExcepcionCancionNoContenida;
 import excepciones.ExcepcionCancionNoValidada;
@@ -116,6 +118,9 @@ public class Album extends Buscable implements Serializable{
         
         canciones.add(c);
         this.setDuracion(this.getDuracion() + c.getDuracion());
+        for (UsuarioRegistrado u : Aplicacion.getInstance().getUsuarios()) {
+        	u.getListas().stream().filter(l -> l.contieneReproducible(this)).forEach(l -> l.incrementarDuracion(c.getDuracion()));
+        }
     }
 
     /**
@@ -136,6 +141,10 @@ public class Album extends Buscable implements Serializable{
 
         if(this.canciones.stream().filter(cancion -> cancion.getEstado() == Estado.NOBLOQUEADO).count() == 0){
             this.setEstado(Estado.BORRADO);
+        }
+        
+        for (UsuarioRegistrado u : Aplicacion.getInstance().getUsuarios()) {
+        	u.getListas().stream().filter(l -> l.contieneReproducible(this)).forEach(l -> l.incrementarDuracion(-borrado.getDuracion()));
         }
     }
 

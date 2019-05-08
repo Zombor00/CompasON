@@ -19,7 +19,7 @@ import usuarios.UsuarioRegistrado;
 public class Lista extends Reproducible implements Serializable{
 
     private ArrayList <Reproducible> reproducibles;
-    private ArrayList <Lista> padres;
+    private Set <Lista> padres;
 
     /**
      * Constructor de la clase lista que inicializa el array de reproducibles y
@@ -29,7 +29,7 @@ public class Lista extends Reproducible implements Serializable{
     public Lista(String titulo){
         super(titulo);
         this.reproducibles = new ArrayList<Reproducible>();
-        this.padres = new ArrayList<>();
+        this.padres = new HashSet<>();
     }
 
     /**
@@ -80,9 +80,17 @@ public class Lista extends Reproducible implements Serializable{
         if(!r.sePuedeMeterEn(this)) { /* this.esViableAniadir(r) */
         	throw new ExcepcionInsercionInvalida(); /* InsercionInvalida */
         }
-        this.setDuracion(this.getDuracion() + r.getDuracion());
+        
+        this.incrementarDuracion(r.getDuracion());
         reproducibles.add(r);
         r.aniadirPadre(this);
+    }
+    
+    public void incrementarDuracion(double incr) {
+    	this.setDuracion(this.getDuracion() + incr);
+    	for (Lista l : padres) {
+    		l.incrementarDuracion(incr);
+    	}
     }
 
     /**
@@ -98,7 +106,7 @@ public class Lista extends Reproducible implements Serializable{
         	throw new ExcepcionCancionNoContenida();
         }
         
-        this.setDuracion(this.getDuracion() - r.getDuracion());
+        this.incrementarDuracion(-r.getDuracion());
         reproducibles.remove(index);
         r.quitarPadre(this);
     }
@@ -122,7 +130,7 @@ public class Lista extends Reproducible implements Serializable{
         return false;
     }
 
-    public ArrayList<Lista> getPadres() {
+    public Set<Lista> getPadres() {
     	return this.padres;
     }
 
