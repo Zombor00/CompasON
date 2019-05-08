@@ -1,6 +1,7 @@
 package media;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.time.LocalDate;
 
 import usuarios.UsuarioRegistrado;
@@ -72,7 +73,7 @@ public class CancionTest {
 		}
 	    try {
 	    	cancion1.modificar("Wait for it",null);
-		} catch (ExcepcionCancionYaValidada | ExcepcionCancionYaNoModificable | ExcepcionMp3NoValido e) {
+		} catch (ExcepcionCancionYaValidada | ExcepcionCancionYaNoModificable | ExcepcionMp3NoValido | IOException e) {
 			fail("Lanzada excepcion no esperada");
 		}
 	    
@@ -88,7 +89,7 @@ public class CancionTest {
 	    try {
 	    	cancion1.modificar("CANTCHANGENAME", null);
 	    	fail("Esperada excepcion no lanzada");
-		} catch (ExcepcionCancionYaValidada | ExcepcionCancionYaNoModificable | ExcepcionMp3NoValido e) {
+		} catch (ExcepcionCancionYaValidada | ExcepcionCancionYaNoModificable | ExcepcionMp3NoValido | IOException e) {
 			lanzadaExcepcion = true;
 		}
 	   assertTrue(lanzadaExcepcion);
@@ -99,7 +100,7 @@ public class CancionTest {
 	    	fail("Esperada excepcion no lanzada");
 		} catch (ExcepcionCancionYaValidada e) {
 			lanzadaExcepcion = true;
-		} catch(ExcepcionCancionYaNoModificable | ExcepcionMp3NoValido e1){
+		} catch(ExcepcionCancionYaNoModificable | ExcepcionMp3NoValido | IOException e1){
 			fail("Lanzada excepcion no esperada");
 		}
 	   assertTrue(lanzadaExcepcion);
@@ -116,13 +117,13 @@ public class CancionTest {
 	    	fail("Esperada excepcion no lanzada");
 		} catch ( ExcepcionMp3NoValido e) {
 			lanzadaExcepcion = true;
-		} catch(ExcepcionCancionYaNoModificable | ExcepcionCancionYaValidada e1){
+		} catch(ExcepcionCancionYaNoModificable | ExcepcionCancionYaValidada | IOException e1){
 			fail("Lanzada excepcion no esperada");
 		}
 	    
 	    try {
 			cancion2.modificar("Thats What I Like","canciones/Thats What I Like.mp3");
-		} catch (ExcepcionCancionYaValidada | ExcepcionCancionYaNoModificable | ExcepcionMp3NoValido e) {
+		} catch (ExcepcionCancionYaValidada | ExcepcionCancionYaNoModificable | ExcepcionMp3NoValido | IOException e) {
 			fail("Lanzada excepcion no esperada");
 		}
 	}

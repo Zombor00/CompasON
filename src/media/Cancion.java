@@ -1,6 +1,9 @@
 package media;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.time.*;
 
 import excepciones.ExcepcionDuracionLimiteSuperada;
@@ -53,12 +56,8 @@ public class Cancion extends Buscable implements Serializable{
             }
         }
         this.estadoValidacion = EstadoValidacion.NOVALIDADA;
-        try {
-            this.setDuracion(Mp3Player.getDuration(file));
-        }
-        catch(FileNotFoundException e){
-        	throw new FileNotFoundException();
-        }
+        this.setDuracion(Mp3Player.getDuration(file));
+       
             
     }
 
@@ -119,8 +118,8 @@ public class Cancion extends Buscable implements Serializable{
      * @throws ExcepcionMp3NoValido
      */
     public void modificar(String titulo, String file) throws ExcepcionCancionYaValidada,
-    FileNotFoundException, ExcepcionDuracionLimiteSuperada,ExcepcionCancionYaNoModificable,
-    ExcepcionMp3NoValido {
+    ExcepcionDuracionLimiteSuperada,ExcepcionCancionYaNoModificable,
+    ExcepcionMp3NoValido, IOException {
         if(this.estadoValidacion == EstadoValidacion.APTOMENORES ||
            this.estadoValidacion == EstadoValidacion.EXPLICITO) {
             throw new ExcepcionCancionYaValidada();
@@ -132,7 +131,12 @@ public class Cancion extends Buscable implements Serializable{
 
         if(file != null) {
             if(Mp3Player.isValidMp3File(file)) {
-                    this.ficheroAudio = file;
+            	double duracionPrev = this.getDuracion();
+            	double duracionPost = Mp3Player.getDuration(file);
+            	Files.copy(Paths.get(file), Paths.get("canciones/"+ this.getTitulo() + id + ".mp3"), StandardCopyOption.REPLACE_EXISTING);
+                this.ficheroAudio = "canciones/"+ this.getTitulo() + id + ".mp3";
+                this.setDuracion(duracionPost);
+                this.getAutor().getAlbumes().stream().filter(a -> a.contieneReproducible(this)).forEach(a -> a.setDuracion(a.getDuracion() - duracionPrev + duracionPost));
             }else{
             	throw new ExcepcionMp3NoValido();
             }

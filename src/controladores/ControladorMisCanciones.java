@@ -490,6 +490,8 @@ public class ControladorMisCanciones implements ActionListener {
 					GuiAplicacion.showMessage("Cancion ya no modificable");
 				} catch (ExcepcionMp3NoValido e1) {
 					GuiAplicacion.showMessage("Mp3 no valido");
+				} catch (IOException e1) {
+					GuiAplicacion.showMessage("Fallo al modificar");
 				}
 				gui.actualizarDatos();
 			}else {
