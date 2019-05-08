@@ -286,7 +286,6 @@ public class AlbumTest {
 	    Cancion cancion1 = null;
 	    Cancion cancion2 = null;
 	    Cancion cancion3 = null;
-	    boolean lanzadaExcepcion = false;
 	    try {
 			cancion1 = new Cancion("cancion1","canciones/Thats What I Like.mp3",usuario);
 			cancion2 = new Cancion("cancion2","canciones/Thats What I Like.mp3",usuario);

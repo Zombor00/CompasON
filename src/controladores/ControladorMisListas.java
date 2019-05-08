@@ -14,6 +14,7 @@ import GUI.GuiAplicacion;
 import GUI.AccesoComun.JCheckBoxScrollableListSelect;
 import GUI.UsuarioPremium.MisListas;
 import aplicacion.Aplicacion;
+import excepciones.ExcepcionCancionNoContenida;
 import excepciones.ExcepcionInsercionInvalida;
 import excepciones.ExcepcionLimiteReproducidasAlcanzado;
 import excepciones.ExcepcionNoAptoParaMenores;
@@ -22,6 +23,7 @@ import excepciones.ExcepcionReproducibleNoValido;
 import excepciones.ExcepcionReproducirProhibido;
 import excepciones.ExcepcionUsuarioNoPremium;
 import excepciones.ExcepcionUsuarioSinCuenta;
+import media.Estado;
 import media.Lista;
 import media.Reproducible;
 import pads.musicPlayer.exceptions.Mp3InvalidFileException;
@@ -64,14 +66,21 @@ public class ControladorMisListas implements ActionListener {
 		if (aplicacion == null) aplicacion = Aplicacion.getInstance();
 		if (gui == null) gui = GuiAplicacion.getInstance();
 		
-		/* Si se pulsa el opciones de canciones se muestra u oculta su menu */
+		/* Si se pulsa el opciones de las listas se muestra u oculta su menu */
 		if (e.getActionCommand().equals("OPCIONES")) {			
 			
 			JButton opciones = vista.getOpciones();
 			JPopupMenu menu = vista.getMenu();
 			menu.show(opciones, 0, opciones.getHeight());
 			
-		/* Si se pulsa reproducir se reproduce la primera lista seleccionada y las demas se aniaden a la cola */	
+		/* Si se pulsa el opciones de la lista mostrada se muestra u oculta su menu */	
+		} else if (e.getActionCommand().equals("OPCIONES_DE_LA_LISTA")) {
+			
+			JButton opciones = vista.getOpcionesDeLaLista();
+			JPopupMenu menu = vista.GetMenuDeLaLista();
+			menu.show(opciones, 0, opciones.getHeight());
+	        
+	    /* Reproducir lista */
 		} else if (e.getActionCommand().equals("REPRODUCIR")) {
 			
 			ArrayList<Lista> listas= this.getSelectedListas();
@@ -101,6 +110,55 @@ public class ControladorMisListas implements ActionListener {
 			} catch (ExcepcionReproducirProhibido e1) {
 				GuiAplicacion.showMessage("Lista no reproducible");
 			}
+	        
+	    /* Reproducir elemento de la lista mostrada */
+		} else if (e.getActionCommand().equals("REPRODUCIR_REPRODUCIBLE")) {
+			
+			ArrayList<Reproducible> reproducibles = this.getSelectedReproducibles();
+			if(reproducibles == null)return;
+			
+	        try {
+	        	aplicacion.reproducirReproducible(reproducibles.get(0));
+	        	reproducibles.remove(0);
+				gui.getReproductor().setFirstRep(true);
+	        	for (Reproducible reproducible : reproducibles) {
+	        		try {
+						aplicacion.aniadirALaCola(reproducible);
+					} catch (ExcepcionUsuarioSinCuenta e1) {
+						
+					}
+	        	}
+			} catch (FileNotFoundException e1) {
+				GuiAplicacion.showMessage("No se encuentra el archivo");
+			} catch (Mp3PlayerException e1) {
+				GuiAplicacion.showMessage("Reproductor no funcionando");
+			} catch (ExcepcionLimiteReproducidasAlcanzado e1) {
+				GuiAplicacion.showMessage("Limite de reproducciones alcanzado");
+			} catch (ExcepcionNoAptoParaMenores e1) {
+				GuiAplicacion.showMessage("No apto para menores");
+			} catch (ExcepcionParametrosDeEntradaIncorrectos e1) {
+				e1.printStackTrace();
+			} catch (ExcepcionReproducirProhibido e1) {
+				GuiAplicacion.showMessage("Lista no reproducible");
+			}
+	        
+	    /* Quitamos elemento de la lista mostrada */
+		} else if (e.getActionCommand().equals("QUITAR_REPRODUCIBLE")) {
+			
+			Lista lista = this.getSelectedLista();
+			ArrayList<Reproducible> reproducibles = this.getSelectedReproducibles();
+			if(reproducibles == null)return;
+			for(Reproducible r : reproducibles) {
+				try {
+					lista.quitarReproducible(r);
+				} catch (ExcepcionCancionNoContenida e1) {
+					e1.printStackTrace();
+				}
+			}
+			vista.getVisualizarLista().doClick();
+			gui.actualizarDatos();
+			
+			
 	        
 	    /* Si se pulsa aceptar se crea la lista con la informacion indicada */
 		} else if(e.getActionCommand().equals("ACEPTAR")) {
@@ -237,8 +295,31 @@ public class ControladorMisListas implements ActionListener {
 			}
 			gui.actualizarDatos();
 			
+		/* Se muestran los elementos de la primera lista seleccionada */
+		} else if(e.getActionCommand().equals("VISUALIZAR_LISTA")) {
 			
-		}
+			Lista lista = this.getSelectedLista();
+			if(lista == null) {
+				return;
+			}
+			while(vista.getDatosDeLaLista().getRowCount() > 0) {
+				vista.getDatosDeLaLista().removeRow(0);
+			}
+			Object[] rowData = {0,0,0};
+			for (Reproducible r : lista.getReproducibles()) {
+				rowData[0] = r;
+				if (r.getEstado() == Estado.BLOQUEADO) {
+					rowData[1] = r.getTituloExplicito() + " (Bloqueado)";
+				}
+				else{
+					rowData[1] = r.getTituloExplicito();
+				}
+				rowData[2] = r.parseSeconds(r.getDuracion());
+				vista.getDatosDeLaLista().addRow(rowData);
+			}
+			
+			
+		} 
 		
 	}
 	
@@ -247,18 +328,30 @@ public class ControladorMisListas implements ActionListener {
 	 * @return lista de listas seleccionados
 	 */
 	private ArrayList<Lista> getSelectedListas(){
-		JTable tablaListas = vista.getTabla();
+		return vista.getSelectedListas();
+	}
+	
+	/**
+	 * Metodo que devuelve la primera lista seleccionada
+	 * @return lista de listas seleccionados
+	 */
+	private Lista getSelectedLista() {
+		return vista.getSelectedLista();
+	}
+	
+	private ArrayList<Reproducible> getSelectedReproducibles(){
+		JTable tabla = vista.getTablaDeLaLista();
 		
-		int filas[] = tablaListas.getSelectedRows();
+		int filas[] = tabla.getSelectedRows();
         if(filas.length == 0) {
         	return null;
         }
-        ArrayList<Lista> listas = new ArrayList<>();
+        ArrayList<Reproducible> reproducible = new ArrayList<>();
         for (int f : filas) {
-        	listas.add((Lista)tablaListas.getModel().getValueAt(f, 0));
+        	reproducible.add((Reproducible)tabla.getModel().getValueAt(f, 0));
         }        
         
-        return listas;
+        return reproducible;
 	}
 
 }

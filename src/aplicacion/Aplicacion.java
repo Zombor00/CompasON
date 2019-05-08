@@ -750,12 +750,12 @@ public class Aplicacion implements Serializable {
         List<Buscable> borrados = new ArrayList<>();
         UsuarioRegistrado autor;
 
-        for (Buscable buscable : buscables) {
+        for(Buscable buscable : buscables) {
             if (buscable.getEstado() == Estado.BORRADO) {
             	borrados.add(buscable);
             }
         }
-        for (Buscable borrado : borrados) {
+        for(Buscable borrado : borrados) {
             autor = borrado.getAutor();
             for(Album album : autor.getAlbumes()) {
             	try {
@@ -764,6 +764,17 @@ public class Aplicacion implements Serializable {
 					
 				}
             }
+        }
+        for(UsuarioRegistrado u : this.getUsuarios()) {
+        	for(Lista lista : u.getListas()) {
+        		for(Buscable b : borrados) {
+        			try {
+						lista.quitarReproducible(b);
+					} catch (ExcepcionCancionNoContenida e) {
+						
+					}
+        		}
+        	}
         }
         buscables.removeAll(borrados);
 	}

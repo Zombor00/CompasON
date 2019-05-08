@@ -180,7 +180,7 @@ public class Lista extends Reproducible implements Serializable{
 	  }
 
 	public ArrayList<Reproducible> getReproducibles(){
-		return this.getReproducibles();
+		return this.reproducibles;
 	}
 
 
