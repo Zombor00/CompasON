@@ -119,7 +119,7 @@ public class Album extends Buscable implements Serializable{
         canciones.add(c);
         this.setDuracion(this.getDuracion() + c.getDuracion());
         for (UsuarioRegistrado u : Aplicacion.getInstance().getUsuarios()) {
-        	u.getListas().stream().filter(l -> l.contieneReproducible(this)).forEach(l -> l.incrementarDuracion(c.getDuracion()));
+        	u.getListas().stream().filter(l -> l.getReproducibles().contains(this)).forEach(l -> l.incrementarDuracion(c.getDuracion()));
         }
     }
 
@@ -144,7 +144,7 @@ public class Album extends Buscable implements Serializable{
         }
         
         for (UsuarioRegistrado u : Aplicacion.getInstance().getUsuarios()) {
-        	u.getListas().stream().filter(l -> l.contieneReproducible(this)).forEach(l -> l.incrementarDuracion(-borrado.getDuracion()));
+        	u.getListas().stream().filter(l -> l.getReproducibles().contains(this)).forEach(l -> l.incrementarDuracion(-borrado.getDuracion()));
         }
     }
 
