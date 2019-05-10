@@ -326,6 +326,24 @@ public class UsuarioRegistrado extends UsuarioConCuenta implements Serializable{
     	return cont;
     	 
     }
+    
+    /**
+    * Devuelve el numero de reproducciones que llevan otros usuarios
+    * de canciones suyas este mes
+    *
+    * @return numero de reproducciones
+    */
+    public int reproduccionesMesActual() {
+    	LocalDate hoy = LocalDate.now();	
+    	int mes = hoy.getMonthValue();
+    	int anio = hoy.getYear();
+    	
+    	/* Nos guardamos el primer dia de este mes */
+    	LocalDate fechaAntigua = LocalDate.of(anio, mes, 1);
+    	
+    	return (int) reproducciones.stream().filter(f -> f.isBefore(fechaAntigua) == false).count();
+    	 
+    }
 
     /**
      * Devuelve si el usuario es menor de edad

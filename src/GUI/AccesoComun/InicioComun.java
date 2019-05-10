@@ -73,8 +73,9 @@ public class InicioComun extends JPanel{
 		this.bienvenido.setText("Bienvenido " + u.getNombre());
 		this.reproducciones.setText("Canciones reproducidas este mes: " + u.getReproducidas() +
 				                    " (Limite: "+ Aplicacion.getInstance().getLimiteReproducciones() + ")");
-		this.reproducidas.setText("Reproducciones obtenidas este mes: " + u.reproduccionesUltimoMes() +
-				                  " (" + Aplicacion.getInstance().getReproduccionesPremium() + " mas para ser premium)");
+		int rep = u.reproduccionesMesActual();
+		this.reproducidas.setText("Reproducciones obtenidas este mes: " + rep +
+				                  " (" + (Aplicacion.getInstance().getReproduccionesPremium() - rep) + " mas para ser premium)");
 	}
 
 }
