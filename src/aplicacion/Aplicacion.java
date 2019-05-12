@@ -668,6 +668,7 @@ public class Aplicacion implements Serializable {
 		
 				}
 			});
+        	cancion.getAutor().getCancionesNuevas().remove(cancion);
         }
     }
 
